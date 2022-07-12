@@ -88,7 +88,8 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         String segundonombre="";
         String Papellido="";
         String Sapellido="";
-        String FechaN="";
+       java.util.Calendar FechaN;
+       java.util.Calendar FechaC;
         String telefono="";
         String direccion="";
         String correo="";
@@ -97,21 +98,19 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         int numeroCta=0;
         int estado=0;
         int IdTipodocumento=0;
-    
-       
+
+        
         puesto = puestos.get(JCombopuesto.getSelectedItem().toString());
         
-    
-        
-        
-        String SQL = "INSERT INTO Clientes (IdCliente,Nombres,Apellidos,DireccionCliente,Telefono,CorreoElectronico) VALUES"
-                + "(?, ?, ?, ?, ?, ?)";
+     
+        String SQL = "INSERT INTO Empleados (IdEmpleado,PrimerNombre, SegundoNombre, FechaNacimiento, IdTipoDocumento, CorreoElectronico, Genero,DireccionEmpleado, IdPuesto, FechaContratacion, NumeroCuenta, IdEstado, PrimerApellido,SegundoApellido)  VALUES"
+                + "(?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, id);
-            preparedStmt.setString (2, nombres);
-            preparedStmt.setString   (3, apellidos);
-            preparedStmt.setString(4, direccion);
+            preparedStmt.setString (2, primernombre);
+            preparedStmt.setString   (3, segundonombre);
+         //   preparedStmt.set(4, FechaN );
             preparedStmt.setString(5, telefono);
             preparedStmt.setString(6, correo);
             preparedStmt.execute();
@@ -124,7 +123,17 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         
        
     }
-
+ public Boolean validar(){
+       // char [] arrayC=rSMPassView1.getPassword();
+        //String acceso= new String(arrayC);
+        if(JCodigoDisponible.getText().isEmpty() || NombreC.getText().isEmpty() 
+                ||ApellidoC.getText().isEmpty() ||DirC.getText().isEmpty() || TelC1.getText().isEmpty() || CorreoC.getText().isEmpty() ){
+            
+            return false;
+        }else{
+            return true;
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -610,7 +619,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(500, 500, 500)
-                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
@@ -624,10 +633,8 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+            .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
@@ -1015,7 +1022,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
                 .addGap(24, 24, 24))
         );
 
@@ -1025,17 +1032,18 @@ public class AgregarEmpleado extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1416, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(260, 260, 260)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -1222,22 +1230,6 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_correoEActionPerformed
 
-    private void JComboGen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JComboGen1MouseClicked
-
-    private void JComboGen1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JComboGen1MouseEntered
-
-    private void JComboGen1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JComboGen1MouseExited
-
-    private void JComboGen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboGen1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JComboGen1ActionPerformed
-
     private void JComboTipo2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboTipo2MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_JComboTipo2MouseClicked
@@ -1253,6 +1245,22 @@ public class AgregarEmpleado extends javax.swing.JFrame {
     private void JComboTipo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboTipo2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JComboTipo2ActionPerformed
+
+    private void JComboGen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboGen1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JComboGen1ActionPerformed
+
+    private void JComboGen1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JComboGen1MouseExited
+
+    private void JComboGen1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JComboGen1MouseEntered
+
+    private void JComboGen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JComboGen1MouseClicked
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1402,4 +1410,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     private rojerusan.RSYearDateBeanInfo rSYearDateBeanInfo1;
     // End of variables declaration//GEN-END:variables
+
+    private boolean validar() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

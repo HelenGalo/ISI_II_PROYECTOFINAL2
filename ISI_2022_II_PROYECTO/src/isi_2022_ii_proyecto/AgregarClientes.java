@@ -33,138 +33,29 @@ public class AgregarClientes extends javax.swing.JFrame {
     /**
      * Creates new form AgregarCliente
      */
-    boolean a = true;
-    String codigoe="";
-    String rol="";
+     boolean a = true;
+    String cliente;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     int id=0;
-    HashMap<String, Integer> empleados = new HashMap<String, Integer>();
-
+    String rol;
+    
+  public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
   
     
     public AgregarClientes() {
         initComponents();
-        buscardatos();
-        listarEmpleados();
+    
         
     }
-    
-    
-    
-    public void insertar(){
-        
-        int idUsuario=0;
-        int IdEmpleado=0;
-        String Contra="";
-        int Intentos=0;
-        int IdRol=0;
-        String Usuario="";
-        
-        idUsuario = Integer.parseInt(JCodigoDisponible.getText());
-        IdEmpleado = empleados.get(JComboEmpleados.getSelectedItem().toString());
-        Usuario=Juser2.getText();
-        System.out.println(idUsuario);
-          System.out.println(IdEmpleado);
-        char [] arrayC=rSMPassView1.getPassword();
-        Contra= new String(arrayC);
-        
-        Intentos = Integer.parseInt(String.valueOf(JIntentos.getSelectedItem()));
-        try {
-                String sql = "SELECT r.IdRol FROM Roles r Where r.Nombre="+"'"+rol+"'";
-                Statement st = (Statement) con.createStatement();
-                ResultSet rs = st.executeQuery(sql);
-                while (rs.next()){
-                    IdRol=rs.getInt("IdRol");
-                }
-        } catch (Exception e) {
-               JOptionPane.showMessageDialog(this, e.getMessage());
-                
-        }
-            
-        System.out.println(String.valueOf(idUsuario)+" "+String.valueOf(IdEmpleado)+" "+Contra+String.valueOf(Intentos)+" "+ String.valueOf(IdRol)+" "+Usuario);
-        
-    
-        
-        
-        String SQL = "INSERT INTO Usuarios (IdUsuario,IdEmpleado,Contrase,Intentos,IdRol,Usuario) VALUES"
-                + "(?, ?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement preparedStmt = con.prepareStatement(SQL);
-            preparedStmt.setInt(1, idUsuario);
-            preparedStmt.setInt (2, IdEmpleado);
-            preparedStmt.setString(3, Contra);
-            preparedStmt.setInt(4, Intentos);
-            preparedStmt.setInt(5, IdRol);
-            preparedStmt.setString(6, Usuario);
-            preparedStmt.execute();
-            
-            JOptionPane.showMessageDialog(this, "Usuario Guardado");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-        
-        
-        
-       
-    }
-        
-    public Boolean validar(){
-        char [] arrayC=rSMPassView1.getPassword();
-        String acceso= new String(arrayC);
-        if(JCodigoDisponible.getText().isEmpty() || JComboEmpleados.getSelectedItem().toString().isEmpty() || Juser2.getText().isEmpty() 
-                || JIntentos.getSelectedItem().toString().isEmpty() || acceso.isEmpty() || rol.isEmpty() ){
-            
-            return false;
-        }else{
-            return true;
-        }
-    }
-    
-  
-      public void listarEmpleados(){
-          String nombres="";
-          String apellidos="";
-          int idEmpleado=0;
-          
-         
-         
-          
-          
-          
- 
-       
-       
-
-        String SQL = "SELECT e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido FROM Empleados e\n" +
-                    "LEFT JOIN Usuarios u ON e.IdEmpleado = u.IdEmpleado\n" +
-                    "WHERE u.IdEmpleado is null;";
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                idEmpleado =rs.getInt("IdEmpleado");
-                nombres =rs.getString("PrimerNombre")+" "+rs.getString("SegundoNombre");
-                apellidos = rs.getString("PrimerApellido")+" "+rs.getString("SegundoApellido");
-                JComboEmpleados.addItem(nombres+" "+apellidos);
-                empleados.put(nombres+" "+apellidos,idEmpleado);
-            }
-
-            System.out.println(empleados);
-            for(int i=1; i<=3;i++){
-            JIntentos.addItem(i);
-            };
-            
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+    public void inicializar(){
+       JCodigoDisponible.setText(cliente);
     }
     
     public void buscardatos(){
-          String SQL = "SELECT * FROM Usuarios u WHERE u.IdUsuario=(SELECT max(IdUsuario) FROM Usuarios)";
+          String SQL = "SELECT * FROM Clientes WHERE idCliente=(SELECT max(IdCliente) FROM Clientes)";
           
           
         try {
@@ -172,7 +63,7 @@ public class AgregarClientes extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                id = rs.getInt("IdUsuario");
+                id = rs.getInt("IdCliente");
                
                 
             }
@@ -181,7 +72,7 @@ public class AgregarClientes extends javax.swing.JFrame {
             System.out.println("SIN SUMAR"+String.valueOf(id));
             id = id +1;
             System.out.println(String.valueOf(id));
-            JCodigoDisponible.setText(String.valueOf(id));
+            jLabel13.setText(String.valueOf(id));
             
            
 
@@ -189,6 +80,62 @@ public class AgregarClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
+      public void insertar(){
+        String nombres="";
+        String apellidos="";
+        String telefono="";
+        String direccion="";
+        String correo="";
+        
+        nombres = NombreC.getText();
+        apellidos = ApellidoC.getText();
+        direccion = DirC.getText();
+        telefono=TelC1.getText();
+        correo=CorreoC.getText();
+        
+        
+        String SQL = "INSERT INTO Clientes (IdCliente,Nombres,Apellidos,DireccionCliente,Telefono,CorreoElectronico) VALUES"
+                + "(?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, id);
+            preparedStmt.setString (2, nombres);
+            preparedStmt.setString   (3, apellidos);
+            preparedStmt.setString(4, direccion);
+            preparedStmt.setString(5, telefono);
+            preparedStmt.setString(6, correo);
+            preparedStmt.execute();
+            
+            JOptionPane.showMessageDialog(null, "Registro Guardado Exitosamente");
+
+        } catch (Exception e) {
+            System.out.println("ERROR" + e.getMessage());
+        }
+        
+        
+        
+       
+    }
+
+      
+       
+    
+        
+    public Boolean validar(){
+       // char [] arrayC=rSMPassView1.getPassword();
+        //String acceso= new String(arrayC);
+        if(JCodigoDisponible.getText().isEmpty() || NombreC.getText().isEmpty() 
+                ||ApellidoC.getText().isEmpty() ||DirC.getText().isEmpty() || TelC1.getText().isEmpty() || CorreoC.getText().isEmpty() ){
+            
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+  
+     
+
     
    
 
@@ -300,8 +247,10 @@ public class AgregarClientes extends javax.swing.JFrame {
         jLabel32 = new javax.swing.JLabel();
         NombreE2 = new rojeru_san.RSMTextFull();
         ApellidoC = new rojeru_san.RSMTextFull();
-        TelC = new rojeru_san.RSMTextFull();
+        DirC = new rojeru_san.RSMTextFull();
         jLabel17 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        TelC1 = new rojeru_san.RSMTextFull();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -350,7 +299,7 @@ public class AgregarClientes extends javax.swing.JFrame {
         linesetting4.setLayout(linesetting4Layout);
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 838, Short.MAX_VALUE)
+            .addGap(0, 717, Short.MAX_VALUE)
         );
         linesetting4Layout.setVerticalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,10 +369,10 @@ public class AgregarClientes extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
-                .addGap(13, 13, 13)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addGap(253, 253, 253)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 837, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65))
@@ -703,7 +652,7 @@ public class AgregarClientes extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(500, 500, 500)
-                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
+                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
@@ -717,10 +666,8 @@ public class AgregarClientes extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
+            .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
@@ -1134,7 +1081,7 @@ public class AgregarClientes extends javax.swing.JFrame {
                 CorreoCActionPerformed(evt);
             }
         });
-        jPanel5.add(CorreoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 380, -1, -1));
+        jPanel5.add(CorreoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, -1, -1));
 
         rSPanelCircle2.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -1171,8 +1118,8 @@ public class AgregarClientes extends javax.swing.JFrame {
         jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(153, 0, 255));
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel31.setText("Telefono");
-        jPanel5.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 180, 20));
+        jLabel31.setText("Direccion");
+        jPanel5.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 180, 20));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
@@ -1316,7 +1263,7 @@ public class AgregarClientes extends javax.swing.JFrame {
         jLabel32.setForeground(new java.awt.Color(153, 0, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel32.setText("Correo Electronico:");
-        jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, 180, 40));
+        jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, 180, 40));
 
         NombreE2.setPlaceholder("Ingresa nombre Empresas..");
         NombreE2.addActionListener(new java.awt.event.ActionListener() {
@@ -1335,19 +1282,33 @@ public class AgregarClientes extends javax.swing.JFrame {
         });
         jPanel5.add(ApellidoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, -1, -1));
 
-        TelC.setPlaceholder("Ingresa el numero Telefono");
-        TelC.addActionListener(new java.awt.event.ActionListener() {
+        DirC.setPlaceholder("Ingresa Direccion");
+        DirC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TelCActionPerformed(evt);
+                DirCActionPerformed(evt);
             }
         });
-        jPanel5.add(TelC, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, -1, -1));
+        jPanel5.add(DirC, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("CodClientes");
         jPanel5.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 190, 40));
+
+        jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel33.setText("Telefono");
+        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, 180, 20));
+
+        TelC1.setPlaceholder("Ingresa el numero Telefono");
+        TelC1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TelC1ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(TelC1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 370, -1, -1));
 
         jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -1405,7 +1366,9 @@ public class AgregarClientes extends javax.swing.JFrame {
                 .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -1490,8 +1453,8 @@ public class AgregarClientes extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-        Usuario usuario = new Usuario();
-        usuario.setVisible(true);
+       Cliente cliente = new Cliente();
+        cliente.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
@@ -1732,9 +1695,13 @@ public class AgregarClientes extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ApellidoCActionPerformed
 
-    private void TelCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelCActionPerformed
+    private void DirCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DirCActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TelCActionPerformed
+    }//GEN-LAST:event_DirCActionPerformed
+
+    private void TelC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelC1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TelC1ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1811,13 +1778,14 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojeru_san.RSMTextFull ApellidoC;
     private rojeru_san.RSMTextFull CorreoC;
+    private rojeru_san.RSMTextFull DirC;
     private javax.swing.JPanel Header;
     private javax.swing.JLabel JCodigoDisponible;
     private javax.swing.JLabel JCodigoDisponible1;
     private javax.swing.JPanel MenuIcon;
     private rojeru_san.RSMTextFull NombreC;
     private rojeru_san.RSMTextFull NombreE2;
-    private rojeru_san.RSMTextFull TelC;
+    private rojeru_san.RSMTextFull TelC1;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
@@ -1840,6 +1808,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

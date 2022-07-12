@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
  *
  * @author orell
  */
-public class AgregarProveedor extends javax.swing.JFrame {
+public class ActualizarProveedor extends javax.swing.JFrame {
 
     /**
      * Creates new form AgregarProveedor
@@ -40,12 +40,12 @@ public class AgregarProveedor extends javax.swing.JFrame {
         this.proveedor = proveedor;
     }
     
-    public AgregarProveedor() {
+    public ActualizarProveedor() {
         initComponents();
     }
     
     public void inicializar(){
-        JCodigoDisponible.setText(proveedor);
+        iid.setText(proveedor);
     }
     
     
@@ -67,7 +67,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
             System.out.println("SIN SUMAR"+String.valueOf(id));
             id = id +1;
             System.out.println(String.valueOf(id));
-            JCodigoDisponible.setText(String.valueOf(id));
+            iid.setText(String.valueOf(id));
             
            
 
@@ -81,14 +81,13 @@ public class AgregarProveedor extends javax.swing.JFrame {
         String direccion="";
         String telefono="";
         String correo="";
-        int estadoP=0;
+        //int estadoP="";
         
         
-        NombreE = NombreE1.getText();
-        direccion = DireccionE.getText();
-        telefono=Tel.getText();
+        NombreE = NombreE.getText();
+        direccion = Jtextuser4.getText();
+        telefono=Jtextuser.getText();
         correo=CorreoP.getText();
-        estadoP= Integer.parseInt(String.valueOf(JEstado.getSelectedItem()));
        
                 
        String SQL = "INSERT INTO Proveedores (IdProveedor,NombreEmpresa,DireccionEmpresa,Telefono,CorreoElectronico,Estado) VALUES"
@@ -100,7 +99,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
             preparedStmt.setString   (3, direccion);
             preparedStmt.setString(4, telefono);
             preparedStmt.setString(5, correo);
-            preparedStmt.setInt(6, estadoP);
+            //preparedStmt.setString(6, estadoP);
             preparedStmt.execute();
 
         } catch (Exception e) {
@@ -579,7 +578,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Agregar");
+        jLabel12.setText("Modificar");
         linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
 
         javax.swing.GroupLayout menuhideLayout = new javax.swing.GroupLayout(menuhide);
@@ -637,7 +636,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Agregar Proveedor");
+        jLabel8.setText("Modificar Proveedor");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -1297,21 +1296,23 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgregarProveedor().setVisible(true);
+                new ActualizarProveedor().setVisible(true);
             }
         });
     }

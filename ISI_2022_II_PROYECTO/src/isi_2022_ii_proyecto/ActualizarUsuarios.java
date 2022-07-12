@@ -8,11 +8,14 @@ import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.List;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -20,37 +23,148 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author orell
  */
-public class AgregarProveedor extends javax.swing.JFrame {
+public class ActualizarUsuarios extends javax.swing.JFrame {
 
     /**
-     * Creates new form AgregarProveedor
+     * Creates new form AgregarCliente
      */
     boolean a = true;
-    String proveedor;
+    String codigoe="";
+    String rol="";
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     int id=0;
-    private String rol;
+    HashMap<String, Integer> empleados = new HashMap<String, Integer>();
 
-    public void setProveedor(String proveedor) {
-        this.proveedor = proveedor;
-    }
+  
     
-    public AgregarProveedor() {
+    public ActualizarUsuarios() {
         initComponents();
+        buscardatos();
+        listarEmpleados();
+        
     }
     
-    public void inicializar(){
-        JCodigoDisponible.setText(proveedor);
+    
+    
+    public void insertar(){
+        
+        int idUsuario=0;
+        int IdEmpleado=0;
+        String Contra="";
+        int Intentos=0;
+        int IdRol=0;
+        String Usuario="";
+        
+        idUsuario = Integer.parseInt(JCodigoDisponible.getText());
+        IdEmpleado = empleados.get(JComboEmpleados.getSelectedItem().toString());
+        Usuario=Juser2.getText();
+        System.out.println(idUsuario);
+          System.out.println(IdEmpleado);
+        char [] arrayC=rSMPassView1.getPassword();
+        Contra= new String(arrayC);
+        
+        Intentos = Integer.parseInt(String.valueOf(JIntentos.getSelectedItem()));
+        try {
+                String sql = "SELECT r.IdRol FROM Roles r Where r.Nombre="+"'"+rol+"'";
+                Statement st = (Statement) con.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+                while (rs.next()){
+                    IdRol=rs.getInt("IdRol");
+                }
+        } catch (Exception e) {
+               JOptionPane.showMessageDialog(this, e.getMessage());
+                
+        }
+            
+        System.out.println(String.valueOf(idUsuario)+" "+String.valueOf(IdEmpleado)+" "+Contra+String.valueOf(Intentos)+" "+ String.valueOf(IdRol)+" "+Usuario);
+        
+    
+        
+        
+        String SQL = "INSERT INTO Usuarios (IdUsuario,IdEmpleado,Contrase,Intentos,IdRol,Usuario) VALUES"
+                + "(?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, idUsuario);
+            preparedStmt.setInt (2, IdEmpleado);
+            preparedStmt.setString(3, Contra);
+            preparedStmt.setInt(4, Intentos);
+            preparedStmt.setInt(5, IdRol);
+            preparedStmt.setString(6, Usuario);
+            preparedStmt.execute();
+            
+            JOptionPane.showMessageDialog(this, "Usuario Guardado");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+        
+        
+       
+    }
+        
+    public Boolean validar(){
+        char [] arrayC=rSMPassView1.getPassword();
+        String acceso= new String(arrayC);
+        if(JCodigoDisponible.getText().isEmpty() || JComboEmpleados.getSelectedItem().toString().isEmpty() || Juser2.getText().isEmpty() 
+                || JIntentos.getSelectedItem().toString().isEmpty() || acceso.isEmpty() || rol.isEmpty() ){
+            
+            return false;
+        }else{
+            return true;
+        }
     }
     
+  
+      public void listarEmpleados(){
+          String nombres="";
+          String apellidos="";
+          int idEmpleado=0;
+          
+         
+         
+          
+          
+          
+ 
+       
+       
+
+        String SQL = "SELECT e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido FROM Empleados e\n" +
+                    "LEFT JOIN Usuarios u ON e.IdEmpleado = u.IdEmpleado\n" +
+                    "WHERE u.IdEmpleado is null;";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idEmpleado =rs.getInt("IdEmpleado");
+                nombres =rs.getString("PrimerNombre")+" "+rs.getString("SegundoNombre");
+                apellidos = rs.getString("PrimerApellido")+" "+rs.getString("SegundoApellido");
+                JComboEmpleados.addItem(nombres+" "+apellidos);
+                empleados.put(nombres+" "+apellidos,idEmpleado);
+            }
+
+            System.out.println(empleados);
+            for(int i=1; i<=3;i++){
+            JIntentos.addItem(i);
+            };
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
     public void buscardatos(){
-          String SQL = "SELECT * FROM Proveedores WHERE IdProveedor=(SELECT max(IdProveedor) FROM Proveedores)";
+          String SQL = "SELECT * FROM Usuarios u WHERE u.IdUsuario=(SELECT max(IdUsuario) FROM Usuarios)";
           
           
         try {
@@ -58,7 +172,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                id = rs.getInt("IdProveedor");
+                id = rs.getInt("IdUsuario");
                
                 
             }
@@ -76,41 +190,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
         }
     }
     
-    public void insertar(){
-        String NombreE="";
-        String direccion="";
-        String telefono="";
-        String correo="";
-        int estadoP=0;
-        
-        
-        NombreE = NombreE1.getText();
-        direccion = DireccionE.getText();
-        telefono=Tel.getText();
-        correo=CorreoP.getText();
-        estadoP= Integer.parseInt(String.valueOf(JEstado.getSelectedItem()));
-       
-                
-       String SQL = "INSERT INTO Proveedores (IdProveedor,NombreEmpresa,DireccionEmpresa,Telefono,CorreoElectronico,Estado) VALUES"
-                + "(?, ?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement preparedStmt = con.prepareStatement(SQL);
-            preparedStmt.setInt(1, id);
-            preparedStmt.setString (2, NombreE);
-            preparedStmt.setString   (3, direccion);
-            preparedStmt.setString(4, telefono);
-            preparedStmt.setString(5, correo);
-            preparedStmt.setInt(6, estadoP);
-            preparedStmt.execute();
-
-        } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());
-        }
-        
-        
-        
-       
-    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -171,15 +251,17 @@ public class AgregarProveedor extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         rSLabelIcon12 = new rojerusan.RSLabelIcon();
         jLabel14 = new javax.swing.JLabel();
+        Juser2 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        JComboEmpleados = new rojerusan.RSComboMetro();
         jLabel18 = new javax.swing.JLabel();
-        CorreoP = new rojeru_san.RSMTextFull();
         rSPanelCircle1 = new rojeru_san.rspanel.RSPanelCircle();
         JCodigoDisponible = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        JEstado = new rojerusan.RSComboMetro();
+        JIntentos = new rojerusan.RSComboMetro();
         jLabel21 = new javax.swing.JLabel();
+        rSMPassView1 = new rojeru_san.RSMPassView();
         jLabel22 = new javax.swing.JLabel();
         rSButtonIcon_new8 = new newscomponents.RSButtonIcon_new();
         rSPanelRound1 = new rojeru_san.rspanel.RSPanelRound();
@@ -192,10 +274,6 @@ public class AgregarProveedor extends javax.swing.JFrame {
         rSRadioButtonMaterial7 = new RSMaterialComponent.RSRadioButtonMaterial();
         rSRadioButtonMaterial8 = new RSMaterialComponent.RSRadioButtonMaterial();
         rSRadioButtonMaterial9 = new RSMaterialComponent.RSRadioButtonMaterial();
-        jLabel23 = new javax.swing.JLabel();
-        NombreE1 = new rojeru_san.RSMTextFull();
-        DireccionE = new rojeru_san.RSMTextFull();
-        Tel = new rojeru_san.RSMTextFull();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -573,13 +651,13 @@ public class AgregarProveedor extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Proveedor");
+        jLabel3.setText("Usuarios");
         linesetting12.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 210, 40));
 
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Agregar");
+        jLabel12.setText("Modificar");
         linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
 
         javax.swing.GroupLayout menuhideLayout = new javax.swing.GroupLayout(menuhide);
@@ -597,7 +675,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(500, 500, 500)
-                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
+                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
@@ -611,10 +689,8 @@ public class AgregarProveedor extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(menuhide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
+            .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
@@ -637,7 +713,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Agregar Proveedor");
+        jLabel8.setText("Agregar Usuario");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -649,7 +725,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Proveedores");
+        jLabel11.setText("Modulo Usuario");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -665,8 +741,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Listado de Proveedores");
-        jLabel14.setToolTipText("");
+        jLabel14.setText("Listado de Usuarios");
 
         rSPanelOpacity1.setLayer(rSLabelIcon6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -687,9 +762,9 @@ public class AgregarProveedor extends javax.swing.JFrame {
             .addGroup(rSPanelOpacity1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(rSLabelIcon8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel9)
-                .addGap(9, 9, 9)
+                .addGap(11, 11, 11)
                 .addComponent(jLabel7)
                 .addGap(12, 12, 12)
                 .addComponent(rSLabelIcon17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -721,9 +796,8 @@ public class AgregarProveedor extends javax.swing.JFrame {
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(rSLabelIcon17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(rSPanelOpacity1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(rSPanelOpacity1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -732,25 +806,38 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
         jPanel3.add(rSPanelOpacity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 50));
 
+        Juser2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Juser2.setForeground(new java.awt.Color(153, 0, 255));
+        Juser2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Juser2.setText("user");
+        jPanel3.add(Juser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 260, 30));
+
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("IdProveedor");
+        jLabel17.setText("CodigoUsuario Disponible:");
         jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 190, 40));
+
+        JComboEmpleados.setColorArrow(new java.awt.Color(102, 0, 255));
+        JComboEmpleados.setColorFondo(new java.awt.Color(60, 76, 143));
+        JComboEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JComboEmpleadosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JComboEmpleadosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JComboEmpleadosMouseExited(evt);
+            }
+        });
+        jPanel3.add(JComboEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 260, 30));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(153, 0, 255));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("Nombre del Empresa:");
+        jLabel18.setText("Nombre del Empleado:");
         jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 190, 30));
-
-        CorreoP.setPlaceholder("Ingresar Correo Electronico");
-        CorreoP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CorreoPActionPerformed(evt);
-            }
-        });
-        jPanel3.add(CorreoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, -1, -1));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -787,27 +874,30 @@ public class AgregarProveedor extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(153, 0, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("Telefono");
-        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 180, 40));
+        jLabel20.setText("Contraseña:");
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 180, 40));
 
-        JEstado.setBorder(null);
-        JEstado.addActionListener(new java.awt.event.ActionListener() {
+        JIntentos.setBorder(null);
+        JIntentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JEstadoActionPerformed(evt);
+                JIntentosActionPerformed(evt);
             }
         });
-        jPanel3.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 260, -1));
+        jPanel3.add(JIntentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 260, -1));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(153, 0, 255));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setText("Estado");
-        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 180, 30));
+        jLabel21.setText("Intentos:");
+        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 180, 30));
+
+        rSMPassView1.setText("rSMPassView1");
+        jPanel3.add(rSMPassView1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, 260, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("Direccion de Empresa");
+        jLabel22.setText("Usuario:");
         jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 180, 30));
 
         rSButtonIcon_new8.setBackground(new java.awt.Color(0, 55, 133));
@@ -942,37 +1032,6 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
         jPanel3.add(rSPanelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 100, 250, 370));
 
-        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("Correo Electronico:");
-        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 180, 40));
-
-        NombreE1.setPlaceholder("Ingresa nombre Empresas..");
-        NombreE1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreE1ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(NombreE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, -1, -1));
-
-        DireccionE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        DireccionE.setPlaceholder("Ingresa Informacion Empresas..");
-        DireccionE.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DireccionEActionPerformed(evt);
-            }
-        });
-        jPanel3.add(DireccionE, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, -1, -1));
-
-        Tel.setPlaceholder("Ingresa el numero Telefono");
-        Tel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TelActionPerformed(evt);
-            }
-        });
-        jPanel3.add(Tel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, -1, -1));
-
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -983,7 +1042,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO PROVEEDORES");
+        jLabel6.setText("MODULO USUARIO");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
@@ -1029,12 +1088,12 @@ public class AgregarProveedor extends javax.swing.JFrame {
                 .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(1373, 712));
+        setSize(new java.awt.Dimension(1362, 712));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1098,11 +1157,13 @@ public class AgregarProveedor extends javax.swing.JFrame {
     private void linesetting9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linesetting9MouseExited
         // TODO add your handling code here:
         linesetting.setBackground(new Color(0,55,133));
+
     }//GEN-LAST:event_linesetting9MouseExited
 
     private void linesetting11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linesetting11MouseEntered
         // TODO add your handling code here:
         linesetting1.setBackground(Color.red);
+
     }//GEN-LAST:event_linesetting11MouseEntered
 
     private void linesetting11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linesetting11MouseExited
@@ -1121,25 +1182,58 @@ public class AgregarProveedor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_linesetting12MouseClicked
 
-    private void JEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JEstadoActionPerformed
+    private void JIntentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JIntentosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JEstadoActionPerformed
+    }//GEN-LAST:event_JIntentosActionPerformed
 
-    private void rSButtonIcon_new8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new8ActionPerformed
+    private void JComboEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleadosMouseClicked
         // TODO add your handling code here:
-        /*if(validar()==true){
+       
+      
+        
+    }//GEN-LAST:event_JComboEmpleadosMouseClicked
 
-            insertar();
+    private void JComboEmpleadosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleadosMouseEntered
+        // TODO add your handling code here:
 
-        }else{
-            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
+    }//GEN-LAST:event_JComboEmpleadosMouseEntered
+
+    private void JComboEmpleadosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleadosMouseExited
+        // TODO add your handling code here:
+        try {
+            int idEmpleado=0;
+            String primername="";
+            String primerapellido="";
+            String usuario="";
+            
+            
+             String name = JComboEmpleados.getSelectedItem().toString();
+             int idEmpleadov = empleados.get(name);
+            String SQL = "Select e.IdEmpleado, e.PrimerNombre,e.PrimerApellido FROM Empleados e Where e.IdEmpleado="+idEmpleadov;
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                 idEmpleado =rs.getInt("IdEmpleado");
+                 primername =rs.getString("PrimerNombre");
+                 primerapellido =rs.getString("PrimerApellido");
+             
+            }
+            
+            usuario= primername.toLowerCase()+"."+primerapellido.toLowerCase()+String.valueOf(idEmpleado);
+             
+              
+             Juser2.setText(usuario);
+             
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-*/
-    }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
+    }//GEN-LAST:event_JComboEmpleadosMouseExited
 
     private void rSRadioButtonMaterial1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial1ActionPerformed
         // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
+          rSRadioButtonMaterial2.setSelected(false);
         rSRadioButtonMaterial3.setSelected(false);
         rSRadioButtonMaterial5.setSelected(false);
         rSRadioButtonMaterial6.setSelected(false);
@@ -1159,12 +1253,12 @@ public class AgregarProveedor extends javax.swing.JFrame {
         rSRadioButtonMaterial8.setSelected(false);
         rSRadioButtonMaterial9.setSelected(false);
         rol=rSRadioButtonMaterial2.getText();
-
+      
     }//GEN-LAST:event_rSRadioButtonMaterial2ActionPerformed
 
     private void rSRadioButtonMaterial3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial3ActionPerformed
         // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
+         rSRadioButtonMaterial2.setSelected(false);
         rSRadioButtonMaterial6.setSelected(false);
         rSRadioButtonMaterial1.setSelected(false);
         rSRadioButtonMaterial5.setSelected(false);
@@ -1176,7 +1270,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
     private void rSRadioButtonMaterial5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial5ActionPerformed
         // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
+           rSRadioButtonMaterial2.setSelected(false);
         rSRadioButtonMaterial3.setSelected(false);
         rSRadioButtonMaterial1.setSelected(false);
         rSRadioButtonMaterial6.setSelected(false);
@@ -1188,7 +1282,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
     private void rSRadioButtonMaterial6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial6ActionPerformed
         // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
+         rSRadioButtonMaterial2.setSelected(false);
         rSRadioButtonMaterial3.setSelected(false);
         rSRadioButtonMaterial1.setSelected(false);
         rSRadioButtonMaterial5.setSelected(false);
@@ -1224,7 +1318,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
     private void rSRadioButtonMaterial9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial9ActionPerformed
         // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
+         rSRadioButtonMaterial2.setSelected(false);
         rSRadioButtonMaterial3.setSelected(false);
         rSRadioButtonMaterial1.setSelected(false);
         rSRadioButtonMaterial5.setSelected(false);
@@ -1234,21 +1328,18 @@ public class AgregarProveedor extends javax.swing.JFrame {
         rol=rSRadioButtonMaterial9.getText();
     }//GEN-LAST:event_rSRadioButtonMaterial9ActionPerformed
 
-    private void CorreoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorreoPActionPerformed
+    private void rSButtonIcon_new8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new8ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CorreoPActionPerformed
-
-    private void NombreE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreE1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NombreE1ActionPerformed
-
-    private void DireccionEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DireccionEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DireccionEActionPerformed
-
-    private void TelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TelActionPerformed
+        if(validar()==true){
+            
+                insertar();
+           
+             
+        }else{
+            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
+        }
+       
+    }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1297,34 +1388,38 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgregarProveedor().setVisible(true);
+                new ActualizarUsuarios().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private rojeru_san.RSMTextFull CorreoP;
-    private rojeru_san.RSMTextFull DireccionE;
     private javax.swing.JPanel Header;
     private javax.swing.JLabel JCodigoDisponible;
-    private rojerusan.RSComboMetro JEstado;
+    private rojerusan.RSComboMetro JComboEmpleados;
+    private rojerusan.RSComboMetro JIntentos;
+    private javax.swing.JLabel Juser2;
     private javax.swing.JPanel MenuIcon;
-    private rojeru_san.RSMTextFull NombreE1;
-    private rojeru_san.RSMTextFull Tel;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
@@ -1338,7 +1433,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1385,6 +1479,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSLabelIcon rSLabelIcon7;
     private rojerusan.RSLabelIcon rSLabelIcon8;
     private rojerusan.RSLabelIcon rSLabelIcon9;
+    private rojeru_san.RSMPassView rSMPassView1;
     private rojeru_san.rspanel.RSPanelCircle rSPanelCircle1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     private rojeru_san.rspanel.RSPanelRound rSPanelRound1;
