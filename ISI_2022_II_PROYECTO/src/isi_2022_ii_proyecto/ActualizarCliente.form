@@ -304,7 +304,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="MenuIcon" alignment="0" pref="700" max="32767" attributes="0"/>
+                  <Component id="MenuIcon" alignment="0" pref="705" max="32767" attributes="0"/>
                   <Component id="menuhide" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
@@ -646,7 +646,7 @@
                           <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="540" max="-2" attributes="0"/>
-                          <Component id="linesetting6" pref="50" max="32767" attributes="0"/>
+                          <Component id="linesetting6" pref="55" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -662,7 +662,7 @@
                       <Color blue="85" green="37" red="0" type="rgb"/>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor Por defecto"/>
+                      <Color id="Default Cursor"/>
                     </Property>
                     <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                       <Value id="REPEAT"/>
@@ -785,7 +785,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="Agregar"/>
+                        <Property name="text" type="java.lang.String" value="Modificar"/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -909,7 +909,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jPanel5" max="32767" attributes="0"/>
-                      <Component id="rSPanelOpacity1" alignment="0" pref="1055" max="32767" attributes="0"/>
+                      <Component id="rSPanelOpacity1" alignment="0" pref="1057" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -1223,14 +1223,31 @@
                     </Component>
                     <Component class="rojeru_san.RSMTextFull" name="DireccionC">
                       <Properties>
-                        <Property name="document" type="javax.swing.text.Document" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="default"/>
-                        </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="placeholder" type="java.lang.String" value="Ingresar domiciliaria del cliente"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DireccionCActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new9">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="85" green="37" red="0" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Guardar Cambios"/>
+                        <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="0" red="99" type="rgb"/>
+                        </Property>
+                        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                          <Color id="Default Cursor"/>
+                        </Property>
+                        <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                          <Value id="SAVE"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new9ActionPerformed"/>
                       </Events>
                     </Component>
                     <Container class="rojeru_san.rspanel.RSPanelCircle" name="rSPanelCircle2">
@@ -1245,7 +1262,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="JCodigoDisponible1" pref="50" max="32767" attributes="0"/>
+                                  <Component id="JCodigoDisponible1" pref="46" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1254,7 +1271,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="JCodigoDisponible1" pref="48" max="32767" attributes="0"/>
+                                  <Component id="JCodigoDisponible1" pref="44" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1299,26 +1316,6 @@
                         <Property name="text" type="java.lang.String" value="Apellidos del Cliente"/>
                       </Properties>
                     </Component>
-                    <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new9">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="85" green="37" red="0" type="rgb"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="Guardar Cambios"/>
-                        <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="0" red="99" type="rgb"/>
-                        </Property>
-                        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Cursor Por defecto"/>
-                        </Property>
-                        <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                          <Value id="SAVE"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new9ActionPerformed"/>
-                      </Events>
-                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel32">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1333,9 +1330,6 @@
                     </Component>
                     <Component class="rojeru_san.RSMTextFull" name="NombreC">
                       <Properties>
-                        <Property name="document" type="javax.swing.text.Document" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="default"/>
-                        </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="placeholder" type="java.lang.String" value="Ingrese los nombres del cliente"/>
                       </Properties>
@@ -1345,9 +1339,6 @@
                     </Component>
                     <Component class="rojeru_san.RSMTextFull" name="ApellidoC">
                       <Properties>
-                        <Property name="document" type="javax.swing.text.Document" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="default"/>
-                        </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="placeholder" type="java.lang.String" value="Ingrese los apellidos del cliente"/>
                       </Properties>
@@ -1357,9 +1348,6 @@
                     </Component>
                     <Component class="rojeru_san.RSMTextFull" name="TelC">
                       <Properties>
-                        <Property name="document" type="javax.swing.text.Document" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="default"/>
-                        </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="placeholder" type="java.lang.String" value="Ingresa el numero Telefono"/>
                       </Properties>
@@ -1393,9 +1381,6 @@
                     </Component>
                     <Component class="rojeru_san.RSMTextFull" name="CorreoC">
                       <Properties>
-                        <Property name="document" type="javax.swing.text.Document" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                          <ComponentRef name="default"/>
-                        </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="placeholder" type="java.lang.String" value="Ingresar Correo Electronico"/>
                       </Properties>

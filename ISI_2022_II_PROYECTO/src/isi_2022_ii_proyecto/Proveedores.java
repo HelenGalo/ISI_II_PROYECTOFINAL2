@@ -874,7 +874,7 @@ public class Proveedores extends javax.swing.JFrame {
 
     private void linesetting11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linesetting11MouseExited
         // TODO add your handling code here:
-        linesetting1.setBackground(new Color(0,55,133));
+        //linesetting1.setBackground(new Color(0,55,133));
     }//GEN-LAST:event_linesetting11MouseExited
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
@@ -883,10 +883,20 @@ public class Proveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
     private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
-        // TODO add your handling code here:
-      
-    }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
+        if(codiP.isEmpty()==false){
+          
+          ActualizarProveedor ap = new ActualizarProveedor();
+           ap.setId(codiP);
+           ap.MostrarProveedores();
+           ap.setVisible(true);   
+           this.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+        }
+    
 
+    }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
+        
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
         // TODO add your handling code here:
       

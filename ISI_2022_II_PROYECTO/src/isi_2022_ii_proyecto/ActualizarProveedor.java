@@ -31,86 +31,156 @@ public class ActualizarProveedor extends javax.swing.JFrame {
      */
     boolean a = true;
     String proveedor;
+    String Nombreem;
+    String DirE;
+    String tele ;
+    String correopro;
+    int estadop = 0;
+    int  id=0;
+    
+    
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    int id=0;
-    private String rol;
-
-    public void setProveedor(String proveedor) {
-        this.proveedor = proveedor;
+  
+    
+     public void setId(int id) {
+        this.id = id;
+    }
+     
+   
+   public void setProveedor(String proveedor) {
+      this.proveedor = proveedor;
     }
     
     public ActualizarProveedor() {
         initComponents();
+      this.setExtendedState(this.MAXIMIZED_BOTH);
     }
     
-    public void inicializar(){
-        iid.setText(proveedor);
-    }
+ 
     
-    
-    public void buscardatos(){
-          String SQL = "SELECT * FROM Proveedores WHERE IdProveedor=(SELECT max(IdProveedor) FROM Proveedores)";
-          
-          
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                id = rs.getInt("IdProveedor");
-               
-                
-            }
-
-            
-            System.out.println("SIN SUMAR"+String.valueOf(id));
-            id = id +1;
-            System.out.println(String.valueOf(id));
-            iid.setText(String.valueOf(id));
-            
-           
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    public void insertar(){
-        String NombreE="";
-        String direccion="";
-        String telefono="";
-        String correo="";
-        //int estadoP="";
-        
-        
-        NombreE = NombreE.getText();
-        direccion = Jtextuser4.getText();
-        telefono=Jtextuser.getText();
-        correo=CorreoP.getText();
-       
-                
-       String SQL = "INSERT INTO Proveedores (IdProveedor,NombreEmpresa,DireccionEmpresa,Telefono,CorreoElectronico,Estado) VALUES"
+      public void actualizar(){
+            String NombreE="";
+            String direccion="";
+            String telefono="";
+            String correo="";
+         int estadop=Obtenerestado();
+            String SQL = "UPDATE INTO Proveedores (IdProveedor,NombreEmpresa,DireccionEmpresa,Telefono,CorreoElectronico,Estado) VALUES"
                 + "(?, ?, ?, ?, ?, ?)";
         try {
-            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+           PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, id);
             preparedStmt.setString (2, NombreE);
             preparedStmt.setString   (3, direccion);
             preparedStmt.setString(4, telefono);
             preparedStmt.setString(5, correo);
-            //preparedStmt.setString(6, estadoP);
+            preparedStmt.setInt(6, estadop);
             preparedStmt.execute();
+             JOptionPane.showMessageDialog(null, "Registro actualizado Exitosamente");
 
         } catch (Exception e) {
             System.out.println("ERROR" + e.getMessage());
         }
         
         
-        
        
     }
+     public void inicializar(){
+     
+     
+    String SQL = "SELECT * FROM Proveedores";
+         String estadou="";
+         
+       try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
 
+ 
+
+            while (rs.next()) {
+               estadou = rs.getString("Estado");
+              JEstado.addItem(estadou);
+               
+                
+            }
+            
+              } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+       
+    
+    }  
+      public int Obtenerestado(){
+          String SQL = "SELECT * FROM Proveedores g Where g.Estado="+"'"+JEstado.getSelectedItem().toString()+"'";
+          int idg=0;
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idg = rs.getInt("Estado");
+               
+                
+            }
+
+            
+            
+ 
+            
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return idg;
+        
+    }
+    public Boolean validar(){
+      return true;
+    }
+    
+       public void MostrarProveedores(){
+
+        String SQL = "Select * from Proveedores Where IdProveedor="+"'"+id+"'";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+               Nombreem =rs.getString("NombreEmpresa");
+                DirE =rs.getString("DireccionEmpresa");
+                tele =rs.getString("Telefono");
+                correopro =rs.getString("CorreoElectronico");
+                
+              
+            }
+            
+            NombreE1.setText(Nombreem);
+            DireccionE.setText(DirE);
+            Tel.setText(tele);
+            CorreoP.setText(correopro);
+            JCodigoDisponible.setText(id).toString(id);
+            
+       
+            
+
+           
+       
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+       
+      
+    
+        
+        
+       
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -175,7 +245,6 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         CorreoP = new rojeru_san.RSMTextFull();
         rSPanelCircle1 = new rojeru_san.rspanel.RSPanelCircle();
         JCodigoDisponible = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         JEstado = new rojerusan.RSComboMetro();
         jLabel21 = new javax.swing.JLabel();
@@ -535,7 +604,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -767,12 +836,6 @@ public class ActualizarProveedor extends javax.swing.JFrame {
 
         jPanel3.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 70, 70));
 
-        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("ASIGNACION DE ROLES");
-        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 90, 260, 30));
-
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(153, 0, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -981,8 +1044,8 @@ public class ActualizarProveedor extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-        Usuario usuario = new Usuario();
-        usuario.setVisible(true);
+        Proveedores p = new Proveedores();
+        p.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
@@ -996,14 +1059,13 @@ public class ActualizarProveedor extends javax.swing.JFrame {
 
     private void rSButtonIcon_new8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new8ActionPerformed
         // TODO add your handling code here:
-        /*if(validar()==true){
+        if(validar()==true){
 
-            insertar();
+            actualizar();
 
         }else{
             JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
         }
-*/
     }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
 
     private void CorreoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorreoPActionPerformed
@@ -1108,7 +1170,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;

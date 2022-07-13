@@ -178,11 +178,11 @@ public class ActualizarCliente extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         DireccionC = new rojeru_san.RSMTextFull();
+        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         rSPanelCircle2 = new rojeru_san.rspanel.RSPanelCircle();
         JCodigoDisponible1 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         jLabel32 = new javax.swing.JLabel();
         NombreC = new rojeru_san.RSMTextFull();
         ApellidoC = new rojeru_san.RSMTextFull();
@@ -573,7 +573,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Agregar");
+        jLabel12.setText("Modificar");
         linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
 
         javax.swing.GroupLayout menuhideLayout = new javax.swing.GroupLayout(menuhide);
@@ -591,7 +591,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(540, 540, 540)
-                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
@@ -605,7 +605,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
             .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -753,6 +753,17 @@ public class ActualizarCliente extends javax.swing.JFrame {
             }
         });
 
+        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new9.setText("Guardar Cambios");
+        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
+        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
+        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new9ActionPerformed(evt);
+            }
+        });
+
         rSPanelCircle2.setBackground(new java.awt.Color(60, 76, 143));
 
         JCodigoDisponible1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -766,14 +777,14 @@ public class ActualizarCliente extends javax.swing.JFrame {
             rSPanelCircle2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelCircle2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(JCodigoDisponible1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addComponent(JCodigoDisponible1, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                 .addContainerGap())
         );
         rSPanelCircle2Layout.setVerticalGroup(
             rSPanelCircle2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rSPanelCircle2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(JCodigoDisponible1, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addComponent(JCodigoDisponible1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -786,17 +797,6 @@ public class ActualizarCliente extends javax.swing.JFrame {
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Apellidos del Cliente");
-
-        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new9.setText("Guardar Cambios");
-        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
-        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
-        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new9ActionPerformed(evt);
-            }
-        });
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(153, 0, 255));
@@ -921,7 +921,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 1055, Short.MAX_VALUE)
+            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 1057, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -995,33 +995,6 @@ public class ActualizarCliente extends javax.swing.JFrame {
         this.setExtendedState(ICONIFIED);
     }//GEN-LAST:event_rSButtonIconOne5ActionPerformed
 
-    private void DireccionCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DireccionCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DireccionCActionPerformed
-
-    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
-        // TODO add your handling code here:
-        if(validar()==true){
-
-            actualizar();
-
-        }else{
-            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
-        }
-    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
-
-    private void NombreCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NombreCActionPerformed
-
-    private void ApellidoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApellidoCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ApellidoCActionPerformed
-
-    private void TelCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TelCActionPerformed
-
     private void linesetting12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linesetting12MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_linesetting12MouseClicked
@@ -1088,6 +1061,33 @@ public class ActualizarCliente extends javax.swing.JFrame {
     private void CorreoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorreoCActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CorreoCActionPerformed
+
+    private void TelCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TelCActionPerformed
+
+    private void ApellidoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApellidoCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ApellidoCActionPerformed
+
+    private void NombreCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NombreCActionPerformed
+
+    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
+        // TODO add your handling code here:
+        if(validar()==true){
+
+            actualizar();
+
+        }else{
+            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
+        }
+    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
+
+    private void DireccionCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DireccionCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DireccionCActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));

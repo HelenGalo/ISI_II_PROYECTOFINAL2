@@ -34,7 +34,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     int id=0;
-    private String rol;
+  
 
     public void setProveedor(String proveedor) {
         this.proveedor = proveedor;
@@ -42,11 +42,46 @@ public class AgregarProveedor extends javax.swing.JFrame {
     
     public AgregarProveedor() {
         initComponents();
+        inicializar();
+        buscardatos();
     }
     
     public void inicializar(){
-        JCodigoDisponible.setText(proveedor);
+     
+     
+    String SQL = "SELECT * FROM Proveedores";
+         String estadou="";
+         
+       try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+ 
+
+            while (rs.next()) {
+               estadou = rs.getString("Estado");
+              JEstado.addItem(estadou);
+               
+                
+            }
+            
+              } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+       
+    
     }
+       
+            
+            
+       
+            
+    
+            
+           
+
+       
+    
     
     
     public void buscardatos(){
@@ -76,19 +111,48 @@ public class AgregarProveedor extends javax.swing.JFrame {
         }
     }
     
-    public void insertar(){
+    public int Obtenerestado(){
+          String SQL = "SELECT * FROM Proveedores g Where g.Estado="+"'"+JEstado.getSelectedItem().toString()+"'";
+          int idg=0;
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idg = rs.getInt("Estado");
+               
+                
+            }
+
+            
+            
+ 
+            
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return idg;
+        
+    }
+    
+    public void insertarP(){
         String NombreE="";
         String direccion="";
         String telefono="";
         String correo="";
-        int estadoP=0;
+        int estadop=Obtenerestado();
         
         
         NombreE = NombreE1.getText();
         direccion = DireccionE.getText();
         telefono=Tel.getText();
         correo=CorreoP.getText();
-        estadoP= Integer.parseInt(String.valueOf(JEstado.getSelectedItem()));
+     
+  
        
                 
        String SQL = "INSERT INTO Proveedores (IdProveedor,NombreEmpresa,DireccionEmpresa,Telefono,CorreoElectronico,Estado) VALUES"
@@ -100,8 +164,10 @@ public class AgregarProveedor extends javax.swing.JFrame {
             preparedStmt.setString   (3, direccion);
             preparedStmt.setString(4, telefono);
             preparedStmt.setString(5, correo);
-            preparedStmt.setInt(6, estadoP);
+            preparedStmt.setInt(6, estadop);
             preparedStmt.execute();
+            
+             JOptionPane.showMessageDialog(null, "Registro Guardado Exitosamente");
 
         } catch (Exception e) {
             System.out.println("ERROR" + e.getMessage());
@@ -111,7 +177,17 @@ public class AgregarProveedor extends javax.swing.JFrame {
         
        
     }
-
+ public Boolean validar(){
+       // char [] arrayC=rSMPassView1.getPassword();
+        //String acceso= new String(arrayC);
+        if(JCodigoDisponible.getText().isEmpty() || NombreE1.getText().isEmpty() 
+                ||DireccionE.getText().isEmpty() ||Tel.getText().isEmpty() ||  CorreoP.getText().isEmpty() ){
+            
+            return false;
+        }else{
+            return true;
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -176,22 +252,11 @@ public class AgregarProveedor extends javax.swing.JFrame {
         CorreoP = new rojeru_san.RSMTextFull();
         rSPanelCircle1 = new rojeru_san.rspanel.RSPanelCircle();
         JCodigoDisponible = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         JEstado = new rojerusan.RSComboMetro();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         rSButtonIcon_new8 = new newscomponents.RSButtonIcon_new();
-        rSPanelRound1 = new rojeru_san.rspanel.RSPanelRound();
-        rSPanelRound2 = new rojeru_san.rspanel.RSPanelRound();
-        rSRadioButtonMaterial1 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial2 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial3 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial5 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial6 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial7 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial8 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial9 = new RSMaterialComponent.RSRadioButtonMaterial();
         jLabel23 = new javax.swing.JLabel();
         NombreE1 = new rojeru_san.RSMTextFull();
         DireccionE = new rojeru_san.RSMTextFull();
@@ -778,12 +843,6 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
         jPanel3.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 70, 70));
 
-        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("ASIGNACION DE ROLES");
-        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 60, 260, 30));
-
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(153, 0, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -821,126 +880,6 @@ public class AgregarProveedor extends javax.swing.JFrame {
             }
         });
         jPanel3.add(rSButtonIcon_new8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 110, 40));
-
-        rSPanelRound1.setColorBackground(new java.awt.Color(60, 76, 143));
-        rSPanelRound1.setColorBorde(new java.awt.Color(60, 76, 143));
-
-        rSPanelRound2.setColorBackground(new java.awt.Color(255, 255, 255));
-        rSPanelRound2.setColorBorde(new java.awt.Color(60, 76, 143));
-
-        rSRadioButtonMaterial1.setText("Gerente Comercial");
-        rSRadioButtonMaterial1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial1ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial2.setText("Superusuario");
-        rSRadioButtonMaterial2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial2ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial3.setText("Jefe Almacen");
-        rSRadioButtonMaterial3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial3ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial5.setText("Gerente General");
-        rSRadioButtonMaterial5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial5ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial6.setText("Vendedor");
-        rSRadioButtonMaterial6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial6ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial7.setText("Cajero");
-        rSRadioButtonMaterial7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial7ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial8.setText("Supervisor");
-        rSRadioButtonMaterial8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial8ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial9.setText("Jefe Logistica");
-        rSRadioButtonMaterial9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial9ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout rSPanelRound2Layout = new javax.swing.GroupLayout(rSPanelRound2);
-        rSPanelRound2.setLayout(rSPanelRound2Layout);
-        rSPanelRound2Layout.setHorizontalGroup(
-            rSPanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelRound2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(rSPanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(rSRadioButtonMaterial1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-        rSPanelRound2Layout.setVerticalGroup(
-            rSPanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelRound2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(rSRadioButtonMaterial2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSRadioButtonMaterial1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSRadioButtonMaterial5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSRadioButtonMaterial6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSRadioButtonMaterial7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSRadioButtonMaterial3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSRadioButtonMaterial9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rSRadioButtonMaterial8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
-        );
-
-        javax.swing.GroupLayout rSPanelRound1Layout = new javax.swing.GroupLayout(rSPanelRound1);
-        rSPanelRound1.setLayout(rSPanelRound1Layout);
-        rSPanelRound1Layout.setHorizontalGroup(
-            rSPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelRound1Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addComponent(rSPanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
-        );
-        rSPanelRound1Layout.setVerticalGroup(
-            rSPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelRound1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(rSPanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel3.add(rSPanelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 100, 250, 370));
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(153, 0, 255));
@@ -1112,8 +1051,8 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-        Usuario usuario = new Usuario();
-        usuario.setVisible(true);
+       Proveedores proveedor = new  Proveedores ();
+        proveedor.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
@@ -1127,112 +1066,15 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
     private void rSButtonIcon_new8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new8ActionPerformed
         // TODO add your handling code here:
-        /*if(validar()==true){
+        if(validar()==true){
 
-            insertar();
+         insertarP();
 
         }else{
             JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
         }
-*/
+
     }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
-
-    private void rSRadioButtonMaterial1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial1ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial1.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial1ActionPerformed
-
-    private void rSRadioButtonMaterial2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial2ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial2.getText();
-
-    }//GEN-LAST:event_rSRadioButtonMaterial2ActionPerformed
-
-    private void rSRadioButtonMaterial3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial3ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial3.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial3ActionPerformed
-
-    private void rSRadioButtonMaterial5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial5ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial5.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial5ActionPerformed
-
-    private void rSRadioButtonMaterial6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial6ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial6.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial6ActionPerformed
-
-    private void rSRadioButtonMaterial7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial7ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial7.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial7ActionPerformed
-
-    private void rSRadioButtonMaterial8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial8ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial8.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial8ActionPerformed
-
-    private void rSRadioButtonMaterial9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial9ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rol=rSRadioButtonMaterial9.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial9ActionPerformed
 
     private void CorreoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorreoPActionPerformed
         // TODO add your handling code here:
@@ -1334,7 +1176,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -1387,15 +1228,5 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSLabelIcon rSLabelIcon9;
     private rojeru_san.rspanel.RSPanelCircle rSPanelCircle1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
-    private rojeru_san.rspanel.RSPanelRound rSPanelRound1;
-    private rojeru_san.rspanel.RSPanelRound rSPanelRound2;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial1;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial2;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial3;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial5;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial6;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial7;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial8;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial9;
     // End of variables declaration//GEN-END:variables
 }
