@@ -42,6 +42,8 @@ public class AgregarProveedor extends javax.swing.JFrame {
     
     public AgregarProveedor() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setExtendedState(this.MAXIMIZED_BOTH);
         inicializar();
         buscardatos();
     }
@@ -49,7 +51,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
     public void inicializar(){
      
      
-    String SQL = "SELECT * FROM Proveedores";
+    String SQL = "SELECT * FROM EstadosUsuario";
          String estadou="";
          
        try {
@@ -59,7 +61,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
  
 
             while (rs.next()) {
-               estadou = rs.getString("Estado");
+               estadou = rs.getString("Descripcion");
               JEstado.addItem(estadou);
                
                 
@@ -112,7 +114,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
     }
     
     public int Obtenerestado(){
-          String SQL = "SELECT * FROM Proveedores g Where g.Estado="+"'"+JEstado.getSelectedItem().toString()+"'";
+          String SQL = "SELECT * FROM EstadosUsuario g Where g.Descripcion="+"'"+JEstado.getSelectedItem().toString()+"'";
           int idg=0;
           
         try {
@@ -120,7 +122,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                idg = rs.getInt("Estado");
+                idg = rs.getInt("IdEstado");
                
                 
             }

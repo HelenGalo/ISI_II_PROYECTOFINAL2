@@ -48,33 +48,63 @@ public class ActualizarProveedor extends javax.swing.JFrame {
     }
      
    
+       public void inicializar(){
+         String SQL = "SELECT e.Descripcion FROM EstadosUsuario e";
+         String des="";
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+               des = rs.getString("Descripcion");
+               JEstado.addItem(des);
+               
+                
+            }
+            
+      
+ 
+    
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+       
+    
+    } 
+     
+     
    public void setProveedor(String proveedor) {
       this.proveedor = proveedor;
     }
     
     public ActualizarProveedor() {
         initComponents();
-      this.setExtendedState(this.MAXIMIZED_BOTH);
+       this.setLocationRelativeTo(null);
+       this.setExtendedState(this.MAXIMIZED_BOTH);
+      inicializar();
     }
     
  
     
       public void actualizar(){
-            String NombreE="";
-            String direccion="";
-            String telefono="";
-            String correo="";
+            String NombreE=NombreE1.getText();
+            String direccion=DireccionE.getText();
+            String telefono=Tel.getText();
+            String correo=CorreoP.getText();
          int estadop=Obtenerestado();
-            String SQL = "UPDATE INTO Proveedores (IdProveedor,NombreEmpresa,DireccionEmpresa,Telefono,CorreoElectronico,Estado) VALUES"
-                + "(?, ?, ?, ?, ?, ?)";
+            String SQL = "UPDATE Proveedores SET NombreEmpresa=?,DireccionEmpresa=?,Telefono=?,CorreoElectronico=?,Estado=? WHERE IdProveedor="+"'"+id+"'";
         try {
            PreparedStatement preparedStmt = con.prepareStatement(SQL);
-            preparedStmt.setInt(1, id);
-            preparedStmt.setString (2, NombreE);
-            preparedStmt.setString   (3, direccion);
-            preparedStmt.setString(4, telefono);
-            preparedStmt.setString(5, correo);
-            preparedStmt.setInt(6, estadop);
+            
+            preparedStmt.setString (1, NombreE);
+            preparedStmt.setString  (2, direccion);
+            preparedStmt.setInt(3, Integer.parseInt(telefono));
+            preparedStmt.setString(4, correo);
+            preparedStmt.setInt(5, estadop);
             preparedStmt.execute();
              JOptionPane.showMessageDialog(null, "Registro actualizado Exitosamente");
 
@@ -85,33 +115,9 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         
        
     }
-     public void inicializar(){
      
-     
-    String SQL = "SELECT * FROM Proveedores";
-         String estadou="";
-         
-       try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
- 
-
-            while (rs.next()) {
-               estadou = rs.getString("Estado");
-              JEstado.addItem(estadou);
-               
-                
-            }
-            
-              } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-       
-    
-    }  
       public int Obtenerestado(){
-          String SQL = "SELECT * FROM Proveedores g Where g.Estado="+"'"+JEstado.getSelectedItem().toString()+"'";
+          String SQL = "SELECT * FROM EstadosUsuario g Where g.Descripcion="+"'"+JEstado.getSelectedItem().toString()+"'";
           int idg=0;
           
         try {
@@ -119,7 +125,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                idg = rs.getInt("Estado");
+                idg = rs.getInt("IdEstado");
                
                 
             }
@@ -138,12 +144,41 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         
     }
     public Boolean validar(){
-      return true;
+        boolean a=true;
+      if(NombreE1.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
+          a= false;
+      }
+      
+       if(DireccionE.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese una direccion valida");
+          a= false;
+      }
+       
+       
+        if(Tel.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un telefono valido");
+          a= false;
+      }
+        
+       if(CorreoP.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
+          a= false;
+      }
+       
+       if(JEstado.getSelectedItem().toString().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione un estado valido");
+          a= false;
+       }
+       
+       return a;
+       
+      
     }
     
        public void MostrarProveedores(){
 
-        String SQL = "Select * from Proveedores Where IdProveedor="+"'"+id+"'";
+        String SQL = "Select * from Proveedores Where IdProveedor="+id;
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -161,7 +196,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
             DireccionE.setText(DirE);
             Tel.setText(tele);
             CorreoP.setText(correopro);
-            JCodigoDisponible.setText(id).toString(id);
+            JCodigoDisponible.setText(String.valueOf(id));
             
        
             
@@ -1063,8 +1098,6 @@ public class ActualizarProveedor extends javax.swing.JFrame {
 
             actualizar();
 
-        }else{
-            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
         }
     }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
 

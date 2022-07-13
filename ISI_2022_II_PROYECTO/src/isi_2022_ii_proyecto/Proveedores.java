@@ -36,6 +36,8 @@ public class Proveedores extends javax.swing.JFrame {
     
     public Proveedores() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setExtendedState(this.MAXIMIZED_BOTH);
         listar();
     }
 
@@ -59,8 +61,8 @@ public class Proveedores extends javax.swing.JFrame {
                 registros[0] = rs.getString("IdProveedor");
                 registros[1] = rs.getString("NombreEmpresa");
                 registros[2] = rs.getString("DireccionEmpresa");
-                registros[3] = rs.getString("CorreoElectronico");
-                
+                registros[3] = String.valueOf(rs.getInt("Telefono"));
+                registros[4] = rs.getString("CorreoElectronico");
                 modelo.addRow(registros);
             }
 
@@ -523,7 +525,7 @@ public class Proveedores extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -719,7 +721,7 @@ public class Proveedores extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "NombresEmpresa", "Direccion", "Telefono", "Puesto"
+                "Codigo Proveedor", "Nombre de la Empresa", "Direccion de la Empresa", "Telefono", "Correo Electronico"
             }
         ));
         JTableProveedor.setColorSecondary(new java.awt.Color(204, 255, 255));
@@ -799,7 +801,7 @@ public class Proveedores extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(1092, 697));
+        setSize(new java.awt.Dimension(1362, 697));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -883,16 +885,22 @@ public class Proveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
     private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
-        if(codiP.isEmpty()==false){
+        try {
+             if(codiP.isEmpty()==false){
           
           ActualizarProveedor ap = new ActualizarProveedor();
-           ap.setId(codiP);
+           ap.setId(Integer.parseInt(codiP));
            ap.MostrarProveedores();
            ap.setVisible(true);   
-           this.setVisible(false);
+           this.dispose();
         }else{
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
         }
+        } catch (Exception e) {
+            System.out.println("Error "+e.getMessage() );
+            JOptionPane.showMessageDialog(this, "Por favor seleccione el registro a modificar", "Error" ,JOptionPane.ERROR_MESSAGE);
+        }
+       
     
 
     }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
@@ -938,11 +946,47 @@ public class Proveedores extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             limpiartabla();
-            //buscarNombre();
+            buscarProveedor();
 
         }
     }//GEN-LAST:event_JTextbuscarKeyReleased
-  public void  changecolor(JPanel hover, Color rand){
+  
+    
+    private void buscarProveedor(){
+        
+         
+        String[] registros = new String[5];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableProveedor.getModel();
+
+        String SQL = "select * from Proveedores p WHERE p.NombreEmpresa LIKE'"+JTextbuscar.getText()+"%'";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdProveedor");
+                registros[1] = rs.getString("NombreEmpresa");
+                registros[2] = rs.getString("DireccionEmpresa");
+                registros[3] = String.valueOf(rs.getInt("Telefono"));
+                registros[4] = rs.getString("CorreoElectronico");
+                modelo.addRow(registros);
+            }
+
+            JTableProveedor.setModel(modelo);
+            
+            
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    
+    
+    
+    
+    public void  changecolor(JPanel hover, Color rand){
      hover.setBackground(rand);
  }
   
