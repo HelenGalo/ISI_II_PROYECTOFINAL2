@@ -50,11 +50,8 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         
     }
     
-    
-    
-    public void insertar(){
-        
-        int idUsuario=0;
+     public void Actualizaru(){
+         int idUsuario=0;
         int IdEmpleado=0;
         String Contra="";
         int Intentos=0;
@@ -68,8 +65,7 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
           System.out.println(IdEmpleado);
         char [] arrayC=rSMPassView1.getPassword();
         Contra= new String(arrayC);
-        
-        Intentos = Integer.parseInt(String.valueOf(JIntentos.getSelectedItem()));
+          Intentos = Integer.parseInt(String.valueOf(JIntentos.getSelectedItem()));
         try {
                 String sql = "SELECT r.IdRol FROM Roles r Where r.Nombre="+"'"+rol+"'";
                 Statement st = (Statement) con.createStatement();
@@ -84,10 +80,8 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
             
         System.out.println(String.valueOf(idUsuario)+" "+String.valueOf(IdEmpleado)+" "+Contra+String.valueOf(Intentos)+" "+ String.valueOf(IdRol)+" "+Usuario);
         
-    
-        
-        
-        String SQL = "INSERT INTO Usuarios (IdUsuario,IdEmpleado,Contrase,Intentos,IdRol,Usuario) VALUES"
+           
+        String SQL = "INSERT  Usuarios SET (IdEmpleado,Contrase,Intentos,IdRol,Usuario) VALUES"
                 + "(?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
@@ -104,6 +98,18 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
+         
+     }
+    
+    
+    
+    public void insertar(){
+        
+        
+        
+      
+        
+ 
         
         
         
@@ -1332,7 +1338,7 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(validar()==true){
             
-                insertar();
+                Actualizaru();
            
              
         }else{

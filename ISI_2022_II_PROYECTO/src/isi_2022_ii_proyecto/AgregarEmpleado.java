@@ -312,6 +312,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         
        
     }
+    
     public Boolean validar(){
       
         return null;
@@ -1334,8 +1335,8 @@ public class AgregarEmpleado extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-        Usuario usuario = new Usuario();
-        usuario.setVisible(true);
+        Empleados em= new Empleados();
+        em.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 

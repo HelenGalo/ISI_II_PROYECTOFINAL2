@@ -406,7 +406,7 @@ public class Usuario extends javax.swing.JFrame {
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new3.setText("Tipo de Identificaciones");
         rSButtonIcon_new3.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        rSButtonIcon_new3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         rSButtonIcon_new3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WEB);
         rSButtonIcon_new3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -489,7 +489,7 @@ public class Usuario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -700,6 +700,11 @@ public class Usuario extends javax.swing.JFrame {
 
         JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         JTextbuscar.setPlaceholder("Busqueda rapida");
+        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTextbuscarActionPerformed(evt);
+            }
+        });
         JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 JTextbuscarKeyReleased(evt);
@@ -852,27 +857,26 @@ public class Usuario extends javax.swing.JFrame {
 
     private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
         // TODO add your handling code here:
-        Cliente clientes = new Cliente();
-        clientes.setVisible(true);
+        ActualizarUsuarios acu = new ActualizarUsuarios();
+        acu.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
 
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
-        // TODO add your handling code here:
-        Usuario usuarios = new Usuario();
-        usuarios.setVisible(true);
-        this.setVisible(false);
+           buscarNombre();
+           // TODO add your handling code here:
+    
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 
     private void rSButtonIcon_new6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new6ActionPerformed
         // TODO add your handling code here:
-        Proveedores proveedores = new Proveedores();
-        proveedores.setVisible(true);
-        this.setVisible(false);
+   
     }//GEN-LAST:event_rSButtonIcon_new6ActionPerformed
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
-        // TODO add your handling code here:
+        AgregarUsuario Usuarios  = new AgregarUsuario();
+        Usuarios.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
 
     private void rSButtonIcon_new10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new10ActionPerformed
@@ -884,7 +888,9 @@ public class Usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_linesetting12MouseClicked
 
     private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
-        // TODO add your handling code here:
+        Menu a= new Menu();
+        a.setVisible(true);
+        this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
 
     private void JTableEmpleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableEmpleadoMouseClicked
@@ -902,6 +908,12 @@ public class Usuario extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_JTextbuscarKeyReleased
+
+    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
+
+           limpiartabla();
+           buscarNombre();
+    }//GEN-LAST:event_JTextbuscarActionPerformed
 
     
     

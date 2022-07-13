@@ -46,6 +46,17 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
     public void inicializar(){
         jLabel13.setText(cliente);
     }
+     public Boolean validar(){
+       // char [] arrayC=rSMPassView1.getPassword();
+        //String acceso= new String(arrayC);
+        if(JCodigoDisponible.getText().isEmpty() || NombreE1.getText().isEmpty() || NombreE3.getText().isEmpty() 
+                ||Ap1.getText().isEmpty() | || Ap2.getText().isEmpty()  || cuenta.getText().isEmpty() || correoE.getText().isEmpty() ){
+            
+            return false;
+        }else{
+            return true;
+        }
+    }
     
     
     public void buscardatos(){
@@ -178,15 +189,15 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         rSButtonIcon_new8 = new newscomponents.RSButtonIcon_new();
-        NombreE2 = new rojeru_san.RSMTextFull();
+        Ap2 = new rojeru_san.RSMTextFull();
         cuenta = new rojeru_san.RSMTextFull();
         NombreE3 = new rojeru_san.RSMTextFull();
-        NombreE4 = new rojeru_san.RSMTextFull();
+        Ap1 = new rojeru_san.RSMTextFull();
         JComboEstado = new rojerusan.RSComboMetro();
         jLabel23 = new javax.swing.JLabel();
         CorreoAE = new javax.swing.JLabel();
         JCombopuesto = new rojerusan.RSComboMetro();
-        NombreE5 = new rojeru_san.RSMTextFull();
+        NombreE1 = new rojeru_san.RSMTextFull();
         CorreoAE1 = new javax.swing.JLabel();
         correoE = new rojeru_san.RSMTextFull();
         estado = new javax.swing.JLabel();
@@ -195,6 +206,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         JComboTipo2 = new rojerusan.RSComboMetro();
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
+        Fc = new rojerusan.RSDateChooser();
+        Fn = new rojerusan.RSDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -809,14 +822,14 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         });
         jPanel3.add(rSButtonIcon_new8, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 490, 110, 40));
 
-        NombreE2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NombreE2.setPlaceholder("Ingresa nombre");
-        NombreE2.addActionListener(new java.awt.event.ActionListener() {
+        Ap2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Ap2.setPlaceholder("Ingresa nombre");
+        Ap2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreE2ActionPerformed(evt);
+                Ap2ActionPerformed(evt);
             }
         });
-        jPanel3.add(NombreE2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 230, 130, -1));
+        jPanel3.add(Ap2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 230, 130, -1));
 
         cuenta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         cuenta.setPlaceholder("Ingrese Cuenta");
@@ -836,14 +849,14 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         });
         jPanel3.add(NombreE3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, 130, -1));
 
-        NombreE4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NombreE4.setPlaceholder("Ingresa nombre");
-        NombreE4.addActionListener(new java.awt.event.ActionListener() {
+        Ap1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Ap1.setPlaceholder("Ingresa nombre");
+        Ap1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreE4ActionPerformed(evt);
+                Ap1ActionPerformed(evt);
             }
         });
-        jPanel3.add(NombreE4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 130, -1));
+        jPanel3.add(Ap1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 130, -1));
 
         JComboEstado.setColorArrow(new java.awt.Color(102, 0, 255));
         JComboEstado.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -897,14 +910,14 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         });
         jPanel3.add(JCombopuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, 260, 30));
 
-        NombreE5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NombreE5.setPlaceholder("Ingresa nombre");
-        NombreE5.addActionListener(new java.awt.event.ActionListener() {
+        NombreE1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        NombreE1.setPlaceholder("Ingresa nombre");
+        NombreE1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreE5ActionPerformed(evt);
+                NombreE1ActionPerformed(evt);
             }
         });
-        jPanel3.add(NombreE5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, 130, -1));
+        jPanel3.add(NombreE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, 130, -1));
 
         CorreoAE1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         CorreoAE1.setForeground(new java.awt.Color(153, 0, 255));
@@ -992,6 +1005,16 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             }
         });
         jPanel3.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+
+        Fc.setLimpiarFecha(true);
+        Fc.setName(""); // NOI18N
+        Fc.setTextoFecha("2001/06/18");
+        jPanel3.add(Fc, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 300, 290, -1));
+
+        Fn.setLimpiarFecha(true);
+        Fn.setName(""); // NOI18N
+        Fn.setTextoFecha("2001/06/18");
+        jPanel3.add(Fn, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 290, -1));
 
         javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
         dashboardview.setLayout(dashboardviewLayout);
@@ -1113,8 +1136,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-        Usuario usuario = new Usuario();
-        usuario.setVisible(true);
+        Empleados em= new Empleados();
+        em.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
@@ -1133,9 +1156,9 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
 
-    private void NombreE2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreE2ActionPerformed
+    private void Ap2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Ap2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NombreE2ActionPerformed
+    }//GEN-LAST:event_Ap2ActionPerformed
 
     private void cuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cuentaActionPerformed
         // TODO add your handling code here:
@@ -1145,9 +1168,9 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreE3ActionPerformed
 
-    private void NombreE4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreE4ActionPerformed
+    private void Ap1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Ap1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NombreE4ActionPerformed
+    }//GEN-LAST:event_Ap1ActionPerformed
 
     private void JComboEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEstadoMouseClicked
         // TODO add your handling code here:
@@ -1207,9 +1230,9 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JCombopuestoActionPerformed
 
-    private void NombreE5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreE5ActionPerformed
+    private void NombreE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreE1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NombreE5ActionPerformed
+    }//GEN-LAST:event_NombreE1ActionPerformed
 
     private void correoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correoEActionPerformed
         // TODO add your handling code here:
@@ -1336,9 +1359,13 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private rojeru_san.RSMTextFull Ap1;
+    private rojeru_san.RSMTextFull Ap2;
     private javax.swing.JLabel CorreoAE;
     private javax.swing.JLabel CorreoAE1;
+    private rojerusan.RSDateChooser Fc;
     private javax.swing.JLabel FechaContracion;
+    private rojerusan.RSDateChooser Fn;
     private javax.swing.JLabel Genero;
     private javax.swing.JPanel Header;
     private javax.swing.JLabel JCodigoDisponible;
@@ -1348,10 +1375,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSComboMetro JCombopuesto;
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel MenuIcon;
-    private rojeru_san.RSMTextFull NombreE2;
+    private rojeru_san.RSMTextFull NombreE1;
     private rojeru_san.RSMTextFull NombreE3;
-    private rojeru_san.RSMTextFull NombreE4;
-    private rojeru_san.RSMTextFull NombreE5;
     private rojeru_san.RSMTextFull correoE;
     private rojeru_san.RSMTextFull cuenta;
     private javax.swing.JPanel dashboardview;

@@ -850,23 +850,20 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
 
     private void rSButtonIcon_new6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new6ActionPerformed
         // TODO add your handling code here:
-        Proveedores proveedores = new Proveedores();
-        proveedores.setVisible(true);
-        this.setVisible(false);
+    
     }//GEN-LAST:event_rSButtonIcon_new6ActionPerformed
 
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
-        // TODO add your handling code here:
-        Usuario usuarios = new Usuario();
-        usuarios.setVisible(true);
-        this.setVisible(false);
+          
+        buscarNombre();
+        
+      
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 
     private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
-        // TODO add your handling code here:
-        Cliente clientes = new Cliente();
-        clientes.setVisible(true);
-        this.setVisible(false);
+            ActualizarEmpleado aem = new ActualizarEmpleado();
+           aem.setVisible(true);
+           this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
@@ -977,7 +974,9 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
     }//GEN-LAST:event_linesetting8MouseExited
 
     private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
-        // TODO add your handling code here:
+           Menu m = new Menu();
+           m.setVisible(true);
+           this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
 
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed

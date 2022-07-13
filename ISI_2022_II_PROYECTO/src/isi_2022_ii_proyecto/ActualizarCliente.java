@@ -62,7 +62,37 @@ public class ActualizarCliente extends javax.swing.JFrame {
     
     
     public void actualizar(){
+   String nombres="";
+        String apellidos="";
+        String telefono="";
+        String direccion="";
+        String correo="";
         
+        nombres = NombreC.getText();
+        apellidos = ApellidoC.getText();
+        direccion = DireccionC.getText();
+        telefono=TelC.getText();
+        correo=CorreoC.getText();
+        
+        
+        String SQL = "UPDATE  Clientes SET (Nombres,Apellidos,DireccionCliente,Telefono,CorreoElectronico) VALUES"
+                + "(?, ?, ?, ?, ?)WHERE IdProveedor="+id;
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+          
+            preparedStmt.setString (1, nombres);
+            preparedStmt.setString   (2, apellidos);
+            preparedStmt.setString(3, direccion);
+            preparedStmt.setString(4, telefono);
+            preparedStmt.setString(5, correo);
+            preparedStmt.execute();
+            
+            JOptionPane.showMessageDialog(null, "Registro actualizado Exitosamente");
+
+        } catch (Exception e) {
+            System.out.println("ERROR" + e.getMessage());   
+        }
+              
   
         
         
