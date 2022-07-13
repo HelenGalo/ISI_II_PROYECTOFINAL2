@@ -181,16 +181,6 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         rSButtonIcon_new8 = new newscomponents.RSButtonIcon_new();
-        rSPanelRound1 = new rojeru_san.rspanel.RSPanelRound();
-        rSPanelRound2 = new rojeru_san.rspanel.RSPanelRound();
-        rSRadioButtonMaterial1 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial2 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial3 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial5 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial6 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial7 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial8 = new RSMaterialComponent.RSRadioButtonMaterial();
-        rSRadioButtonMaterial9 = new RSMaterialComponent.RSRadioButtonMaterial();
         jLabel23 = new javax.swing.JLabel();
         NombreE1 = new rojeru_san.RSMTextFull();
         DireccionE = new rojeru_san.RSMTextFull();
@@ -545,7 +535,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -734,13 +724,13 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("IdProveedor");
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 190, 40));
+        jLabel17.setText("Codigo Proveedor:");
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 140, 50));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(153, 0, 255));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("Nombre del Empresa:");
+        jLabel18.setText("Nombre de la empresa:");
         jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 190, 30));
 
         CorreoP.setPlaceholder("Ingresar Correo Electronico");
@@ -749,7 +739,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
                 CorreoPActionPerformed(evt);
             }
         });
-        jPanel3.add(CorreoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, -1, -1));
+        jPanel3.add(CorreoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 460, -1));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -775,13 +765,13 @@ public class ActualizarProveedor extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel3.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 70, 70));
+        jPanel3.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 70, 70));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(153, 0, 255));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("ASIGNACION DE ROLES");
-        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 60, 260, 30));
+        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 90, 260, 30));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(153, 0, 255));
@@ -795,18 +785,18 @@ public class ActualizarProveedor extends javax.swing.JFrame {
                 JEstadoActionPerformed(evt);
             }
         });
-        jPanel3.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 260, -1));
+        jPanel3.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, 260, -1));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(153, 0, 255));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setText("Estado");
+        jLabel21.setText("Estado:");
         jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 180, 30));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("Direccion de Empresa");
+        jLabel22.setText("Direccion de la empresa");
         jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 180, 30));
 
         rSButtonIcon_new8.setBackground(new java.awt.Color(0, 55, 133));
@@ -821,126 +811,6 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         });
         jPanel3.add(rSButtonIcon_new8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 110, 40));
 
-        rSPanelRound1.setColorBackground(new java.awt.Color(60, 76, 143));
-        rSPanelRound1.setColorBorde(new java.awt.Color(60, 76, 143));
-
-        rSPanelRound2.setColorBackground(new java.awt.Color(255, 255, 255));
-        rSPanelRound2.setColorBorde(new java.awt.Color(60, 76, 143));
-
-        rSRadioButtonMaterial1.setText("Gerente Comercial");
-        rSRadioButtonMaterial1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial1ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial2.setText("Superusuario");
-        rSRadioButtonMaterial2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial2ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial3.setText("Jefe Almacen");
-        rSRadioButtonMaterial3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial3ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial5.setText("Gerente General");
-        rSRadioButtonMaterial5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial5ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial6.setText("Vendedor");
-        rSRadioButtonMaterial6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial6ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial7.setText("Cajero");
-        rSRadioButtonMaterial7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial7ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial8.setText("Supervisor");
-        rSRadioButtonMaterial8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial8ActionPerformed(evt);
-            }
-        });
-
-        rSRadioButtonMaterial9.setText("Jefe Logistica");
-        rSRadioButtonMaterial9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButtonMaterial9ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout rSPanelRound2Layout = new javax.swing.GroupLayout(rSPanelRound2);
-        rSPanelRound2.setLayout(rSPanelRound2Layout);
-        rSPanelRound2Layout.setHorizontalGroup(
-            rSPanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelRound2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(rSPanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(rSRadioButtonMaterial1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(rSRadioButtonMaterial9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-        rSPanelRound2Layout.setVerticalGroup(
-            rSPanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelRound2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(rSRadioButtonMaterial2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSRadioButtonMaterial1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSRadioButtonMaterial5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSRadioButtonMaterial6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSRadioButtonMaterial7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSRadioButtonMaterial3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSRadioButtonMaterial9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rSRadioButtonMaterial8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
-        );
-
-        javax.swing.GroupLayout rSPanelRound1Layout = new javax.swing.GroupLayout(rSPanelRound1);
-        rSPanelRound1.setLayout(rSPanelRound1Layout);
-        rSPanelRound1Layout.setHorizontalGroup(
-            rSPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelRound1Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addComponent(rSPanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
-        );
-        rSPanelRound1Layout.setVerticalGroup(
-            rSPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelRound1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(rSPanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel3.add(rSPanelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 100, 250, 370));
-
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(153, 0, 255));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -953,7 +823,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
                 NombreE1ActionPerformed(evt);
             }
         });
-        jPanel3.add(NombreE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, -1, -1));
+        jPanel3.add(NombreE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 460, -1));
 
         DireccionE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         DireccionE.setPlaceholder("Ingresa Informacion Empresas..");
@@ -962,7 +832,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
                 DireccionEActionPerformed(evt);
             }
         });
-        jPanel3.add(DireccionE, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, -1, -1));
+        jPanel3.add(DireccionE, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, 460, -1));
 
         Tel.setPlaceholder("Ingresa el numero Telefono");
         Tel.addActionListener(new java.awt.event.ActionListener() {
@@ -970,7 +840,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
                 TelActionPerformed(evt);
             }
         });
-        jPanel3.add(Tel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, -1, -1));
+        jPanel3.add(Tel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 460, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1136,103 +1006,6 @@ public class ActualizarProveedor extends javax.swing.JFrame {
 */
     }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
 
-    private void rSRadioButtonMaterial1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial1ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial1.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial1ActionPerformed
-
-    private void rSRadioButtonMaterial2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial2ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial2.getText();
-
-    }//GEN-LAST:event_rSRadioButtonMaterial2ActionPerformed
-
-    private void rSRadioButtonMaterial3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial3ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial3.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial3ActionPerformed
-
-    private void rSRadioButtonMaterial5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial5ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial5.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial5ActionPerformed
-
-    private void rSRadioButtonMaterial6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial6ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial6.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial6ActionPerformed
-
-    private void rSRadioButtonMaterial7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial7ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial7.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial7ActionPerformed
-
-    private void rSRadioButtonMaterial8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial8ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rSRadioButtonMaterial9.setSelected(false);
-        rol=rSRadioButtonMaterial8.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial8ActionPerformed
-
-    private void rSRadioButtonMaterial9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial9ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButtonMaterial2.setSelected(false);
-        rSRadioButtonMaterial3.setSelected(false);
-        rSRadioButtonMaterial1.setSelected(false);
-        rSRadioButtonMaterial5.setSelected(false);
-        rSRadioButtonMaterial7.setSelected(false);
-        rSRadioButtonMaterial8.setSelected(false);
-        rSRadioButtonMaterial6.setSelected(false);
-        rol=rSRadioButtonMaterial9.getText();
-    }//GEN-LAST:event_rSRadioButtonMaterial9ActionPerformed
-
     private void CorreoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorreoPActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CorreoPActionPerformed
@@ -1388,15 +1161,5 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSLabelIcon rSLabelIcon9;
     private rojeru_san.rspanel.RSPanelCircle rSPanelCircle1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
-    private rojeru_san.rspanel.RSPanelRound rSPanelRound1;
-    private rojeru_san.rspanel.RSPanelRound rSPanelRound2;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial1;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial2;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial3;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial5;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial6;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial7;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial8;
-    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial9;
     // End of variables declaration//GEN-END:variables
 }

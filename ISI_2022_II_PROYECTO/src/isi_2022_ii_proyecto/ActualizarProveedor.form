@@ -666,7 +666,7 @@
                       <Color blue="85" green="37" red="0" type="rgb"/>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Cursor Por defecto"/>
                     </Property>
                     <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                       <Value id="REPEAT"/>
@@ -694,7 +694,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="rSLabelIcon4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="rSLabelIcon5" pref="69" max="32767" attributes="0"/>
+                              <Component id="rSLabelIcon5" pref="71" max="32767" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="rSLabelIcon3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
@@ -1047,11 +1047,11 @@
                       <Color blue="ff" green="0" red="99" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="IdProveedor"/>
+                    <Property name="text" type="java.lang.String" value="Codigo Proveedor:"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="60" y="90" width="190" height="40"/>
+                      <AbsoluteConstraints x="300" y="80" width="140" height="50"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -1064,7 +1064,7 @@
                       <Color blue="ff" green="0" red="99" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Nombre del Empresa:"/>
+                    <Property name="text" type="java.lang.String" value="Nombre de la empresa:"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1081,7 +1081,7 @@
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="260" y="360" width="-1" height="-1"/>
+                      <AbsoluteConstraints x="260" y="360" width="460" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -1093,7 +1093,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="350" y="80" width="70" height="70"/>
+                      <AbsoluteConstraints x="450" y="70" width="70" height="70"/>
                     </Constraint>
                   </Constraints>
 
@@ -1145,7 +1145,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="690" y="60" width="260" height="30"/>
+                      <AbsoluteConstraints x="710" y="90" width="260" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -1177,7 +1177,7 @@
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="260" y="430" width="260" height="-1"/>
+                      <AbsoluteConstraints x="260" y="440" width="260" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -1190,7 +1190,7 @@
                       <Color blue="ff" green="0" red="99" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Estado"/>
+                    <Property name="text" type="java.lang.String" value="Estado:"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1207,7 +1207,7 @@
                       <Color blue="ff" green="0" red="99" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Direccion de Empresa"/>
+                    <Property name="text" type="java.lang.String" value="Direccion de la empresa"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1225,7 +1225,7 @@
                       <Color blue="ff" green="0" red="99" type="rgb"/>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Default Cursor"/>
+                      <Color id="Cursor Por defecto"/>
                     </Property>
                     <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                       <Value id="SAVE"/>
@@ -1240,164 +1240,6 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Container class="rojeru_san.rspanel.RSPanelRound" name="rSPanelRound1">
-                  <Properties>
-                    <Property name="colorBackground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="8f" green="4c" red="3c" type="rgb"/>
-                    </Property>
-                    <Property name="colorBorde" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="8f" green="4c" red="3c" type="rgb"/>
-                    </Property>
-                  </Properties>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="700" y="100" width="250" height="370"/>
-                    </Constraint>
-                  </Constraints>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="26" max="32767" attributes="0"/>
-                              <Component id="rSPanelRound2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="rSPanelRound2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Container class="rojeru_san.rspanel.RSPanelRound" name="rSPanelRound2">
-                      <Properties>
-                        <Property name="colorBackground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                        </Property>
-                        <Property name="colorBorde" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="8f" green="4c" red="3c" type="rgb"/>
-                        </Property>
-                      </Properties>
-
-                      <Layout>
-                        <DimensionLayout dim="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="rSRadioButtonMaterial1" alignment="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="rSRadioButtonMaterial5" alignment="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="rSRadioButtonMaterial6" alignment="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="rSRadioButtonMaterial3" alignment="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="rSRadioButtonMaterial2" alignment="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="rSRadioButtonMaterial7" alignment="1" pref="0" max="32767" attributes="0"/>
-                                      <Component id="rSRadioButtonMaterial8" alignment="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="rSRadioButtonMaterial9" alignment="1" min="-2" pref="166" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace pref="18" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
-                        <DimensionLayout dim="1">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                  <Component id="rSRadioButtonMaterial2" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="rSRadioButtonMaterial1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="rSRadioButtonMaterial5" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="rSRadioButtonMaterial6" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="rSRadioButtonMaterial7" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="rSRadioButtonMaterial3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="rSRadioButtonMaterial9" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="rSRadioButtonMaterial8" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
-                      </Layout>
-                      <SubComponents>
-                        <Component class="RSMaterialComponent.RSRadioButtonMaterial" name="rSRadioButtonMaterial1">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Gerente Comercial"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSRadioButtonMaterial1ActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="RSMaterialComponent.RSRadioButtonMaterial" name="rSRadioButtonMaterial2">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Superusuario"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSRadioButtonMaterial2ActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="RSMaterialComponent.RSRadioButtonMaterial" name="rSRadioButtonMaterial3">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Jefe Almacen"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSRadioButtonMaterial3ActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="RSMaterialComponent.RSRadioButtonMaterial" name="rSRadioButtonMaterial5">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Gerente General"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSRadioButtonMaterial5ActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="RSMaterialComponent.RSRadioButtonMaterial" name="rSRadioButtonMaterial6">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Vendedor"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSRadioButtonMaterial6ActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="RSMaterialComponent.RSRadioButtonMaterial" name="rSRadioButtonMaterial7">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Cajero"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSRadioButtonMaterial7ActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="RSMaterialComponent.RSRadioButtonMaterial" name="rSRadioButtonMaterial8">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Supervisor"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSRadioButtonMaterial8ActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="RSMaterialComponent.RSRadioButtonMaterial" name="rSRadioButtonMaterial9">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Jefe Logistica"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSRadioButtonMaterial9ActionPerformed"/>
-                          </Events>
-                        </Component>
-                      </SubComponents>
-                    </Container>
-                  </SubComponents>
-                </Container>
                 <Component class="javax.swing.JLabel" name="jLabel23">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1424,7 +1266,7 @@
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="260" y="170" width="-1" height="-1"/>
+                      <AbsoluteConstraints x="260" y="170" width="460" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -1438,7 +1280,7 @@
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="260" y="230" width="-1" height="-1"/>
+                      <AbsoluteConstraints x="260" y="230" width="460" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -1451,7 +1293,7 @@
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="260" y="300" width="-1" height="-1"/>
+                      <AbsoluteConstraints x="260" y="300" width="460" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>

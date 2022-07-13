@@ -217,7 +217,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,9 +269,9 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(13, 13, 13)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -568,7 +568,7 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -726,6 +726,17 @@ public class Menu extends javax.swing.JFrame {
         rSPanelRound2.setBackground(new java.awt.Color(0, 55, 133));
         rSPanelRound2.setColorBackground(new java.awt.Color(0, 55, 133));
         rSPanelRound2.setColorBorde(new java.awt.Color(255, 255, 255));
+        rSPanelRound2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rSPanelRound2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                rSPanelRound2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                rSPanelRound2MouseExited(evt);
+            }
+        });
 
         rSLabelIcon12.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ACCOUNT_BOX);
@@ -764,6 +775,17 @@ public class Menu extends javax.swing.JFrame {
         rSPanelRound3.setBackground(new java.awt.Color(0, 55, 133));
         rSPanelRound3.setColorBackground(new java.awt.Color(0, 55, 133));
         rSPanelRound3.setColorBorde(new java.awt.Color(255, 255, 255));
+        rSPanelRound3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rSPanelRound3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                rSPanelRound3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                rSPanelRound3MouseExited(evt);
+            }
+        });
 
         rSLabelIcon13.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WC);
@@ -802,6 +824,17 @@ public class Menu extends javax.swing.JFrame {
         rSPanelRound4.setBackground(new java.awt.Color(0, 55, 133));
         rSPanelRound4.setColorBackground(new java.awt.Color(0, 55, 133));
         rSPanelRound4.setColorBorde(new java.awt.Color(255, 255, 255));
+        rSPanelRound4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rSPanelRound4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                rSPanelRound4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                rSPanelRound4MouseExited(evt);
+            }
+        });
 
         rSLabelIcon15.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon15.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.BUSINESS);
@@ -840,6 +873,17 @@ public class Menu extends javax.swing.JFrame {
         rSPanelRound5.setBackground(new java.awt.Color(0, 55, 133));
         rSPanelRound5.setColorBackground(new java.awt.Color(0, 55, 133));
         rSPanelRound5.setColorBorde(new java.awt.Color(255, 255, 255));
+        rSPanelRound5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rSPanelRound5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                rSPanelRound5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                rSPanelRound5MouseExited(evt);
+            }
+        });
 
         rSLabelIcon14.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon14.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -879,6 +923,14 @@ public class Menu extends javax.swing.JFrame {
         rSPanelRound6.setBackground(new java.awt.Color(0, 55, 133));
         rSPanelRound6.setColorBackground(new java.awt.Color(0, 55, 133));
         rSPanelRound6.setColorBorde(new java.awt.Color(255, 255, 255));
+        rSPanelRound6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                rSPanelRound6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                rSPanelRound6MouseExited(evt);
+            }
+        });
 
         rSLabelIcon16.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ACCOUNT_BALANCE);
@@ -1077,6 +1129,86 @@ public class Menu extends javax.swing.JFrame {
         inicio.setVisible(true);
         
     }//GEN-LAST:event_linesetting8MouseClicked
+
+    private void rSPanelRound2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound2MouseClicked
+        // TODO add your handling code here:
+        Cliente c = new Cliente();
+        c.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_rSPanelRound2MouseClicked
+
+    private void rSPanelRound3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound3MouseClicked
+        // TODO add your handling code here:
+        Empleados e = new Empleados();
+        e.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_rSPanelRound3MouseClicked
+
+    private void rSPanelRound5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound5MouseClicked
+        // TODO add your handling code here:
+        Usuario u = new Usuario();
+        u.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_rSPanelRound5MouseClicked
+
+    private void rSPanelRound4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound4MouseClicked
+        // TODO add your handling code here:
+        Proveedores p = new Proveedores();
+        p.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_rSPanelRound4MouseClicked
+
+    private void rSPanelRound2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound2MouseEntered
+        // TODO add your handling code here:
+        rSPanelRound2.setBackground(new Color(33,150,243));
+    }//GEN-LAST:event_rSPanelRound2MouseEntered
+
+    private void rSPanelRound2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound2MouseExited
+        // TODO add your handling code here:
+        rSPanelRound2.setBackground(new Color(0,55,133));
+        
+    }//GEN-LAST:event_rSPanelRound2MouseExited
+
+    private void rSPanelRound3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound3MouseEntered
+        // TODO add your handling code here:
+        rSPanelRound3.setBackground(new Color(33,150,243));
+    }//GEN-LAST:event_rSPanelRound3MouseEntered
+
+    private void rSPanelRound3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound3MouseExited
+        // TODO add your handling code here:
+        rSPanelRound3.setBackground(new Color(0,55,133));
+    }//GEN-LAST:event_rSPanelRound3MouseExited
+
+    private void rSPanelRound5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound5MouseEntered
+        // TODO add your handling code here:
+        rSPanelRound5.setBackground(new Color(33,150,243));
+    }//GEN-LAST:event_rSPanelRound5MouseEntered
+
+    private void rSPanelRound5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound5MouseExited
+        // TODO add your handling code here:
+        rSPanelRound5.setBackground(new Color(0,55,133));
+    }//GEN-LAST:event_rSPanelRound5MouseExited
+
+    private void rSPanelRound4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound4MouseEntered
+        // TODO add your handling code here:
+        rSPanelRound4.setBackground(new Color(33,150,243));
+    }//GEN-LAST:event_rSPanelRound4MouseEntered
+
+    private void rSPanelRound4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound4MouseExited
+        // TODO add your handling code here:
+        rSPanelRound4.setBackground(new Color(0,55,133));
+    }//GEN-LAST:event_rSPanelRound4MouseExited
+
+    private void rSPanelRound6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound6MouseEntered
+        // TODO add your handling code here:
+        rSPanelRound6.setBackground(new Color(33,150,243));
+    }//GEN-LAST:event_rSPanelRound6MouseEntered
+
+    private void rSPanelRound6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelRound6MouseExited
+        // TODO add your handling code here:
+        rSPanelRound6.setBackground(new Color(0,55,133));
+    }//GEN-LAST:event_rSPanelRound6MouseExited
 
     /**
      * @param args the command line arguments

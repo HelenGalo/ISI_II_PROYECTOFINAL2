@@ -30,7 +30,7 @@ import rojerusan.RSTableMetro1;
 public class Cliente extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    String codigoc="";
+    String codigoc;
 
     /**
      * Creates new form Cliente
@@ -38,6 +38,7 @@ public class Cliente extends javax.swing.JFrame {
     boolean a = true;
     public Cliente() {
         initComponents();
+        this.setExtendedState(this.MAXIMIZED_BOTH);
         listar();
       
        
@@ -116,6 +117,7 @@ public class Cliente extends javax.swing.JFrame {
         rSButtonIcon_new11 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(java.awt.Color.white);
         setMinimumSize(new java.awt.Dimension(150, 170));
         setUndecorated(true);
 
@@ -320,10 +322,16 @@ public class Cliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CodigoEmpleado", "Nombres", "Apellidos", "Identificacion", "Puesto"
+                "Codigo Cliente", "Nombres", "Apellidos", "Telefono", "Correo Electronico"
             }
         ));
-        JTableEmpleado.setColorSecondary(new java.awt.Color(204, 255, 255));
+        JTableEmpleado.setBackgoundHead(new java.awt.Color(60, 76, 143));
+        JTableEmpleado.setBackgoundHover(new java.awt.Color(60, 76, 143));
+        JTableEmpleado.setColorSecondary(new java.awt.Color(255, 255, 255));
+        JTableEmpleado.setEffectHover(true);
+        JTableEmpleado.setHighHead(50);
+        JTableEmpleado.setRowHeight(50);
+        JTableEmpleado.setShowHorizontalLines(true);
         JTableEmpleado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JTableEmpleadoMouseClicked(evt);
@@ -375,7 +383,7 @@ public class Cliente extends javax.swing.JFrame {
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(24, 24, 24))
         );
 
@@ -383,6 +391,7 @@ public class Cliente extends javax.swing.JFrame {
 
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
+        MenuIcon.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         linesetting.setBackground(new java.awt.Color(5, 10, 46));
         linesetting.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -398,6 +407,8 @@ public class Cliente extends javax.swing.JFrame {
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
+        MenuIcon.add(linesetting, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, -1, -1));
+
         linehidemenu.setBackground(new java.awt.Color(5, 10, 46));
         linehidemenu.setPreferredSize(new java.awt.Dimension(50, 10));
 
@@ -411,6 +422,8 @@ public class Cliente extends javax.swing.JFrame {
             linehidemenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
+
+        MenuIcon.add(linehidemenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         linesetting1.setBackground(new java.awt.Color(5, 10, 46));
         linesetting1.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -426,6 +439,8 @@ public class Cliente extends javax.swing.JFrame {
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
+        MenuIcon.add(linesetting1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, -1, -1));
+
         linesetting2.setBackground(new java.awt.Color(5, 10, 46));
         linesetting2.setPreferredSize(new java.awt.Dimension(50, 10));
 
@@ -439,6 +454,8 @@ public class Cliente extends javax.swing.JFrame {
             linesetting2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
+
+        MenuIcon.add(linesetting2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, -1, -1));
 
         linesetting7.setBackground(new java.awt.Color(0, 55, 133));
         linesetting7.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -455,6 +472,8 @@ public class Cliente extends javax.swing.JFrame {
         rSLabelIcon7.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon7.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.INFO);
         linesetting7.add(rSLabelIcon7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
+
+        MenuIcon.add(linesetting7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, -1, 50));
 
         linesetting8.setBackground(new java.awt.Color(0, 55, 133));
         linesetting8.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -475,6 +494,8 @@ public class Cliente extends javax.swing.JFrame {
         rSLabelIcon9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ENHANCED_ENCRYPTION);
         linesetting8.add(rSLabelIcon9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
 
+        MenuIcon.add(linesetting8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, -1, 50));
+
         linesetting9.setBackground(new java.awt.Color(0, 55, 133));
         linesetting9.setPreferredSize(new java.awt.Dimension(50, 10));
         linesetting9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -492,6 +513,8 @@ public class Cliente extends javax.swing.JFrame {
         rSLabelIcon10.setInheritsPopupMenu(true);
         linesetting9.add(rSLabelIcon10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
 
+        MenuIcon.add(linesetting9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, -1, 50));
+
         linesetting10.setBackground(new java.awt.Color(5, 10, 46));
         linesetting10.setPreferredSize(new java.awt.Dimension(50, 10));
 
@@ -505,6 +528,8 @@ public class Cliente extends javax.swing.JFrame {
             linesetting10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
+
+        MenuIcon.add(linesetting10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, -1, -1));
 
         linesetting11.setBackground(new java.awt.Color(0, 55, 133));
         linesetting11.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -522,43 +547,10 @@ public class Cliente extends javax.swing.JFrame {
         rSLabelIcon11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SETTINGS);
         linesetting11.add(rSLabelIcon11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
 
-        javax.swing.GroupLayout MenuIconLayout = new javax.swing.GroupLayout(MenuIcon);
-        MenuIcon.setLayout(MenuIconLayout);
-        MenuIconLayout.setHorizontalGroup(
-            MenuIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(linehidemenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        MenuIconLayout.setVerticalGroup(
-            MenuIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MenuIconLayout.createSequentialGroup()
-                .addComponent(linehidemenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(linesetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting11, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        MenuIcon.add(linesetting11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, -1, 50));
 
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
+        menuhide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new3.setText("Tipo de Identificaciones");
@@ -570,6 +562,7 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new3ActionPerformed(evt);
             }
         });
+        menuhide.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 210, -1));
 
         rSButtonIcon_new4.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new4.setText("Modificar Clientes");
@@ -580,6 +573,7 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new4ActionPerformed(evt);
             }
         });
+        menuhide.add(rSButtonIcon_new4, new org.netbeans.lib.awtextra.AbsoluteConstraints(226, 110, 210, -1));
 
         rSButtonIcon_new5.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new5.setText("Buscar Clientes");
@@ -590,6 +584,7 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new5ActionPerformed(evt);
             }
         });
+        menuhide.add(rSButtonIcon_new5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 210, -1));
 
         rSButtonIcon_new6.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new6.setText("Deshabilitar Clientes");
@@ -600,6 +595,7 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new6ActionPerformed(evt);
             }
         });
+        menuhide.add(rSButtonIcon_new6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 210, 40));
 
         rSButtonIcon_new7.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new7.setText("Agregar Clientes");
@@ -610,11 +606,18 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new7ActionPerformed(evt);
             }
         });
+        menuhide.add(rSButtonIcon_new7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 210, -1));
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new9.setText("Puestos");
+        rSButtonIcon_new9.setText("Modificar Clientes");
         rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.RECENT_ACTORS);
+        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new9ActionPerformed(evt);
+            }
+        });
+        menuhide.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 210, -1));
 
         rSButtonIcon_new10.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new10.setText("Imprimir ");
@@ -625,6 +628,7 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new10ActionPerformed(evt);
             }
         });
+        menuhide.add(rSButtonIcon_new10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 210, -1));
 
         linesetting6.setBackground(new java.awt.Color(20, 101, 187));
         linesetting6.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -646,7 +650,7 @@ public class Cliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -661,6 +665,8 @@ public class Cliente extends javax.swing.JFrame {
                     .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        menuhide.add(linesetting6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 585, 210, 51));
 
         linesetting12.setBackground(new java.awt.Color(0, 55, 133));
         linesetting12.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -683,6 +689,8 @@ public class Cliente extends javax.swing.JFrame {
         jLabel12.setText("Gestiones");
         linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
 
+        menuhide.add(linesetting12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 70));
+
         rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new11.setText("Regresar");
         rSButtonIcon_new11.setBackgroundHover(new java.awt.Color(0, 55, 133));
@@ -692,49 +700,7 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new11ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout menuhideLayout = new javax.swing.GroupLayout(menuhide);
-        menuhide.setLayout(menuhideLayout);
-        menuhideLayout.setHorizontalGroup(
-            menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(menuhideLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(rSButtonIcon_new5, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSButtonIcon_new4, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(rSButtonIcon_new6, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new7, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new10, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new11, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        menuhideLayout.setVerticalGroup(
-            menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuhideLayout.createSequentialGroup()
-                .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rSButtonIcon_new4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(menuhideLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rSButtonIcon_new5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(27, 27, 27)
-                .addComponent(rSButtonIcon_new6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 195, Short.MAX_VALUE)
-                .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        menuhide.add(rSButtonIcon_new11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 210, -1));
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
         menu.setLayout(menuLayout);
@@ -743,14 +709,14 @@ public class Cliente extends javax.swing.JFrame {
             .addGroup(menuLayout.createSequentialGroup()
                 .addComponent(MenuIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(menuhide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(menuhide, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
+            .addComponent(MenuIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(menuLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(menuhide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -763,7 +729,7 @@ public class Cliente extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -880,11 +846,14 @@ public class Cliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         Proveedores proveedores = new Proveedores();
         proveedores.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new6ActionPerformed
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
         // TODO add your handling code here:
+        AgregarClientes ag = new AgregarClientes();
+        ag.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
 
     private void rSButtonIcon_new10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new10ActionPerformed
@@ -902,8 +871,7 @@ public class Cliente extends javax.swing.JFrame {
     private void JTableEmpleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableEmpleadoMouseClicked
         // TODO add your handling code here:
         int seleccion = JTableEmpleado.rowAtPoint(evt.getPoint());
-        codigoc = String.valueOf(JTableEmpleado.getValueAt(seleccion, 0));
-        System.out.println("THIs" +codigoc);
+        codigoc =   String.valueOf(JTableEmpleado.getValueAt(seleccion, 0));
     }//GEN-LAST:event_JTableEmpleadoMouseClicked
 
     private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
@@ -915,6 +883,20 @@ public class Cliente extends javax.swing.JFrame {
         }
        
     }//GEN-LAST:event_JTextbuscarKeyReleased
+
+    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
+        // TODO add your handling code here:
+        if(codigoc.isEmpty()==false){
+          
+           ActualizarCliente ac = new ActualizarCliente();
+           ac.setId(codigoc);
+           ac.MostrarCliente();
+           ac.setVisible(true);   
+           this.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+        }
+    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
     public void  changecolor(JPanel hover, Color rand){
      hover.setBackground(rand);
  }
@@ -966,20 +948,18 @@ public class Cliente extends javax.swing.JFrame {
         String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
         
-         String SQL = "SELECT e.IdEmpleado,e.Nombres,e.Apellidos,t.Valor,p.Nombre FROM Empleados e\n" +
-                    "INNER JOIN EstadosUsuario u ON e.IdEstado = u.IdEstado\n" +
-                    "INNER JOIN DetalleEmpleadoDocumento t ON t.IdEmpleado = e.IdEmpleado\n" +
-                    "INNER JOIN Puestos p ON p.IdPuesto = e.IdPuesto WHERE e.Nombres LIKE '"+JTextbuscar.getText()+"%'";
+         String SQL = "SELECT e.IdCliente,e.Nombres,e.Apellidos,e.Telefono, e.CorreoElectronico FROM Clientes e\n" +
+                    " WHERE e.Nombres LIKE '"+JTextbuscar.getText()+"%'";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                registros[0] = rs.getString("IdEmpleado");
+                registros[0] = rs.getString("IdCliente");
                 registros[1] = rs.getString("Nombres");
                 registros[2] = rs.getString("Apellidos");
-                registros[3] = rs.getString("Valor");
-                registros[4] = rs.getString("Nombre");
+                registros[3] = rs.getString("Telefono");
+                registros[4] = rs.getString("CorreoElectronico");
                 modelo.addRow(registros);
             }
 

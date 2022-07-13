@@ -688,7 +688,7 @@ public class Usuario extends javax.swing.JFrame {
                 "CodigoEmpleado", "Nombres", "Apellidos", "Identificacion", "Puesto"
             }
         ));
-        JTableEmpleado.setColorSecondary(new java.awt.Color(204, 255, 255));
+        JTableEmpleado.setColorSecondary(new java.awt.Color(153, 153, 255));
         JTableEmpleado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JTableEmpleadoMouseClicked(evt);
