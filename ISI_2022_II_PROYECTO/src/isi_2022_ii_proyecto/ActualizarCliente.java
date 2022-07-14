@@ -61,6 +61,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
     
     
     
+          
     public void actualizar(){
    String nombres="";
         String apellidos="";
@@ -75,8 +76,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
         correo=CorreoC.getText();
         
         
-        String SQL = "UPDATE  Clientes SET (Nombres,Apellidos,DireccionCliente,Telefono,CorreoElectronico) VALUES"
-                + "(?, ?, ?, ?, ?)WHERE IdProveedor="+id;
+        String SQL = "UPDATE  Clientes SET Nombres=?,Apellidos=?,DireccionCliente=?,Telefono=?,CorreoElectronico=?WHERE IdCliente="+"'"+id+"'";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
           
