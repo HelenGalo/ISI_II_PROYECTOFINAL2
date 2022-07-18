@@ -100,7 +100,6 @@ public class Cliente extends javax.swing.JFrame {
         linesetting11 = new javax.swing.JPanel();
         rSLabelIcon11 = new rojerusan.RSLabelIcon();
         menuhide = new javax.swing.JPanel();
-        rSButtonIcon_new3 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new4 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new5 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new6 = new newscomponents.RSButtonIcon_new();
@@ -343,6 +342,11 @@ public class Cliente extends javax.swing.JFrame {
 
         JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         JTextbuscar.setPlaceholder("Busqueda rapida");
+        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTextbuscarActionPerformed(evt);
+            }
+        });
         JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 JTextbuscarKeyReleased(evt);
@@ -551,18 +555,6 @@ public class Cliente extends javax.swing.JFrame {
 
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
         menuhide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new3.setText("Tipo de Identificaciones");
-        rSButtonIcon_new3.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        rSButtonIcon_new3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WEB);
-        rSButtonIcon_new3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new3ActionPerformed(evt);
-            }
-        });
-        menuhide.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 210, -1));
 
         rSButtonIcon_new4.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new4.setText("Modificar Clientes");
@@ -821,13 +813,6 @@ public class Cliente extends javax.swing.JFrame {
         linesetting1.setBackground(new Color(0,55,133));
     }//GEN-LAST:event_linesetting11MouseExited
 
-    private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
-        // TODO add your handling code here:
-        Empleados empleados = new Empleados();
-        empleados.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
-
     private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
         // TODO add your handling code here:
         Cliente clientes = new Cliente();
@@ -837,9 +822,8 @@ public class Cliente extends javax.swing.JFrame {
 
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
         // TODO add your handling code here:
-        Usuario usuarios = new Usuario();
-        usuarios.setVisible(true);
-        this.setVisible(false);
+      
+        
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 
     private void rSButtonIcon_new6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new6ActionPerformed
@@ -865,7 +849,10 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_linesetting12MouseClicked
 
     private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
-        // TODO add your handling code here:
+   
+        Menu m = new Menu();
+        m.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
 
     private void JTableEmpleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableEmpleadoMouseClicked
@@ -897,6 +884,10 @@ public class Cliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
         }
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
+
+    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
+        
+    }//GEN-LAST:event_JTextbuscarActionPerformed
     public void  changecolor(JPanel hover, Color rand){
      hover.setBackground(rand);
  }
@@ -1084,7 +1075,6 @@ public class Cliente extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new10;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new11;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new4;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new6;

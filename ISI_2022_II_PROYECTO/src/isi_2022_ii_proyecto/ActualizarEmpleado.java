@@ -49,8 +49,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
      public Boolean validar(){
        // char [] arrayC=rSMPassView1.getPassword();
         //String acceso= new String(arrayC);
-        if(JCodigoDisponible.getText().isEmpty() || NombreE1.getText().isEmpty() || NombreE3.getText().isEmpty() 
-                ||Ap1.getText().isEmpty() | || Ap2.getText().isEmpty()  || cuenta.getText().isEmpty() || correoE.getText().isEmpty() ){
+       if(JCodigoDisponible.getText().isEmpty() || NombreE1.getText().isEmpty() || NombreE3.getText().isEmpty() 
+                ||Ap1.getText().isEmpty()  || Ap2.getText().isEmpty()  || cuenta.getText().isEmpty() || correoE.getText().isEmpty() ){
             
             return false;
         }else{

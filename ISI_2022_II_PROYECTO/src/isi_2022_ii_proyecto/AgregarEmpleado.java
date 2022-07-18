@@ -271,8 +271,8 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         String segundonombre="";
         String Papellido="";
         String Sapellido="";
-       Date FechaN=Date.valueOf(rSDateChooser1.getFechaSeleccionada());
-       Date FechaC=Date.valueOf(rSDateChooser2.getFechaSeleccionada());
+       Date FechaN=Date.valueOf(Fn.getFechaSeleccionada());
+       Date FechaC=Date.valueOf(Fc.getFechaSeleccionada());
         String telefono="";
         String direccion="";
         String correo="";
@@ -404,8 +404,8 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         NombreE6 = new rojeru_san.RSMTextFull();
         FechaContracion1 = new javax.swing.JLabel();
-        rSDateChooser1 = new rojerusan.RSDateChooser();
-        rSDateChooser2 = new rojerusan.RSDateChooser();
+        Fn = new rojerusan.RSDateChooser();
+        Fc = new rojerusan.RSDateChooser();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -756,7 +756,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -1191,11 +1191,11 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         FechaContracion1.setText("Fecha Contratacion:");
         jPanel3.add(FechaContracion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 90, 150, 40));
 
-        rSDateChooser1.setLimpiarFecha(true);
-        rSDateChooser1.setName(""); // NOI18N
-        rSDateChooser1.setTextoFecha("2001/06/18");
-        jPanel3.add(rSDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 290, -1));
-        jPanel3.add(rSDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 90, 220, -1));
+        Fn.setLimpiarFecha(true);
+        Fn.setName(""); // NOI18N
+        Fn.setTextoFecha("2001/06/18");
+        jPanel3.add(Fn, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 290, -1));
+        jPanel3.add(Fc, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 90, 220, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1519,7 +1519,9 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CorreoAE;
     private javax.swing.JLabel CorreoAE1;
+    private rojerusan.RSDateChooser Fc;
     private javax.swing.JLabel FechaContracion1;
+    private rojerusan.RSDateChooser Fn;
     private javax.swing.JLabel Genero;
     private javax.swing.JPanel Header;
     private javax.swing.JLabel JCodigoDisponible;
@@ -1582,8 +1584,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new8;
-    private rojerusan.RSDateChooser rSDateChooser1;
-    private rojerusan.RSDateChooser rSDateChooser2;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon10;

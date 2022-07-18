@@ -1493,7 +1493,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="rojerusan.RSDateChooser" name="rSDateChooser1">
+                <Component class="rojerusan.RSDateChooser" name="Fn">
                   <Properties>
                     <Property name="limpiarFecha" type="boolean" value="true"/>
                     <Property name="name" type="java.lang.String" value="" noResource="true"/>
@@ -1505,7 +1505,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="rojerusan.RSDateChooser" name="rSDateChooser2">
+                <Component class="rojerusan.RSDateChooser" name="Fc">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="780" y="90" width="220" height="-1"/>

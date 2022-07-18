@@ -289,7 +289,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="MenuIcon" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="menuhide" min="-2" max="-2" attributes="0"/>
+                      <Component id="menuhide" min="-2" pref="210" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -628,16 +628,20 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="linesetting12" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new3" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new4" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new5" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new6" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new7" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new9" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new10" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new11" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="linesetting6" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="linesetting12" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new3" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new4" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new5" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new6" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new7" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new10" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="linesetting6" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new11" min="-2" pref="210" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -654,11 +658,9 @@
                           <Component id="rSButtonIcon_new6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new7" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                          <Component id="rSButtonIcon_new9" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new10" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new11" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="linesetting6" min="-2" pref="51" max="-2" attributes="0"/>
@@ -677,7 +679,7 @@
                       <Color blue="85" green="37" red="0" type="rgb"/>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor Por defecto"/>
+                      <Color id="Default Cursor"/>
                     </Property>
                     <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                       <Value id="WEB"/>
@@ -755,20 +757,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new7ActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new9">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="f3" green="96" red="21" type="rgb"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Puestos"/>
-                    <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="85" green="37" red="0" type="rgb"/>
-                    </Property>
-                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                      <Value id="RECENT_ACTORS"/>
-                    </Property>
-                  </Properties>
-                </Component>
                 <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new10">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -803,7 +791,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="rSLabelIcon4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="rSLabelIcon5" pref="71" max="32767" attributes="0"/>
+                              <Component id="rSLabelIcon5" pref="69" max="32767" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="rSLabelIcon3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
@@ -1191,6 +1179,7 @@
                     <Property name="placeholder" type="java.lang.String" value="Busqueda rapida"/>
                   </Properties>
                   <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="JTextbuscarMouseClicked"/>
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTextbuscarKeyReleased"/>
                   </Events>
                   <Constraints>

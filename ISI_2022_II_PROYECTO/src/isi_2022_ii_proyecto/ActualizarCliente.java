@@ -100,7 +100,35 @@ public class ActualizarCliente extends javax.swing.JFrame {
     }
         
     public Boolean validar(){
-      return true;
+        boolean a=true;
+      if(NombreC.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
+          a= false;
+      }
+      
+       if(ApellidoC.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese Apellidos");
+          a= false;
+      }
+        if(TelC.getText().contentEquals(paramString())){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
+          a= false;
+      }
+       
+        if(DireccionC.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese una direccion");
+          a= false;
+      }
+        
+       if(CorreoC.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
+          a= false;
+      }
+       
+      
+       return a;
+       
+      
     }
     
   
@@ -835,6 +863,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
 
         NombreC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NombreC.setPlaceholder("Ingrese los nombres del cliente");
+        NombreC.setSoloLetras(true);
         NombreC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NombreCActionPerformed(evt);
@@ -843,6 +872,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
 
         ApellidoC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ApellidoC.setPlaceholder("Ingrese los apellidos del cliente");
+        ApellidoC.setSoloLetras(true);
         ApellidoC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ApellidoCActionPerformed(evt);
@@ -851,6 +881,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
 
         TelC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TelC.setPlaceholder("Ingresa el numero Telefono");
+        TelC.setSoloNumeros(true);
         TelC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TelCActionPerformed(evt);

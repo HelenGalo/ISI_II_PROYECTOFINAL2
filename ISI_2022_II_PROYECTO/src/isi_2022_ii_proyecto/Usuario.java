@@ -863,7 +863,9 @@ public class Usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
 
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
-           buscarNombre();
+                buscarNombre();
+                limpiartabla();
+ 
            // TODO add your handling code here:
     
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
@@ -910,9 +912,9 @@ public class Usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_JTextbuscarKeyReleased
 
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
-
-           limpiartabla();
            buscarNombre();
+           limpiartabla();
+         
     }//GEN-LAST:event_JTextbuscarActionPerformed
 
     

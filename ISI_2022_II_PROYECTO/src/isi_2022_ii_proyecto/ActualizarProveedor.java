@@ -1081,7 +1081,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         // TODO add your handling code here:
         Proveedores p = new Proveedores();
         p.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
     private void linesetting12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linesetting12MouseClicked
