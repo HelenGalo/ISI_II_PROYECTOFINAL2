@@ -12,9 +12,14 @@ import java.awt.Color;
 
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +36,13 @@ public class Inicio extends javax.swing.JFrame {
     String usuario;
     String acceso;
     String vacceso="";
+    Hashtable<String, String> cifrador = new Hashtable<String, String>();
+    String contradC="";
+    String corredor1="";
+    int intentos;
+    String des = "";
+
+    
  
 
     /**
@@ -40,15 +52,191 @@ public class Inicio extends javax.swing.JFrame {
     public Inicio() {
         initComponents(); 
         this.setLocationRelativeTo(null);
+        inicializarValoresC();
         
         
-
-      
         
-   
-    
-       
     }
+    
+    
+    public void inicializarValoresC(){
+        cifrador.put("A", "E3:$%^");
+        cifrador.put("B", "Aq2=!#");
+        cifrador.put("C", "Zzp1@*");
+        cifrador.put("D", "lkh4$5");
+        cifrador.put("E", "^7192H");
+        cifrador.put("F", "%=zXQ+");
+        cifrador.put("G", "00FvT-");
+        cifrador.put("H", "&Cas45");
+        cifrador.put("I", "P4fdW3");
+        cifrador.put("J", "bgCo3l");
+        cifrador.put("K", "Someb3");
+        cifrador.put("L", "gDmen+");
+        cifrador.put("M", "Very03");
+        cifrador.put("N", "02ne#$");
+        cifrador.put("Ñ", "88df4#");
+        cifrador.put("O", "F#0002");
+        cifrador.put("P", "R%StUP");
+        cifrador.put("Q", "IDa7-*");
+        cifrador.put("R", "*-*.O.");
+        cifrador.put("S", "^0^663");
+        cifrador.put("T", "W@a&&e");
+        cifrador.put("U", "KOK#%)");
+        cifrador.put("V", "(-+)*$");
+        cifrador.put("W", "%hjkl1");
+        cifrador.put("X", "58l(%%");
+        cifrador.put("Y", "=34Sap");
+        cifrador.put("Z", "SaP012");
+        
+        //Cifrador de minusculas
+        cifrador.put("a", "dFGH46");
+        cifrador.put("b", "678Mza");
+        cifrador.put("c", "AS23Df");
+        cifrador.put("d", "ZXSR#4");
+        cifrador.put("e", "POPU27");
+        cifrador.put("f", "Iik&!4");
+        cifrador.put("g", "!-//+!");
+        cifrador.put("h", "F%^Nñd");
+        cifrador.put("i", "la34F4");
+        cifrador.put("j", "WcGh34");
+        cifrador.put("k", "-*=Mi");
+        cifrador.put("l", "ndSt92");
+        cifrador.put("m", "Kl2$!=");
+        cifrador.put("n", "*1V4hl");
+        cifrador.put("ñ", "Ru/e40");
+        cifrador.put("o", "00Fx#2");
+        cifrador.put("p", "1ce5G/");
+        cifrador.put("q", "*fht@)");
+        cifrador.put("r", "(45gR*");
+        cifrador.put("s", "!#$Tre");
+        cifrador.put("t", "^g%#^!");
+        cifrador.put("u", "M4%@Xx");
+        cifrador.put("v", "X-XO.0");
+        cifrador.put("w", "aQjf$%");
+        cifrador.put("x", "H3hl8*");
+        cifrador.put("y", "_-_93r");
+        cifrador.put("z", "7*7*+/");
+        
+        //cifrador de numeros
+        cifrador.put("0", "gGL4+/");
+        cifrador.put("1", "0UvUZ4");
+        cifrador.put("2", "5-5fJ%");
+        cifrador.put("3", "/1de89");
+        cifrador.put("4", "(89)bV");
+        cifrador.put("5", "LoLP40");
+        cifrador.put("6", "Mkl3^5");
+        cifrador.put("7", "$%$Kam");
+        cifrador.put("8", "BDuDu2");
+        cifrador.put("9", "K11LTL");
+        
+        //crifrador de simbolos
+        cifrador.put("$", "Le%(tm");
+        cifrador.put("#", "H0WYou");
+        cifrador.put("@", "L1K3Th");
+        cifrador.put("%", "aT--+^");
+        cifrador.put("/", "Inf@ou");
+        cifrador.put("&", "JaSJs*");
+        cifrador.put("*", "$$##/*/");
+        cifrador.put("-", "D&oNTA");
+        cifrador.put("+", "NGE/*/");
+        cifrador.put("!", "+----*");
+        cifrador.put("^", "!0!$$$");
+        cifrador.put("(", "BnM3%*");
+        cifrador.put(")", "LQ56^s");
+        cifrador.put("_", "HJond#");
+        cifrador.put("=", "Za3Dpe");
+        cifrador.put(".", "Ho(+)D");
+    }
+    
+    public void obtenerInt(){
+          String Sql = "Select u.Intentos from Usuarios u Where u.Usuario="+"'"+usuario+"'";
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(Sql);
+            while (rs.next()) {
+                intentos = rs.getInt("Intentos");
+            }
+            
+        
+        
+        
+         }catch(Exception e){
+             System.out.println("Error "+e.getMessage());
+             
+             
+          
+                    }
+        
+    }
+    
+    private void encriptar(){
+        String contra = "Erem1862";
+        char puntero;
+        String contraC = "";
+        //Cifrador de mayusculas//
+        
+       
+        for(int i=0;i<8;i++){
+            puntero = contra.charAt(i);
+            contraC = contraC + cifrador.get(String.valueOf(puntero));
+            
+        
+            
+        }
+        
+        System.out.println("La contrase es: " + contra);
+        System.out.println("La contraseC es: " + contraC);
+        
+    }
+    
+    
+    private void buscar(Hashtable ri){
+        
+        Enumeration llaves = ri.keys();
+         while (llaves.hasMoreElements()) {
+                Object key = llaves.nextElement();
+                Object elemnt = cifrador.get(key);
+                if(cifrador.get(key).equals(corredor1)){
+                    contradC = contradC + key.toString();
+                  
+                
+                }
+
+            }
+    }
+    
+    private String desencriptar(String C){
+        String contraC = C;
+        char puntero;
+        
+        
+        int cont=0;
+        int cont1=0;
+       
+        for (int i=0; i<8; i++){
+            corredor1="";
+            for( int j=cont1; j<6+cont; j++){
+                puntero = contraC.charAt(j);
+                corredor1 = corredor1 + String.valueOf(puntero);
+               
+          
+            }
+       
+            
+            buscar(cifrador);
+            cont = cont + 6;
+            cont1=cont1+6;
+            
+                
+            }
+ 
+         return contradC;
+            
+           
+      
+        }
+    
+           
     
     
     private void temporizador(){
@@ -71,6 +259,46 @@ public class Inicio extends javax.swing.JFrame {
         }else{
             return true;
         }
+    }
+    
+    
+    private void refrescarIntentos(){
+        
+        
+       String Sql = "Select u.Intentos from Usuarios u Where u.Usuario="+"'"+usuario+"'";
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(Sql);
+            while (rs.next()) {
+                intentos = rs.getInt("Intentos");
+            }
+            
+        
+        
+        
+         }catch(Exception e){
+             System.out.println("Error "+e.getMessage());
+             
+             
+          
+                    }
+        
+        
+        
+        String SQL1 = "UPDATE Usuarios u SET u.Intentos=? WHERE u.Usuario="+"'"+usuario+"'";
+  
+        try {
+            int intentosAct= intentos-1;
+            PreparedStatement preparedStmt = con.prepareStatement(SQL1);
+            preparedStmt.setInt (1, intentosAct);
+            preparedStmt.execute();
+            
+             JOptionPane.showMessageDialog(null, "Intentos Refresacados");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
     }
     
     private void obteneracceso(){
@@ -102,7 +330,14 @@ public class Inicio extends javax.swing.JFrame {
          System.out.println("contra ingre "+acceso);
          System.out.println("user "+usuario);
          System.out.println("contra reci "+vacceso);
-         temporizador();
+         System.out.println("contra reci "+vacceso.length());
+         if(vacceso.length()==0){
+            JOptionPane.showMessageDialog(null, "Acceso denegado, por favor revise las credenciales");
+         }else{
+            obtenerInt();
+            temporizador(); 
+         }
+         
         
     }
     
@@ -111,19 +346,42 @@ public class Inicio extends javax.swing.JFrame {
     }
     
     public void logearse(){
-       
-         if(acceso.equals(vacceso)){
-             try {
-                 con.close();
-             } catch (SQLException ex) {
-                 Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        contradC="";
+        des = desencriptar(vacceso);
+        System.out.println("la contra es: "+vacceso);
+        System.out.println("la contrase des es: "+des);
+        System.out.println("la contra1 es: "+acceso);
+           
+        if(acceso.equals(des)){
+            
+             if(intentos>0){
+                 
+                try {
+                    con.close();
+                    Menu me = new Menu();
+                    me.setUsuario(usuario.toString());
+                    me.setVisible(true);
+                    this.dispose();
+                 } catch (SQLException ex) {
+                    System.out.println("Error: "+ ex.getMessage());
              }
-             Menu me = new Menu();
-             me.setVisible(true);
-             this.dispose();
-         }else{
-             JOptionPane.showMessageDialog(null, "USUARIO NO ENCONTRADO");
-         }
+             }else{
+                 JOptionPane.showMessageDialog(null, "Acceso denegado, usuario bloqueado, contacte al administrador");
+             }
+             
+           
+             
+        }else{
+            if(intentos>0){
+                 refrescarIntentos();
+                 JOptionPane.showMessageDialog(null, "Acceso denegado, por favor revise las credenciales");
+             }else{
+                 JOptionPane.showMessageDialog(null, "Acceso denegado, usuario bloqueado, contacte al administrador");
+             }
+             
+             
+             
+        }
     }
 
     /**

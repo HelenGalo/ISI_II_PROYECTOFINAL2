@@ -1189,8 +1189,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             String usuario="";
 
             String name = JComboEstado.getSelectedItem().toString();
-            int idEmpleadov = Empleados.get(name);
-            String SQL = "Select e.IdEmpleado, e.PrimerNombre,e.PrimerApellido FROM Empleados e Where e.IdEmpleado="+idEmpleadov;
+          
+            String SQL = "Select e.IdEmpleado, e.PrimerNombre,e.PrimerApellido FROM Empleados e Where e.IdEmpleado="+cliente;
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 

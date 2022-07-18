@@ -817,7 +817,7 @@ public class Cliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         Cliente clientes = new Cliente();
         clientes.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
 
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
