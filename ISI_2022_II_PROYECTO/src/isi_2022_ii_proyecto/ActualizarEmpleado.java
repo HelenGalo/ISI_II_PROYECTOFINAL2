@@ -9,12 +9,16 @@ import isi_2022_ii_proyecto.Recursos.ColorFondo;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,37 +34,171 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
      * Creates new form AgregarCliente
      */
     boolean a = true;
-    String cliente;
+    String empleado;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     int id=0;
+    private String rol;
+   
+    String codigoe="";
 
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
+   
+    HashMap<String, Integer> puestos = new HashMap<String, Integer>();
+    HashMap<String, Integer> documentos = new HashMap<String, Integer>();
+
+    public void setEmpleado(String empleado) {
+        this.empleado= empleado;
     }
-    
+     
+       
     public ActualizarEmpleado() {
         initComponents();
+        inicializar();
+        buscardatos();
     }
-    
-    public void inicializar(){
-        jLabel13.setText(cliente);
-    }
-     public Boolean validar(){
-       // char [] arrayC=rSMPassView1.getPassword();
-        //String acceso= new String(arrayC);
-       if(JCodigoDisponible.getText().isEmpty() || NombreE1.getText().isEmpty() || NombreE3.getText().isEmpty() 
-                ||Ap1.getText().isEmpty()  || Ap2.getText().isEmpty()  || cuenta.getText().isEmpty() || correoE.getText().isEmpty() ){
+    public void Mostrar(){
+String primernombre="";
+       String segundonombre="";
+       String Papellido="";
+       String Sapellido="";
+       String formato="yyyy/MM/dd";
+       String correo="";
+       int genero=1;
+       int puesto=1;
+       int numeroCta=1;
+       int estado=0;
+       int IdTipodocumento=1;
+       
+       Date FechaN=FN.getDatoFecha();
+       Date FechaC=FC.getDatoFecha();
+       SimpleDateFormat formateador = new SimpleDateFormat(formato);
+       String Fn = formateador.format(FechaN);
+       String Fc =formateador.format(FechaC);
+        
+        genero=Obtenergenero();
+       
+        puesto=Obtenerpuesto();
+        
+        numeroCta=Integer.parseInt(cuenta.getText());
+        
+        estado=Obtenerestado();
+        
+        IdTipodocumento=ObtenerTipoD();
+        String direccion="";
+        String SQL = "Select * from Empleados Where IdEmpleado="+id;
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+              primernombre=rs.getString("PrimerNombre");
+              segundonombre =rs.getString("SegundoNombre");
+              Papellido =rs.getString("PrimerApellido");
+             Sapellido =rs.getString("SegundoApellido");
+              correo = rs.getString("CorreoElectronico");
+               puesto= rs.getInt("Puesto");
+               direccion = rs.getString("DireccionEmpleado");
+               numeroCta = rs.getInt("NumeroCuenta");
+               Fn= rs.getString("FechaNacimiento");
+               Fc = rs.getString("FechaContratacion");
+                      
+              
+              
+            }
             
-            return false;
-        }else{
-            return true;
+            pnomb.setText(primernombre);
+            segundonom.setText(segundonombre);
+            ape1.setText(Papellido);
+            ape2.setText(Sapellido);
+            CorreoAE.setText(correo);
+            cuenta.setText(String.valueOf(numeroCta));
+            JCodigoDisponible.setText(String.valueOf(id));
+            
+       
+            
+
+           
+       
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    
-    public void buscardatos(){
-          String SQL = "SELECT * FROM Clientes WHERE idCliente=(SELECT max(IdCliente) FROM Clientes)";
+     public void actualizar(){
+        
+       String primernombre="";
+       String segundonombre="";
+       String Papellido="";
+       String Sapellido="";
+       String formato="yyyy/MM/dd";
+       String correo="";
+       int genero=1;
+       int puesto=1;
+       int numeroCta=1;
+       int estado=0;
+       int IdTipodocumento=1;
+       
+       Date FechaN=FN.getDatoFecha();
+       Date FechaC=FC.getDatoFecha();
+       SimpleDateFormat formateador = new SimpleDateFormat(formato);
+       String Fn = formateador.format(FechaN);
+       String Fc =formateador.format(FechaC);
+        
+        genero=Obtenergenero();
+       
+        puesto=Obtenerpuesto();
+        
+        numeroCta=Integer.parseInt(cuenta.getText());
+        
+        estado=Obtenerestado();
+        
+        IdTipodocumento=ObtenerTipoD();
+        String direccion="";
+
+        
+ 
+        String SQL = "UPDATE Empleados SET PrimerNombre=?, SegundoNombre=?, FechaNacimiento=?, IdTipoDocumento=?, CorreoElectronico=?, IdGenero=?, DireccionEmpleado=?, IdPuesto=?, FechaContratacion=?, NumeroCuenta=?, IdEstado=?, PrimerApellido=?, "
+                + "SegundoApellido=? + WHERE IdEmpleado="+"'"+id+"'";
+        try {
+           PreparedStatement preparedStmt = con.prepareStatement(SQL);;
+         
+            preparedStmt.setString (1, primernombre);
+            preparedStmt.setString   (2, segundonombre);
+            preparedStmt.setString(3, Fn);
+            preparedStmt.setInt(4, IdTipodocumento);
+            preparedStmt.setString(5, correo);
+            preparedStmt.setInt(6, genero);
+            preparedStmt.setString(7, direccion);
+            preparedStmt.setInt(8, puesto);
+            preparedStmt.setString(9, Fc);
+            preparedStmt.setInt(10, numeroCta );
+            preparedStmt.setInt(11, estado);
+            preparedStmt.setString(12, Papellido);
+            preparedStmt.setString(13, Sapellido);
+            preparedStmt.execute();
+            JOptionPane.showMessageDialog(this, "Registro Guardado");
+
+        } catch (SQLException e) {
+            System.out.println("ERROR AL REGISTRAR: " + e.getMessage());
+        }
+        
+        
+        
+       
+    }
+    public void inicializar(){
+         String SQL = "SELECT * FROM TipoDocumento";
+         String des="";
+         
+         String SQL1 = "SELECT * FROM Puestos";
+         String puesto="";
+         
+         String SQL2 = "SELECT * FROM EstadosUsuario";
+         String estadou="";
+         
+         String SQL3 = "SELECT * FROM Generos";
+         String genero="";
           
           
         try {
@@ -68,7 +206,66 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                id = rs.getInt("IdCliente");
+               des = rs.getString("Descripcion");
+               JComboTipo2.addItem(des);
+               
+                
+            }
+            
+            
+            Statement st1 = (Statement) con.createStatement();
+            ResultSet rs1 = st1.executeQuery(SQL1);
+
+            while (rs1.next()) {
+               des = rs1.getString("Nombre");
+               JComboGen1.addItem(des);
+               
+                
+            }
+            
+            Statement st2 = (Statement) con.createStatement();
+            ResultSet rs2 = st2.executeQuery(SQL2);
+
+            while (rs2.next()) {
+               des = rs2.getString("Descripcion");
+               JComboEstado.addItem(des);
+               
+                
+            }
+            
+            
+            Statement st3 = (Statement) con.createStatement();
+            ResultSet rs3 = st3.executeQuery(SQL3);
+
+            while (rs3.next()) {
+               des = rs3.getString("Nombre");
+               JCombopuesto.addItem(des);
+               
+                
+            }
+
+            
+    
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+       
+    
+    }
+    
+    public void buscardatos(){
+          String SQL = "SELECT * FROM Empleados WHERE IdEmpleado=(SELECT max(IdEmpleado) FROM Empleados)";
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                id = rs.getInt("IdEmpleado");
                
                 
             }
@@ -76,8 +273,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             
             System.out.println("SIN SUMAR"+String.valueOf(id));
             id = id +1;
-            System.out.println(String.valueOf(id));
-            jLabel13.setText(String.valueOf(id));
+ 
+            JCodigoDisponible.setText(String.valueOf(id));
             
            
 
@@ -86,36 +283,129 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         }
     }
     
-    public void insertar(){
-        String nombres="";
-        String apellidos="";
-        String telefono="";
-        String direccion="";
-        String correo="";
-        
-       
-        
-        String SQL = "INSERT INTO Clientes (IdCliente,Nombres,Apellidos,DireccionCliente,Telefono,CorreoElectronico) VALUES"
-                + "(?, ?, ?, ?, ?, ?)";
+    
+    public int ObtenerTipoD(){
+          String SQL = "SELECT t.IdTipoDocumento FROM TipoDocumento t Where t.Descripcion="+"'"+JComboTipo2.getSelectedItem().toString()+"'";
+          int idp=0;
+          
         try {
-            PreparedStatement preparedStmt = con.prepareStatement(SQL);
-            preparedStmt.setInt(1, id);
-            preparedStmt.setString (2, nombres);
-            preparedStmt.setString   (3, apellidos);
-            preparedStmt.setString(4, direccion);
-            preparedStmt.setString(5, telefono);
-            preparedStmt.setString(6, correo);
-            preparedStmt.execute();
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
 
-        } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());
+            while (rs.next()) {
+                idp = rs.getInt("IdTipoDocumento");
+               
+                
+            }
+
+            
+            
+ 
+            
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+        return idp;
         
-        
-        
-       
     }
+    
+    
+    
+     public int Obtenerpuesto(){
+          String SQL = "SELECT p.IdPuesto FROM Puestos p Where p.Nombre="+"'"+JComboGen1.getSelectedItem().toString()+"'";
+          int idp=0;
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
 
+            while (rs.next()) {
+                idp = rs.getInt("IdPuesto");
+               
+                
+            }
+
+            
+            
+ 
+            
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return idp;
+        
+    }
+    
+    
+    public int Obtenergenero(){
+          String SQL = "SELECT g.IdGenero FROM Generos g Where g.Nombre="+"'"+JCombopuesto.getSelectedItem().toString()+"'";
+          int idg=0;
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idg = rs.getInt("IdGenero");
+               
+                
+            }
+
+            
+            
+ 
+            
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return idg;
+        
+    }
+    
+     public int Obtenerestado(){
+          String SQL = "SELECT g.IdEstado FROM EstadosUsuario g Where g.Descripcion="+"'"+JComboEstado.getSelectedItem().toString()+"'";
+          int idg=0;
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idg = rs.getInt("IdEstado");
+               
+                
+            }
+
+            
+            
+ 
+            
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return idg;
+        
+    }
+    
+   
+    
+    public Boolean validar(){
+      
+        return true;
+      
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -163,11 +453,6 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         dashboardview = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        rSLabelIcon1 = new rojerusan.RSLabelIcon();
-        jLabel6 = new javax.swing.JLabel();
-        rSLabelIcon2 = new rojerusan.RSLabelIcon();
-        rSLabelHora1 = new rojeru_san.RSLabelHora();
         jPanel3 = new javax.swing.JPanel();
         rSPanelOpacity1 = new RSMaterialComponent.RSPanelOpacity();
         rSLabelIcon6 = new rojerusan.RSLabelIcon();
@@ -186,28 +471,34 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         rSPanelCircle1 = new rojeru_san.rspanel.RSPanelCircle();
         JCodigoDisponible = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         rSButtonIcon_new8 = new newscomponents.RSButtonIcon_new();
-        Ap2 = new rojeru_san.RSMTextFull();
+        ape2 = new rojeru_san.RSMTextFull();
         cuenta = new rojeru_san.RSMTextFull();
-        NombreE3 = new rojeru_san.RSMTextFull();
-        Ap1 = new rojeru_san.RSMTextFull();
+        segundonom = new rojeru_san.RSMTextFull();
+        ident1 = new rojeru_san.RSMTextFull();
         JComboEstado = new rojerusan.RSComboMetro();
         jLabel23 = new javax.swing.JLabel();
         CorreoAE = new javax.swing.JLabel();
         JCombopuesto = new rojerusan.RSComboMetro();
-        NombreE1 = new rojeru_san.RSMTextFull();
+        pnomb = new rojeru_san.RSMTextFull();
         CorreoAE1 = new javax.swing.JLabel();
-        correoE = new rojeru_san.RSMTextFull();
+        correo1 = new rojeru_san.RSMTextFull();
         estado = new javax.swing.JLabel();
-        FechaContracion = new javax.swing.JLabel();
         JComboGen1 = new rojerusan.RSComboMetro();
         jLabel24 = new javax.swing.JLabel();
         JComboTipo2 = new rojerusan.RSComboMetro();
-        JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
-        Fc = new rojerusan.RSDateChooser();
-        Fn = new rojerusan.RSDateChooser();
+        jLabel26 = new javax.swing.JLabel();
+        ape1 = new rojeru_san.RSMTextFull();
+        FechaContracion1 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        FN = new rojeru_san.componentes.RSDateChooser();
+        FC = new rojeru_san.componentes.RSDateChooser();
+        jPanel4 = new javax.swing.JPanel();
+        rSLabelIcon1 = new rojerusan.RSLabelIcon();
+        jLabel6 = new javax.swing.JLabel();
+        rSLabelIcon2 = new rojerusan.RSLabelIcon();
+        rSLabelHora1 = new rojeru_san.RSLabelHora();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -580,14 +871,14 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Empleado");
+        jLabel3.setText("Empleados");
         linesetting12.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 210, 40));
 
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Modificar");
-        linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 210, 20));
+        linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
 
         javax.swing.GroupLayout menuhideLayout = new javax.swing.GroupLayout(menuhide);
         menuhide.setLayout(menuhideLayout);
@@ -604,7 +895,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(500, 500, 500)
-                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
@@ -618,30 +909,11 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
             .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
-
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MENU);
-        jPanel4.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
-
-        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(102, 0, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO EMPLEADOS");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
-
-        rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
-        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, 60, 50));
-
-        rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
-        jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -708,9 +980,9 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         rSPanelOpacity1Layout.setHorizontalGroup(
             rSPanelOpacity1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rSPanelOpacity1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addComponent(rSLabelIcon8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel9)
                 .addGap(11, 11, 11)
                 .addComponent(jLabel7)
@@ -752,19 +1024,19 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
-        jPanel3.add(rSPanelOpacity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 50));
+        jPanel3.add(rSPanelOpacity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1050, 50));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("CodigoUsuario Disponible:");
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, 190, 70));
+        jLabel17.setText("Codigo Empleado Disponible:");
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 220, 50));
 
         Genero.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Genero.setForeground(new java.awt.Color(153, 0, 255));
         Genero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Genero.setText("Genero:");
-        jPanel3.add(Genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, 150, 30));
+        jPanel3.add(Genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, 150, 30));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -779,36 +1051,30 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             rSPanelCircle1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelCircle1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                 .addContainerGap())
         );
         rSPanelCircle1Layout.setVerticalGroup(
             rSPanelCircle1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rSPanelCircle1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel3.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, 70, 70));
+        jPanel3.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 70, 70));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(153, 0, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("IdPuesto");
-        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 180, 40));
-
-        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setText("Fecha de nacimiento");
-        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 180, 30));
+        jLabel20.setText("Puesto:");
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 420, 140, 30));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("Apellidos");
-        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 180, 30));
+        jLabel22.setText("Apellidos del Empleado:");
+        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 190, 30));
 
         rSButtonIcon_new8.setBackground(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new8.setText("Guardar");
@@ -820,16 +1086,16 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 rSButtonIcon_new8ActionPerformed(evt);
             }
         });
-        jPanel3.add(rSButtonIcon_new8, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 490, 110, 40));
+        jPanel3.add(rSButtonIcon_new8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 110, 40));
 
-        Ap2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Ap2.setPlaceholder("Ingresa nombre");
-        Ap2.addActionListener(new java.awt.event.ActionListener() {
+        ape2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ape2.setPlaceholder("Ingresa nombre");
+        ape2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Ap2ActionPerformed(evt);
+                ape2ActionPerformed(evt);
             }
         });
-        jPanel3.add(Ap2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 230, 130, -1));
+        jPanel3.add(ape2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 130, -1));
 
         cuenta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         cuenta.setPlaceholder("Ingrese Cuenta");
@@ -838,25 +1104,25 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 cuentaActionPerformed(evt);
             }
         });
-        jPanel3.add(cuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 230, 210, 30));
+        jPanel3.add(cuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 230, 220, 30));
 
-        NombreE3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NombreE3.setPlaceholder("Ingresa nombre");
-        NombreE3.addActionListener(new java.awt.event.ActionListener() {
+        segundonom.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        segundonom.setPlaceholder("Ingresa nombre");
+        segundonom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreE3ActionPerformed(evt);
+                segundonomActionPerformed(evt);
             }
         });
-        jPanel3.add(NombreE3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, 130, -1));
+        jPanel3.add(segundonom, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 130, -1));
 
-        Ap1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Ap1.setPlaceholder("Ingresa nombre");
-        Ap1.addActionListener(new java.awt.event.ActionListener() {
+        ident1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ident1.setPlaceholder("Ingresa nombre");
+        ident1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Ap1ActionPerformed(evt);
+                ident1ActionPerformed(evt);
             }
         });
-        jPanel3.add(Ap1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 130, -1));
+        jPanel3.add(ident1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, 280, -1));
 
         JComboEstado.setColorArrow(new java.awt.Color(102, 0, 255));
         JComboEstado.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -876,19 +1142,19 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 JComboEstadoActionPerformed(evt);
             }
         });
-        jPanel3.add(JComboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 370, 160, 30));
+        jPanel3.add(JComboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 300, 220, 30));
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(153, 0, 255));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("Nombre del Empleado:");
-        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 190, 30));
+        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 190, 30));
 
         CorreoAE.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         CorreoAE.setForeground(new java.awt.Color(153, 0, 255));
         CorreoAE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CorreoAE.setText("Numero cuenta");
-        jPanel3.add(CorreoAE, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 240, 160, 30));
+        CorreoAE.setText("Numero cuenta:");
+        jPanel3.add(CorreoAE, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 240, 150, 30));
 
         JCombopuesto.setColorArrow(new java.awt.Color(102, 0, 255));
         JCombopuesto.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -908,43 +1174,37 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 JCombopuestoActionPerformed(evt);
             }
         });
-        jPanel3.add(JCombopuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, 260, 30));
+        jPanel3.add(JCombopuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 360, 220, 30));
 
-        NombreE1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NombreE1.setPlaceholder("Ingresa nombre");
-        NombreE1.addActionListener(new java.awt.event.ActionListener() {
+        pnomb.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        pnomb.setPlaceholder("Ingresa nombre");
+        pnomb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreE1ActionPerformed(evt);
+                pnombActionPerformed(evt);
             }
         });
-        jPanel3.add(NombreE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, 130, -1));
+        jPanel3.add(pnomb, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 140, -1));
 
         CorreoAE1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         CorreoAE1.setForeground(new java.awt.Color(153, 0, 255));
         CorreoAE1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         CorreoAE1.setText("Correo Electronico:");
-        jPanel3.add(CorreoAE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 180, 160, 30));
+        jPanel3.add(CorreoAE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, 150, 30));
 
-        correoE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        correoE.setPlaceholder("Ingrese Correo");
-        correoE.addActionListener(new java.awt.event.ActionListener() {
+        correo1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        correo1.setPlaceholder("Ingrese Correo");
+        correo1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                correoEActionPerformed(evt);
+                correo1ActionPerformed(evt);
             }
         });
-        jPanel3.add(correoE, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 180, 210, 30));
+        jPanel3.add(correo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 170, 220, 30));
 
         estado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         estado.setForeground(new java.awt.Color(153, 0, 255));
         estado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        estado.setText("Estado");
-        jPanel3.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 370, 150, 30));
-
-        FechaContracion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        FechaContracion.setForeground(new java.awt.Color(153, 0, 255));
-        FechaContracion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        FechaContracion.setText("Fecha Contratacion");
-        jPanel3.add(FechaContracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 300, 150, 30));
+        estado.setText("Estado:");
+        jPanel3.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, 160, 30));
 
         JComboGen1.setColorArrow(new java.awt.Color(102, 0, 255));
         JComboGen1.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -964,13 +1224,13 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 JComboGen1ActionPerformed(evt);
             }
         });
-        jPanel3.add(JComboGen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 80, 160, 30));
+        jPanel3.add(JComboGen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 420, 220, 30));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(153, 0, 255));
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel24.setText("Tipo documento");
-        jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 180, 40));
+        jLabel24.setText("No. Identificacion:");
+        jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, 170, 30));
 
         JComboTipo2.setColorArrow(new java.awt.Color(102, 0, 255));
         JComboTipo2.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -990,47 +1250,71 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 JComboTipo2ActionPerformed(evt);
             }
         });
-        jPanel3.add(JComboTipo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 380, 260, 30));
+        jPanel3.add(JComboTipo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 390, 280, 30));
 
-        JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
-        JTextbuscar.setPlaceholder("Busqueda rapida");
-        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel26.setText("Tipo documento");
+        jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 170, 30));
+
+        ape1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ape1.setPlaceholder("Ingresa nombre");
+        ape1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTextbuscarActionPerformed(evt);
+                ape1ActionPerformed(evt);
             }
         });
-        JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                JTextbuscarKeyReleased(evt);
-            }
-        });
-        jPanel3.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+        jPanel3.add(ape1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, 140, -1));
 
-        Fc.setLimpiarFecha(true);
-        Fc.setName(""); // NOI18N
-        Fc.setTextoFecha("2001/06/18");
-        jPanel3.add(Fc, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 300, 290, -1));
+        FechaContracion1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        FechaContracion1.setForeground(new java.awt.Color(153, 0, 255));
+        FechaContracion1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        FechaContracion1.setText("Fecha Contratacion:");
+        jPanel3.add(FechaContracion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 90, 150, 40));
 
-        Fn.setLimpiarFecha(true);
-        Fn.setName(""); // NOI18N
-        Fn.setTextoFecha("2001/06/18");
-        jPanel3.add(Fn, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 290, -1));
+        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel27.setText("Fecha de nacimiento");
+        jPanel3.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 180, 30));
+        jPanel3.add(FN, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, -1, -1));
+        jPanel3.add(FC, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 90, -1, -1));
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MENU);
+        jPanel4.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel6.setText("MODULO EMPLEADO");
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
+
+        rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
+        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, 60, 50));
+
+        rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
+        jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
 
         javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
         dashboardview.setLayout(dashboardviewLayout);
         dashboardviewLayout.setHorizontalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1156, Short.MAX_VALUE)
             .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(37, 37, 37)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1047, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dashboardviewLayout.setVerticalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(47, 47, 47)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(24, 24, 24))
         );
@@ -1041,24 +1325,23 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1416, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(260, 260, 260)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(1377, 620));
+        setSize(new java.awt.Dimension(1362, 716));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1149,31 +1432,33 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(validar()==true){
 
-            insertar();
+        actualizar();
 
         }else{
             JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
         }
+
     }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
 
-    private void Ap2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Ap2ActionPerformed
+    private void ape2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ape2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Ap2ActionPerformed
+    }//GEN-LAST:event_ape2ActionPerformed
 
     private void cuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cuentaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cuentaActionPerformed
 
-    private void NombreE3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreE3ActionPerformed
+    private void segundonomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_segundonomActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NombreE3ActionPerformed
+    }//GEN-LAST:event_segundonomActionPerformed
 
-    private void Ap1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Ap1ActionPerformed
+    private void ident1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ident1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Ap1ActionPerformed
+    }//GEN-LAST:event_ident1ActionPerformed
 
     private void JComboEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEstadoMouseClicked
         // TODO add your handling code here:
+
     }//GEN-LAST:event_JComboEstadoMouseClicked
 
     private void JComboEstadoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEstadoMouseEntered
@@ -1182,32 +1467,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
     private void JComboEstadoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEstadoMouseExited
         // TODO add your handling code here:
-        try {
-            int idEmpleado=0;
-            String primername="";
-            String primerapellido="";
-            String usuario="";
-
-            String name = JComboEstado.getSelectedItem().toString();
-          
-            String SQL = "Select e.IdEmpleado, e.PrimerNombre,e.PrimerApellido FROM Empleados e Where e.IdEmpleado="+cliente;
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                idEmpleado =rs.getInt("IdEmpleado");
-                primername =rs.getString("PrimerNombre");
-                primerapellido =rs.getString("PrimerApellido");
-
-            }
-
-            usuario= primername.toLowerCase()+"."+primerapellido.toLowerCase()+String.valueOf(idEmpleado);
-
-            //Juser2.setText(usuario);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
+        
     }//GEN-LAST:event_JComboEstadoMouseExited
 
     private void JComboEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboEstadoActionPerformed
@@ -1230,29 +1490,13 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JCombopuestoActionPerformed
 
-    private void NombreE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreE1ActionPerformed
+    private void pnombActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pnombActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NombreE1ActionPerformed
+    }//GEN-LAST:event_pnombActionPerformed
 
-    private void correoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correoEActionPerformed
+    private void correo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correo1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_correoEActionPerformed
-
-    private void JComboGen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JComboGen1MouseClicked
-
-    private void JComboGen1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JComboGen1MouseEntered
-
-    private void JComboGen1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JComboGen1MouseExited
-
-    private void JComboGen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboGen1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JComboGen1ActionPerformed
+    }//GEN-LAST:event_correo1ActionPerformed
 
     private void JComboTipo2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboTipo2MouseClicked
         // TODO add your handling code here:
@@ -1270,21 +1514,25 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JComboTipo2ActionPerformed
 
-    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
-
-       // limpiartabla();
-        //buscarNombre();
-
-    }//GEN-LAST:event_JTextbuscarActionPerformed
-
-    private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
+    private void JComboGen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboGen1ActionPerformed
         // TODO add your handling code here:
-        /*if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            limpiartabla();
-            buscarNombre();
+    }//GEN-LAST:event_JComboGen1ActionPerformed
 
-        }*/
-    }//GEN-LAST:event_JTextbuscarKeyReleased
+    private void JComboGen1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JComboGen1MouseExited
+
+    private void JComboGen1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JComboGen1MouseEntered
+
+    private void JComboGen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JComboGen1MouseClicked
+
+    private void ape1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ape1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ape1ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1345,10 +1593,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1359,13 +1603,11 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private rojeru_san.RSMTextFull Ap1;
-    private rojeru_san.RSMTextFull Ap2;
     private javax.swing.JLabel CorreoAE;
     private javax.swing.JLabel CorreoAE1;
-    private rojerusan.RSDateChooser Fc;
-    private javax.swing.JLabel FechaContracion;
-    private rojerusan.RSDateChooser Fn;
+    private rojeru_san.componentes.RSDateChooser FC;
+    private rojeru_san.componentes.RSDateChooser FN;
+    private javax.swing.JLabel FechaContracion1;
     private javax.swing.JLabel Genero;
     private javax.swing.JPanel Header;
     private javax.swing.JLabel JCodigoDisponible;
@@ -1373,15 +1615,15 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSComboMetro JComboGen1;
     private rojerusan.RSComboMetro JComboTipo2;
     private rojerusan.RSComboMetro JCombopuesto;
-    private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel MenuIcon;
-    private rojeru_san.RSMTextFull NombreE1;
-    private rojeru_san.RSMTextFull NombreE3;
-    private rojeru_san.RSMTextFull correoE;
+    private rojeru_san.RSMTextFull ape1;
+    private rojeru_san.RSMTextFull ape2;
+    private rojeru_san.RSMTextFull correo1;
     private rojeru_san.RSMTextFull cuenta;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JLabel estado;
     private javax.swing.JPanel iconminmaxclose;
+    private rojeru_san.RSMTextFull ident1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1389,10 +1631,11 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1420,6 +1663,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel linesetting9;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel menuhide;
+    private rojeru_san.RSMTextFull pnomb;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
@@ -1442,5 +1686,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.rspanel.RSPanelCircle rSPanelCircle1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     private rojerusan.RSYearDateBeanInfo rSYearDateBeanInfo1;
+    private rojeru_san.RSMTextFull segundonom;
     // End of variables declaration//GEN-END:variables
+
+    
 }
