@@ -53,6 +53,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
     
     
   public void inicio(){
+        RSUtilities.setFullScreenJFrame(this);
         listarentradas();
         listaresalidas();
         totalentradas();
@@ -103,7 +104,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR FELLE SO" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -129,7 +130,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR HELLO" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
       
@@ -155,7 +156,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR ARI " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -184,20 +185,20 @@ public class BancosMovimientos extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR NPES" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
     
     public void totalsalidas(){
         String tsalidas="0.00";
-        String SQL = "SELECT sum(db.Valor) as 'TOTALSALIDAS' FROM DetallesBancarios db\n" +
+        String SQL = "SELECT sum(db.Valor) FROM DetallesBancarios db\n" +
                      "WHERE db.IdTipoTransaccion=2 AND db.IdCuenta="+codigob;
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                tsalidas=String.valueOf(rs.getFloat("TOTALSALIDAS"));
+                tsalidas=String.valueOf(rs.getFloat("sum(db.Valor)"));
               
             }
             if(tipoc.equals("LEMPIRAS")){
@@ -213,7 +214,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR PUEDE SER" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
      
@@ -267,7 +268,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AQUI" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -292,7 +293,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR OTRO" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
      
@@ -321,7 +322,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "EL QUE NO" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -337,10 +338,10 @@ public class BancosMovimientos extends javax.swing.JFrame {
               
             }
             if(tipoc.equals("LEMPIRAS")){
-               jLabel17.setText("L."+tsalidas);
+               jLabel17.setText("L."+tsalidas.toString());
             }else{
                 if(tipoc.equals("DOLARES")){
-               jLabel17.setText("$."+tsalidas);
+               jLabel17.setText("$."+tsalidas.toString());
             }
             }
             
@@ -349,7 +350,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "EL QUE BUSCO" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -595,8 +596,11 @@ public class BancosMovimientos extends javax.swing.JFrame {
         );
         HeaderLayout.setVerticalGroup(
             HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(iconminmaxclose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(HeaderLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(iconminmaxclose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
         );
 
         jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1369, -1));
@@ -618,7 +622,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        linehidemenu.setBackground(new java.awt.Color(5, 10, 46));
+        linehidemenu.setBackground(new java.awt.Color(0, 55, 133));
         linehidemenu.setPreferredSize(new java.awt.Dimension(50, 10));
 
         javax.swing.GroupLayout linehidemenuLayout = new javax.swing.GroupLayout(linehidemenu);
@@ -1115,7 +1119,6 @@ public class BancosMovimientos extends javax.swing.JFrame {
         JTableBancosEntradas.setEffectHover(true);
         JTableBancosEntradas.setHighHead(50);
         JTableBancosEntradas.setRowHeight(50);
-        JTableBancosEntradas.setRowSelectionAllowed(true);
         JTableBancosEntradas.setShowHorizontalLines(true);
         JTableBancosEntradas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1363,10 +1366,10 @@ public class BancosMovimientos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(2147482930, 2147482930, 2147482930))
+                .addGap(2147322392, 2147322392, 2147322392))
         );
 
-        setSize(new java.awt.Dimension(0, 0));
+        setSize(new java.awt.Dimension(1369, 737));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1430,8 +1433,8 @@ public class BancosMovimientos extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-        Cliente clientes = new Cliente();
-        clientes.setVisible(true);
+        Banco banco = new Banco();
+        banco.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
@@ -1494,56 +1497,100 @@ public class BancosMovimientos extends javax.swing.JFrame {
         limpiartabla();
         limpiartabla2();
         String formato="yyyy/MM/dd";
-        Date FechaI=rSDateChooser1.getDatoFecha();
-        Date FechaF=rSDateChooser2.getDatoFecha();
-        SimpleDateFormat formateador = new SimpleDateFormat(formato);
-        String Fi = formateador.format(FechaI);
-        String Fn =formateador.format(FechaF);
-        String hi = rSComboBox2.getSelectedItem().toString();
-        String hf = rSComboBox1.getSelectedItem().toString();
+        String Fi="";
+        String Fn="";
+        String hi="";
+        String hf="";
+        Date FechaI;
+        Date FechaF;
+        
+        
+        if(rSCheckBox2.isSelected()==true && rSCheckBox1.isSelected()==true){
+            FechaI=rSDateChooser1.getDatoFecha();
+            FechaF=rSDateChooser2.getDatoFecha();
+            SimpleDateFormat formateador = new SimpleDateFormat(formato);
+            Fi = formateador.format(FechaI);
+            Fn =formateador.format(FechaF);
+            hi = rSComboBox2.getSelectedItem().toString();
+            hf = rSComboBox1.getSelectedItem().toString();
+        }
+        
+        
+        if(rSCheckBox2.isSelected()==false && rSCheckBox1.isSelected()==true){
+             hi = rSComboBox2.getSelectedItem().toString();
+             hf = rSComboBox1.getSelectedItem().toString();
+        }
+        
+         if(rSCheckBox2.isSelected()==true && rSCheckBox1.isSelected()==false){
+            FechaI=rSDateChooser1.getDatoFecha();
+            FechaF=rSDateChooser2.getDatoFecha();
+            SimpleDateFormat formateador = new SimpleDateFormat(formato);
+            Fi = formateador.format(FechaI);
+            Fn =formateador.format(FechaF);
+        }
+        
+        
+        
         
         String sql1="SELECT db.Descripcion,db.Valor,db.Hora,db.Fecha FROM DetallesBancarios db \n" +
                 "WHERE db.IdTipoTransaccion=1 AND db.IdCuenta=1 AND db.Hora between '"+hi+"' and '"+hf+"'"+" AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
+        
         String sql2="SELECT db.Descripcion,db.Valor,db.Hora,db.Fecha FROM DetallesBancarios db \n" +
                 "WHERE db.IdTipoTransaccion=1 AND db.IdCuenta=1 AND db.Hora between '"+hi+"' and '"+hf+"';";
+        
         String sql3="SELECT db.Descripcion,db.Valor,db.Hora,db.Fecha FROM DetallesBancarios db \n" +
                 "WHERE db.IdTipoTransaccion=1 AND db.IdCuenta=1 AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
+        
         String sqlvs1="SELECT db.Descripcion,db.Valor,db.Hora,db.Fecha FROM DetallesBancarios db \n" +
                 "WHERE db.IdTipoTransaccion=2 AND db.IdCuenta=1 AND db.Hora between '"+hi+"' and '"+hf+"'"+" AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
+        
         String sqlvs2="SELECT db.Descripcion,db.Valor,db.Hora,db.Fecha FROM DetallesBancarios db \n" +
                 "WHERE db.IdTipoTransaccion=2 AND db.IdCuenta=1 AND db.Hora between '"+hi+"' and '"+hf+"';";
+        
         String sqlvs3="SELECT db.Descripcion,db.Valor,db.Hora,db.Fecha FROM DetallesBancarios db \n" +
                 "WHERE db.IdTipoTransaccion=2 AND db.IdCuenta=1 AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
+        
         String sqlt1="SELECT sum(db.Valor) FROM DetallesBancarios db\n" +
                 "WHERE db.IdTipoTransaccion=1 AND db.IdCuenta="+codigob+" AND db.Hora between '"+hi+"' and '"+hf+"'"+" AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
+        
         String sqlt2="SELECT sum(db.Valor) FROM DetallesBancarios db\n" +
                 "WHERE db.IdTipoTransaccion=1 AND db.IdCuenta="+codigob+" AND db.Hora between '"+hi+"' and '"+hf+"';";
+        
         String sqlt3="SELECT sum(db.Valor) FROM DetallesBancarios db \n" +
                 "WHERE db.IdTipoTransaccion=1 AND db.IdCuenta="+codigob+" AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
+        
         String sqlts1="SELECT sum(db.Valor) FROM DetallesBancarios db\n" +
                 "WHERE db.IdTipoTransaccion=2 AND db.IdCuenta="+codigob+" AND db.Hora between '"+hi+"' and '"+hf+"'"+" AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
+        
         String sqlts2="SELECT sum(db.Valor) FROM DetallesBancarios db\n" +
                 "WHERE db.IdTipoTransaccion=2 AND db.IdCuenta="+codigob+" AND db.Hora between '"+hi+"' and '"+hf+"';";
+        
         String sqlts3="SELECT sum(db.Valor) FROM DetallesBancarios db\n" +
                 "WHERE db.IdTipoTransaccion=2 AND db.IdCuenta="+codigob+" AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
-        if(rSCheckBox2.isSelected() && rSCheckBox1.isSelected()){
+        
+        if(rSCheckBox2.isSelected()==true && rSCheckBox1.isSelected()==true){
             listarentradasf(sql1);
             listaresalidasf(sqlvs1);
-            totalentradasf(sql1);
+            totalentradasf(sqlt1);
             totalsalidasf(sqlts1);
-        }
-        if(rSCheckBox2.isSelected()==false && rSCheckBox1.isSelected()){
+        }else{
+            if(rSCheckBox2.isSelected()==false && rSCheckBox1.isSelected()==true){
             listarentradasf(sql2);
             listaresalidasf(sqlvs2);
             totalentradasf(sqlt2);
             totalsalidasf(sqlts2);
-        }
-        if(rSCheckBox2.isSelected() && rSCheckBox1.isSelected()==false){
+        }else{
+            if(rSCheckBox2.isSelected()==true && rSCheckBox1.isSelected()==false){
             listarentradasf(sql3);
             listaresalidasf(sqlvs3);
             totalentradasf(sqlt3);
             totalsalidasf(sqlts3);
         }
+            }
+            
+        }
+       
+       
        
         
         

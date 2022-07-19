@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -57,35 +58,21 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         buscardatos();
     }
     public void Mostrar(){
-String primernombre="";
+       String primernombre="";
        String segundonombre="";
        String Papellido="";
        String Sapellido="";
-       String formato="yyyy/MM/dd";
        String correo="";
-       int genero=1;
-       int puesto=1;
-       int numeroCta=1;
-       int estado=0;
-       int IdTipodocumento=1;
+       String genero="";
+       String puesto="";
+       String numeroCta="";
+       String estado="";
+       String IdTipodocumento="";
+       SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MMM-dd");
+  
+       String direccion="";
        
-       Date FechaN=FN.getDatoFecha();
-       Date FechaC=FC.getDatoFecha();
-       SimpleDateFormat formateador = new SimpleDateFormat(formato);
-       String Fn = formateador.format(FechaN);
-       String Fc =formateador.format(FechaC);
-        
-        genero=Obtenergenero();
-       
-        puesto=Obtenerpuesto();
-        
-        numeroCta=Integer.parseInt(cuenta.getText());
-        
-        estado=Obtenerestado();
-        
-        IdTipodocumento=ObtenerTipoD();
-        String direccion="";
-        String SQL = "Select * from Empleados Where IdEmpleado="+id;
+       String SQL = "Select * from Empleados Where IdEmpleado="+Integer.parseInt(empleado);
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -94,13 +81,23 @@ String primernombre="";
               primernombre=rs.getString("PrimerNombre");
               segundonombre =rs.getString("SegundoNombre");
               Papellido =rs.getString("PrimerApellido");
-             Sapellido =rs.getString("SegundoApellido");
+              Sapellido =rs.getString("SegundoApellido");
               correo = rs.getString("CorreoElectronico");
-               puesto= rs.getInt("Puesto");
-               direccion = rs.getString("DireccionEmpleado");
-               numeroCta = rs.getInt("NumeroCuenta");
-               Fn= rs.getString("FechaNacimiento");
-               Fc = rs.getString("FechaContratacion");
+              puesto= String.valueOf(rs.getInt("IdPuesto"));
+              direccion = rs.getString("DireccionEmpleado");
+              numeroCta = String.valueOf(rs.getInt("NumeroCuenta"));
+                try {
+                    Date Fn= formateador.parse(rs.getString("FechaNacimiento"));
+                    FN.setDatoFecha(Fn);
+                } catch (ParseException ex) {
+                    Logger.getLogger(ActualizarEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    Date Fc = formateador.parse(rs.getString("FechaContratacion"));
+                    FC.setDatoFecha(Fc);
+                } catch (ParseException ex) {
+                    Logger.getLogger(ActualizarEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+                }
                       
               
               
@@ -111,6 +108,7 @@ String primernombre="";
             ape1.setText(Papellido);
             ape2.setText(Sapellido);
             CorreoAE.setText(correo);
+            
             cuenta.setText(String.valueOf(numeroCta));
             JCodigoDisponible.setText(String.valueOf(id));
             

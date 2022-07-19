@@ -858,12 +858,12 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
 
     private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
           try{
-            if(code.isEmpty()==false){
+           if(code.isEmpty()==false){
           
            ActualizarEmpleado ac = new ActualizarEmpleado();
-           ac.setId(code);
+           ac.setEmpleado(code);
            ac.Mostrar();
-           ac.setVisible(true);   
+           ac.setVisible(true); 
            this.setVisible(false);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");

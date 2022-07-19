@@ -26,6 +26,13 @@ public class BuscarCuentaB extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     String cuentab="";
+    
+    
+    Banco banco;
+
+    public void setBanco(Banco banco) {
+        this.banco = banco;
+    }
 
     public void setCuentab(String cuentab) {
         this.cuentab = cuentab;
@@ -560,6 +567,7 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         bm.setTipoc(jLabel34.getText());
         bm.setCodigob(JTextbuscar.getText());
         bm.setVisible(true);
+        banco.dispose();
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
 
