@@ -246,9 +246,9 @@ public class AgregarClientes extends javax.swing.JFrame {
         if (comparar.find() == true) {
            
              JOptionPane.showMessageDialog(this,"El correo ingresado es válido.");
-             a=true;
+             a=true
         } else {
-           JOptionPane.showMessageDialog(this,"El correo ingresado es inválido.");
+           JOptionPane.showMessageDialog(this,"El correo ingresado es inválido.")
                    a=false;
         }
          return a;

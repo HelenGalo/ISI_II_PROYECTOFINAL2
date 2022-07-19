@@ -9,7 +9,6 @@ import isi_2022_ii_proyecto.Recursos.ColorFondo;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.List;
-import java.awt.event.KeyEvent;
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,101 +26,113 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 /**
  *
+ * @author orell
  */
-public class Envio extends javax.swing.JFrame {
+public class AgregarClientes extends javax.swing.JFrame {
 
     /**
      * Creates new form AgregarCliente
      */
      boolean a = true;
-    String codenvio;
+    String cliente;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     int id=0;
-
+    String rol;
     
-  public void setEnvio(String envio) {
-        this.codenvio = envio;
+  public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
   
     
-    public Envio() {
+    public AgregarClientes() {
         initComponents();
-         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
-        listarE();
     
         
     }
-     public void listarE(){
-        String[] registros = new String[5];
-        DefaultTableModel modelo =  (DefaultTableModel) JTableEnvio.getModel();
-
-        String SQL = "select * from EmpresasEnvio";
+    public void inicializar(){
+       JCodigoDisponible.setText(cliente);
+    }
+    
+    public void buscardatos(){
+          String SQL = "SELECT * FROM Clientes WHERE idCliente=(SELECT max(IdCliente) FROM Clientes)";
+          
+          
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                registros[0] = rs.getString("IdEmpresaEnvio");
-                registros[1] = rs.getString("NombreEmpresa");
-                registros[2] = rs.getString("Tarifa");
-                registros[3] = rs.getString("Telefono");
-                registros[4] = rs.getString("CorreoElectronico");
-                modelo.addRow(registros);
+                id = rs.getInt("IdCliente");
+               
+                
             }
 
-            JTableEnvio.setModel(modelo);
             
+            System.out.println("SIN SUMAR"+String.valueOf(id));
+            id = id +1;
+            System.out.println(String.valueOf(id));
+            jLabel13.setText(String.valueOf(id));
+            
+           
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
-     
-     
-     private void limpiartabla(){
-        DefaultTableModel modelo =  (DefaultTableModel) JTableEnvio.getModel();
-        while (modelo.getRowCount() > 0)
-        {
-        modelo.removeRow(0);
+      public void insertar(){
+        String nombres="";
+        String apellidos="";
+        String telefono="";
+        String direccion="";
+        String correo="";
+        
+        nombres = NombreC.getText();
+        apellidos = ApellidoC.getText();
+        direccion = DirC.getText();
+        telefono=TelC1.getText();
+        correo=CorreoC.getText();
+        
+        
+        String SQL = "INSERT INTO Clientes (IdCliente,Nombres,Apellidos,DireccionCliente,Telefono,CorreoElectronico) VALUES"
+                + "(?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, id);
+            preparedStmt.setString (2, nombres);
+            preparedStmt.setString   (3, apellidos);
+            preparedStmt.setString(4, direccion);
+            preparedStmt.setString(5, telefono);
+            preparedStmt.setString(6, correo);
+            preparedStmt.execute();
+            
+            JOptionPane.showMessageDialog(null, "Registro Guardado Exitosamente");
+
+        } catch (Exception e) {
+            System.out.println("ERROR" + e.getMessage());
         }
         
         
         
        
-        
-     
     }
 
+      
+       
     
-   private void buscarNombre(){
-        String[] registros = new String[5];
-        DefaultTableModel modelo =  (DefaultTableModel) JTableEnvio.getModel();
         
-         String SQL = "SELECT e.IdEmpresaEnvio,e.NombreEmpresa,e.Tarifa, FROM EmpresasEnvio e\n" +
-                    " WHERE e.IdEmpresaEnvio LIKE '"+JTextbuscar.getText()+"%'";
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-             while (rs.next()) {
-                registros[0] = rs.getString("IdEmpresaEnvio");
-                registros[1] = rs.getString("NombreEmpresa");
-                registros[2] = rs.getString("Tarifa");
-                registros[3] = rs.getString("Telefono");
-                registros[4] = rs.getString("CorreoElectronico");
-                modelo.addRow(registros);
-            }
-
-            JTableEnvio.setModel(modelo);
+    public Boolean validar(){
+       // char [] arrayC=rSMPassView1.getPassword();
+        //String acceso= new String(arrayC);
+        if(JCodigoDisponible.getText().isEmpty() || NombreC.getText().isEmpty() 
+                ||ApellidoC.getText().isEmpty() ||DirC.getText().isEmpty() || TelC1.getText().isEmpty() || CorreoC.getText().isEmpty() ){
             
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }else{
+            return true;
         }
-        
-    } 
-    
+    }
     
   
      
@@ -174,11 +185,6 @@ public class Envio extends javax.swing.JFrame {
         linesetting12 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        rSButtonIcon_new5 = new newscomponents.RSButtonIcon_new();
-        rSButtonIcon_new6 = new newscomponents.RSButtonIcon_new();
-        rSButtonIcon_new7 = new newscomponents.RSButtonIcon_new();
-        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
-        rSButtonIcon_new10 = new newscomponents.RSButtonIcon_new();
         dashboardview = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         rSPanelOpacity1 = new RSMaterialComponent.RSPanelOpacity();
@@ -193,9 +199,22 @@ public class Envio extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         rSLabelIcon12 = new rojerusan.RSLabelIcon();
         jLabel14 = new javax.swing.JLabel();
-        JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        JTableEnvio = new rojerusan.RSTableMetro1();
+        NombreC = new rojeru_san.RSMTextFull();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
+        CorreoC = new rojeru_san.RSMTextFull();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
+        jLabel32 = new javax.swing.JLabel();
+        ApellidoC = new rojeru_san.RSMTextFull();
+        DirC = new rojeru_san.RSMTextFull();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        TelC1 = new rojeru_san.RSMTextFull();
+        rSPanelCircle1 = new rojeru_san.rspanel.RSPanelCircle();
+        JCodigoDisponible = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -210,6 +229,7 @@ public class Envio extends javax.swing.JFrame {
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
         Header.setPreferredSize(new java.awt.Dimension(800, 50));
+        Header.setLayout(new java.awt.BorderLayout());
 
         iconminmaxclose.setBackground(new java.awt.Color(5, 10, 46));
 
@@ -221,8 +241,10 @@ public class Envio extends javax.swing.JFrame {
         );
         iconminmaxcloseLayout.setVerticalGroup(
             iconminmaxcloseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
+
+        Header.add(iconminmaxclose, java.awt.BorderLayout.LINE_END);
 
         jPanel2.setBackground(new java.awt.Color(20, 101, 187));
 
@@ -241,7 +263,7 @@ public class Envio extends javax.swing.JFrame {
         linesetting4.setLayout(linesetting4Layout);
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 717, Short.MAX_VALUE)
         );
         linesetting4Layout.setVerticalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,22 +306,20 @@ public class Envio extends javax.swing.JFrame {
         linesetting3Layout.setHorizontalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(linesetting3Layout.createSequentialGroup()
-                .addGap(168, 168, 168)
-                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(138, 138, 138))
+                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(linesetting3Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -314,11 +334,11 @@ public class Envio extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(253, 253, 253)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65))
         );
         jPanel2Layout.setVerticalGroup(
@@ -332,16 +352,7 @@ public class Envio extends javax.swing.JFrame {
             .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        javax.swing.GroupLayout HeaderLayout = new javax.swing.GroupLayout(Header);
-        Header.setLayout(HeaderLayout);
-        HeaderLayout.setHorizontalGroup(
-            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        HeaderLayout.setVerticalGroup(
-            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        Header.add(jPanel2, java.awt.BorderLayout.CENTER);
 
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
@@ -554,7 +565,7 @@ public class Envio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -581,64 +592,14 @@ public class Envio extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Empresa Envío");
+        jLabel3.setText("Clientes");
         linesetting12.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 210, 40));
 
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Gestiones");
+        jLabel12.setText("Agregar");
         linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
-
-        rSButtonIcon_new5.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new5.setText("Buscar ");
-        rSButtonIcon_new5.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
-        rSButtonIcon_new5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new5ActionPerformed(evt);
-            }
-        });
-
-        rSButtonIcon_new6.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new6.setText("Deshabilitar Empresa ");
-        rSButtonIcon_new6.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new6.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE_SWEEP);
-        rSButtonIcon_new6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new6ActionPerformed(evt);
-            }
-        });
-
-        rSButtonIcon_new7.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new7.setText("Agregar Empresa Envío");
-        rSButtonIcon_new7.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new7.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
-        rSButtonIcon_new7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new7ActionPerformed(evt);
-            }
-        });
-
-        rSButtonIcon_new9.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new9.setText("Modificar ");
-        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.RECENT_ACTORS);
-        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new9ActionPerformed(evt);
-            }
-        });
-
-        rSButtonIcon_new10.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new10.setText("Imprimir ");
-        rSButtonIcon_new10.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new10.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
-        rSButtonIcon_new10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new10ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout menuhideLayout = new javax.swing.GroupLayout(menuhide);
         menuhide.setLayout(menuhideLayout);
@@ -647,29 +608,14 @@ public class Envio extends javax.swing.JFrame {
             .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new5, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new6, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new7, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new10, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         menuhideLayout.setVerticalGroup(
             menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuhideLayout.createSequentialGroup()
                 .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSButtonIcon_new5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
                 .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(289, 289, 289)
+                .addGap(500, 500, 500)
                 .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
         );
 
@@ -691,6 +637,7 @@ public class Envio extends javax.swing.JFrame {
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSPanelOpacity1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -707,7 +654,7 @@ public class Envio extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Agregar Empresa Envío");
+        jLabel8.setText("Agregar Clientes");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -719,7 +666,7 @@ public class Envio extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Empresa Envios");
+        jLabel11.setText("Modulo Clientes");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -735,7 +682,7 @@ public class Envio extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Listado de Empresas");
+        jLabel14.setText("Listado de Clientes");
 
         rSPanelOpacity1.setLayer(rSLabelIcon6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -798,63 +745,134 @@ public class Envio extends javax.swing.JFrame {
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
-        JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
-        JTextbuscar.setPlaceholder("Busqueda rapida");
-        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
+        jPanel3.add(rSPanelOpacity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 50));
+
+        NombreC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        NombreC.setPlaceholder("Ingresa nombre");
+        NombreC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTextbuscarActionPerformed(evt);
+                NombreCActionPerformed(evt);
             }
         });
-        JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                JTextbuscarKeyReleased(evt);
+        jPanel3.add(NombreC, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 440, -1));
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel29.setText("Nombre Cliente:");
+        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 170, 40));
+
+        CorreoC.setPlaceholder("Ingresar Correo Electronico");
+        CorreoC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CorreoCActionPerformed(evt);
             }
         });
+        jPanel5.add(CorreoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 440, -1));
 
-        JTableEnvio.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel30.setText("ASIGNACION DE ROLES");
+        jPanel5.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 90, 180, 30));
 
-            },
-            new String [] {
-                "Codigo Empresa de Envío", "Nombre Empresa", "Tarifa", "Telefono", "Correo Electronico"
-            }
-        ));
-        JTableEnvio.setToolTipText("");
-        JTableEnvio.setBackgoundHead(new java.awt.Color(60, 76, 143));
-        JTableEnvio.setBackgoundHover(new java.awt.Color(60, 76, 143));
-        JTableEnvio.setColorSecondary(new java.awt.Color(255, 255, 255));
-        JTableEnvio.setEffectHover(true);
-        JTableEnvio.setHighHead(50);
-        JTableEnvio.setRowHeight(50);
-        JTableEnvio.setShowHorizontalLines(true);
-        JTableEnvio.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JTableEnvioMouseClicked(evt);
+        jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("Direccion:");
+        jPanel5.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 180, 40));
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel22.setText("Apellido Cliente:");
+        jPanel5.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 180, 40));
+
+        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new9.setText("Guardar");
+        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
+        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
+        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new9ActionPerformed(evt);
             }
         });
-        jScrollPane2.setViewportView(JTableEnvio);
+        jPanel5.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 110, 40));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 1030, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel32.setText("Correo Electronico:");
+        jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 190, 40));
+
+        ApellidoC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ApellidoC.setPlaceholder("Apellido");
+        ApellidoC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ApellidoCActionPerformed(evt);
+            }
+        });
+        jPanel5.add(ApellidoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, 440, -1));
+
+        DirC.setPlaceholder("Ingresa Direccion");
+        DirC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DirCActionPerformed(evt);
+            }
+        });
+        jPanel5.add(DirC, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 440, -1));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("Codigo Cliente:");
+        jPanel5.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 120, 50));
+
+        jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel33.setText("Telefono:");
+        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, 180, 40));
+
+        TelC1.setPlaceholder("Ingresa el numero Telefono");
+        TelC1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TelC1ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(TelC1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 440, -1));
+
+        rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
+
+        JCodigoDisponible.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        JCodigoDisponible.setForeground(new java.awt.Color(255, 255, 255));
+        JCodigoDisponible.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        JCodigoDisponible.setText("1");
+
+        javax.swing.GroupLayout rSPanelCircle1Layout = new javax.swing.GroupLayout(rSPanelCircle1);
+        rSPanelCircle1.setLayout(rSPanelCircle1Layout);
+        rSPanelCircle1Layout.setHorizontalGroup(
+            rSPanelCircle1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelCircle1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        rSPanelCircle1Layout.setVerticalGroup(
+            rSPanelCircle1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelCircle1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        jPanel5.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 70, 70));
+
+        jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -866,7 +884,7 @@ public class Envio extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODÚLO EMPRESA DE ENVÍO");
+        jLabel6.setText("MODULO CLIENTES");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
@@ -898,7 +916,7 @@ public class Envio extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, 1416, Short.MAX_VALUE)
+            .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1416, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(260, 260, 260)
                 .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -911,8 +929,8 @@ public class Envio extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -995,80 +1013,47 @@ public class Envio extends javax.swing.JFrame {
         linesetting1.setBackground(new Color(0,55,133));
     }//GEN-LAST:event_linesetting11MouseExited
 
+    private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
+        // TODO add your handling code here:
+       Cliente cliente = new Cliente();
+        cliente.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
+
     private void linesetting12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linesetting12MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_linesetting12MouseClicked
 
-    private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
+    private void NombreCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCActionPerformed
         // TODO add your handling code here:
-      Menu m = new Menu();
-        m.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
+    }//GEN-LAST:event_NombreCActionPerformed
 
-    private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
+    private void CorreoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorreoCActionPerformed
         // TODO add your handling code here:
-
-    }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
-
-    private void rSButtonIcon_new6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new6ActionPerformed
-        // TODO add your handling code here:
-        Proveedores proveedores = new Proveedores();
-        proveedores.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_rSButtonIcon_new6ActionPerformed
-
-    private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
-        // TODO add your handling code here:
-        AgregarEnvio ag = new AgregarEnvio();
-        ag.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
+    }//GEN-LAST:event_CorreoCActionPerformed
 
     private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
-       // TODO add your handling code here:
-         try {
-             if(codenvio.isEmpty()==false){
-          
-          ActualizarEnvio ac = new   ActualizarEnvio();
-           ac.setId(Integer.parseInt(codenvio));
-           ac.MostrarE();
-           ac.setVisible(true);   
-           this.dispose();
+        // TODO add your handling code here:
+        if(validar()==true){
+
+            insertar();
+
         }else{
-            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
         }
-        } catch (Exception e) {
-            System.out.println("Error "+e.getMessage() );
-            JOptionPane.showMessageDialog(this, "Por favor seleccione el registro a modificar", "Error" ,JOptionPane.ERROR_MESSAGE);
-        }
-       
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
-    private void rSButtonIcon_new10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new10ActionPerformed
+    private void ApellidoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApellidoCActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rSButtonIcon_new10ActionPerformed
+    }//GEN-LAST:event_ApellidoCActionPerformed
 
-    private void JTableEnvioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableEnvioMouseClicked
-        
-        int seleccion = JTableEnvio.rowAtPoint(evt.getPoint());
-        codenvio =   String.valueOf(JTableEnvio.getValueAt(seleccion, 0));
-         System.out.println("THIs" +codenvio);
-    }//GEN-LAST:event_JTableEnvioMouseClicked
-
-    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
-
-    }//GEN-LAST:event_JTextbuscarActionPerformed
-
-    private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
+    private void DirCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DirCActionPerformed
         // TODO add your handling code here:
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            limpiartabla();
-            buscarNombre();
+    }//GEN-LAST:event_DirCActionPerformed
 
-        }
-
-    }//GEN-LAST:event_JTextbuscarKeyReleased
+    private void TelC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelC1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TelC1ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1117,38 +1102,14 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Envio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Envio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Envio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Envio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -1161,16 +1122,20 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Envio().setVisible(true);
+                new AgregarClientes().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private rojeru_san.RSMTextFull ApellidoC;
+    private rojeru_san.RSMTextFull CorreoC;
+    private rojeru_san.RSMTextFull DirC;
     private javax.swing.JPanel Header;
-    private rojerusan.RSTableMetro1 JTableEnvio;
-    private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
+    private javax.swing.JLabel JCodigoDisponible;
     private javax.swing.JPanel MenuIcon;
+    private rojeru_san.RSMTextFull NombreC;
+    private rojeru_san.RSMTextFull TelC1;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
@@ -1178,7 +1143,14 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1189,7 +1161,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel linehidemenu;
     private javax.swing.JPanel linesetting;
     private javax.swing.JPanel linesetting1;
@@ -1209,11 +1181,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new10;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new5;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new6;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new7;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new9;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
@@ -1229,6 +1197,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSLabelIcon rSLabelIcon7;
     private rojerusan.RSLabelIcon rSLabelIcon8;
     private rojerusan.RSLabelIcon rSLabelIcon9;
+    private rojeru_san.rspanel.RSPanelCircle rSPanelCircle1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
 }
