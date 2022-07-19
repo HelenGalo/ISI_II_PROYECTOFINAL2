@@ -26,8 +26,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class Empleados extends javax.swing.JFrame implements Metodos{
     boolean a = true;
-    String codigoe="";
-    String contra="";
+    String code;
+   
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
 
@@ -72,7 +72,7 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         }
     }    
     
-  
+
     
    
     public void listar(){
@@ -553,7 +553,7 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -593,7 +593,7 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new11.setText("Regresar");
         rSButtonIcon_new11.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
+        rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REPEAT);
         rSButtonIcon_new11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new11ActionPerformed(evt);
@@ -857,9 +857,25 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 
     private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
-            ActualizarEmpleado aem = new ActualizarEmpleado();
-           aem.setVisible(true);
+          try{
+            if(code.isEmpty()==false){
+          
+           ActualizarEmpleado ac = new ActualizarEmpleado();
+           ac.setId(code);
+           ac.Mostrar();
+           ac.setVisible(true);   
            this.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+        }   
+          }catch (Exception e) {
+            System.out.println("Error "+e.getMessage() );
+            JOptionPane.showMessageDialog(this, "Por favor seleccione el registro a modificar", "Error" ,JOptionPane.ERROR_MESSAGE);
+        }
+       
+    
+        
+        
     }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
@@ -904,8 +920,8 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
     private void JTableEmpleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableEmpleadoMouseClicked
         // TODO add your handling code here:
         int seleccion = JTableEmpleado.rowAtPoint(evt.getPoint());
-        codigoe = String.valueOf(JTableEmpleado.getValueAt(seleccion, 0));
-        System.out.println("THIs" +codigoe);
+        code= String.valueOf(JTableEmpleado.getValueAt(seleccion, 0));
+        System.out.println("THIs" +code);
 
     }//GEN-LAST:event_JTableEmpleadoMouseClicked
 

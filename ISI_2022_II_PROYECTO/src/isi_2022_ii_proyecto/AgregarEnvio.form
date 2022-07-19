@@ -131,10 +131,9 @@
                           <EmptySpace min="-2" pref="253" max="-2" attributes="0"/>
                           <Component id="linesetting5" pref="0" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="linesetting4" pref="627" max="32767" attributes="0"/>
-                          <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                          <Component id="linesetting3" min="-2" pref="325" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                          <Component id="linesetting4" pref="342" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
+                          <Component id="icono" pref="632" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -147,7 +146,7 @@
                       <Component id="jLabel5" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="linesetting4" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="linesetting5" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="linesetting3" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="icono" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -211,7 +210,7 @@
                     <Property name="useNullLayout" type="boolean" value="false"/>
                   </Layout>
                 </Container>
-                <Container class="javax.swing.JPanel" name="linesetting3">
+                <Container class="javax.swing.JPanel" name="icono">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="bb" green="65" red="14" type="rgb"/>
@@ -225,13 +224,13 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
-                              <Component id="rSButtonIconOne5" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="rSButtonIconOne3" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="rSButtonIconOne5" min="-2" pref="30" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="rSButtonIconOne3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="rSButtonIconOne4" min="-2" pref="30" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -640,7 +639,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="linesetting12" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
                       <Component id="rSButtonIcon_new3" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="linesetting6" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                      <Component id="linesetting6" alignment="0" pref="210" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -649,8 +648,8 @@
                           <Component id="linesetting12" min="-2" pref="70" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="500" max="-2" attributes="0"/>
-                          <Component id="linesetting6" pref="56" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="linesetting6" min="-2" pref="56" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -694,7 +693,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="rSLabelIcon4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="rSLabelIcon5" pref="69" max="32767" attributes="0"/>
+                              <Component id="rSLabelIcon5" max="32767" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="rSLabelIcon3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
@@ -1094,7 +1093,10 @@
                                       <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                                       <Component id="CorreoC" min="-2" pref="440" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="rSButtonIcon_new9" min="-2" pref="110" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="rSButtonIcon_new9" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace min="590" pref="590" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace min="-2" pref="330" max="-2" attributes="0"/>
                           </Group>
@@ -1103,7 +1105,7 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="80" pref="80" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
@@ -1111,9 +1113,9 @@
                                   </Group>
                                   <Component id="rSPanelCircle1" min="-2" pref="70" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="jLabel29" min="-2" pref="40" max="-2" attributes="0"/>
-                              <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel22" min="-2" pref="40" max="-2" attributes="0"/>
                                   <Component id="Tarifa" min="-2" max="-2" attributes="0"/>
@@ -1123,13 +1125,13 @@
                                   <Component id="jLabel33" min="-2" pref="40" max="-2" attributes="0"/>
                                   <Component id="TelC1" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel32" min="-2" pref="40" max="-2" attributes="0"/>
                                   <Component id="CorreoC" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
-                              <Component id="rSButtonIcon_new9" min="-2" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new9" pref="41" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1183,6 +1185,7 @@
                         <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                           <Value id="SAVE"/>
                         </Property>
+                        <Property name="verticalAlignment" type="int" value="3"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new9ActionPerformed"/>

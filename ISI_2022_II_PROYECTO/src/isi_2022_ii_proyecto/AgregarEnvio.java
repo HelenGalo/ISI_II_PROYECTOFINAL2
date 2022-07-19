@@ -39,7 +39,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
     Connection con = conexion.conexion();
     int id=0;
  
-  public void setCliente(String env) {
+  public void setEnvio(String env) {
         this.envio =env;
     }
   
@@ -177,7 +177,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         linesetting4 = new javax.swing.JPanel();
         linesetting5 = new javax.swing.JPanel();
-        linesetting3 = new javax.swing.JPanel();
+        icono = new javax.swing.JPanel();
         rSButtonIconOne3 = new RSMaterialComponent.RSButtonIconOne();
         rSButtonIconOne4 = new RSMaterialComponent.RSButtonIconOne();
         rSButtonIconOne5 = new RSMaterialComponent.RSButtonIconOne();
@@ -288,8 +288,8 @@ public class AgregarEnvio extends javax.swing.JFrame {
         linesetting5.setPreferredSize(new java.awt.Dimension(50, 10));
         linesetting5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        linesetting3.setBackground(new java.awt.Color(20, 101, 187));
-        linesetting3.setPreferredSize(new java.awt.Dimension(50, 10));
+        icono.setBackground(new java.awt.Color(20, 101, 187));
+        icono.setPreferredSize(new java.awt.Dimension(50, 10));
 
         rSButtonIconOne3.setBackground(new java.awt.Color(20, 101, 187));
         rSButtonIconOne3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FULLSCREEN);
@@ -315,24 +315,24 @@ public class AgregarEnvio extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout linesetting3Layout = new javax.swing.GroupLayout(linesetting3);
-        linesetting3.setLayout(linesetting3Layout);
-        linesetting3Layout.setHorizontalGroup(
-            linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(linesetting3Layout.createSequentialGroup()
-                .addGap(168, 168, 168)
-                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout iconoLayout = new javax.swing.GroupLayout(icono);
+        icono.setLayout(iconoLayout);
+        iconoLayout.setHorizontalGroup(
+            iconoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(iconoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(138, 138, 138))
+                .addGap(52, 52, 52))
         );
-        linesetting3Layout.setVerticalGroup(
-            linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(linesetting3Layout.createSequentialGroup()
+        iconoLayout.setVerticalGroup(
+            iconoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(iconoLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(iconoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -352,10 +352,9 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 .addGap(253, 253, 253)
                 .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65))
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addGap(83, 83, 83)
+                .addComponent(icono, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -365,7 +364,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(linesetting4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(linesetting5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(icono, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout HeaderLayout = new javax.swing.GroupLayout(Header);
@@ -590,7 +589,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -632,7 +631,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
             menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
         );
         menuhideLayout.setVerticalGroup(
             menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -640,8 +639,8 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(500, 500, 500)
-                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
@@ -655,7 +654,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
             .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -806,6 +805,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
         rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
+        rSButtonIcon_new9.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new9ActionPerformed(evt);
@@ -896,7 +896,9 @@ public class AgregarEnvio extends javax.swing.JFrame {
                         .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(590, 590, 590)))
                 .addGap(330, 330, 330))
         );
         jPanel5Layout.setVerticalGroup(
@@ -923,7 +925,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
                     .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(86, 86, 86)
-                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
         );
 
         jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, -1));
@@ -1195,6 +1197,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.RSMTextFull TelC1;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
+    private javax.swing.JPanel icono;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1224,7 +1227,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel linesetting11;
     private javax.swing.JPanel linesetting12;
     private javax.swing.JPanel linesetting2;
-    private javax.swing.JPanel linesetting3;
     private javax.swing.JPanel linesetting4;
     private javax.swing.JPanel linesetting5;
     private javax.swing.JPanel linesetting6;
