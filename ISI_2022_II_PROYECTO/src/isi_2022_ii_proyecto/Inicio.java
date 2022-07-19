@@ -329,10 +329,18 @@ public class Inicio extends javax.swing.JFrame {
     
     public void logearse(){
         contradC="";
-        des = desencriptar(vacceso);
+        try {
+            des = desencriptar(vacceso);
+        } catch (Exception e) {
+            des = null;
+        }
+        
         System.out.println("la contra es: "+vacceso);
         System.out.println("la contrase des es: "+des);
         System.out.println("la contra1 es: "+acceso);
+        if(des==null){
+             System.out.println("la contrase des es: null");
+        }
            
         if(acceso.equals(des)){
             

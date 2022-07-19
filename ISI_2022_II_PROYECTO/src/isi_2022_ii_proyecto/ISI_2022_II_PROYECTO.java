@@ -18,8 +18,8 @@ public class ISI_2022_II_PROYECTO {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-         ConexionBD conexion = new ConexionBD();
-         Connection con = conexion.conexion();
+         Inicio inicio = new Inicio();
+         inicio.setVisible(true);
     }
     
 }

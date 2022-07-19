@@ -50,6 +50,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
         buscardatos();
         listarEmpleados();
         inicializarValoresC();
+        System.out.println(encriptar("Helen123"));
         
         
     }

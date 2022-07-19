@@ -1310,53 +1310,53 @@ public class Menu extends javax.swing.JFrame {
 
     private void BOTONCLIENTEMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONCLIENTEMouseEntered
         // TODO add your handling code here:
-        BOTONCLIENTE.setBackground(new Color(33,150,243));
+     
     }//GEN-LAST:event_BOTONCLIENTEMouseEntered
 
     private void BOTONCLIENTEMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONCLIENTEMouseExited
         // TODO add your handling code here:
-        BOTONCLIENTE.setBackground(new Color(0,55,133));
+      
         
     }//GEN-LAST:event_BOTONCLIENTEMouseExited
 
     private void BOTONEMPLEADOMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONEMPLEADOMouseEntered
         // TODO add your handling code here:
-        BOTONEMPLEADO.setBackground(new Color(33,150,243));
+      
     }//GEN-LAST:event_BOTONEMPLEADOMouseEntered
 
     private void BOTONEMPLEADOMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONEMPLEADOMouseExited
         // TODO add your handling code here:
-        BOTONEMPLEADO.setBackground(new Color(0,55,133));
+      
     }//GEN-LAST:event_BOTONEMPLEADOMouseExited
 
     private void BOTONUSUARIOMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONUSUARIOMouseEntered
         // TODO add your handling code here:
-        BOTONUSUARIO.setBackground(new Color(33,150,243));
+      
     }//GEN-LAST:event_BOTONUSUARIOMouseEntered
 
     private void BOTONUSUARIOMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONUSUARIOMouseExited
         // TODO add your handling code here:
-        BOTONUSUARIO.setBackground(new Color(0,55,133));
+        
     }//GEN-LAST:event_BOTONUSUARIOMouseExited
 
     private void BOTONPROVEEDORESMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONPROVEEDORESMouseEntered
         // TODO add your handling code here:
-        BOTONPROVEEDORES.setBackground(new Color(33,150,243));
+        
     }//GEN-LAST:event_BOTONPROVEEDORESMouseEntered
 
     private void BOTONPROVEEDORESMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONPROVEEDORESMouseExited
         // TODO add your handling code here:
-        BOTONPROVEEDORES.setBackground(new Color(0,55,133));
+        
     }//GEN-LAST:event_BOTONPROVEEDORESMouseExited
 
     private void BOTONBANCOMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONBANCOMouseEntered
         // TODO add your handling code here:
-        BOTONBANCO.setBackground(new Color(33,150,243));
+      
     }//GEN-LAST:event_BOTONBANCOMouseEntered
 
     private void BOTONBANCOMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONBANCOMouseExited
         // TODO add your handling code here:
-        BOTONBANCO.setBackground(new Color(0,55,133));
+    
     }//GEN-LAST:event_BOTONBANCOMouseExited
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
