@@ -169,25 +169,7 @@ public class Inicio extends javax.swing.JFrame {
         
     }
     
-    private void encriptar(){
-        String contra = "Erem1862";
-        char puntero;
-        String contraC = "";
-        //Cifrador de mayusculas//
-        
-       
-        for(int i=0;i<8;i++){
-            puntero = contra.charAt(i);
-            contraC = contraC + cifrador.get(String.valueOf(puntero));
-            
-        
-            
-        }
-        
-        System.out.println("La contrase es: " + contra);
-        System.out.println("La contraseC es: " + contraC);
-        
-    }
+    
     
     
     private void buscar(Hashtable ri){

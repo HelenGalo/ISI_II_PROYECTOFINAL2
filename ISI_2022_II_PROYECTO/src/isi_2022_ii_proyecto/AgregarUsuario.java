@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -40,6 +41,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
     Connection con = conexion.conexion();
     int id=0;
     HashMap<String, Integer> empleados = new HashMap<String, Integer>();
+    Hashtable<String, String> cifrador = new Hashtable<String, String>();
 
   
     
@@ -47,10 +49,119 @@ public class AgregarUsuario extends javax.swing.JFrame {
         initComponents();
         buscardatos();
         listarEmpleados();
+        inicializarValoresC();
+        
         
     }
     
     
+    public void inicializarValoresC(){
+        cifrador.put("A", "E3:$%^");
+        cifrador.put("B", "Aq2=!#");
+        cifrador.put("C", "Zzp1@*");
+        cifrador.put("D", "lkh4$5");
+        cifrador.put("E", "^7192H");
+        cifrador.put("F", "%=zXQ+");
+        cifrador.put("G", "00FvT-");
+        cifrador.put("H", "&Cas45");
+        cifrador.put("I", "P4fdW3");
+        cifrador.put("J", "bgCo3l");
+        cifrador.put("K", "Someb3");
+        cifrador.put("L", "gDmen+");
+        cifrador.put("M", "Very03");
+        cifrador.put("N", "02ne#$");
+        cifrador.put("Ñ", "88df4#");
+        cifrador.put("O", "F#0002");
+        cifrador.put("P", "R%StUP");
+        cifrador.put("Q", "IDa7-*");
+        cifrador.put("R", "*-*.O.");
+        cifrador.put("S", "^0^663");
+        cifrador.put("T", "W@a&&e");
+        cifrador.put("U", "KOK#%)");
+        cifrador.put("V", "(-+)*$");
+        cifrador.put("W", "%hjkl1");
+        cifrador.put("X", "58l(%%");
+        cifrador.put("Y", "=34Sap");
+        cifrador.put("Z", "SaP012");
+        
+        //Cifrador de minusculas
+        cifrador.put("a", "dFGH46");
+        cifrador.put("b", "678Mza");
+        cifrador.put("c", "AS23Df");
+        cifrador.put("d", "ZXSR#4");
+        cifrador.put("e", "POPU27");
+        cifrador.put("f", "Iik&!4");
+        cifrador.put("g", "!-//+!");
+        cifrador.put("h", "F%^Nñd");
+        cifrador.put("i", "la34F4");
+        cifrador.put("j", "WcGh34");
+        cifrador.put("k", "-*=Mi");
+        cifrador.put("l", "ndSt92");
+        cifrador.put("m", "Kl2$!=");
+        cifrador.put("n", "*1V4hl");
+        cifrador.put("ñ", "Ru/e40");
+        cifrador.put("o", "00Fx#2");
+        cifrador.put("p", "1ce5G/");
+        cifrador.put("q", "*fht@)");
+        cifrador.put("r", "(45gR*");
+        cifrador.put("s", "!#$Tre");
+        cifrador.put("t", "^g%#^!");
+        cifrador.put("u", "M4%@Xx");
+        cifrador.put("v", "X-XO.0");
+        cifrador.put("w", "aQjf$%");
+        cifrador.put("x", "H3hl8*");
+        cifrador.put("y", "_-_93r");
+        cifrador.put("z", "7*7*+/");
+        
+        //cifrador de numeros
+        cifrador.put("0", "gGL4+/");
+        cifrador.put("1", "0UvUZ4");
+        cifrador.put("2", "5-5fJ%");
+        cifrador.put("3", "/1de89");
+        cifrador.put("4", "(89)bV");
+        cifrador.put("5", "LoLP40");
+        cifrador.put("6", "Mkl3^5");
+        cifrador.put("7", "$%$Kam");
+        cifrador.put("8", "BDuDu2");
+        cifrador.put("9", "K11LTL");
+        
+        //crifrador de simbolos
+        cifrador.put("$", "Le%(tm");
+        cifrador.put("#", "H0WYou");
+        cifrador.put("@", "L1K3Th");
+        cifrador.put("%", "aT--+^");
+        cifrador.put("/", "Inf@ou");
+        cifrador.put("&", "JaSJs*");
+        cifrador.put("*", "$$##/*/");
+        cifrador.put("-", "D&oNTA");
+        cifrador.put("+", "NGE/*/");
+        cifrador.put("!", "+----*");
+        cifrador.put("^", "!0!$$$");
+        cifrador.put("(", "BnM3%*");
+        cifrador.put(")", "LQ56^s");
+        cifrador.put("_", "HJond#");
+        cifrador.put("=", "Za3Dpe");
+        cifrador.put(".", "Ho(+)D");
+    }
+      
+    private String encriptar(String c){
+        String contra = c;
+        char puntero;
+        String contraC = "";
+        //Cifrador de mayusculas//
+        
+       
+        for(int i=0;i<8;i++){
+            puntero = contra.charAt(i);
+            contraC = contraC + cifrador.get(String.valueOf(puntero));
+            
+        
+            
+        }
+        
+      return contraC;
+        
+    }
     
     public void insertar(){
         
@@ -60,14 +171,16 @@ public class AgregarUsuario extends javax.swing.JFrame {
         int Intentos=0;
         int IdRol=0;
         String Usuario="";
+        String cF="";
         
         idUsuario = Integer.parseInt(JCodigoDisponible.getText());
         IdEmpleado = empleados.get(JComboEmpleados.getSelectedItem().toString());
         Usuario=Juser2.getText();
         System.out.println(idUsuario);
-          System.out.println(IdEmpleado);
+        System.out.println(IdEmpleado);
         char [] arrayC=rSMPassView1.getPassword();
         Contra= new String(arrayC);
+        cF = encriptar(Contra);
         
         Intentos = Integer.parseInt(String.valueOf(JIntentos.getSelectedItem()));
         try {
@@ -93,7 +206,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, idUsuario);
             preparedStmt.setInt (2, IdEmpleado);
-            preparedStmt.setString(3, Contra);
+            preparedStmt.setString(3,cF);
             preparedStmt.setInt(4, Intentos);
             preparedStmt.setInt(5, IdRol);
             preparedStmt.setString(6, Usuario);

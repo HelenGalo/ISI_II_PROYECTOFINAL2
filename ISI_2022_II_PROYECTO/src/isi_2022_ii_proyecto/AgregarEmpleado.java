@@ -9,14 +9,16 @@ import isi_2022_ii_proyecto.Recursos.ColorFondo;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -160,7 +162,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                idp = rs.getInt("IdPuesto");
+                idp = rs.getInt("IdTipoDocumento");
                
                 
             }
@@ -182,7 +184,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
     
     
      public int Obtenerpuesto(){
-          String SQL = "SELECT g.IdPuesto FROM Puestos g Where g.Nombre="+"'"+JComboGen1.getSelectedItem().toString()+"'";
+          String SQL = "SELECT p.IdPuesto FROM Puestos p Where p.Nombre="+"'"+JComboGen1.getSelectedItem().toString()+"'";
           int idp=0;
           
         try {
@@ -203,7 +205,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
            
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return idp;
         
@@ -267,45 +269,69 @@ public class AgregarEmpleado extends javax.swing.JFrame {
     }
     
     public void insertar(){
-        String primernombre="";
-        String segundonombre="";
-        String Papellido="";
-        String Sapellido="";
-       Date FechaN=Date.valueOf(Fn.getFechaSeleccionada());
-       Date FechaC=Date.valueOf(Fc.getFechaSeleccionada());
-        String telefono="";
+        
+       String primernombre="";
+       String segundonombre="";
+       String Papellido="";
+       String Sapellido="";
+       String formato="yyyy/MM/dd";
+       String correo="";
+       int genero=1;
+       int puesto=1;
+       int numeroCta=1;
+       int estado=0;
+       int IdTipodocumento=1;
+       
+       Date FechaN=rSDateChooser2.getDatoFecha();
+       Date FechaC=rSDateChooser1.getDatoFecha();
+       SimpleDateFormat formateador = new SimpleDateFormat(formato);
+       String Fn = formateador.format(FechaN);
+       String Fc =formateador.format(FechaC);
+        
+        
+        correo=correoE.getText();
+        primernombre = NombreE5.getText();
+        segundonombre = NombreE3.getText();
+        Papellido = NombreE6.getText();
+        Sapellido = NombreE2.getText();
+        genero=Obtenergenero();
+       
+        puesto=Obtenerpuesto();
+        
+        numeroCta=Integer.parseInt(cuenta.getText());
+        
+        estado=Obtenerestado();
+        
+        IdTipodocumento=ObtenerTipoD();
         String direccion="";
-        String correo="";
-        int genero=Obtenergenero();
-        int puesto=Obtenerpuesto();
-        String numeroCta=cuenta.getText();
-        int estado=Obtenerestado();
-        int IdTipodocumento=ObtenerTipoD();
 
         
    
         
-     
-        String SQL = "INSERT INTO Empleados (IdEmpleado,PrimerNombre, SegundoNombre, FechaNacimiento, IdTipoDocumento, CorreoElectronico, Genero, DireccionEmpleado, IdPuesto, FechaContratacion, NumeroCuenta, IdEstado)  VALUES"
+    
+        String SQL = "INSERT INTO Empleados (IdEmpleado,PrimerNombre, SegundoNombre, FechaNacimiento, IdTipoDocumento, CorreoElectronico, IdGenero, DireccionEmpleado, IdPuesto, FechaContratacion, NumeroCuenta, IdEstado, PrimerApellido, SegundoApellido)  VALUES"
                 + "(?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, id);
             preparedStmt.setString (2, primernombre);
             preparedStmt.setString   (3, segundonombre);
-            preparedStmt.setDate(4, FechaN );
+            preparedStmt.setString(4, Fn);
             preparedStmt.setInt(5, IdTipodocumento);
             preparedStmt.setString(6, correo);
             preparedStmt.setInt(7, genero);
             preparedStmt.setString(8, direccion);
             preparedStmt.setInt(9, puesto);
-            preparedStmt.setDate(10, FechaC );
-            preparedStmt.setString(11, numeroCta );
+            preparedStmt.setString(10, Fc);
+            preparedStmt.setInt(11, numeroCta );
             preparedStmt.setInt(12, estado);
+            preparedStmt.setString(13, Papellido);
+            preparedStmt.setString(14, Sapellido);
             preparedStmt.execute();
+            JOptionPane.showMessageDialog(this, "Registro Guardado");
 
-        } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("ERROR AL REGISTRAR: " + e.getMessage());
         }
         
         
@@ -315,7 +341,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
     
     public Boolean validar(){
       
-        return null;
+        return true;
       
     }
     /**
@@ -400,12 +426,12 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         JComboGen1 = new rojerusan.RSComboMetro();
         jLabel24 = new javax.swing.JLabel();
         JComboTipo2 = new rojerusan.RSComboMetro();
-        jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         NombreE6 = new rojeru_san.RSMTextFull();
         FechaContracion1 = new javax.swing.JLabel();
-        Fn = new rojerusan.RSDateChooser();
-        Fc = new rojerusan.RSDateChooser();
+        jLabel27 = new javax.swing.JLabel();
+        rSDateChooser1 = new rojeru_san.componentes.RSDateChooser();
+        rSDateChooser2 = new rojeru_san.componentes.RSDateChooser();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -756,7 +782,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -1164,12 +1190,6 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         });
         jPanel3.add(JComboTipo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 390, 280, 30));
 
-        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel25.setText("Fecha de nacimiento");
-        jPanel3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 180, 30));
-
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(153, 0, 255));
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1191,11 +1211,13 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         FechaContracion1.setText("Fecha Contratacion:");
         jPanel3.add(FechaContracion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 90, 150, 40));
 
-        Fn.setLimpiarFecha(true);
-        Fn.setName(""); // NOI18N
-        Fn.setTextoFecha("2001/06/18");
-        jPanel3.add(Fn, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 290, -1));
-        jPanel3.add(Fc, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 90, 220, -1));
+        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel27.setText("Fecha de nacimiento");
+        jPanel3.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 180, 30));
+        jPanel3.add(rSDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 90, -1, -1));
+        jPanel3.add(rSDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, -1, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1519,9 +1541,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CorreoAE;
     private javax.swing.JLabel CorreoAE1;
-    private rojerusan.RSDateChooser Fc;
     private javax.swing.JLabel FechaContracion1;
-    private rojerusan.RSDateChooser Fn;
     private javax.swing.JLabel Genero;
     private javax.swing.JPanel Header;
     private javax.swing.JLabel JCodigoDisponible;
@@ -1550,8 +1570,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1584,6 +1604,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new8;
+    private rojeru_san.componentes.RSDateChooser rSDateChooser1;
+    private rojeru_san.componentes.RSDateChooser rSDateChooser2;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon10;

@@ -30,15 +30,54 @@ public class CalendarForm extends javax.swing.JFrame {
 
         rSPanelOpacity1 = new RSMaterialComponent.RSPanelOpacity();
         rSPanelOpacity2 = new RSMaterialComponent.RSPanelOpacity();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        rSCalendar2 = new rojerusan.RSCalendar();
         rSDateChooser1 = new rojerusan.RSDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         rSPanelOpacity2.setBackground(new java.awt.Color(51, 0, 153));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("CALENDARIO");
+        jLabel11.setFocusable(false);
+        jLabel11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        rSPanelOpacity2.add(jLabel11);
+        jLabel11.setBounds(150, 20, 96, 17);
+
         rSPanelOpacity1.add(rSPanelOpacity2);
         rSPanelOpacity2.setBounds(0, 0, 400, 60);
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("CALENDARIO");
+        jLabel12.setFocusable(false);
+        jLabel12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        rSPanelOpacity1.add(jLabel12);
+        jLabel12.setBounds(160, 420, 96, 17);
+
+        rSCalendar2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rSCalendar2MouseClicked(evt);
+            }
+        });
+        rSPanelOpacity1.add(rSCalendar2);
+        rSCalendar2.setBounds(50, 70, 312, 333);
+
+        rSDateChooser1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rSDateChooser1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                rSDateChooser1MouseEntered(evt);
+            }
+        });
         rSPanelOpacity1.add(rSDateChooser1);
-        rSDateChooser1.setBounds(50, 120, 270, 32);
+        rSDateChooser1.setBounds(50, 450, 310, 32);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -48,11 +87,31 @@ public class CalendarForm extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void rSDateChooser1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSDateChooser1MouseEntered
+        // TODO add your handling code here:
+        
+    
+    }//GEN-LAST:event_rSDateChooser1MouseEntered
+
+    private void rSCalendar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSCalendar2MouseClicked
+        // TODO add your handling code here:
+       
+
+    }//GEN-LAST:event_rSCalendar2MouseClicked
+
+    private void rSDateChooser1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSDateChooser1MouseClicked
+        // TODO add your handling code here:
+         
+        
+    }//GEN-LAST:event_rSDateChooser1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -90,6 +149,9 @@ public class CalendarForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private rojerusan.RSCalendar rSCalendar2;
     private rojerusan.RSDateChooser rSDateChooser1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity2;

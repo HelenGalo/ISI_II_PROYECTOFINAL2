@@ -38,10 +38,6 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
-       
-     
-
-
         listar();
     }
     
@@ -83,9 +79,9 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
 
-        String SQL = "SELECT e.IdEmpleado,e.Nombres,e.Apellidos,t.Valor,p.Nombre FROM Empleados e\n" +
+        String SQL = "SELECT e.IdEmpleado,e.PrimerNombre,e.PrimerApellido,t.Valor,p.Nombre FROM Empleados e\n" +
                     "INNER JOIN EstadosUsuario u ON e.IdEstado = u.IdEstado\n" +
-                    "INNER JOIN DetalleEmpleadoDocumento t ON t.IdEmpleado = e.IdEmpleado\n" +
+                    "LEFT JOIN DetalleEmpleadoDocumento t ON t.IdEmpleado = e.IdEmpleado\n" +
                     "INNER JOIN Puestos p ON p.IdPuesto = e.IdPuesto";
         try {
             Statement st = (Statement) con.createStatement();
@@ -93,8 +89,8 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
 
             while (rs.next()) {
                 registros[0] = rs.getString("IdEmpleado");
-                registros[1] = rs.getString("Nombres");
-                registros[2] = rs.getString("Apellidos");
+                registros[1] = rs.getString("PrimerNombre");
+                registros[2] = rs.getString("PrimerApellido");
                 registros[3] = rs.getString("Valor");
                 registros[4] = rs.getString("Nombre");
                 modelo.addRow(registros);
@@ -557,7 +553,7 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -753,7 +749,7 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
 
             },
             new String [] {
-                "CodigoEmpleado", "Nombres", "Apellidos", "Identificacion", "Puesto"
+                "CodigoEmpleado", "Primer Nombre", "Primer Apellido", "Identificacion", "Puesto"
             }
         ));
         JTableEmpleado.setColorSecondary(new java.awt.Color(204, 255, 255));
@@ -1006,18 +1002,18 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
         
-         String SQL = "SELECT e.IdEmpleado,e.Nombres,e.Apellidos,t.Valor,p.Nombre FROM Empleados e\n" +
+         String SQL = "SELECT e.IdEmpleado,e.PrimerNombre,e.PrimerApellido,t.Valor,p.Nombre FROM Empleados e\n" +
                     "INNER JOIN EstadosUsuario u ON e.IdEstado = u.IdEstado\n" +
                     "INNER JOIN DetalleEmpleadoDocumento t ON t.IdEmpleado = e.IdEmpleado\n" +
-                    "INNER JOIN Puestos p ON p.IdPuesto = e.IdPuesto WHERE e.Nombres LIKE '"+JTextbuscar.getText()+"%'";
+                    "INNER JOIN Puestos p ON p.IdPuesto = e.IdPuesto WHERE e.PrimerNombre LIKE '"+JTextbuscar.getText()+"%'";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
                 registros[0] = rs.getString("IdEmpleado");
-                registros[1] = rs.getString("Nombres");
-                registros[2] = rs.getString("Apellidos");
+                registros[1] = rs.getString("PrimerNombre");
+                registros[2] = rs.getString("PrimerApellido");
                 registros[3] = rs.getString("Valor");
                 registros[4] = rs.getString("Nombre");
                 modelo.addRow(registros);

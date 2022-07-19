@@ -27,6 +27,7 @@ public class Menu extends javax.swing.JFrame {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
         jLabel10.setText("Usuario en sesion: "+usuario);
+        refrescarInt();
     }
     /**
      * Creates new form Menu
@@ -35,7 +36,7 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
-        refrescarInt();
+        
         
     }
     
