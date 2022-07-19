@@ -114,7 +114,6 @@ public class Proveedores extends javax.swing.JFrame {
         linesetting11 = new javax.swing.JPanel();
         rSLabelIcon11 = new rojerusan.RSLabelIcon();
         menuhide = new javax.swing.JPanel();
-        rSButtonIcon_new3 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new4 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new5 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new6 = new newscomponents.RSButtonIcon_new();
@@ -438,17 +437,6 @@ public class Proveedores extends javax.swing.JFrame {
 
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
 
-        rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new3.setText("Tipo de Identificaciones");
-        rSButtonIcon_new3.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        rSButtonIcon_new3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WEB);
-        rSButtonIcon_new3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new3ActionPerformed(evt);
-            }
-        });
-
         rSButtonIcon_new4.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new4.setText("Modificar Proveedores");
         rSButtonIcon_new4.setBackgroundHover(new java.awt.Color(0, 55, 133));
@@ -559,7 +547,7 @@ public class Proveedores extends javax.swing.JFrame {
         rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new11.setText("Regresar");
         rSButtonIcon_new11.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
+        rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REPEAT);
         rSButtonIcon_new11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new11ActionPerformed(evt);
@@ -573,7 +561,6 @@ public class Proveedores extends javax.swing.JFrame {
             .addGroup(menuhideLayout.createSequentialGroup()
                 .addGroup(menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSButtonIcon_new4, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSButtonIcon_new5, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSButtonIcon_new6, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -587,9 +574,7 @@ public class Proveedores extends javax.swing.JFrame {
             menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuhideLayout.createSequentialGroup()
                 .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addGap(40, 40, 40)
                 .addComponent(rSButtonIcon_new4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -601,7 +586,7 @@ public class Proveedores extends javax.swing.JFrame {
                 .addComponent(rSButtonIcon_new10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rSButtonIcon_new11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 232, Short.MAX_VALUE)
                 .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -878,11 +863,6 @@ public class Proveedores extends javax.swing.JFrame {
         //linesetting1.setBackground(new Color(0,55,133));
     }//GEN-LAST:event_linesetting11MouseExited
 
-    private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
-        // TODO add your handling code here:
-   
-    }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
-
     private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
         try {
              if(codiP.isEmpty()==false){
@@ -1101,7 +1081,6 @@ public class Proveedores extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new10;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new11;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new4;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new6;

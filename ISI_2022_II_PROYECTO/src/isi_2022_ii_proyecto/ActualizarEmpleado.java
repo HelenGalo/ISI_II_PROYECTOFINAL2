@@ -40,7 +40,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
     int id=0;
     private String rol;
    
-    String codigoe="";
+
 
    
     HashMap<String, Integer> puestos = new HashMap<String, Integer>();
@@ -50,14 +50,16 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         this.empleado= empleado;
     }
      
-       
+    public void setId(int id) {
+        this.id = id;
+    }  
     public ActualizarEmpleado() {
         initComponents();
         inicializar();
         buscardatos();
     }
     public void Mostrar(){
-String primernombre="";
+       String primernombre="";
        String segundonombre="";
        String Papellido="";
        String Sapellido="";
@@ -69,11 +71,11 @@ String primernombre="";
        int estado=0;
        int IdTipodocumento=1;
        
-       Date FechaN=FN.getDatoFecha();
+       /*Date FechaN=FN.getDatoFecha();
        Date FechaC=FC.getDatoFecha();
        SimpleDateFormat formateador = new SimpleDateFormat(formato);
        String Fn = formateador.format(FechaN);
-       String Fc =formateador.format(FechaC);
+       String Fc =formateador.format(FechaC);*/
         
         genero=Obtenergenero();
        
@@ -84,7 +86,7 @@ String primernombre="";
         estado=Obtenerestado();
         
         IdTipodocumento=ObtenerTipoD();
-        String direccion="";
+      
         String SQL = "Select * from Empleados Where IdEmpleado="+id;
         try {
             Statement st = (Statement) con.createStatement();
@@ -96,11 +98,8 @@ String primernombre="";
               Papellido =rs.getString("PrimerApellido");
              Sapellido =rs.getString("SegundoApellido");
               correo = rs.getString("CorreoElectronico");
-               puesto= rs.getInt("Puesto");
-               direccion = rs.getString("DireccionEmpleado");
                numeroCta = rs.getInt("NumeroCuenta");
-               Fn= rs.getString("FechaNacimiento");
-               Fc = rs.getString("FechaContratacion");
+               
                       
               
               
@@ -1688,6 +1687,10 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSYearDateBeanInfo rSYearDateBeanInfo1;
     private rojeru_san.RSMTextFull segundonom;
     // End of variables declaration//GEN-END:variables
+
+    void setId(String code) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     
 }
