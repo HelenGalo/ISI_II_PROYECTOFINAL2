@@ -68,7 +68,14 @@ public class BuscarCuentaB extends javax.swing.JFrame {
             jLabel32.setText(nombre);
             jLabel34.setText(descripcion);
             jLabel36.setText(fecha);
-            jLabel37.setText("L."+total);
+            if(descripcion.equals("LEMPIRAS")){
+               jLabel37.setText("L."+total);
+           }else{
+                if(descripcion.equals("DOLARES")){
+                   jLabel37.setText("$."+total);
+                }
+           }
+            
             
 
            
@@ -442,7 +449,7 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         jLabel37.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel37.setForeground(new java.awt.Color(255, 255, 255));
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel37.setText("L. 5000");
+        jLabel37.setText("0.00");
 
         javax.swing.GroupLayout rSButtonPane1Layout = new javax.swing.GroupLayout(rSButtonPane1);
         rSButtonPane1.setLayout(rSButtonPane1Layout);
@@ -549,6 +556,11 @@ public class BuscarCuentaB extends javax.swing.JFrame {
 
     private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
         // TODO add your handling code here:
+        BancosMovimientos bm = new BancosMovimientos();
+        bm.setTipoc(jLabel34.getText());
+        bm.setCodigob(JTextbuscar.getText());
+        bm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
 
     private void rSButtonIconOne5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne5ActionPerformed
