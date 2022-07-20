@@ -637,14 +637,20 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="linesetting12" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new3" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="linesetting6" alignment="0" pref="210" max="32767" attributes="0"/>
-                      <Component id="rSButtonIcon_new5" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new6" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new7" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new9" min="-2" pref="210" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new10" min="-2" pref="210" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="linesetting12" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new3" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new5" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new6" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new7" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new9" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new10" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new8" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="linesetting6" alignment="0" pref="230" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -659,11 +665,13 @@
                           <Component id="rSButtonIcon_new7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new9" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                          <Component id="rSButtonIcon_new10" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="rSButtonIcon_new8" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="289" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="rSButtonIcon_new10" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="linesetting6" min="-2" pref="56" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -709,9 +717,9 @@
                               <Component id="rSLabelIcon4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="rSLabelIcon5" max="32767" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="rSLabelIcon3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -791,7 +799,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="0" y="30" width="210" height="40"/>
+                          <AbsoluteConstraints x="0" y="30" width="230" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -808,29 +816,12 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="0" y="0" width="210" height="40"/>
+                          <AbsoluteConstraints x="0" y="0" width="230" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new5">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="f3" green="96" red="21" type="rgb"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Buscar Precio Historico"/>
-                    <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="85" green="37" red="0" type="rgb"/>
-                    </Property>
-                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                      <Value id="SEARCH"/>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new5ActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new6">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -846,6 +837,23 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new6ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new5">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="f3" green="96" red="21" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Precio Historico"/>
+                    <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="85" green="37" red="0" type="rgb"/>
+                    </Property>
+                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                      <Value id="TRACK_CHANGES"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new5ActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new7">
@@ -897,6 +905,23 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new10ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new8">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="f3" green="96" red="21" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Buscar Productos"/>
+                    <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="85" green="37" red="0" type="rgb"/>
+                    </Property>
+                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                      <Value id="SEARCH"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new8ActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -962,7 +987,7 @@
                           <Component id="JTextbuscar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="390" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="38" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
