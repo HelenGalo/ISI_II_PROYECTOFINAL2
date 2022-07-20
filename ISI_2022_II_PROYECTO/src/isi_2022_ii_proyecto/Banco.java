@@ -6,7 +6,9 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.Confirmacion;
 import isi_2022_ii_proyecto.Recursos.TotalBancos;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.List;
@@ -39,7 +41,7 @@ public class Banco extends javax.swing.JFrame {
     String codigob;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    
+    boolean estadoC = false;
     
   
   
@@ -53,6 +55,22 @@ public class Banco extends javax.swing.JFrame {
      
     
         
+    }
+    
+    public void deshabilitar(){
+        String SQL = "UPDATE  CuentasBancarias SET IdEstado=? Where IdCuenta="+codigob;
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+          
+            preparedStmt.setInt (1, 0);
+            preparedStmt.execute();
+            
+            VentanaEmergente1 ve = new VentanaEmergente1();
+            ve.setVisible(true);
+
+        } catch (Exception e) {
+            System.out.println("ERROR" + e.getMessage());   
+        }
     }
 
       public void listar(){
@@ -1102,9 +1120,17 @@ public class Banco extends javax.swing.JFrame {
 
     private void rSButtonIcon_new6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new6ActionPerformed
         // TODO add your handling code here:
-        Proveedores proveedores = new Proveedores();
-        proveedores.setVisible(true);
-        this.dispose();
+        
+       if(codigob!=null){
+          
+           Confirmacion c = new Confirmacion();
+           c.setBafectado(this);
+           c.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+        }
+       
+       
     }//GEN-LAST:event_rSButtonIcon_new6ActionPerformed
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed

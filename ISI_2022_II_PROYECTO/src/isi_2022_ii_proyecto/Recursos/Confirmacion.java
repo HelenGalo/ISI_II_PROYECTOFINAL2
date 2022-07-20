@@ -5,19 +5,25 @@
  */
 package isi_2022_ii_proyecto.Recursos;
 
+import isi_2022_ii_proyecto.Banco;
 import rojeru_san.complementos.RSUtilities;
 
 /**
  *
  * @author Edwin Rafael
  */
-public class VentanaEmergente1 extends javax.swing.JFrame {
+public class Confirmacion extends javax.swing.JFrame {
+    Banco bafectado;
+
+    public void setBafectado(Banco bafectado) {
+        this.bafectado = bafectado;
+    }
 
     /**
-     * Creates new form VentanaEmergente1
+     * Creates new form Confirmacion
      */
-    public VentanaEmergente1() {
-        RSUtilities.setFullScreenJFrame(this);
+    public Confirmacion() {
+         RSUtilities.setFullScreenJFrame(this);
         initComponents();
         RSUtilities.setOpaqueWindow(this, false);
         RSUtilities.setOpacityComponent(this.jPanel1, 150);
@@ -35,9 +41,10 @@ public class VentanaEmergente1 extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         rSPanelOpacity1 = new RSMaterialComponent.RSPanelOpacity();
         rSLabelIcon1 = new RSMaterialComponent.RSLabelIcon();
+        rSButtonIcon_new1 = new newscomponents.RSButtonIcon_new();
+        rSButtonIcon_new2 = new newscomponents.RSButtonIcon_new();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        rSButtonRound1 = new rojerusan.RSButtonRound();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,32 +55,55 @@ public class VentanaEmergente1 extends javax.swing.JFrame {
 
         rSLabelIcon1.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon1.setToolTipText("");
-        rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK_CIRCLE);
-        rSPanelOpacity1.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 150, 140));
+        rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.HELP);
+        rSPanelOpacity1.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 150, 140));
 
-        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 40)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("ACCIONES EJECUTADAS");
-        rSPanelOpacity1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 450, -1));
-
-        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel7.setFont(new java.awt.Font("Franklin Gothic Book", 0, 36)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel7.setText("CORRECTAMENTE");
-        rSPanelOpacity1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, -1, -1));
-
-        rSButtonRound1.setBackground(new java.awt.Color(0, 153, 102));
-        rSButtonRound1.setText("Aceptar");
-        rSButtonRound1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        rSButtonRound1.addActionListener(new java.awt.event.ActionListener() {
+        rSButtonIcon_new1.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonIcon_new1.setText("Cancelar");
+        rSButtonIcon_new1.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        rSButtonIcon_new1.setFocusable(false);
+        rSButtonIcon_new1.setForegroundIcon(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new1.setForegroundText(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSButtonIcon_new1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        rSButtonIcon_new1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonRound1ActionPerformed(evt);
+                rSButtonIcon_new1ActionPerformed(evt);
             }
         });
-        rSPanelOpacity1.add(rSButtonRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, -1, -1));
+        rSPanelOpacity1.add(rSButtonIcon_new1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 130, 60));
+
+        rSButtonIcon_new2.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonIcon_new2.setForeground(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new2.setText("Aceptar");
+        rSButtonIcon_new2.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        rSButtonIcon_new2.setFocusable(false);
+        rSButtonIcon_new2.setForegroundIcon(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new2.setForegroundText(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSButtonIcon_new2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK_BOX);
+        rSButtonIcon_new2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new2ActionPerformed(evt);
+            }
+        });
+        rSPanelOpacity1.add(rSButtonIcon_new2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, 130, 60));
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 36)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel6.setText("ATENCIÓN ");
+        rSPanelOpacity1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, -1, -1));
+
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel7.setText("¿ESTÁ SEGURO DE REALIZAR LOS CAMBIOS?");
+        rSPanelOpacity1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -106,9 +136,16 @@ public class VentanaEmergente1 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rSButtonRound1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonRound1ActionPerformed
+    private void rSButtonIcon_new1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rSButtonRound1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_rSButtonIcon_new1ActionPerformed
+
+    private void rSButtonIcon_new2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new2ActionPerformed
+        // TODO add your handling code here:
+        bafectado.deshabilitar();
+        this.dispose();
+    }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,20 +164,20 @@ public class VentanaEmergente1 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaEmergente1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Confirmacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaEmergente1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Confirmacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaEmergente1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Confirmacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaEmergente1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Confirmacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaEmergente1().setVisible(true);
+                new Confirmacion().setVisible(true);
             }
         });
     }
@@ -149,7 +186,8 @@ public class VentanaEmergente1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private rojerusan.RSButtonRound rSButtonRound1;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new1;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new2;
     private RSMaterialComponent.RSLabelIcon rSLabelIcon1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables

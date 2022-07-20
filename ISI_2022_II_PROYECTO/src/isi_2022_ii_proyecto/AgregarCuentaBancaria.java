@@ -6,6 +6,7 @@
 package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -138,7 +139,8 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
             preparedStmt.setInt(8, numerocuenta);            
             preparedStmt.execute();
             
-            JOptionPane.showMessageDialog(this, "Usuario Guardado");
+             VentanaEmergente1 ve = new VentanaEmergente1();
+             ve.setVisible(true);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
