@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package isi_2022_ii_proyecto.Recursos;
+package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import java.sql.Connection;
@@ -19,196 +19,128 @@ import rojeru_san.complementos.RSUtilities;
  *
  * @author Edwin Rafael
  */
-public class TotalBancos extends javax.swing.JFrame {
+public class ModificarCuentaB extends javax.swing.JFrame {
+
+    public void setCodigob(String codigob) {
+        this.codigob = codigob;
+        mostrar();
+    }
+    String codigob;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
 
     /**
-     * Creates new form TotalBancos
+     * Creates new form ModificarCuentaB
      */
-    public TotalBancos() {
+    public ModificarCuentaB() {
         RSUtilities.setFullScreenJFrame(this);
         initComponents();
         RSUtilities.setOpaqueWindow(this, false);
         RSUtilities.setOpacityComponent(this.jPanel1, 150);
-        cuentasDeshabilitadas();
-        cuentasHabilitadas();
-        cuentasLempiras();
-        cuentasDolar();
-        totalCLempiras();
-        totalDLempiras();
+        listarBancos();
+        listarTipoCuenta();
+        listarEstado();
     }
     
-    
-    public void cuentasLempiras(){
-        String valor="";
-   
-        String SQL = "SELECT count('db.IdCuenta') FROM CuentasBancarias cb\n"
-                + "WHERE cb.IdTipoCuenta=2";
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                valor = rs.getString("count('db.IdCuenta')");
-              
-               
-                
-            }
-            jLabel39.setText(valor);
-      
-            
-            
-
-           
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    
-    public void cuentasDolar(){
-          String valor="";
-   
-        String SQL = "SELECT count('db.IdCuenta') FROM CuentasBancarias cb\n"
-                + "WHERE cb.IdTipoCuenta=1";
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                valor = rs.getString("count('db.IdCuenta')");
-              
-               
-                
-            }
-            jLabel32.setText(valor);
-      
-            
-            
-
-           
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-     public void cuentasHabilitadas(){
-         String valor="";
-   
-        String SQL = "SELECT count('db.IdCuenta') FROM CuentasBancarias cb\n"
-                + "WHERE cb.IdEstado=1";
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                valor = rs.getString("count('db.IdCuenta')");
-              
-               
-                
-            }
-            jLabel34.setText(valor);
-      
-            
-            
-
-           
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    public void cuentasDeshabilitadas(){
-           String valor="";
-   
-        String SQL = "SELECT count('db.IdCuenta') FROM CuentasBancarias cb\n"
-                + "WHERE cb.IdEstado=0";
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                valor = rs.getString("count('db.IdCuenta')");
-              
-               
-                
-            }
-            jLabel36.setText(valor);
-      
-            
-            
-
-           
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    
-    public void totalCLempiras(){
-          String valor="";
-   
-        String SQL = "SELECT ifnull(sum(cb.TotalenCuenta),0) as 'Tot' FROM CuentasBancarias cb\n" +
-                     "WHERE cb.IdTipoCuenta=2";
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                valor = rs.getString("Tot");
-              
-               
-                
-            }
-            jLabel41.setText("L."+valor);
-      
-            
-            
-
-           
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    public void totalDLempiras(){
+    public void mostrar(){
+        String SQL = "SELECT cb.IdCuenta, b.Nombre,tc.Descripcion,e.Descripcion,cb.NCuenta from CuentasBancarias cb\n" +
+                     "INNER JOIN Bancos b ON b.IdBanco = cb.IdBanco\n" +
+                     "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta\n" +
+                     "INNER JOIN EstadosUsuario e ON e.IdEstado = cb.IdEstado\n"+
+                     "WHERE cb.IdCuenta="+codigob;
+        String idcuenta="";
+        String nbanco="";
+        String tipnombreoc="";
+        String tipoe="";
+        String ncuenta="";
         
-          String valor="";
-   
-         String SQL = "SELECT ifnull(sum(cb.TotalenCuenta),0) as 'Tot' FROM CuentasBancarias cb\n" +
-                     "WHERE cb.IdTipoCuenta=1";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                valor = rs.getString("Tot");
-              
-               
+                idcuenta =rs.getString("cb.IdCuenta");
+                nbanco =rs.getString("b.Nombre");
+                tipnombreoc =rs.getString("tc.Descripcion");
+                tipoe =rs.getString("e.Descripcion");
+                ncuenta =rs.getString("cb.NCuenta");
+                
+    
                 
             }
-            jLabel37.setText("$."+valor);
-      
             
+            JCodigoDisponible.setText(idcuenta);
+            jLabel31.setText(nbanco);
+            JNDeposito.setText(ncuenta);
+            jLabel41.setText(tipoe);
+            jLabel35.setText(tipnombreoc);
             
-
-           
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        
     }
     
     
+    public void listarBancos(){
+        rSComboMetro2.addItem("Seleccionar Institucion");
+        String nombre="";
+         
+        String SQL = "SELECT b.Nombre From Bancos b Where IdEstado=1";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                nombre =rs.getString("b.Nombre");
     
+                rSComboMetro2.addItem(nombre);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
+    public void listarTipoCuenta(){
+        rSComboMetro1.addItem("Seleccionar Tipo");
+        String descripcion="";
+         
+        String SQL = "SELECT b.Descripcion From TipoCuenta b Where IdEstado=1";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                descripcion =rs.getString("b.Descripcion");
+    
+                rSComboMetro1.addItem(descripcion);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void listarEstado(){
+        rSComboMetro3.addItem("Seleccionar Estado");
+        String descripcion="";
+         
+        String SQL = "SELECT b.Descripcion From EstadosUsuario b";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                descripcion =rs.getString("b.Descripcion");
+    
+                rSComboMetro3.addItem(descripcion);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
 
     /**
@@ -232,7 +164,6 @@ public class TotalBancos extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         linesetting4 = new javax.swing.JPanel();
         linesetting5 = new javax.swing.JPanel();
-        linesetting3 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         rSPanelOpacity2 = new RSMaterialComponent.RSPanelOpacity();
         rSLabelIcon6 = new rojerusan.RSLabelIcon();
@@ -248,20 +179,23 @@ public class TotalBancos extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
-        rSButtonPane1 = new rojerusan.RSButtonPane();
+        rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
+        rSPanelCircle1 = new rojeru_san.rspanel.RSPanelCircle();
+        JCodigoDisponible = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
-        rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
-        jLabel34 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        rSButtonPane2 = new rojerusan.RSButtonPane();
-        jLabel41 = new javax.swing.JLabel();
+        rSComboMetro1 = new rojerusan.RSComboMetro();
+        rSComboMetro2 = new rojerusan.RSComboMetro();
         jLabel40 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        rSComboMetro3 = new rojerusan.RSComboMetro();
+        jLabel43 = new javax.swing.JLabel();
+        JNDeposito = new rojeru_san.RSMTextFull();
+        rSButtonIcon_new14 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -289,7 +223,7 @@ public class TotalBancos extends javax.swing.JFrame {
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 108, -1));
 
-        rSPanelOpacity1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 870, 60));
+        rSPanelOpacity1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 890, 60));
 
         jPanel2.setBackground(new java.awt.Color(20, 101, 187));
 
@@ -308,7 +242,7 @@ public class TotalBancos extends javax.swing.JFrame {
         linesetting4.setLayout(linesetting4Layout);
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
+            .addGap(0, 53, Short.MAX_VALUE)
         );
         linesetting4Layout.setVerticalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,20 +252,6 @@ public class TotalBancos extends javax.swing.JFrame {
         linesetting5.setBackground(new java.awt.Color(20, 101, 187));
         linesetting5.setPreferredSize(new java.awt.Dimension(50, 10));
         linesetting5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        linesetting3.setBackground(new java.awt.Color(20, 101, 187));
-        linesetting3.setPreferredSize(new java.awt.Dimension(50, 10));
-
-        javax.swing.GroupLayout linesetting3Layout = new javax.swing.GroupLayout(linesetting3);
-        linesetting3.setLayout(linesetting3Layout);
-        linesetting3Layout.setHorizontalGroup(
-            linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 120, Short.MAX_VALUE)
-        );
-        linesetting3Layout.setVerticalGroup(
-            linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -345,12 +265,10 @@ public class TotalBancos extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(253, 253, 253)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                .addGap(232, 232, 232)
-                .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                .addGap(362, 362, 362))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,10 +278,9 @@ public class TotalBancos extends javax.swing.JFrame {
             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(linesetting4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(linesetting5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        rSPanelOpacity1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        rSPanelOpacity1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -383,7 +300,7 @@ public class TotalBancos extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Total en Bancos");
+        jLabel8.setText("Buscar Cuenta");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -479,133 +396,134 @@ public class TotalBancos extends javax.swing.JFrame {
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel29.setText("Numero de Cuentas Habilitadas:");
-        jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 250, 40));
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel29.setText("Codigo Cuenta:");
+        jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 130, 30));
 
         jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel31.setText("Numero de Cuentas Inahabilitadas:");
-        jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 250, 40));
-
-        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel32.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setText("0");
-        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, 140, 40));
-
-        jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel33.setText("Numero de Cuentas en Lempiras:");
-        jPanel3.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 250, 40));
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("Numero de Cuenta:");
+        jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, -1, 40));
 
         jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel35.setText("Numero de Cuentas en Dolar:");
-        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 250, 40));
-
-        rSButtonPane1.setColorHover(new java.awt.Color(0, 55, 133));
-        rSButtonPane1.setColorNormal(new java.awt.Color(0, 204, 102));
-
-        jLabel37.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel37.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel37.setText("0.00");
-
-        javax.swing.GroupLayout rSButtonPane1Layout = new javax.swing.GroupLayout(rSButtonPane1);
-        rSButtonPane1.setLayout(rSButtonPane1Layout);
-        rSButtonPane1Layout.setHorizontalGroup(
-            rSButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-        );
-        rSButtonPane1Layout.setVerticalGroup(
-            rSButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSButtonPane1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(47, 47, 47))
-        );
-
-        jPanel3.add(rSButtonPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 220, 100));
-
-        jLabel38.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel38.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel38.setText("Total de Activos en Cuentas en Dolares:");
-        jPanel3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, 320, 40));
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel35.setText("Status");
+        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 200, 140, 40));
 
         rSButtonIcon_new13.setBackground(new java.awt.Color(102, 51, 255));
-        rSButtonIcon_new13.setText("Cerrar Ventana");
+        rSButtonIcon_new13.setText("Modificar Cuenta");
         rSButtonIcon_new13.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSButtonIcon_new13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        rSButtonIcon_new13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
         rSButtonIcon_new13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new13ActionPerformed(evt);
             }
         });
-        jPanel3.add(rSButtonIcon_new13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 160, 50));
+        jPanel3.add(rSButtonIcon_new13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 160, 50));
 
-        jLabel34.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel34.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel34.setText("0");
-        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, 140, 40));
+        rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
+
+        JCodigoDisponible.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        JCodigoDisponible.setForeground(new java.awt.Color(255, 255, 255));
+        JCodigoDisponible.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        JCodigoDisponible.setText("1");
+
+        javax.swing.GroupLayout rSPanelCircle1Layout = new javax.swing.GroupLayout(rSPanelCircle1);
+        rSPanelCircle1.setLayout(rSPanelCircle1Layout);
+        rSPanelCircle1Layout.setHorizontalGroup(
+            rSPanelCircle1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelCircle1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        rSPanelCircle1Layout.setVerticalGroup(
+            rSPanelCircle1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelCircle1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel3.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 70, 70));
+
+        jLabel37.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel37.setText("Institucion Bancaria Nueva:");
+        jPanel3.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, 40));
+
+        jLabel38.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel38.setText("Institucion Bancaria Actual:");
+        jPanel3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, 40));
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel36.setForeground(new java.awt.Color(153, 0, 255));
         jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel36.setText("0");
-        jPanel3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 140, 40));
+        jLabel36.setText("Numero de Cuenta:");
+        jPanel3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 200, 40));
 
         jLabel39.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel39.setForeground(new java.awt.Color(153, 0, 255));
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel39.setText("0");
-        jPanel3.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 140, 40));
-
-        rSButtonPane2.setBackground(new java.awt.Color(0, 204, 102));
-        rSButtonPane2.setColorHover(new java.awt.Color(0, 55, 133));
-        rSButtonPane2.setColorNormal(new java.awt.Color(0, 204, 102));
-
-        jLabel41.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel41.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel41.setText("0.00");
-
-        javax.swing.GroupLayout rSButtonPane2Layout = new javax.swing.GroupLayout(rSButtonPane2);
-        rSButtonPane2.setLayout(rSButtonPane2Layout);
-        rSButtonPane2Layout.setHorizontalGroup(
-            rSButtonPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-        );
-        rSButtonPane2Layout.setVerticalGroup(
-            rSButtonPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSButtonPane2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(47, 47, 47))
-        );
-
-        jPanel3.add(rSButtonPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, 220, 100));
+        jLabel39.setText("Estado de la Cuenta Nueva:");
+        jPanel3.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 200, 40));
+        jPanel3.add(rSComboMetro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 250, 140, -1));
+        jPanel3.add(rSComboMetro2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 140, -1));
 
         jLabel40.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(153, 0, 255));
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel40.setText("Total de Activos en Cuentas en Lempiras:");
-        jPanel3.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, 320, 40));
+        jLabel40.setText("Estado de la Cuenta Actual:");
+        jPanel3.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 200, 40));
 
-        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(153, 0, 153));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel12.setText("RESUMEN DE BANCOS");
-        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 260, 50));
+        jLabel41.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel41.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel41.setText("Status");
+        jPanel3.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 70, 140, 40));
 
-        rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 760, 410));
+        jLabel42.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel42.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel42.setText("Tipo de Cuenta Actual:");
+        jPanel3.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, 200, 40));
+        jPanel3.add(rSComboMetro3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 140, 140, -1));
+
+        jLabel43.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel43.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel43.setText("Tipo de Cuenta Nuevo:");
+        jPanel3.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 250, 200, 40));
+
+        JNDeposito.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        JNDeposito.setPlaceholder("Ingresa el N. de Cuenta");
+        JNDeposito.setSoloNumeros(true);
+        JNDeposito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JNDepositoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(JNDeposito, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, 180, 40));
+
+        rSButtonIcon_new14.setBackground(new java.awt.Color(102, 51, 255));
+        rSButtonIcon_new14.setText("Cancelar");
+        rSButtonIcon_new14.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSButtonIcon_new14.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        rSButtonIcon_new14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new14ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rSButtonIcon_new14, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 320, 140, 50));
+
+        rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 790, 370));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -613,14 +531,14 @@ public class TotalBancos extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 872, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 891, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -632,7 +550,9 @@ public class TotalBancos extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -644,10 +564,19 @@ public class TotalBancos extends javax.swing.JFrame {
             con.close();
             this.dispose();
         } catch (SQLException ex) {
-            Logger.getLogger(TotalBancos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscarCuentaB.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
+
+    private void JNDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNDepositoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JNDepositoActionPerformed
+
+    private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_rSButtonIcon_new14ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -666,35 +595,33 @@ public class TotalBancos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TotalBancos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificarCuentaB.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TotalBancos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificarCuentaB.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TotalBancos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificarCuentaB.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TotalBancos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificarCuentaB.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TotalBancos().setVisible(true);
+                new ModificarCuentaB().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel JCodigoDisponible;
+    private rojeru_san.RSMTextFull JNDeposito;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
@@ -703,6 +630,8 @@ public class TotalBancos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -712,12 +641,13 @@ public class TotalBancos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel linesetting3;
     private javax.swing.JPanel linesetting4;
     private javax.swing.JPanel linesetting5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new13;
-    private rojerusan.RSButtonPane rSButtonPane1;
-    private rojerusan.RSButtonPane rSButtonPane2;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new14;
+    private rojerusan.RSComboMetro rSComboMetro1;
+    private rojerusan.RSComboMetro rSComboMetro2;
+    private rojerusan.RSComboMetro rSComboMetro3;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon12;
@@ -725,6 +655,7 @@ public class TotalBancos extends javax.swing.JFrame {
     private rojerusan.RSLabelIcon rSLabelIcon2;
     private rojerusan.RSLabelIcon rSLabelIcon6;
     private rojerusan.RSLabelIcon rSLabelIcon8;
+    private rojeru_san.rspanel.RSPanelCircle rSPanelCircle1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity2;
     // End of variables declaration//GEN-END:variables

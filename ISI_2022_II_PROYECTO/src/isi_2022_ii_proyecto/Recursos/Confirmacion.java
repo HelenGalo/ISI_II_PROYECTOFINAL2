@@ -144,6 +144,7 @@ public class Confirmacion extends javax.swing.JFrame {
     private void rSButtonIcon_new2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new2ActionPerformed
         // TODO add your handling code here:
         bafectado.deshabilitar();
+        bafectado.limpiartabla();
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 

@@ -153,7 +153,7 @@ public class Banco extends javax.swing.JFrame {
         }
     }
      
-     private void limpiartabla(){
+     public void limpiartabla(){
         DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
         while (modelo.getRowCount() > 0)
         {
@@ -282,7 +282,6 @@ public class Banco extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
@@ -318,7 +317,7 @@ public class Banco extends javax.swing.JFrame {
         linesetting4.setLayout(linesetting4Layout);
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 603, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         linesetting4Layout.setVerticalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -389,9 +388,9 @@ public class Banco extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(253, 253, 253)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 2, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
                 .addGap(278, 278, 278)
                 .addComponent(linesetting13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -420,12 +419,10 @@ public class Banco extends javax.swing.JFrame {
             .addComponent(iconminmaxclose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1369, -1));
-
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
 
-        linesetting.setBackground(new java.awt.Color(5, 10, 46));
+        linesetting.setBackground(new java.awt.Color(0, 55, 133));
         linesetting.setPreferredSize(new java.awt.Dimension(50, 10));
 
         javax.swing.GroupLayout linesettingLayout = new javax.swing.GroupLayout(linesetting);
@@ -439,7 +436,7 @@ public class Banco extends javax.swing.JFrame {
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        linehidemenu.setBackground(new java.awt.Color(5, 10, 46));
+        linehidemenu.setBackground(new java.awt.Color(0, 55, 133));
         linehidemenu.setPreferredSize(new java.awt.Dimension(50, 10));
 
         javax.swing.GroupLayout linehidemenuLayout = new javax.swing.GroupLayout(linehidemenu);
@@ -453,7 +450,7 @@ public class Banco extends javax.swing.JFrame {
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        linesetting1.setBackground(new java.awt.Color(5, 10, 46));
+        linesetting1.setBackground(new java.awt.Color(0, 55, 133));
         linesetting1.setPreferredSize(new java.awt.Dimension(50, 10));
 
         javax.swing.GroupLayout linesetting1Layout = new javax.swing.GroupLayout(linesetting1);
@@ -467,7 +464,7 @@ public class Banco extends javax.swing.JFrame {
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        linesetting2.setBackground(new java.awt.Color(5, 10, 46));
+        linesetting2.setBackground(new java.awt.Color(0, 55, 133));
         linesetting2.setPreferredSize(new java.awt.Dimension(50, 10));
 
         javax.swing.GroupLayout linesetting2Layout = new javax.swing.GroupLayout(linesetting2);
@@ -533,7 +530,7 @@ public class Banco extends javax.swing.JFrame {
         rSLabelIcon10.setInheritsPopupMenu(true);
         linesetting9.add(rSLabelIcon10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
 
-        linesetting10.setBackground(new java.awt.Color(5, 10, 46));
+        linesetting10.setBackground(new java.awt.Color(0, 55, 133));
         linesetting10.setPreferredSize(new java.awt.Dimension(50, 10));
 
         javax.swing.GroupLayout linesetting10Layout = new javax.swing.GroupLayout(linesetting10);
@@ -781,8 +778,6 @@ public class Banco extends javax.swing.JFrame {
             .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 46, 260, -1));
-
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -896,7 +891,8 @@ public class Banco extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1030, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(jScrollPane2)
                 .addGap(31, 31, 31))
         );
         jPanel3Layout.setVerticalGroup(
@@ -904,7 +900,7 @@ public class Banco extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -1026,7 +1022,27 @@ public class Banco extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 1109, 668));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, 1362, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(260, 260, 260)
+                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(60, 60, 60))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1142,6 +1158,15 @@ public class Banco extends javax.swing.JFrame {
 
     private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
         // TODO add your handling code here:
+         if(codigob!=null){
+          
+           ModificarCuentaB mc = new ModificarCuentaB();
+           mc.setCodigob(codigob);
+           mc.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+        }
+       
    
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
@@ -1191,13 +1216,14 @@ public class Banco extends javax.swing.JFrame {
 
     private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
         // TODO add your handling code here:
+        rSButtonIcon_new6.setEnabled(true);
         limpiartabla();
         listarHabilitados();
     }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
 
     private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
         // TODO add your handling code here:
-        
+        rSButtonIcon_new6.setEnabled(false);
         limpiartabla();
         listarDeshabilitados();
         
