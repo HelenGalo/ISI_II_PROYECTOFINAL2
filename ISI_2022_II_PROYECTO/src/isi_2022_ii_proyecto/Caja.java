@@ -6,9 +6,11 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.TotalCajas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.List;
+import java.awt.event.KeyEvent;
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,21 +36,17 @@ public class Caja extends javax.swing.JFrame {
      * Creates new form AgregarCliente
      */
      boolean a = true;
-    String cliente;
+    String codigoc;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    int id=0;
-    String rol;
-    
-  public void setCliente(String cliente) {
-        this.cliente = cliente;
-    }
+   
   
     
     public Caja() {
         initComponents();
          this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
+        listar();
 
      
     
@@ -57,10 +55,180 @@ public class Caja extends javax.swing.JFrame {
 
     
     
+    public void listar(){
+        String[] registros = new String[3];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
+
+        String SQL = "SELECT c.IdCaja, u.Usuario, c.TotalCaja FROM Caja c\n"
+                + "INNER JOIN Usuarios u ON u.IdUsuario=c.IdUsuario";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdCaja");
+                registros[1] = rs.getString("Usuario");
+                registros[2] = rs.getString("TotalCaja");
+                modelo.addRow(registros);
+            }
+
+            JTableBancos.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
+    public void listarHabilitados(){
+         String[] registros = new String[3];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
+
+        String SQL = "SELECT c.IdCaja, u.Usuario, c.TotalCaja FROM Caja c\n"
+                + "INNER JOIN Usuarios u ON u.IdUsuario=c.IdUsuario \n"
+                +"WHERE c.IdEstado=1";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdCaja");
+                registros[1] = rs.getString("Usuario");
+                registros[2] = rs.getString("TotalCaja");
+                modelo.addRow(registros);
+            }
+
+            JTableBancos.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+     public void listarCCerradas(){
+         String[] registros = new String[3];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
+
+        String SQL = "SELECT c.IdCaja, u.Usuario, c.TotalCaja FROM Caja c\n" +
+                     "INNER JOIN Usuarios u ON u.IdUsuario=c.IdUsuario\n" +
+                     "WHERE c.IdEstadoCaja=1;";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdCaja");
+                registros[1] = rs.getString("Usuario");
+                registros[2] = rs.getString("TotalCaja");
+                modelo.addRow(registros);
+            }
+
+            JTableBancos.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
   
+     public void listarCAbiertas(){
+        String[] registros = new String[3];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
+
+        String SQL = "SELECT c.IdCaja, u.Usuario, c.TotalCaja FROM Caja c\n" +
+                     "INNER JOIN Usuarios u ON u.IdUsuario=c.IdUsuario\n" +
+                     "WHERE c.IdEstadoCaja=2;";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdCaja");
+                registros[1] = rs.getString("Usuario");
+                registros[2] = rs.getString("TotalCaja");
+                modelo.addRow(registros);
+            }
+
+            JTableBancos.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+      public void listarDeshabilitados(){
+        String[] registros = new String[3];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
+
+        String SQL = "SELECT c.IdCaja, u.Usuario, c.TotalCaja FROM Caja c\n"
+                + "INNER JOIN Usuarios u ON u.IdUsuario=c.IdUsuario\n"
+                +"WHERE c.IdEstado=0";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdCaja");
+                registros[1] = rs.getString("Usuario");
+                registros[2] = rs.getString("TotalCaja");
+                modelo.addRow(registros);
+            }
+
+            JTableBancos.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
      
+     public void limpiartabla(){
+        DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
+        while (modelo.getRowCount() > 0)
+        {
+        modelo.removeRow(0);
+        }
+        
+        
+        
+       
+        
+     
+    }
+    
+    
+    
+    private void buscarNombre(){
+        String[] registros = new String[3];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
+
+        String SQL = "SELECT c.IdCaja, u.Usuario, c.TotalCaja FROM Caja c\n"
+                + "INNER JOIN Usuarios u ON u.IdUsuario=c.IdUsuario \n"
+                +"WHERE c.IdCaja LIKE'"+JTextbuscar.getText()+"%'";;
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdCaja");
+                registros[1] = rs.getString("Usuario");
+                registros[2] = rs.getString("TotalCaja");
+                modelo.addRow(registros);
+            }
+
+            JTableBancos.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+   
+        
+    }
 
     
    
@@ -115,10 +283,13 @@ public class Caja extends javax.swing.JFrame {
         rSButtonIcon_new7 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new10 = new newscomponents.RSButtonIcon_new();
+        rSButtonIcon_new11 = new newscomponents.RSButtonIcon_new();
+        rSButtonIcon_new12 = new newscomponents.RSButtonIcon_new();
+        rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
+        rSButtonIcon_new18 = new newscomponents.RSButtonIcon_new();
         dashboardview = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         rSPanelOpacity1 = new RSMaterialComponent.RSPanelOpacity();
-        rSLabelIcon6 = new rojerusan.RSLabelIcon();
         jLabel7 = new javax.swing.JLabel();
         rSLabelIcon8 = new rojerusan.RSLabelIcon();
         jLabel8 = new javax.swing.JLabel();
@@ -126,17 +297,25 @@ public class Caja extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         rSLabelIcon17 = new rojerusan.RSLabelIcon();
-        jLabel13 = new javax.swing.JLabel();
         rSLabelIcon12 = new rojerusan.RSLabelIcon();
         jLabel14 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        JTableBancos = new rojerusan.RSTableMetro1();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        rSButtonIcon_new14 = new newscomponents.RSButtonIcon_new();
+        rSButtonIcon_new15 = new newscomponents.RSButtonIcon_new();
+        rSButtonIcon_new8 = new newscomponents.RSButtonIcon_new();
+        JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
+        rSButtonIcon_new16 = new newscomponents.RSButtonIcon_new();
+        rSButtonIcon_new17 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
 
@@ -174,7 +353,7 @@ public class Caja extends javax.swing.JFrame {
         linesetting4.setLayout(linesetting4Layout);
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 659, Short.MAX_VALUE)
         );
         linesetting4Layout.setVerticalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,9 +397,9 @@ public class Caja extends javax.swing.JFrame {
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(linesetting3Layout.createSequentialGroup()
                 .addGap(168, 168, 168)
-                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(138, 138, 138))
@@ -247,9 +426,9 @@ public class Caja extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(253, 253, 253)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65))
@@ -275,6 +454,8 @@ public class Caja extends javax.swing.JFrame {
             HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+
+        menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
@@ -453,7 +634,10 @@ public class Caja extends javax.swing.JFrame {
                 .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        menu.add(MenuIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 666));
+
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
+        menuhide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new3.setText("Regresar");
@@ -466,6 +650,7 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new3ActionPerformed(evt);
             }
         });
+        menuhide.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 210, -1));
 
         linesetting6.setBackground(new java.awt.Color(20, 101, 187));
         linesetting6.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -487,7 +672,7 @@ public class Caja extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -501,6 +686,8 @@ public class Caja extends javax.swing.JFrame {
                     .addComponent(rSLabelIcon5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
+
+        menuhide.add(linesetting6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 609, 210, 57));
 
         linesetting12.setBackground(new java.awt.Color(0, 55, 133));
         linesetting12.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -523,8 +710,10 @@ public class Caja extends javax.swing.JFrame {
         jLabel12.setText("Gestiones");
         linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
 
+        menuhide.add(linesetting12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 70));
+
         rSButtonIcon_new5.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new5.setText("Buscar ");
+        rSButtonIcon_new5.setText("Buscar Caja ");
         rSButtonIcon_new5.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         rSButtonIcon_new5.addActionListener(new java.awt.event.ActionListener() {
@@ -532,8 +721,10 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new5ActionPerformed(evt);
             }
         });
+        menuhide.add(rSButtonIcon_new5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 76, 210, -1));
 
         rSButtonIcon_new6.setBackground(new java.awt.Color(33, 150, 243));
+        rSButtonIcon_new6.setText("Deshabilitar Caja");
         rSButtonIcon_new6.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new6.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE_SWEEP);
         rSButtonIcon_new6.addActionListener(new java.awt.event.ActionListener() {
@@ -541,9 +732,10 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new6ActionPerformed(evt);
             }
         });
+        menuhide.add(rSButtonIcon_new6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 116, 210, -1));
 
         rSButtonIcon_new7.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new7.setText("Agregar Cierre de Caja");
+        rSButtonIcon_new7.setText("Agregar Caja");
         rSButtonIcon_new7.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new7.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
         rSButtonIcon_new7.addActionListener(new java.awt.event.ActionListener() {
@@ -551,9 +743,10 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new7ActionPerformed(evt);
             }
         });
+        menuhide.add(rSButtonIcon_new7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 156, 210, -1));
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new9.setText("Modificar ");
+        rSButtonIcon_new9.setText("Modificar Caja");
         rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.RECENT_ACTORS);
         rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
@@ -561,9 +754,10 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new9ActionPerformed(evt);
             }
         });
+        menuhide.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 196, 210, -1));
 
         rSButtonIcon_new10.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new10.setText("Imprimir ");
+        rSButtonIcon_new10.setText("Generar Cierre de Caja");
         rSButtonIcon_new10.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new10.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
         rSButtonIcon_new10.addActionListener(new java.awt.event.ActionListener() {
@@ -571,64 +765,60 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new10ActionPerformed(evt);
             }
         });
+        menuhide.add(rSButtonIcon_new10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 210, -1));
 
-        javax.swing.GroupLayout menuhideLayout = new javax.swing.GroupLayout(menuhide);
-        menuhide.setLayout(menuhideLayout);
-        menuhideLayout.setHorizontalGroup(
-            menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new5, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new6, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new7, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new10, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        menuhideLayout.setVerticalGroup(
-            menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuhideLayout.createSequentialGroup()
-                .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSButtonIcon_new5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(289, 289, 289)
-                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
-        );
+        rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
+        rSButtonIcon_new11.setText("Imprimir Reporte Diario");
+        rSButtonIcon_new11.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
+        rSButtonIcon_new11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new11ActionPerformed(evt);
+            }
+        });
+        menuhide.add(rSButtonIcon_new11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 236, 210, -1));
 
-        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
-        menu.setLayout(menuLayout);
-        menuLayout.setHorizontalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        menuLayout.setVerticalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
-            .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        rSButtonIcon_new12.setBackground(new java.awt.Color(33, 150, 243));
+        rSButtonIcon_new12.setText("Aperturar Caja");
+        rSButtonIcon_new12.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.OPEN_IN_NEW);
+        rSButtonIcon_new12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new12ActionPerformed(evt);
+            }
+        });
+        menuhide.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 210, -1));
+
+        rSButtonIcon_new13.setBackground(new java.awt.Color(33, 150, 243));
+        rSButtonIcon_new13.setText("Cerrar Caja");
+        rSButtonIcon_new13.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        rSButtonIcon_new13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new13ActionPerformed(evt);
+            }
+        });
+        menuhide.add(rSButtonIcon_new13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 210, -1));
+
+        rSButtonIcon_new18.setBackground(new java.awt.Color(33, 150, 243));
+        rSButtonIcon_new18.setText("Imprimir Cierre de Caja");
+        rSButtonIcon_new18.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new18.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
+        rSButtonIcon_new18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new18ActionPerformed(evt);
+            }
+        });
+        menuhide.add(rSButtonIcon_new18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 210, -1));
+
+        menu.add(menuhide, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, -1));
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
+        dashboardview.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         rSPanelOpacity1.setBackground(new java.awt.Color(60, 76, 143));
-
-        rSLabelIcon6.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon6.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
-        rSLabelIcon6.setName(""); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -639,7 +829,7 @@ public class Caja extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Agregar");
+        jLabel8.setText("Listado de Cajas");
         jLabel8.setToolTipText("");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -658,10 +848,6 @@ public class Caja extends javax.swing.JFrame {
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
         rSLabelIcon17.setName(""); // NOI18N
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("/");
-
         rSLabelIcon12.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LIST);
         rSLabelIcon12.setName(""); // NOI18N
@@ -669,7 +855,6 @@ public class Caja extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
 
-        rSPanelOpacity1.setLayer(rSLabelIcon6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(rSLabelIcon8, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -677,7 +862,6 @@ public class Caja extends javax.swing.JFrame {
         rSPanelOpacity1.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(rSLabelIcon17, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        rSPanelOpacity1.setLayer(jLabel13, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(rSLabelIcon12, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(jLabel14, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -703,12 +887,8 @@ public class Caja extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSLabelIcon6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
-                .addContainerGap())
+                .addContainerGap(502, Short.MAX_VALUE))
         );
         rSPanelOpacity1Layout.setVerticalGroup(
             rSPanelOpacity1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -717,29 +897,60 @@ public class Caja extends javax.swing.JFrame {
                 .addGroup(rSPanelOpacity1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(rSPanelOpacity1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSLabelIcon6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(rSPanelOpacity1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
+        JTableBancos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo Caja", "Usuario Asignado", "Total en Caja"
+            }
+        ));
+        JTableBancos.setBackgoundHead(new java.awt.Color(60, 76, 143));
+        JTableBancos.setBackgoundHover(new java.awt.Color(60, 76, 143));
+        JTableBancos.setColorSecondary(new java.awt.Color(255, 255, 255));
+        JTableBancos.setEffectHover(true);
+        JTableBancos.setHighHead(50);
+        JTableBancos.setRowHeight(50);
+        JTableBancos.setShowHorizontalLines(true);
+        JTableBancos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTableBancosMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(JTableBancos);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 1030, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(35, 35, 35)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 910, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(65, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(75, 75, 75)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(43, Short.MAX_VALUE)))
         );
+
+        dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 129, 1010, 480));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -760,34 +971,89 @@ public class Caja extends javax.swing.JFrame {
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
 
-        javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
-        dashboardview.setLayout(dashboardviewLayout);
-        dashboardviewLayout.setHorizontalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(89, 89, 89))
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        dashboardviewLayout.setVerticalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
-        );
+        dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1256, -1));
+
+        rSButtonIcon_new14.setBackground(new java.awt.Color(33, 150, 243));
+        rSButtonIcon_new14.setText("Cajas Habilitadas");
+        rSButtonIcon_new14.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new14.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
+        rSButtonIcon_new14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new14ActionPerformed(evt);
+            }
+        });
+        dashboardview.add(rSButtonIcon_new14, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 170, -1));
+
+        rSButtonIcon_new15.setBackground(new java.awt.Color(255, 153, 51));
+        rSButtonIcon_new15.setText("Cajas Deshabilitadas");
+        rSButtonIcon_new15.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new15.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_OFF);
+        rSButtonIcon_new15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new15ActionPerformed(evt);
+            }
+        });
+        dashboardview.add(rSButtonIcon_new15, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, 190, -1));
+
+        rSButtonIcon_new8.setBackground(new java.awt.Color(0, 204, 51));
+        rSButtonIcon_new8.setText("Total en Cajas");
+        rSButtonIcon_new8.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new8.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FUNCTIONS);
+        rSButtonIcon_new8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new8ActionPerformed(evt);
+            }
+        });
+        dashboardview.add(rSButtonIcon_new8, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 70, 160, -1));
+
+        JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        JTextbuscar.setPlaceholder("Busqueda rapida");
+        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTextbuscarActionPerformed(evt);
+            }
+        });
+        JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTextbuscarKeyReleased(evt);
+            }
+        });
+        dashboardview.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 69, 170, -1));
+
+        rSButtonIcon_new16.setBackground(new java.awt.Color(255, 102, 102));
+        rSButtonIcon_new16.setText("Cajas Cerradas");
+        rSButtonIcon_new16.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
+        rSButtonIcon_new16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new16ActionPerformed(evt);
+            }
+        });
+        dashboardview.add(rSButtonIcon_new16, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 70, 150, -1));
+
+        rSButtonIcon_new17.setBackground(new java.awt.Color(102, 51, 255));
+        rSButtonIcon_new17.setText("Cajas Abiertas");
+        rSButtonIcon_new17.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
+        rSButtonIcon_new17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new17ActionPerformed(evt);
+            }
+        });
+        dashboardview.add(rSButtonIcon_new17, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 70, 150, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, 1416, Short.MAX_VALUE)
+            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, 1535, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(260, 260, 260)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(84, 84, 84))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -800,9 +1066,9 @@ public class Caja extends javax.swing.JFrame {
                 .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        setSize(new java.awt.Dimension(1362, 712));
+        setSize(new java.awt.Dimension(1377, 712));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -886,8 +1152,8 @@ public class Caja extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-        Cliente clientes = new Cliente();
-        clientes.setVisible(true);
+        Menu menu = new Menu();
+        menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
@@ -918,6 +1184,79 @@ public class Caja extends javax.swing.JFrame {
     private void rSButtonIcon_new10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new10ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rSButtonIcon_new10ActionPerformed
+
+    private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
+
+    private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
+
+    private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
+
+    private void JTableBancosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancosMouseClicked
+        // TODO add your handling code here:
+        int seleccion = JTableBancos.rowAtPoint(evt.getPoint());
+        codigoc =   String.valueOf(JTableBancos.getValueAt(seleccion, 0));
+    }//GEN-LAST:event_JTableBancosMouseClicked
+
+    private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
+        // TODO add your handling code here:
+        rSButtonIcon_new6.setEnabled(true);
+        limpiartabla();
+        listarHabilitados();
+    }//GEN-LAST:event_rSButtonIcon_new14ActionPerformed
+
+    private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new15ActionPerformed
+        // TODO add your handling code here:
+        rSButtonIcon_new6.setEnabled(false);
+        limpiartabla();
+        listarDeshabilitados();
+
+    }//GEN-LAST:event_rSButtonIcon_new15ActionPerformed
+
+    private void rSButtonIcon_new8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new8ActionPerformed
+        // TODO add your handling code here:
+        TotalCajas tc = new TotalCajas();
+        tc.setVisible(true);
+    }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
+
+    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
+
+    }//GEN-LAST:event_JTextbuscarActionPerformed
+
+    private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            limpiartabla();
+            buscarNombre();
+
+        }
+    }//GEN-LAST:event_JTextbuscarKeyReleased
+
+    private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
+        // TODO add your handling code here:
+        rSButtonIcon_new12.setEnabled(true);
+        rSButtonIcon_new13.setEnabled(false);
+        limpiartabla();
+        listarCAbiertas();
+        
+    }//GEN-LAST:event_rSButtonIcon_new16ActionPerformed
+
+    private void rSButtonIcon_new17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new17ActionPerformed
+        // TODO add your handling code here:
+        rSButtonIcon_new12.setEnabled(false);
+        rSButtonIcon_new13.setEnabled(true);
+        limpiartabla();
+        listarCCerradas();
+    }//GEN-LAST:event_rSButtonIcon_new17ActionPerformed
+
+    private void rSButtonIcon_new18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new18ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSButtonIcon_new18ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1001,13 +1340,14 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Header;
+    private rojerusan.RSTableMetro1 JTableBancos;
+    private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel MenuIcon;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1020,6 +1360,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel linehidemenu;
     private javax.swing.JPanel linesetting;
     private javax.swing.JPanel linesetting1;
@@ -1040,10 +1381,19 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new10;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new11;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new13;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new14;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new15;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new16;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new17;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new18;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new6;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new7;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new8;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new9;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
@@ -1055,7 +1405,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSLabelIcon rSLabelIcon3;
     private rojerusan.RSLabelIcon rSLabelIcon4;
     private rojerusan.RSLabelIcon rSLabelIcon5;
-    private rojerusan.RSLabelIcon rSLabelIcon6;
     private rojerusan.RSLabelIcon rSLabelIcon7;
     private rojerusan.RSLabelIcon rSLabelIcon8;
     private rojerusan.RSLabelIcon rSLabelIcon9;
