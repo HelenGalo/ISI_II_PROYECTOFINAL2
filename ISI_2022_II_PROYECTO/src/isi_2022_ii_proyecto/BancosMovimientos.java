@@ -1533,22 +1533,22 @@ public class BancosMovimientos extends javax.swing.JFrame {
         
         
         String sql1="SELECT db.Descripcion,db.Valor,db.Hora,db.Fecha FROM DetallesBancarios db \n" +
-                "WHERE db.IdTipoTransaccion=1 AND db.IdCuenta=1 AND db.Hora between '"+hi+"' and '"+hf+"'"+" AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
+                "WHERE db.IdTipoTransaccion=1 AND db.IdCuenta="+codigob+" AND db.Hora between '"+hi+"' and '"+hf+"'"+" AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
         
         String sql2="SELECT db.Descripcion,db.Valor,db.Hora,db.Fecha FROM DetallesBancarios db \n" +
-                "WHERE db.IdTipoTransaccion=1 AND db.IdCuenta=1 AND db.Hora between '"+hi+"' and '"+hf+"';";
+                "WHERE db.IdTipoTransaccion=1 AND db.IdCuenta="+codigob+" AND db.Hora between '"+hi+"' and '"+hf+"';";
         
         String sql3="SELECT db.Descripcion,db.Valor,db.Hora,db.Fecha FROM DetallesBancarios db \n" +
-                "WHERE db.IdTipoTransaccion=1 AND db.IdCuenta=1 AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
+                "WHERE db.IdTipoTransaccion=1 AND db.IdCuenta="+codigob+" AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
         
         String sqlvs1="SELECT db.Descripcion,db.Valor,db.Hora,db.Fecha FROM DetallesBancarios db \n" +
-                "WHERE db.IdTipoTransaccion=2 AND db.IdCuenta=1 AND db.Hora between '"+hi+"' and '"+hf+"'"+" AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
+                "WHERE db.IdTipoTransaccion=2 AND db.IdCuenta="+codigob+" AND db.Hora between '"+hi+"' and '"+hf+"'"+" AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
         
         String sqlvs2="SELECT db.Descripcion,db.Valor,db.Hora,db.Fecha FROM DetallesBancarios db \n" +
-                "WHERE db.IdTipoTransaccion=2 AND db.IdCuenta=1 AND db.Hora between '"+hi+"' and '"+hf+"';";
+                "WHERE db.IdTipoTransaccion=2 AND db.IdCuenta="+codigob+" AND db.Hora between '"+hi+"' and '"+hf+"';";
         
         String sqlvs3="SELECT db.Descripcion,db.Valor,db.Hora,db.Fecha FROM DetallesBancarios db \n" +
-                "WHERE db.IdTipoTransaccion=2 AND db.IdCuenta=1 AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
+                "WHERE db.IdTipoTransaccion=2 AND db.IdCuenta="+codigob+" AND db.Fecha between '"+Fi+"' and '"+Fn+"';";
         
         String sqlt1="SELECT sum(db.Valor) FROM DetallesBancarios db\n" +
                 "WHERE db.IdTipoTransaccion=1 AND db.IdCuenta="+codigob+" AND db.Hora between '"+hi+"' and '"+hf+"'"+" AND db.Fecha between '"+Fi+"' and '"+Fn+"';";

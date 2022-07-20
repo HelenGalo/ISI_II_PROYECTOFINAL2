@@ -6,6 +6,7 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.TotalBancos;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.List;
@@ -60,7 +61,7 @@ public class Banco extends javax.swing.JFrame {
 
         String SQL = "SELECT cb.IdCuenta, b.Nombre,tc.Descripcion, cb.TotalenCuenta FROM CuentasBancarias cb\n" +
                     "INNER JOIN Bancos b ON b.IdBanco = cb.IdBanco\n" +
-                    "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta";
+                    "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta WHERE cb.IdEstado=1";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -81,6 +82,58 @@ public class Banco extends javax.swing.JFrame {
         }
     }
      
+      public void listarHabilitados(){
+        String[] registros = new String[4];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
+
+        String SQL = "SELECT cb.IdCuenta, b.Nombre,tc.Descripcion, cb.TotalenCuenta FROM CuentasBancarias cb\n" +
+                    "INNER JOIN Bancos b ON b.IdBanco = cb.IdBanco\n" +
+                    "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta WHERE cb.IdEstado=1";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdCuenta");
+                registros[1] = rs.getString("Nombre");
+                registros[2] = rs.getString("Descripcion");
+                registros[3] = rs.getString("TotalenCuenta");
+                modelo.addRow(registros);
+            }
+
+            JTableBancos.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+      public void listarDeshabilitados(){
+        String[] registros = new String[4];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
+
+        String SQL = "SELECT cb.IdCuenta, b.Nombre,tc.Descripcion, cb.TotalenCuenta FROM CuentasBancarias cb\n" +
+                    "INNER JOIN Bancos b ON b.IdBanco = cb.IdBanco\n" +
+                    "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta WHERE cb.IdEstado=0";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdCuenta");
+                registros[1] = rs.getString("Nombre");
+                registros[2] = rs.getString("Descripcion");
+                registros[3] = rs.getString("TotalenCuenta");
+                modelo.addRow(registros);
+            }
+
+            JTableBancos.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
      
      private void limpiartabla(){
         DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
@@ -895,7 +948,7 @@ public class Banco extends javax.swing.JFrame {
         rSButtonIcon_new8.setBackground(new java.awt.Color(0, 204, 51));
         rSButtonIcon_new8.setText("Total en Bancos");
         rSButtonIcon_new8.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new8.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        rSButtonIcon_new8.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FUNCTIONS);
         rSButtonIcon_new8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new8ActionPerformed(evt);
@@ -903,9 +956,9 @@ public class Banco extends javax.swing.JFrame {
         });
 
         rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new11.setText("Cuentas Activas");
+        rSButtonIcon_new11.setText("Cuentas Habilitadas");
         rSButtonIcon_new11.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
         rSButtonIcon_new11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new11ActionPerformed(evt);
@@ -913,9 +966,9 @@ public class Banco extends javax.swing.JFrame {
         });
 
         rSButtonIcon_new12.setBackground(new java.awt.Color(255, 153, 51));
-        rSButtonIcon_new12.setText("Cuentas Inactivas");
+        rSButtonIcon_new12.setText("Cuentas Deshabilitadas");
         rSButtonIcon_new12.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_OFF);
         rSButtonIcon_new12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new12ActionPerformed(evt);
@@ -1034,8 +1087,8 @@ public class Banco extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-        Cliente clientes = new Cliente();
-        clientes.setVisible(true);
+        Menu menu = new Menu();
+        menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
@@ -1106,14 +1159,22 @@ public class Banco extends javax.swing.JFrame {
 
     private void rSButtonIcon_new8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new8ActionPerformed
         // TODO add your handling code here:
+        TotalBancos tb = new TotalBancos();
+        tb.setVisible(true);
     }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
 
     private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
         // TODO add your handling code here:
+        limpiartabla();
+        listarHabilitados();
     }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
 
     private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
         // TODO add your handling code here:
+        
+        limpiartabla();
+        listarDeshabilitados();
+        
     }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
 
     private void JTableBancosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancosMouseClicked

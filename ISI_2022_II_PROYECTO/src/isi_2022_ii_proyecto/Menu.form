@@ -871,6 +871,9 @@
                       <Value id="ACCOUNT_BALANCE"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new10ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new11">
                   <Properties>
@@ -1539,6 +1542,7 @@
                     </Property>
                   </Properties>
                   <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BOTONBANCOMouseClicked"/>
                     <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BOTONBANCOMouseEntered"/>
                     <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BOTONBANCOMouseExited"/>
                   </Events>

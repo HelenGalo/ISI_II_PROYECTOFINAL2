@@ -27,7 +27,6 @@ public class Menu extends javax.swing.JFrame {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
         jLabel10.setText("Usuario en sesion: "+usuario);
-        refrescarInt();
     }
     /**
      * Creates new form Menu
@@ -563,6 +562,11 @@ public class Menu extends javax.swing.JFrame {
         rSButtonIcon_new10.setText("Bancos");
         rSButtonIcon_new10.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new10.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ACCOUNT_BALANCE);
+        rSButtonIcon_new10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new10ActionPerformed(evt);
+            }
+        });
 
         rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new11.setText("Logisticas");
@@ -966,6 +970,9 @@ public class Menu extends javax.swing.JFrame {
         BOTONBANCO.setColorBorde(new java.awt.Color(255, 255, 255));
         BOTONBANCO.setPreferredSize(new java.awt.Dimension(170, 152));
         BOTONBANCO.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BOTONBANCOMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 BOTONBANCOMouseEntered(evt);
             }
@@ -1382,6 +1389,20 @@ public class Menu extends javax.swing.JFrame {
              e.setVisible(true);
              this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new15ActionPerformed
+
+    private void BOTONBANCOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONBANCOMouseClicked
+        // TODO add your handling code here:
+        Banco b = new Banco();
+        b.setVisible(a);
+        this.dispose();
+    }//GEN-LAST:event_BOTONBANCOMouseClicked
+
+    private void rSButtonIcon_new10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new10ActionPerformed
+        // TODO add your handling code here:
+        Banco b = new Banco();
+        b.setVisible(a);
+        this.dispose();
+    }//GEN-LAST:event_rSButtonIcon_new10ActionPerformed
 
     /**
      * @param args the command line arguments
