@@ -102,7 +102,7 @@ public class AgregarProducto extends javax.swing.JFrame {
     }
     
     public void buscardatos(){
-          String SQL = "SELECT * FROM Productos WHERE idProducto=(SELECT max(IdProducto) FROM Productos)";
+          String SQL = "SELECT * FROM Productos WHERE IdProducto=(SELECT max(IdProducto) FROM Productos)";
           
           
         try {
@@ -174,8 +174,8 @@ public class AgregarProducto extends javax.swing.JFrame {
         String nombre="";
         String descrip="";
         int precio = 0;
-        int proveedor=0;
-        int Categoria=0;
+        int proveedor=1;
+        int Categoria=1;
         
         
         
@@ -942,7 +942,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         jPanel5.add(precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 159, 40));
 
         NombreP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NombreP.setPlaceholder("Ingrese los nombres del cliente");
+        NombreP.setPlaceholder("Ingrese los nombres del producto");
         NombreP.setSoloLetras(true);
         NombreP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -954,8 +954,8 @@ public class AgregarProducto extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("CodCliente:");
-        jPanel5.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 190, 70));
+        jLabel17.setText("CodProducto:");
+        jPanel5.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 170, 70));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
