@@ -270,8 +270,11 @@ public class Caja extends javax.swing.JFrame {
         linesetting5 = new javax.swing.JPanel();
         linesetting3 = new javax.swing.JPanel();
         rSButtonIconOne3 = new RSMaterialComponent.RSButtonIconOne();
-        rSButtonIconOne4 = new RSMaterialComponent.RSButtonIconOne();
         rSButtonIconOne5 = new RSMaterialComponent.RSButtonIconOne();
+        linesetting16 = new javax.swing.JPanel();
+        rSButtonIconOne15 = new RSMaterialComponent.RSButtonIconOne();
+        rSButtonIconOne16 = new RSMaterialComponent.RSButtonIconOne();
+        rSButtonIconOne17 = new RSMaterialComponent.RSButtonIconOne();
         menu = new javax.swing.JPanel();
         MenuIcon = new javax.swing.JPanel();
         linesetting = new javax.swing.JPanel();
@@ -393,14 +396,6 @@ public class Caja extends javax.swing.JFrame {
             }
         });
 
-        rSButtonIconOne4.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIconOne4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
-        rSButtonIconOne4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIconOne4ActionPerformed(evt);
-            }
-        });
-
         rSButtonIconOne5.setBackground(new java.awt.Color(20, 101, 187));
         rSButtonIconOne5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REMOVE);
         rSButtonIconOne5.addActionListener(new java.awt.event.ActionListener() {
@@ -409,27 +404,78 @@ public class Caja extends javax.swing.JFrame {
             }
         });
 
+        linesetting16.setBackground(new java.awt.Color(20, 101, 187));
+        linesetting16.setPreferredSize(new java.awt.Dimension(50, 10));
+
+        rSButtonIconOne15.setBackground(new java.awt.Color(20, 101, 187));
+        rSButtonIconOne15.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FULLSCREEN);
+        rSButtonIconOne15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIconOne15ActionPerformed(evt);
+            }
+        });
+
+        rSButtonIconOne16.setBackground(new java.awt.Color(20, 101, 187));
+        rSButtonIconOne16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        rSButtonIconOne16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIconOne16ActionPerformed(evt);
+            }
+        });
+
+        rSButtonIconOne17.setBackground(new java.awt.Color(20, 101, 187));
+        rSButtonIconOne17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REMOVE);
+        rSButtonIconOne17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIconOne17ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout linesetting16Layout = new javax.swing.GroupLayout(linesetting16);
+        linesetting16.setLayout(linesetting16Layout);
+        linesetting16Layout.setHorizontalGroup(
+            linesetting16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(linesetting16Layout.createSequentialGroup()
+                .addComponent(rSButtonIconOne17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(rSButtonIconOne15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(rSButtonIconOne16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        linesetting16Layout.setVerticalGroup(
+            linesetting16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(linesetting16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(linesetting16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rSButtonIconOne17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonIconOne15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonIconOne16, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
         javax.swing.GroupLayout linesetting3Layout = new javax.swing.GroupLayout(linesetting3);
         linesetting3.setLayout(linesetting3Layout);
         linesetting3Layout.setHorizontalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(linesetting3Layout.createSequentialGroup()
-                .addGap(168, 168, 168)
+                .addGap(234, 234, 234)
                 .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(138, 138, 138))
+                .addGap(174, 174, 174))
+            .addGroup(linesetting3Layout.createSequentialGroup()
+                .addGap(99, 99, 99)
+                .addComponent(linesetting16, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(linesetting3Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addComponent(linesetting16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -1090,26 +1136,6 @@ public class Caja extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rSButtonIconOne3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne3ActionPerformed
-        // TODO add your handling code here:
-        this.setExtendedState(this.MAXIMIZED_BOTH);
-    }//GEN-LAST:event_rSButtonIconOne3ActionPerformed
-
-    private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne4ActionPerformed
-        try {
-            // TODO add your handling code here:
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.exit(0);
-    }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
-
-    private void rSButtonIconOne5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne5ActionPerformed
-        // TODO add your handling code here:
-        this.setExtendedState(ICONIFIED);
-    }//GEN-LAST:event_rSButtonIconOne5ActionPerformed
-
     private void linesetting7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linesetting7MouseEntered
         // TODO add your handling code here:
         linesetting10.setBackground(Color.red);
@@ -1205,6 +1231,15 @@ public class Caja extends javax.swing.JFrame {
 
     private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
         // TODO add your handling code here:
+         if(codigoc!=null){
+          
+          ActualizarCaja ac = new ActualizarCaja();
+          ac.setCodigoC(codigoc);
+          ac.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+        }
+       
    
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
@@ -1285,6 +1320,34 @@ public class Caja extends javax.swing.JFrame {
     private void rSButtonIcon_new18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new18ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rSButtonIcon_new18ActionPerformed
+
+    private void rSButtonIconOne5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSButtonIconOne5ActionPerformed
+
+    private void rSButtonIconOne3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSButtonIconOne3ActionPerformed
+
+    private void rSButtonIconOne15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne15ActionPerformed
+        // TODO add your handling code here:
+        this.setExtendedState(this.MAXIMIZED_BOTH);
+    }//GEN-LAST:event_rSButtonIconOne15ActionPerformed
+
+    private void rSButtonIconOne16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne16ActionPerformed
+        try {
+            // TODO add your handling code here:
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: de exe"+ ex.getMessage());
+        }
+        System.exit(0);
+    }//GEN-LAST:event_rSButtonIconOne16ActionPerformed
+
+    private void rSButtonIconOne17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne17ActionPerformed
+        // TODO add your handling code here:
+        this.setExtendedState(ICONIFIED);
+    }//GEN-LAST:event_rSButtonIconOne17ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1395,6 +1458,10 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel linesetting10;
     private javax.swing.JPanel linesetting11;
     private javax.swing.JPanel linesetting12;
+    private javax.swing.JPanel linesetting13;
+    private javax.swing.JPanel linesetting14;
+    private javax.swing.JPanel linesetting15;
+    private javax.swing.JPanel linesetting16;
     private javax.swing.JPanel linesetting2;
     private javax.swing.JPanel linesetting3;
     private javax.swing.JPanel linesetting4;
@@ -1405,9 +1472,20 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel linesetting9;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel menuhide;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne10;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne11;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne12;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne13;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne14;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne15;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne16;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne17;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
-    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne6;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne7;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne8;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne9;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new10;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new11;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
