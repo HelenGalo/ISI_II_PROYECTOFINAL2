@@ -6,6 +6,7 @@
 package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionGuardar;
 import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.sql.Connection;
@@ -22,6 +23,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import rojeru_san.complementos.RSUtilities;
 
 /**
  *
@@ -31,12 +33,18 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
       ConexionBD conexion = new ConexionBD();
       Connection con = conexion.conexion();
       int id=0;
+      boolean estadoagregar=false;
+
+    public void setEstadoagregar(boolean estadoagregar) {
+        this.estadoagregar = estadoagregar;
+    }
 
 
     /**
      * Creates new form AgregarCuentaBancaria
      */
     public AgregarCuentaBancaria()   {
+        RSUtilities.setFullScreenJFrame(this);
         initComponents();
         buscardatos();
         listarTipoCuenta();
@@ -46,6 +54,12 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
      
        
       
+    }
+    
+    public void validarConfirmacion(){
+        if(estadoagregar=true){
+            insertar();
+        }
     }
     
    
@@ -150,7 +164,10 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         
        
     }
-     public void buscardatos(){
+    
+    
+    
+    public void buscardatos(){
           String SQL = "SELECT * FROM CuentasBancarias c WHERE c.IdCuenta=(SELECT max(IdCuenta) FROM CuentasBancarias)";
           
           
@@ -323,6 +340,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         rSButtonIcon_new11 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1168,8 +1186,8 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-        Menu menu = new Menu();
-        menu.setVisible(true);
+        Banco banco = new Banco();
+        banco.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
@@ -1179,7 +1197,11 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
 
     private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
         // TODO add your handling code here:
-      insertar();
+        ConfirmacionGuardar cg = new ConfirmacionGuardar();
+        cg.setGcuenta(this);
+        cg.setTipo("GBancos");
+        cg.setVisible(true);
+        
       
     }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
 

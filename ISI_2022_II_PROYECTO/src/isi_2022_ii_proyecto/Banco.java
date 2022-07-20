@@ -6,7 +6,7 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
-import isi_2022_ii_proyecto.Recursos.Confirmacion;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionDeshabilitarCuenta;
 import isi_2022_ii_proyecto.Recursos.TotalBancos;
 import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
@@ -1139,7 +1139,7 @@ public class Banco extends javax.swing.JFrame {
         
        if(codigob!=null){
           
-           Confirmacion c = new Confirmacion();
+           ConfirmacionDeshabilitarCuenta c = new ConfirmacionDeshabilitarCuenta();
            c.setBafectado(this);
            c.setVisible(true);
         }else{
@@ -1151,8 +1151,8 @@ public class Banco extends javax.swing.JFrame {
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
         // TODO add your handling code here:
-        AgregarClientes ag = new AgregarClientes();
-        ag.setVisible(true);
+        AgregarCuentaBancaria ac = new AgregarCuentaBancaria();
+        ac.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
 

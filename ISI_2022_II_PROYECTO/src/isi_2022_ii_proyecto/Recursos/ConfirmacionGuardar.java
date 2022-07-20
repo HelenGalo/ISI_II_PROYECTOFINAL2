@@ -5,6 +5,7 @@
  */
 package isi_2022_ii_proyecto.Recursos;
 
+import isi_2022_ii_proyecto.AgregarCuentaBancaria;
 import isi_2022_ii_proyecto.Banco;
 import rojeru_san.complementos.RSUtilities;
 
@@ -12,17 +13,24 @@ import rojeru_san.complementos.RSUtilities;
  *
  * @author Edwin Rafael
  */
-public class Confirmacion extends javax.swing.JFrame {
-    Banco bafectado;
+public class ConfirmacionGuardar extends javax.swing.JFrame {
+    AgregarCuentaBancaria gcuenta;
 
-    public void setBafectado(Banco bafectado) {
-        this.bafectado = bafectado;
+    public void setGcuenta(AgregarCuentaBancaria gcuenta) {
+        this.gcuenta = gcuenta;
     }
+    String tipo="";
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    
 
     /**
      * Creates new form Confirmacion
      */
-    public Confirmacion() {
+    public ConfirmacionGuardar() {
          RSUtilities.setFullScreenJFrame(this);
         initComponents();
         RSUtilities.setOpaqueWindow(this, false);
@@ -143,9 +151,13 @@ public class Confirmacion extends javax.swing.JFrame {
 
     private void rSButtonIcon_new2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new2ActionPerformed
         // TODO add your handling code here:
-        bafectado.deshabilitar();
-        bafectado.limpiartabla();
-        this.dispose();
+        if(tipo=="GBancos"){
+            gcuenta.setEstadoagregar(true);
+            gcuenta.validarConfirmacion();
+            this.dispose();
+        }
+
+        
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     /**
@@ -165,20 +177,23 @@ public class Confirmacion extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Confirmacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfirmacionGuardar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Confirmacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfirmacionGuardar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Confirmacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfirmacionGuardar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Confirmacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfirmacionGuardar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Confirmacion().setVisible(true);
+                new ConfirmacionGuardar().setVisible(true);
             }
         });
     }

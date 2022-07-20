@@ -6,10 +6,15 @@
 package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionModificar;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -20,6 +25,12 @@ import rojeru_san.complementos.RSUtilities;
  * @author Edwin Rafael
  */
 public class ModificarCuentaB extends javax.swing.JFrame {
+    
+    boolean estadosModificar=false;
+
+    public void setEstadosModificar(boolean estadosModificar) {
+        this.estadosModificar = estadosModificar;
+    }
 
     public void setCodigob(String codigob) {
         this.codigob = codigob;
@@ -41,6 +52,105 @@ public class ModificarCuentaB extends javax.swing.JFrame {
         listarTipoCuenta();
         listarEstado();
     }
+    
+    public void validarConfirmacion(){
+        if(estadosModificar=true){
+            modificar();
+        }
+    }
+    
+    public void modificar(){
+         int idbanco=ObtenerBancos();
+        int tipocuenta=ObtenerTipoCuenta();
+        int idestado=ObtenerEstado();
+        int numerocuenta=Integer.parseInt(JNDeposito.getText().toString());
+
+        
+        
+ 
+       String SQL = "UPDATE CuentasBancarias SET IdBanco=?, IdTipoCuenta=?,IdEstado=?,NCuenta=? WHERE IdCuenta="+JCodigoDisponible.getText();
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, idbanco);
+            preparedStmt.setInt(2, tipocuenta);
+            preparedStmt.setInt(3, idestado);
+            preparedStmt.setInt(4, numerocuenta);            
+            preparedStmt.execute();
+            
+             VentanaEmergente1 ve = new VentanaEmergente1();
+             ve.setVisible(true);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+    }
+    
+    
+    public int ObtenerBancos(){
+        int idbanco=0;
+         
+        String SQL = "SELECT b.IdBanco From Bancos b Where b.Nombre='"+rSComboMetro2.getSelectedItem().toString()+"';";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idbanco =rs.getInt("b.IdBanco");
+            }
+            
+           
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return idbanco;
+    }
+    
+    public int ObtenerTipoCuenta(){
+        
+        int tipocuenta=0;
+         
+        String SQL = "SELECT b.IdTipoCuenta From TipoCuenta b Where b.Descripcion='"+rSComboMetro1.getSelectedItem().toString()+"';";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                tipocuenta =rs.getInt("b.IdTipoCuenta");
+
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        return tipocuenta;
+    }
+    
+    public int ObtenerEstado(){
+        int estado=0;
+         
+        String SQL = "SELECT b.IdEstado From EstadosUsuario b Where b.Descripcion='"+rSComboMetro3.getSelectedItem().toString()+"';";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                estado =rs.getInt("b.IdEstado");
+    
+                
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return estado;
+    }
+    
+    
+    
+   
     
     public void mostrar(){
         String SQL = "SELECT cb.IdCuenta, b.Nombre,tc.Descripcion,e.Descripcion,cb.NCuenta from CuentasBancarias cb\n" +
@@ -559,13 +669,10 @@ public class ModificarCuentaB extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
-        try {
-            // TODO add your handling code here:
-            con.close();
-            this.dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(BuscarCuentaB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ConfirmacionModificar cm = new ConfirmacionModificar();
+        cm.setmcuentab(this);
+        cm.setTipo("MCBancos");
+        cm.setVisible(true);
 
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
 
