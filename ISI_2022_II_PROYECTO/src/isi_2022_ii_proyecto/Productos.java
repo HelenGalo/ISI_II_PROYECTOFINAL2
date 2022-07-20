@@ -34,15 +34,13 @@ public class Productos extends javax.swing.JFrame {
      * Creates new form AgregarCliente
      */
      boolean a = true;
-    String codenvio;
+    String prod;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    int id=0;
+
 
     
-  public void setEnvio(String envio) {
-        this.codenvio = envio;
-    }
+
   
     
     public Productos() {
@@ -99,10 +97,12 @@ public class Productos extends javax.swing.JFrame {
 
     
    private void buscarNombre(){
-        String[] registros = new String[5];
+        String[] registros = new String[6];
         DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
         
-         String SQL = "SELECT * FROM Productos p WHERE p.Nombre LIKE '"+JTextbuscar.getText()+"%'";
+         String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.NombreCategoria,pr.NombreEmpresa  FROM Productos p\n" +
+                      "INNER JOIN Proveedores pr ON pr.IdProveedor = p.IdProveedor\n" +
+                      "INNER JOIN Categorias c ON c.IdCategoria = p.IdCategoria WHERE p.Nombre LIKE '"+JTextbuscar.getText()+"%'";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -1054,12 +1054,11 @@ public class Productos extends javax.swing.JFrame {
     private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
        // TODO add your handling code here:
          try {
-             if(codenvio.isEmpty()==false){
-          
-          ActualizarEnvio ac = new   ActualizarEnvio();
-           ac.setId(Integer.parseInt(codenvio));
-           ac.MostrarE();
-           ac.setVisible(true);   
+             if(prod.isEmpty()==false){
+          ActualizarProductos p = new  ActualizarProductos();
+           p.setId(Integer.parseInt(prod));
+           p.mostrarP();
+           p.setVisible(true);   
            this.dispose();
         }else{
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
@@ -1078,12 +1077,13 @@ public class Productos extends javax.swing.JFrame {
     private void JTableProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableProductosMouseClicked
         
         int seleccion = JTableProductos.rowAtPoint(evt.getPoint());
-        codenvio =   String.valueOf(JTableProductos.getValueAt(seleccion, 0));
-         System.out.println("THIs" +codenvio);
+      prod =   String.valueOf(JTableProductos.getValueAt(seleccion, 0));
+         System.out.println("THIs" +prod);
     }//GEN-LAST:event_JTableProductosMouseClicked
 
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
-
+            limpiartabla();
+            buscarNombre();
     }//GEN-LAST:event_JTextbuscarActionPerformed
 
     private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased

@@ -31,35 +31,77 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author orell
  */
-public class AgregarProducto extends javax.swing.JFrame {
+public class ActualizarProductos extends javax.swing.JFrame {
 
     /**
      * Creates new form AgregarCliente
      */
      boolean a = true;
     String prod;
+    String nombre="";
+    String descrip="";
+   
+    int proveedor=1;
+    int Categoria=1;
+    int id=0;  
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    int id=0;
+ 
   
-    
+       public void setId(int id) {
+        this.id = id;
+    }
   public void setProducto(String producto) {
         this.prod = producto;
     }
   
     
-    public AgregarProducto() {
+    public ActualizarProductos() {
         initComponents();
          this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
         inicializar();
-        buscardatos();
+
          inicial();
         
     }
     public void inicializar(){
          JCodigoDisponible1.setText(prod);
     }
+    
+    
+    public void mostrarP(){
+           int precio = 0;
+    
+        String SQL = "Select * from Productos Where IdProducto="+id;
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+            
+            nombre = NombreP.getText();
+            descrip = Descrip1.getText();
+           precio = Integer.parseInt(pre.getText());
+           proveedor=ObtenerProveedor();
+           Categoria=ObtenerCategoria();  
+            }
+            
+           NombreP.setText(nombre);
+           Descrip1.setText(descrip);
+           pre.setText(String.valueOf(precio));
+          JCodigoDisponible1.setText(String.valueOf(id));
+        
+    
+          } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+        
+    
+    
+    
+    
     
      public void inicial(){
          String SQL = "SELECT * FROM Categorias";
@@ -101,32 +143,7 @@ public class AgregarProducto extends javax.swing.JFrame {
     
     }
     
-    public void buscardatos(){
-          String SQL = "SELECT * FROM Productos WHERE IdProducto=(SELECT max(IdProducto) FROM Productos)";
-          
-          
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
 
-            while (rs.next()) {
-                id = rs.getInt("IdProducto");
-               
-                
-            }
-
-            
-            System.out.println("SIN SUMAR"+String.valueOf(id));
-            id = id +1;
-            System.out.println(String.valueOf(id));
-             JCodigoDisponible1.setText(String.valueOf(id));
-            
-           
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
     
         public int ObtenerCategoria(){
           String SQL = "SELECT * FROM Categorias c Where c.NombreCategoria="+"'"+JCategoria.getSelectedItem().toString()+"'";
@@ -169,36 +186,27 @@ public class AgregarProducto extends javax.swing.JFrame {
         
     }
         
-       
-      public void insertarP(){
-        String nombre="";
-        String descrip="";
+      public void ActualizarP(){
         int precio = 0;
-        int proveedor=1;
-        int Categoria=1;
-        
-        
-        
-        nombre = NombreP.getText();
+          
+         nombre = NombreP.getText();
         descrip = Descrip1.getText();
         precio = Integer.parseInt(pre.getText());
         proveedor=ObtenerProveedor();
         Categoria=ObtenerCategoria();
         
-        String SQL = "INSERT INTO Productos (IdProducto,Nombre,IdCategoria,IdProveedor,Descripcion,Precio) VALUES"
-                + "(?, ?, ?, ?, ?, ?)";
+        String SQL = "UPDATE  Productos SET Nombre=?,IdCategoria=?,IdProveedor=?,Descripcion=?,Precio=? WHERE IdProducto="+"'"+id+"'";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
-            preparedStmt.setInt(1, id);
-            preparedStmt.setString (2, nombre);
-            preparedStmt.setInt(3, Categoria);
-            preparedStmt.setInt(4, proveedor);
-            preparedStmt.setString (5,descrip);
-            preparedStmt.setInt(6, precio);
+            preparedStmt.setString (1, nombre);
+            preparedStmt.setInt(2, Categoria);
+            preparedStmt.setInt(3, proveedor);
+            preparedStmt.setString (4,descrip);
+            preparedStmt.setInt(5, precio);
           
             preparedStmt.execute();
             
-            JOptionPane.showMessageDialog(null, "Registro Guardado Exitosamente");
+              JOptionPane.showMessageDialog(null, "Registro actualizado Exitosamente");
 
         } catch (Exception e) {
             System.out.println("ERROR" + e.getMessage());
@@ -698,7 +706,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Agregar");
+        jLabel12.setText("Modificar");
         linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
 
         javax.swing.GroupLayout menuhideLayout = new javax.swing.GroupLayout(menuhide);
@@ -788,7 +796,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         rSPanelOpacity3.setBackground(new java.awt.Color(60, 76, 143));
 
         rSLabelIcon16.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_SHOPPING_CART);
+        rSLabelIcon16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.RESTORE);
         rSLabelIcon16.setName(""); // NOI18N
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -800,7 +808,7 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("Agregar Productos");
+        jLabel25.setText("Modificar Productos");
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
@@ -869,7 +877,7 @@ public class AgregarProducto extends javax.swing.JFrame {
                 .addComponent(rSLabelIcon16, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel25)
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         rSPanelOpacity3Layout.setVerticalGroup(
             rSPanelOpacity3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1244,7 +1252,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(validar()==true){
 
-            insertarP();
+           ActualizarP();
 
         }else{
 
@@ -1343,14 +1351,30 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -1371,7 +1395,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgregarProducto().setVisible(true);
+                new ActualizarProductos().setVisible(true);
             }
         });
     }
@@ -1447,4 +1471,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.rspanel.RSPanelCircle rSPanelCircle2;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity3;
     // End of variables declaration//GEN-END:variables
+
+   
 }

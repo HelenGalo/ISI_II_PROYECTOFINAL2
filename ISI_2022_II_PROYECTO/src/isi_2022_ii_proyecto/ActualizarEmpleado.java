@@ -107,8 +107,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             segundonom.setText(segundonombre);
             ape1.setText(Papellido);
             ape2.setText(Sapellido);
-            CorreoAE.setText(correo);
-            
+            correo1.setText(correo);
             cuenta.setText(String.valueOf(numeroCta));
             JCodigoDisponible.setText(String.valueOf(id));
             
@@ -1688,7 +1687,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     // End of variables declaration//GEN-END:variables
 
     void setId(String code) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       
     }
 
     
