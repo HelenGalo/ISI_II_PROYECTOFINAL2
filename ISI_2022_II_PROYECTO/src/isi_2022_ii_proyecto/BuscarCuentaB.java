@@ -138,8 +138,8 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         rSButtonPane1 = new rojerusan.RSButtonPane();
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
-        JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
         rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
+        JTextbuscar = new rojeru_san.rsfield.RSTextFull();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -422,20 +422,6 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         jLabel38.setText("Total de Activos:");
         jPanel3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(471, 60, 200, 60));
 
-        JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
-        JTextbuscar.setPlaceholder("Busqueda rapida");
-        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTextbuscarActionPerformed(evt);
-            }
-        });
-        JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                JTextbuscarKeyReleased(evt);
-            }
-        });
-        jPanel3.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 170, -1));
-
         rSButtonIcon_new13.setBackground(new java.awt.Color(102, 51, 255));
         rSButtonIcon_new13.setText("Cerrar Ventana");
         rSButtonIcon_new13.setBackgroundHover(new java.awt.Color(0, 55, 133));
@@ -447,6 +433,16 @@ public class BuscarCuentaB extends javax.swing.JFrame {
             }
         });
         jPanel3.add(rSButtonIcon_new13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 160, 50));
+
+        JTextbuscar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        JTextbuscar.setPlaceholder("Ingrese el codigo.");
+        JTextbuscar.setSoloNumeros(true);
+        JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTextbuscarKeyReleased(evt);
+            }
+        });
+        jPanel3.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 180, -1));
 
         rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 760, 370));
 
@@ -494,18 +490,6 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
 
-    private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
-        // TODO add your handling code here:
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            buscarNombre();
-
-        }
-    }//GEN-LAST:event_JTextbuscarKeyReleased
-
-    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
-
-    }//GEN-LAST:event_JTextbuscarActionPerformed
-
     private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
         // TODO add your handling code here:
         BancosMovimientos bm = new BancosMovimientos();
@@ -515,6 +499,19 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         banco.dispose();
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
+
+    private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
+        // TODO add your handling code here:
+        if(JTextbuscar.getText().isEmpty()==false){
+            if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            buscarNombre();
+
+        }
+        }else{
+            JOptionPane.showMessageDialog(this, "No ha ingresado ningun codigo");
+        }
+        
+    }//GEN-LAST:event_JTextbuscarKeyReleased
 
     /**
      * @param args the command line arguments
@@ -553,7 +550,7 @@ public class BuscarCuentaB extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
+    private rojeru_san.rsfield.RSTextFull JTextbuscar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
