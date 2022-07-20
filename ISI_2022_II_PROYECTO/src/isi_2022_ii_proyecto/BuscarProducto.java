@@ -50,7 +50,7 @@ public class BuscarProducto extends javax.swing.JFrame {
         String provee="";
         String total="";
         
-        String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.Nombre,pr.NombreEmpresa  FROM Productos p\n" +
+        String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.NombreCategoria,pr.NombreEmpresa  FROM Productos p\n" +
                       "INNER JOIN Proveedores pr ON pr.IdProveedor = p.IdProveedor\n" +
                       "INNER JOIN Categorias c ON c.IdCategoria = p.IdCategoria\n" +
                       "WHERE p.IdProducto="+JTextbuscar.getText();

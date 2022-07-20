@@ -57,7 +57,7 @@ public class Productos extends javax.swing.JFrame {
         String[] registros = new String[6];
         DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
 
-        String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.Nombre,pr.NombreEmpresa  FROM Productos p\n" +
+        String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.NombreCategoria,pr.NombreEmpresa  FROM Productos p\n" +
                       "INNER JOIN Proveedores pr ON pr.IdProveedor = p.IdProveedor\n" +
                       "INNER JOIN Categorias c ON c.IdCategoria = p.IdCategoria";
         try {
@@ -69,7 +69,7 @@ public class Productos extends javax.swing.JFrame {
                 registros[1] = rs.getString("Nombre");
                 registros[2] = rs.getString("Descripcion");
                 registros[3] = rs.getString("Precio");
-                registros[4] = rs.getString("Nombre");
+                registros[4] = rs.getString("NombreCategoria");
                 registros[5] = rs.getString("NombreEmpresa");
                 modelo.addRow(registros);
             }
@@ -112,7 +112,7 @@ public class Productos extends javax.swing.JFrame {
                 registros[1] = rs.getString("Nombre");
                 registros[2] = rs.getString("Descripcion");
                 registros[3] = rs.getString("Precio");
-                registros[4] = rs.getString("Nombre");
+                registros[4] = rs.getString("NombreCategoria");
                 registros[5] = rs.getString("NombreEmpresa");
                 modelo.addRow(registros);
             }
@@ -1046,7 +1046,7 @@ public class Productos extends javax.swing.JFrame {
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
         // TODO add your handling code here:
-        AgregarEnvio ag = new AgregarEnvio();
+        AgregarProducto ag = new AgregarProducto();
         ag.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed

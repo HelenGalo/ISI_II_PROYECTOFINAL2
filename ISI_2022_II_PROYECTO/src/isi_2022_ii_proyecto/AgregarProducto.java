@@ -31,24 +31,24 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author orell
  */
-public class AgregarClientes extends javax.swing.JFrame {
+public class AgregarProducto extends javax.swing.JFrame {
 
     /**
      * Creates new form AgregarCliente
      */
      boolean a = true;
-    String cliente;
+    String prod;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     int id=0;
-    String rol;
+  
     
-  public void setCliente(String cliente) {
-        this.cliente = cliente;
+  public void setProducto(String producto) {
+        this.prod = producto;
     }
   
     
-    public AgregarClientes() {
+    public AgregarProducto() {
         initComponents();
          this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
@@ -58,11 +58,17 @@ public class AgregarClientes extends javax.swing.JFrame {
         
     }
     public void inicializar(){
-         JCodigoDisponible1.setText(cliente);
+         JCodigoDisponible1.setText(prod);
     }
     
-    public void buscardatos(){
-          String SQL = "SELECT * FROM Clientes WHERE idCliente=(SELECT max(IdCliente) FROM Clientes)";
+     public void inicial(){
+         String SQL = "SELECT * FROM Categorias";
+         String cat="";
+         
+         String SQL1 = "SELECT * FROM Proveedores";
+         String pro="";
+         
+        
           
           
         try {
@@ -70,7 +76,41 @@ public class AgregarClientes extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                id = rs.getInt("IdCliente");
+              cat = rs.getString("NombreCategoria");
+               JCategoria.addItem(cat);
+               
+                
+            }
+            
+            
+            Statement st1 = (Statement) con.createStatement();
+            ResultSet rs1 = st1.executeQuery(SQL1);
+
+            while (rs1.next()) {
+               pro = rs1.getString("NombreEmpresa");
+               JProveedores.addItem(pro);
+               
+                
+            }
+
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+       
+    
+    }
+    
+    public void buscardatos(){
+          String SQL = "SELECT * FROM Productos WHERE idProducto=(SELECT max(IdProducto) FROM Productos)";
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                id = rs.getInt("IdProducto");
                
                 
             }
@@ -87,38 +127,9 @@ public class AgregarClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
-    public void inicial(){
-         String SQL = "SELECT e.Descripcion FROM EstadosUsuario e";
-         String des="";
-          
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-               des = rs.getString("Descripcion");
-               JComboEstado.addItem(des);
-               
-                
-            }
-            
-      
- 
     
-            
-           
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-       
-    
-    
-        
-       
-    }
-        public int Obtenerestado(){
-          String SQL = "SELECT * FROM EstadosUsuario g Where g.Descripcion="+"'"+JComboEstado.getSelectedItem().toString()+"'";
+        public int ObtenerCategoria(){
+          String SQL = "SELECT * FROM Categorias c Where c.NombreCategoria="+"'"+JCategoria.getSelectedItem().toString()+"'";
           int idg=0;
           
         try {
@@ -126,17 +137,10 @@ public class AgregarClientes extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                idg = rs.getInt("IdEstado");
+                idg = rs.getInt("IdCategoria");
                
                 
             }
-
-            
-            
- 
-            
-            
-           
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -144,31 +148,54 @@ public class AgregarClientes extends javax.swing.JFrame {
         return idg;
         
     }
-      public void insertar(){
-        String nombres="";
-        String apellidos="";
-        String telefono="";
-        String direccion="";
-        String correo="";
-        int estado=Obtenerestado();
-        nombres = NombreC.getText();
-        apellidos = ApellidoC.getText();
-        direccion = DireccionC.getText();
-        telefono=TelC.getText();
-        correo=CorreoC.getText();
+            public int ObtenerProveedor(){
+          String SQL = "SELECT * FROM Proveedores p Where p.NombreEmpresa="+"'"+JProveedores.getSelectedItem().toString()+"'";
+          int idg=0;
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idg = rs.getInt("IdProveedor");
+               
+                
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return idg;
+        
+    }
+        
+       
+      public void insertarP(){
+        String nombre="";
+        String descrip="";
+        int precio = 0;
+        int proveedor=0;
+        int Categoria=0;
         
         
-        String SQL = "INSERT INTO Clientes (IdCliente,Nombres,Apellidos,DireccionCliente,Telefono,CorreoElectronico,Estado) VALUES"
-                + "(?, ?, ?, ?, ?, ?,?)";
+        
+        nombre = NombreP.getText();
+        descrip = Descrip1.getText();
+        precio = Integer.parseInt(pre.getText());
+        proveedor=ObtenerProveedor();
+        Categoria=ObtenerCategoria();
+        
+        String SQL = "INSERT INTO Productos (IdProducto,Nombre,IdCategoria,IdProveedor,Descripcion,Precio) VALUES"
+                + "(?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, id);
-            preparedStmt.setString (2, nombres);
-            preparedStmt.setString   (3, apellidos);
-            preparedStmt.setString(4, direccion);
-            preparedStmt.setString(5, telefono);
-            preparedStmt.setString(6, correo);
-            preparedStmt.setInt(7, estado);
+            preparedStmt.setString (2, nombre);
+            preparedStmt.setInt(3, Categoria);
+            preparedStmt.setInt(4, proveedor);
+            preparedStmt.setString (5,descrip);
+            preparedStmt.setInt(6, precio);
+          
             preparedStmt.execute();
             
             JOptionPane.showMessageDialog(null, "Registro Guardado Exitosamente");
@@ -188,42 +215,32 @@ public class AgregarClientes extends javax.swing.JFrame {
         
       public Boolean validar(){
         boolean a=true;
-      if(NombreC.getText().isEmpty()){
+      if(NombreP.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
           a= false;
       }
       
-       if(ApellidoC.getText().isEmpty()){
-          JOptionPane.showMessageDialog(this, "Por favor ingrese Apellidos");
-          a= false;
-      }
-        if(TelC.getText().contentEquals(paramString())){
+ 
+     
+        if(pre.getText().contentEquals(paramString())){
           JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
           a= false;
       }
+     
+       if(Descrip1.getText().isEmpty()){
        
-        if(DireccionC.getText().isEmpty()){
-          JOptionPane.showMessageDialog(this, "Por favor ingrese una direccion");
+          JOptionPane.showMessageDialog(this, "Por favor ingrese una descripcion");
           a= false;
       }
-        
-       if(CorreoC.getText().isEmpty()){
        
-          JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
+       if(JCategoria.getSelectedItem().toString().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione una categoria valido");
           a= false;
-      }
-          if (validarC(CorreoC.getText())==false){
-            
-               JOptionPane.showMessageDialog(this, "El correo ingresado no es valido");
-              
-             a= false;
-        
       
-             
-        
-        }
-       if(JComboEstado.getSelectedItem().toString().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Por favor seleccione un estado valido");
+    }
+       
+        if(JProveedores.getSelectedItem().toString().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione una categoria valido");
           a= false;
       
  
@@ -235,24 +252,7 @@ public class AgregarClientes extends javax.swing.JFrame {
   
 
         
-      public boolean validarC(String correo){
-             boolean a=true;
-        Pattern patron = Pattern
-                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-           correo = CorreoC.getText();
-        Matcher comparar = patron.matcher(correo);
-       
-        if (comparar.find() == true) {
-           
-             JOptionPane.showMessageDialog(this,"El correo ingresado es válido.");
-             a=true;
-        } else {
-           JOptionPane.showMessageDialog(this,"El correo ingresado es inválido.");
-                   a=false;
-        }
-         return a;
-    }
+   
 
     
    
@@ -322,21 +322,19 @@ public class AgregarClientes extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
-        DireccionC = new rojeru_san.RSMTextFull();
+        pre = new rojeru_san.RSMTextFull();
         rSPanelCircle2 = new rojeru_san.rspanel.RSPanelCircle();
         JCodigoDisponible1 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        NombreC = new rojeru_san.RSMTextFull();
-        ApellidoC = new rojeru_san.RSMTextFull();
-        TelC = new rojeru_san.RSMTextFull();
+        precio = new javax.swing.JLabel();
+        NombreP = new rojeru_san.RSMTextFull();
         jLabel17 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
-        CorreoC = new rojeru_san.RSMTextFull();
-        JComboEstado = new rojerusan.RSComboMetro();
+        JCategoria = new rojerusan.RSComboMetro();
         Estado = new javax.swing.JLabel();
         rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
+        JProveedores = new rojerusan.RSComboMetro();
+        jLabel35 = new javax.swing.JLabel();
+        Descrip1 = new rojeru_san.RSMTextFull();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -694,7 +692,7 @@ public class AgregarClientes extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Clientes");
+        jLabel3.setText("Productos");
         linesetting12.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 210, 40));
 
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
@@ -732,7 +730,7 @@ public class AgregarClientes extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
             .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -746,7 +744,7 @@ public class AgregarClientes extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO CLIENTES");
+        jLabel6.setText("MODÚLO PRODUCTOS");
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
 
@@ -790,7 +788,7 @@ public class AgregarClientes extends javax.swing.JFrame {
         rSPanelOpacity3.setBackground(new java.awt.Color(60, 76, 143));
 
         rSLabelIcon16.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        rSLabelIcon16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_SHOPPING_CART);
         rSLabelIcon16.setName(""); // NOI18N
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -802,7 +800,7 @@ public class AgregarClientes extends javax.swing.JFrame {
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("Agregar Clientes");
+        jLabel25.setText("Agregar Productos");
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
@@ -814,10 +812,10 @@ public class AgregarClientes extends javax.swing.JFrame {
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel28.setText("Modulo Clientes");
+        jLabel28.setText("Modúlo Productos");
 
         rSLabelIcon20.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon20.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
+        rSLabelIcon20.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SHOPPING_CART);
         rSLabelIcon20.setName(""); // NOI18N
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -830,7 +828,7 @@ public class AgregarClientes extends javax.swing.JFrame {
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel34.setText("Listado de Clientes");
+        jLabel34.setText("Listado de Productos");
 
         rSPanelOpacity3.setLayer(rSLabelIcon16, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity3.setLayer(jLabel24, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -871,7 +869,7 @@ public class AgregarClientes extends javax.swing.JFrame {
                 .addComponent(rSLabelIcon16, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel25)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
         rSPanelOpacity3Layout.setVerticalGroup(
             rSPanelOpacity3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -894,19 +892,22 @@ public class AgregarClientes extends javax.swing.JFrame {
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("Nombres del Cliente");
+        jLabel29.setText("Nombre del Producto:");
+        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 180, 40));
 
-        DireccionC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        DireccionC.setPlaceholder("Ingresar domiciliaria del cliente");
-        DireccionC.addActionListener(new java.awt.event.ActionListener() {
+        pre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        pre.setPlaceholder("Ingresar Precio del producto");
+        pre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DireccionCActionPerformed(evt);
+                preActionPerformed(evt);
             }
         });
+        jPanel5.add(pre, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, 380, 40));
 
         rSPanelCircle2.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -932,97 +933,61 @@ public class AgregarClientes extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel31.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel31.setText("Telefono");
+        jPanel5.add(rSPanelCircle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 70, 70));
 
-        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("Apellidos del Cliente");
+        precio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        precio.setForeground(new java.awt.Color(153, 0, 255));
+        precio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        precio.setText("Precio");
+        jPanel5.add(precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 159, 40));
 
-        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel32.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setText("Direccion Domiciliaria:");
-
-        NombreC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NombreC.setPlaceholder("Ingrese los nombres del cliente");
-        NombreC.setSoloLetras(true);
-        NombreC.addActionListener(new java.awt.event.ActionListener() {
+        NombreP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        NombreP.setPlaceholder("Ingrese los nombres del cliente");
+        NombreP.setSoloLetras(true);
+        NombreP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreCActionPerformed(evt);
+                NombrePActionPerformed(evt);
             }
         });
-
-        ApellidoC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ApellidoC.setPlaceholder("Ingrese los apellidos del cliente");
-        ApellidoC.setSoloLetras(true);
-        ApellidoC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ApellidoCActionPerformed(evt);
-            }
-        });
-
-        TelC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TelC.setPlaceholder("Ingresa el numero Telefono");
-        TelC.setSoloNumeros(true);
-        TelC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TelCActionPerformed(evt);
-            }
-        });
+        jPanel5.add(NombreP, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 370, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("CodCliente:");
+        jPanel5.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 190, 70));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("Correo Electronico:");
+        jLabel33.setText("Categoria:");
+        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 40, 180, 40));
 
-        CorreoC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        CorreoC.setPlaceholder("Ingresar Correo Electronico");
-        CorreoC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CorreoCActionPerformed(evt);
-            }
-        });
-        CorreoC.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                CorreoCKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                CorreoCKeyReleased(evt);
-            }
-        });
-
-        JComboEstado.setColorArrow(new java.awt.Color(102, 0, 255));
-        JComboEstado.setColorFondo(new java.awt.Color(60, 76, 143));
-        JComboEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+        JCategoria.setColorArrow(new java.awt.Color(102, 0, 255));
+        JCategoria.setColorFondo(new java.awt.Color(60, 76, 143));
+        JCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JComboEstadoMouseClicked(evt);
+                JCategoriaMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                JComboEstadoMouseEntered(evt);
+                JCategoriaMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                JComboEstadoMouseExited(evt);
+                JCategoriaMouseExited(evt);
             }
         });
-        JComboEstado.addActionListener(new java.awt.event.ActionListener() {
+        JCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JComboEstadoActionPerformed(evt);
+                JCategoriaActionPerformed(evt);
             }
         });
+        jPanel5.add(JCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 90, 190, 30));
 
         Estado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Estado.setForeground(new java.awt.Color(153, 0, 255));
         Estado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Estado.setText("Estado");
+        Estado.setText("Proveedores");
+        jPanel5.add(Estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 220, 120, 40));
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new9.setText("Guardar Cambios");
@@ -1034,110 +999,49 @@ public class AgregarClientes extends javax.swing.JFrame {
                 rSButtonIcon_new9ActionPerformed(evt);
             }
         });
+        jPanel5.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 168, -1));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(249, 249, 249)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(rSPanelCircle2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(168, 168, 168)
-                                .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(168, 168, 168)
-                                .addComponent(ApellidoC, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(TelC, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Estado, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(11, 11, 11)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DireccionC, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(JComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
-                                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(59, 59, 59))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSPanelCircle2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(8, 8, 8)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ApellidoC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(9, 9, 9)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TelC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(Estado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(DireccionC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(JComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22))))
-        );
+        JProveedores.setColorArrow(new java.awt.Color(102, 0, 255));
+        JProveedores.setColorFondo(new java.awt.Color(60, 76, 143));
+        JProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JProveedoresMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JProveedoresMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JProveedoresMouseExited(evt);
+            }
+        });
+        JProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JProveedoresActionPerformed(evt);
+            }
+        });
+        jPanel5.add(JProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 260, 190, 30));
+
+        jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel35.setText("Descripcion:");
+        jPanel5.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 159, 40));
+
+        Descrip1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Descrip1.setPlaceholder("Ingresar descripcion del Producto");
+        Descrip1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Descrip1ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(Descrip1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 380, 40));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.DEFAULT_SIZE, 977, Short.MAX_VALUE)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1183,7 +1087,7 @@ public class AgregarClientes extends javax.swing.JFrame {
                 .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
@@ -1273,81 +1177,66 @@ public class AgregarClientes extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-        Cliente clientes = new Cliente();
-        clientes.setVisible(true);
+      Productos p= new Productos();
+        p.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
-
-    private void DireccionCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DireccionCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DireccionCActionPerformed
 
     private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
         // TODO add your handling code here:
         if(validar()==true){
 
-          insertar();
- 
-     
-             
+            insertarP();
+
         }else{
-       
-            
+
             JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
         }
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
-    private void NombreCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCActionPerformed
+    private void JCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCategoriaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NombreCActionPerformed
+    }//GEN-LAST:event_JCategoriaActionPerformed
 
-    private void ApellidoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApellidoCActionPerformed
+    private void JCategoriaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JCategoriaMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_ApellidoCActionPerformed
+    }//GEN-LAST:event_JCategoriaMouseExited
 
-    private void TelCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelCActionPerformed
+    private void JCategoriaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JCategoriaMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_TelCActionPerformed
+    }//GEN-LAST:event_JCategoriaMouseEntered
 
-    private void CorreoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorreoCActionPerformed
-
-        
-    }//GEN-LAST:event_CorreoCActionPerformed
-
-    private void JComboEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEstadoMouseClicked
+    private void JCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JCategoriaMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboEstadoMouseClicked
+    }//GEN-LAST:event_JCategoriaMouseClicked
 
-    private void JComboEstadoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEstadoMouseEntered
+    private void NombrePActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombrePActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboEstadoMouseEntered
+    }//GEN-LAST:event_NombrePActionPerformed
 
-    private void JComboEstadoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEstadoMouseExited
+    private void preActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboEstadoMouseExited
+    }//GEN-LAST:event_preActionPerformed
 
-    private void JComboEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboEstadoActionPerformed
+    private void JProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JProveedoresMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboEstadoActionPerformed
+    }//GEN-LAST:event_JProveedoresMouseClicked
 
-    private void CorreoCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorreoCKeyReleased
-                
-        if (evt.getKeyChar()=='\n'){
-          if (validarC(CorreoC.getText())==false){
-            
-               JOptionPane.showMessageDialog(this, "El correo ingresado no es valido");  
-        }
-          else{
-              JOptionPane.showMessageDialog(this, "El correo ingresado es valido"); 
-          }
-              
-          }
-    
-    }//GEN-LAST:event_CorreoCKeyReleased
+    private void JProveedoresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JProveedoresMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JProveedoresMouseEntered
 
-    private void CorreoCKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorreoCKeyPressed
-       
-    }//GEN-LAST:event_CorreoCKeyPressed
+    private void JProveedoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JProveedoresMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JProveedoresMouseExited
+
+    private void JProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JProveedoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JProveedoresActionPerformed
+
+    private void Descrip1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Descrip1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Descrip1ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1396,14 +1285,22 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -1416,26 +1313,23 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgregarClientes().setVisible(true);
+                new AgregarProducto().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private rojeru_san.RSMTextFull ApellidoC;
-    private rojeru_san.RSMTextFull CorreoC;
-    private rojeru_san.RSMTextFull DireccionC;
+    private rojeru_san.RSMTextFull Descrip1;
     private javax.swing.JLabel Estado;
     private javax.swing.JPanel Header;
+    private rojerusan.RSComboMetro JCategoria;
     private javax.swing.JLabel JCodigoDisponible1;
-    private rojerusan.RSComboMetro JComboEstado;
+    private rojerusan.RSComboMetro JProveedores;
     private javax.swing.JPanel MenuIcon;
-    private rojeru_san.RSMTextFull NombreC;
-    private rojeru_san.RSMTextFull TelC;
+    private rojeru_san.RSMTextFull NombreP;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
@@ -1444,10 +1338,9 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1472,6 +1365,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel linesetting9;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel menuhide;
+    private rojeru_san.RSMTextFull pre;
+    private javax.swing.JLabel precio;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
