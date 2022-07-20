@@ -6,6 +6,8 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionDeshabilitarCuenta;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.List;
@@ -51,6 +53,23 @@ public class Productos extends javax.swing.JFrame {
     
         
     }
+    
+    
+      public void deshabilitarp(){
+        String SQL = "UPDATE Productos SET IdEstado=? Where IdProductos="+prod;
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+          
+            preparedStmt.setInt (1, 0);
+            preparedStmt.execute();
+            
+            VentanaEmergente1 ve = new VentanaEmergente1();
+            ve.setVisible(true);
+
+        } catch (Exception e) {
+            System.out.println("ERROR" + e.getMessage());   
+        }
+    }
      public void listarP(){
         String[] registros = new String[6];
         DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
@@ -81,7 +100,7 @@ public class Productos extends javax.swing.JFrame {
     }
      
      
-     private void limpiartabla(){
+     public void limpiartabla(){
         DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
         while (modelo.getRowCount() > 0)
         {
@@ -1038,10 +1057,16 @@ public class Productos extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 
     private void rSButtonIcon_new6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new6ActionPerformed
-        // TODO add your handling code here:
-        Proveedores proveedores = new Proveedores();
-        proveedores.setVisible(true);
-        this.dispose();
+      if(prod!=null){
+          
+           ConfirmacionDeshabilitarCuenta c = new ConfirmacionDeshabilitarCuenta();
+           c.setProdafectado(this);
+           c.setTipo("DProducto");
+           c.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+        }
+       
     }//GEN-LAST:event_rSButtonIcon_new6ActionPerformed
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed

@@ -5,6 +5,8 @@
  */
 package isi_2022_ii_proyecto.Recursos;
 
+import isi_2022_ii_proyecto.ActualizarEnvio;
+import isi_2022_ii_proyecto.ActualizarProductos;
 import isi_2022_ii_proyecto.AgregarCuentaBancaria;
 import isi_2022_ii_proyecto.Banco;
 import isi_2022_ii_proyecto.ModificarCuentaB;
@@ -16,10 +18,19 @@ import rojeru_san.complementos.RSUtilities;
  */
 public class ConfirmacionModificar extends javax.swing.JFrame {
     ModificarCuentaB mcuentab;
+    ActualizarEnvio ame;
+
+    public void setAme(ActualizarEnvio ame) {
+        this.ame = ame;
+    }
+   
+  
 
     public void setmcuentab(ModificarCuentaB gcuenta) {
         this.mcuentab = gcuenta;
     }
+    
+   
     String tipo="";
 
     public void setTipo(String tipo) {
@@ -157,6 +168,11 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
             mcuentab.validarConfirmacion();
             this.dispose();
         }
+        if(tipo=="MEnvios"){
+            ame.setEstadosModificar(true);
+            ame.validarConfirmacion();
+            this.dispose();
+        }
 
         
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
@@ -212,4 +228,8 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
     private RSMaterialComponent.RSLabelIcon rSLabelIcon1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
+
+    
+
+  
 }

@@ -6,6 +6,9 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionGuardar;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionGuardarPro;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.List;
@@ -38,7 +41,11 @@ public class AgregarEnvio extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     int id=0;
- 
+    boolean estadoagregar=false;
+
+    public void setEstadoagregar(boolean estadoagregar) {
+        this.estadoagregar = estadoagregar;
+    }
   public void setEnvio(String env) {
         this.envio =env;
     }
@@ -50,9 +57,40 @@ public class AgregarEnvio extends javax.swing.JFrame {
         this.setExtendedState(this.MAXIMIZED_BOTH);
         inicializar();
         buscardatos();
-     
+        inicial();
+        
     
         
+    }
+      public void validarConfirmacion(){
+        if(estadoagregar=true){
+            insertar();
+        }
+    }
+    public void inicial(){
+     
+     
+    String SQL = "SELECT * FROM EstadosUsuario";
+         String estadou="";
+         
+       try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+ 
+
+            while (rs.next()) {
+               estadou = rs.getString("Descripcion");
+              JEstado.addItem(estadou);
+               
+                
+            }
+            
+              } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+       
+    
     }
     public void inicializar(){
        JCodigoDisponible.setText(envio);
@@ -84,20 +122,48 @@ public class AgregarEnvio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
+     public int Obtenerestado(){
+          String SQL = "SELECT * FROM EstadosUsuario g Where g.Descripcion="+"'"+JEstado.getSelectedItem().toString()+"'";
+          int idg=0;
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idg = rs.getInt("IdEstado");
+               
+                
+            }
+
+            
+            
+ 
+            
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return idg;
+        
+    }
 
       public void insertar(){
         String nombres="";
         String Tari="";
         String telefono="";
         String correo="";
+        int estado = 1;
         
         nombres = NombreC.getText();
         Tari = Tarifa.getText();
         telefono=TelC1.getText();
         correo=CorreoC.getText();
+        estado = Obtenerestado();
         
-        
-        String SQL = "INSERT INTO EmpresasEnvio(IdEmpresaEnvio,NombreEmpresa,Tarifa,Telefono,CorreoElectronico) VALUES"
+        String SQL = "INSERT INTO EmpresasEnvio(IdEmpresaEnvio,NombreEmpresa,Tarifa,Telefono,CorreoElectronico,Estado) VALUES"
                 + "(?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
@@ -106,9 +172,11 @@ public class AgregarEnvio extends javax.swing.JFrame {
             preparedStmt.setString   (3, Tari);
             preparedStmt.setString(4, telefono);
             preparedStmt.setString(5, correo);
+             preparedStmt.setInt(7, estado);
             preparedStmt.execute();
             
-            JOptionPane.showMessageDialog(null, "Registro Guardado Exitosamente");
+           VentanaEmergente1 ve = new VentanaEmergente1();
+             ve.setVisible(true);
 
         } catch (Exception e) {
             System.out.println("ERROR" + e.getMessage());
@@ -143,11 +211,16 @@ public class AgregarEnvio extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un telefono valido");
           a= false;
       }
-        
+        if(JEstado.getSelectedItem().toString().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione un estado");
+          a= false;
+      
+    }
        if(CorreoC.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
           a= false;
       }
+       
        
       
        return a;
@@ -232,6 +305,8 @@ public class AgregarEnvio extends javax.swing.JFrame {
         rSPanelCircle1 = new rojeru_san.rspanel.RSPanelCircle();
         JCodigoDisponible = new javax.swing.JLabel();
         NombreC = new rojeru_san.RSMTextFull();
+        jLabel21 = new javax.swing.JLabel();
+        JEstado = new rojerusan.RSComboMetro();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -352,9 +427,9 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 .addGap(253, 253, 253)
                 .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addGap(83, 83, 83)
-                .addComponent(icono, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE))
+                .addComponent(icono, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -654,7 +729,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
             .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -769,11 +844,13 @@ public class AgregarEnvio extends javax.swing.JFrame {
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel29.setText("Nombre Empresa:");
+        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 170, 40));
 
         CorreoC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         CorreoC.setPlaceholder("Ingresar Correo Electronico");
@@ -782,11 +859,13 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 CorreoCActionPerformed(evt);
             }
         });
+        jPanel5.add(CorreoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 372, 440, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Tarifa:");
+        jPanel5.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 180, 40));
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new9.setText("Guardar");
@@ -799,11 +878,13 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 rSButtonIcon_new9ActionPerformed(evt);
             }
         });
+        jPanel5.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(445, 433, 128, 41));
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(153, 0, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel32.setText("Correo Electronico:");
+        jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 372, 190, 40));
 
         Tarifa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Tarifa.setPlaceholder("Tarifa");
@@ -812,16 +893,19 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 TarifaActionPerformed(evt);
             }
         });
+        jPanel5.add(Tarifa, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 172, 440, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("Codigo EmpresaEnvio:");
+        jPanel5.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 90, 174, 50));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel33.setText("Telefono:");
+        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 312, 180, 40));
 
         TelC1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TelC1.setPlaceholder("Ingresa el numero Telefono");
@@ -830,6 +914,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 TelC1ActionPerformed(evt);
             }
         });
+        jPanel5.add(TelC1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 312, 440, -1));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -855,6 +940,8 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel5.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 70, 70));
+
         NombreC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NombreC.setPlaceholder("Ingresa nombre");
         NombreC.addActionListener(new java.awt.event.ActionListener() {
@@ -862,82 +949,39 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 NombreCActionPerformed(evt);
             }
         });
+        jPanel5.add(NombreC, new org.netbeans.lib.awtextra.AbsoluteConstraints(262, 252, 440, -1));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(246, 246, 246)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(rSPanelCircle1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TelC1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(328, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(rSPanelCircle1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TelC1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 19, Short.MAX_VALUE)
-                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
-        );
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("Estado");
+        jPanel5.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, 60, 30));
+
+        JEstado.setColorArrow(new java.awt.Color(102, 0, 255));
+        JEstado.setColorFondo(new java.awt.Color(60, 76, 143));
+        JEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JEstadoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JEstadoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JEstadoMouseExited(evt);
+            }
+        });
+        JEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JEstadoActionPerformed(evt);
+            }
+        });
+        jPanel5.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 100, 180, 30));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 1030, Short.MAX_VALUE)
+            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
             .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel3Layout.setVerticalGroup(
@@ -990,7 +1034,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, 1416, Short.MAX_VALUE)
+            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, 1362, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(260, 260, 260)
                 .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1101,11 +1145,15 @@ public class AgregarEnvio extends javax.swing.JFrame {
 
     private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
         // TODO add your handling code here:
-        if(validar()==true){
-
-            insertar();
+       if(validar()==true){
+        ConfirmacionGuardar ge = new  ConfirmacionGuardar();
+        ge.setGenvio(this);
+        ge.setTipo("GEnvios");
+        ge.setVisible(true);
+         
 
         }else{
+
             JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
         }
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
@@ -1124,6 +1172,22 @@ public class AgregarEnvio extends javax.swing.JFrame {
        ev.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
+
+    private void JEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JEstadoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JEstadoMouseClicked
+
+    private void JEstadoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JEstadoMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JEstadoMouseEntered
+
+    private void JEstadoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JEstadoMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JEstadoMouseExited
+
+    private void JEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JEstadoActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1209,6 +1273,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.RSMTextFull CorreoC;
     private javax.swing.JPanel Header;
     private javax.swing.JLabel JCodigoDisponible;
+    private rojerusan.RSComboMetro JEstado;
     private javax.swing.JPanel MenuIcon;
     private rojeru_san.RSMTextFull NombreC;
     private rojeru_san.RSMTextFull Tarifa;
@@ -1222,6 +1287,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;

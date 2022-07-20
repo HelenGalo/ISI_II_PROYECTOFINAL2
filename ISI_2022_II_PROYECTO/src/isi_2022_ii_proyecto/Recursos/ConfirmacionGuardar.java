@@ -6,6 +6,7 @@
 package isi_2022_ii_proyecto.Recursos;
 
 import isi_2022_ii_proyecto.AgregarCuentaBancaria;
+import isi_2022_ii_proyecto.AgregarEnvio;
 import isi_2022_ii_proyecto.Banco;
 import rojeru_san.complementos.RSUtilities;
 
@@ -15,6 +16,11 @@ import rojeru_san.complementos.RSUtilities;
  */
 public class ConfirmacionGuardar extends javax.swing.JFrame {
     AgregarCuentaBancaria gcuenta;
+    AgregarEnvio genvio;
+
+    public void setGenvio(AgregarEnvio genvio) {
+        this.genvio = genvio;
+    }
 
     public void setGcuenta(AgregarCuentaBancaria gcuenta) {
         this.gcuenta = gcuenta;
@@ -156,7 +162,11 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
             gcuenta.validarConfirmacion();
             this.dispose();
         }
-
+         if(tipo=="GEnvios"){
+            genvio.setEstadoagregar(true);
+            genvio.validarConfirmacion();
+            this.dispose();
+        }
         
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 

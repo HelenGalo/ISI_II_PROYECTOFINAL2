@@ -5,40 +5,32 @@
  */
 package isi_2022_ii_proyecto.Recursos;
 
-import isi_2022_ii_proyecto.Banco;
-import isi_2022_ii_proyecto.Caja;
-import isi_2022_ii_proyecto.Productos;
+import isi_2022_ii_proyecto.AgregarProducto;
+
 import rojeru_san.complementos.RSUtilities;
 
 /**
  *
  * @author Edwin Rafael
  */
-public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
-    Banco bafectado;
-    Caja cafectado;
-    Productos prodafectado;
+public class ConfirmacionGuardarPro extends javax.swing.JFrame {
+    AgregarProducto gproducto;
 
-    public void setProdafectado(Productos prodafectado) {
-        this.prodafectado = prodafectado;
+    public void setgproducto(AgregarProducto gprod) {
+        this.gproducto = gprod;
     }
-    String tipo;
+    String tipo="";
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    public void setCafectado(Caja cafectado) {
-        this.cafectado = cafectado;
-    }
 
-    public void setBafectado(Banco bafectado) {
-        this.bafectado = bafectado;
-    }
+    
 
     /**
      * Creates new form Confirmacion
      */
-    public ConfirmacionDeshabilitarCuenta() {
+    public ConfirmacionGuardarPro() {
          RSUtilities.setFullScreenJFrame(this);
         initComponents();
         RSUtilities.setOpaqueWindow(this, false);
@@ -77,7 +69,7 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
         rSButtonIcon_new1.setBackground(new java.awt.Color(255, 255, 255));
         rSButtonIcon_new1.setText("Cancelar");
         rSButtonIcon_new1.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        rSButtonIcon_new1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         rSButtonIcon_new1.setFocusable(false);
         rSButtonIcon_new1.setForegroundIcon(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new1.setForegroundText(new java.awt.Color(0, 55, 133));
@@ -94,7 +86,7 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
         rSButtonIcon_new2.setForeground(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new2.setText("Aceptar");
         rSButtonIcon_new2.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        rSButtonIcon_new2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         rSButtonIcon_new2.setFocusable(false);
         rSButtonIcon_new2.setForegroundIcon(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new2.setForegroundText(new java.awt.Color(0, 55, 133));
@@ -159,22 +151,12 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
 
     private void rSButtonIcon_new2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new2ActionPerformed
         // TODO add your handling code here:
-        if(tipo=="DBanco"){
-            bafectado.deshabilitar();
-            bafectado.limpiartabla();
+        if(tipo=="GProducto"){
+            gproducto.setEstadoagregar(true);
+            gproducto.validarConfirmacion();
             this.dispose();
         }
-        
-          if(tipo=="DCaja"){
-            cafectado.deshabilitar();
-            cafectado.limpiartabla();
-            this.dispose();
-        }
-             if(tipo=="DProducto"){
-          prodafectado.deshabilitarp();
-          prodafectado.limpiartabla();
-            this.dispose();
-        }
+
         
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
@@ -195,21 +177,27 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConfirmacionDeshabilitarCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfirmacionGuardarPro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConfirmacionDeshabilitarCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfirmacionGuardarPro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConfirmacionDeshabilitarCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfirmacionGuardarPro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConfirmacionDeshabilitarCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfirmacionGuardarPro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConfirmacionDeshabilitarCuenta().setVisible(true);
+                new ConfirmacionGuardarPro().setVisible(true);
             }
         });
     }
@@ -223,6 +211,4 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
     private RSMaterialComponent.RSLabelIcon rSLabelIcon1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
-
-    
 }

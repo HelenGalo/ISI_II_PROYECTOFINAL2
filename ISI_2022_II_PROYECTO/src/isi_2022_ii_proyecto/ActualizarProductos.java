@@ -6,6 +6,8 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionModificarProductos;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.List;
@@ -38,15 +40,19 @@ public class ActualizarProductos extends javax.swing.JFrame {
      */
      boolean a = true;
     String prod;
-    String nombre="";
-    String descrip="";
+   
    
     int proveedor=1;
     int Categoria=1;
+    int estado=1;
     int id=0;  
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
- 
+ boolean estadosModificar=false;
+
+    public void setEstadosModificar(boolean estadosModificar) {
+        this.estadosModificar = estadosModificar;
+    }
   
        public void setId(int id) {
         this.id = id;
@@ -65,31 +71,51 @@ public class ActualizarProductos extends javax.swing.JFrame {
          inicial();
         
     }
+        public void validarConfirmacion(){
+        if(estadosModificar=true){
+            ActualizarP();
+        }
+    }
     public void inicializar(){
          JCodigoDisponible1.setText(prod);
     }
     
     
     public void mostrarP(){
-           int precio = 0;
-    
-        String SQL = "Select * from Productos Where IdProducto="+id;
+           String nombre="";
+           String descrip="";
+           String proveedor="";
+           String Categoria="";
+           String precio="";
+           String estado="";
+       
+        String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.NombreCategoria,pr.NombreEmpresa, eu.Descripcion  FROM Productos p\n" +
+                      "INNER JOIN Proveedores pr ON pr.IdProveedor = p.IdProveedor\n" +
+                      "INNER JOIN Categorias c ON c.IdCategoria = p.IdCategoria\n" +
+                     "INNER JOIN EstadosUsuario eu ON eu.IdEstado = p.IdEstado\n" +
+                      "WHERE p.IdProducto="+id;
          try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-            
-            nombre = NombreP.getText();
-            descrip = Descrip1.getText();
-           precio = Integer.parseInt(pre.getText());
-           proveedor=ObtenerProveedor();
-           Categoria=ObtenerCategoria();  
+         
+            nombre = rs.getString("p.Nombre");
+            descrip = rs.getString("p.Descripcion");
+            precio = String.valueOf(rs.getInt("p.Precio"));
+            proveedor= rs.getString("pr.NombreEmpresa");
+            Categoria =rs.getString("c.NombreCategoria");
+            estado=rs.getString("eu.Descripcion");
             }
             
            NombreP.setText(nombre);
            Descrip1.setText(descrip);
            pre.setText(String.valueOf(precio));
+           actualCat.setText(Categoria);
+           actualp.setText(proveedor);
+           actuale.setText(estado);
+           
+           
           JCodigoDisponible1.setText(String.valueOf(id));
         
     
@@ -110,7 +136,8 @@ public class ActualizarProductos extends javax.swing.JFrame {
          String SQL1 = "SELECT * FROM Proveedores";
          String pro="";
          
-        
+        String SQL2 = "SELECT * FROM EstadosUsuario";
+         String estadou="";
           
           
         try {
@@ -134,6 +161,16 @@ public class ActualizarProductos extends javax.swing.JFrame {
                
                 
             }
+             Statement st2 = (Statement) con.createStatement();
+            ResultSet rs2 = st2.executeQuery(SQL2);
+
+ 
+
+            while (rs2.next()) {
+               estadou = rs2.getString("Descripcion");
+              JEstado.addItem(estadou);
+            }
+
 
 
         } catch (SQLException e) {
@@ -165,6 +202,33 @@ public class ActualizarProductos extends javax.swing.JFrame {
         return idg;
         
     }
+          public int Obtenerestado(){
+          String SQL = "SELECT * FROM EstadosUsuario g Where g.Descripcion="+"'"+JEstado.getSelectedItem().toString()+"'";
+          int idg=0;
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idg = rs.getInt("IdEstado");
+               
+                
+            }
+
+            
+            
+ 
+            
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return idg;
+        
+    }
             public int ObtenerProveedor(){
           String SQL = "SELECT * FROM Proveedores p Where p.NombreEmpresa="+"'"+JProveedores.getSelectedItem().toString()+"'";
           int idg=0;
@@ -187,15 +251,18 @@ public class ActualizarProductos extends javax.swing.JFrame {
     }
         
       public void ActualizarP(){
-        int precio = 0;
+             String nombre="";
+           String descrip="";
+            int precio = 0;
           
          nombre = NombreP.getText();
         descrip = Descrip1.getText();
         precio = Integer.parseInt(pre.getText());
         proveedor=ObtenerProveedor();
         Categoria=ObtenerCategoria();
+        estado=Obtenerestado();
         
-        String SQL = "UPDATE  Productos SET Nombre=?,IdCategoria=?,IdProveedor=?,Descripcion=?,Precio=? WHERE IdProducto="+"'"+id+"'";
+        String SQL = "UPDATE  Productos SET Nombre=?,IdCategoria=?,IdProveedor=?,Descripcion=?,Precio=?,IdEstado=? WHERE IdProducto="+"'"+id+"'";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setString (1, nombre);
@@ -203,10 +270,12 @@ public class ActualizarProductos extends javax.swing.JFrame {
             preparedStmt.setInt(3, proveedor);
             preparedStmt.setString (4,descrip);
             preparedStmt.setInt(5, precio);
+            preparedStmt.setInt(6, estado);
           
             preparedStmt.execute();
             
-              JOptionPane.showMessageDialog(null, "Registro actualizado Exitosamente");
+          VentanaEmergente1 ve = new VentanaEmergente1();
+             ve.setVisible(true);
 
         } catch (Exception e) {
             System.out.println("ERROR" + e.getMessage());
@@ -339,10 +408,18 @@ public class ActualizarProductos extends javax.swing.JFrame {
         jLabel33 = new javax.swing.JLabel();
         JCategoria = new rojerusan.RSComboMetro();
         Estado = new javax.swing.JLabel();
-        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         JProveedores = new rojerusan.RSComboMetro();
         jLabel35 = new javax.swing.JLabel();
         Descrip1 = new rojeru_san.RSMTextFull();
+        actualp = new javax.swing.JLabel();
+        Estado1 = new javax.swing.JLabel();
+        categoria = new javax.swing.JLabel();
+        actualCat = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        JEstado = new rojerusan.RSComboMetro();
+        Estado2 = new javax.swing.JLabel();
+        actuale = new javax.swing.JLabel();
+        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -900,11 +977,13 @@ public class ActualizarProductos extends javax.swing.JFrame {
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel29.setText("Nombre del Producto:");
+        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 133, 180, 40));
 
         pre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pre.setPlaceholder("Ingresar Precio del producto");
@@ -913,6 +992,7 @@ public class ActualizarProductos extends javax.swing.JFrame {
                 preActionPerformed(evt);
             }
         });
+        jPanel5.add(pre, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 286, 380, 40));
 
         rSPanelCircle2.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -938,10 +1018,13 @@ public class ActualizarProductos extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel5.add(rSPanelCircle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 70, 70));
+
         precio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         precio.setForeground(new java.awt.Color(153, 0, 255));
         precio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         precio.setText("Precio");
+        jPanel5.add(precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 295, 159, 40));
 
         NombreP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NombreP.setPlaceholder("Ingrese los nombres del producto");
@@ -951,16 +1034,19 @@ public class ActualizarProductos extends javax.swing.JFrame {
                 NombrePActionPerformed(evt);
             }
         });
+        jPanel5.add(NombreP, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 135, 359, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("CodProducto:");
+        jPanel5.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 170, 70));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel33.setText("Categoria:");
+        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 130, 180, 40));
 
         JCategoria.setColorArrow(new java.awt.Color(102, 0, 255));
         JCategoria.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -980,22 +1066,13 @@ public class ActualizarProductos extends javax.swing.JFrame {
                 JCategoriaActionPerformed(evt);
             }
         });
+        jPanel5.add(JCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 130, 190, 30));
 
         Estado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Estado.setForeground(new java.awt.Color(153, 0, 255));
         Estado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Estado.setText("Proveedores");
-
-        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new9.setText("Guardar Cambios");
-        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
-        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
-        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new9ActionPerformed(evt);
-            }
-        });
+        Estado.setText("Nuevo Proveedor");
+        jPanel5.add(Estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 290, 130, 40));
 
         JProveedores.setColorArrow(new java.awt.Color(102, 0, 255));
         JProveedores.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -1015,11 +1092,13 @@ public class ActualizarProductos extends javax.swing.JFrame {
                 JProveedoresActionPerformed(evt);
             }
         });
+        jPanel5.add(JProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 300, 190, 30));
 
         jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(153, 0, 255));
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setText("Descripcion:");
+        jPanel5.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 215, 159, 40));
 
         Descrip1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Descrip1.setPlaceholder("Ingresar descripcion del Producto");
@@ -1028,79 +1107,69 @@ public class ActualizarProductos extends javax.swing.JFrame {
                 Descrip1ActionPerformed(evt);
             }
         });
+        jPanel5.add(Descrip1, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 218, 380, 40));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(280, 280, 280)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(rSPanelCircle2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(210, 210, 210)
-                        .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(750, 750, 750)
-                        .addComponent(JCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(NombreP, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(Descrip1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(130, 130, 130)
-                        .addComponent(Estado, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(precio, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)
-                        .addComponent(pre, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(120, 120, 120)
-                        .addComponent(JProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSPanelCircle2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addComponent(JCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NombreP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Descrip1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(Estado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(precio, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(pre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(JProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        actualp.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        actualp.setForeground(new java.awt.Color(153, 0, 255));
+        actualp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        actualp.setText("Proveedores");
+        jPanel5.add(actualp, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 220, 120, 40));
+
+        Estado1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Estado1.setForeground(new java.awt.Color(153, 0, 255));
+        Estado1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Estado1.setText("Actual Proveedor:");
+        jPanel5.add(Estado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 130, 40));
+
+        categoria.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        categoria.setForeground(new java.awt.Color(153, 0, 255));
+        categoria.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        categoria.setText("Actual Categoria:");
+        jPanel5.add(categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 50, 130, 40));
+
+        actualCat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        actualCat.setForeground(new java.awt.Color(153, 0, 255));
+        actualCat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        actualCat.setText("Categoria");
+        jPanel5.add(actualCat, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 50, 120, 40));
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("Estado");
+        jPanel5.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 370, 60, 30));
+
+        JEstado.setColorArrow(new java.awt.Color(102, 0, 255));
+        JEstado.setColorFondo(new java.awt.Color(60, 76, 143));
+        JEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JEstadoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JEstadoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JEstadoMouseExited(evt);
+            }
+        });
+        JEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JEstadoActionPerformed(evt);
+            }
+        });
+        jPanel5.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, 180, 30));
+
+        Estado2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Estado2.setForeground(new java.awt.Color(153, 0, 255));
+        Estado2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Estado2.setText("Actual Estado:");
+        jPanel5.add(Estado2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, 130, 40));
+
+        actuale.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        actuale.setForeground(new java.awt.Color(153, 0, 255));
+        actuale.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        actuale.setText("estado");
+        jPanel5.add(actuale, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 120, 40));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -1117,6 +1186,17 @@ public class ActualizarProductos extends javax.swing.JFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new9.setText("Modificar Cambios");
+        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
+        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new9ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
         dashboardview.setLayout(dashboardviewLayout);
         dashboardviewLayout.setHorizontalGroup(
@@ -1126,12 +1206,18 @@ public class ActualizarProductos extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(82, 82, 82))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(dashboardviewLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dashboardviewLayout.setVerticalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85)
+                .addGap(27, 27, 27)
+                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(39, 39, 39))
         );
@@ -1249,12 +1335,12 @@ public class ActualizarProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
     private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
-        // TODO add your handling code here:
-        if(validar()==true){
-
-           ActualizarP();
-
-        }else{
+     if(validar()==true){
+      ConfirmacionModificarProductos cmp = new ConfirmacionModificarProductos();
+      cmp.setmp(this);
+      cmp.setTipo("MPRODUCTO");
+      cmp.setVisible(true);
+         }else{
 
             JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
         }
@@ -1303,6 +1389,22 @@ public class ActualizarProductos extends javax.swing.JFrame {
     private void Descrip1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Descrip1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_Descrip1ActionPerformed
+
+    private void JEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JEstadoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JEstadoMouseClicked
+
+    private void JEstadoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JEstadoMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JEstadoMouseEntered
+
+    private void JEstadoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JEstadoMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JEstadoMouseExited
+
+    private void JEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JEstadoActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1403,15 +1505,23 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojeru_san.RSMTextFull Descrip1;
     private javax.swing.JLabel Estado;
+    private javax.swing.JLabel Estado1;
+    private javax.swing.JLabel Estado2;
     private javax.swing.JPanel Header;
     private rojerusan.RSComboMetro JCategoria;
     private javax.swing.JLabel JCodigoDisponible1;
+    private rojerusan.RSComboMetro JEstado;
     private rojerusan.RSComboMetro JProveedores;
     private javax.swing.JPanel MenuIcon;
     private rojeru_san.RSMTextFull NombreP;
+    private javax.swing.JLabel actualCat;
+    private javax.swing.JLabel actuale;
+    private javax.swing.JLabel actualp;
+    private javax.swing.JLabel categoria;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;

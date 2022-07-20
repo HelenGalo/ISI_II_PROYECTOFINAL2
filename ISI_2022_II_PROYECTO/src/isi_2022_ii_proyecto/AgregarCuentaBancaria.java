@@ -452,7 +452,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
                 .addGap(253, 253, 253)
                 .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 2, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
                 .addGap(278, 278, 278)
                 .addComponent(linesetting13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -762,7 +762,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(510, 510, 510)
-                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
+                .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 52, Short.MAX_VALUE))
         );
 
         menu.add(menuhide, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, -1));
@@ -1038,6 +1038,11 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
                 JComboEmpleados1MouseExited(evt);
             }
         });
+        JComboEmpleados1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JComboEmpleados1ActionPerformed(evt);
+            }
+        });
         jPanel3.add(JComboEmpleados1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 260, 30));
 
         rSLabelFecha1.setFormato("yyyy/MM/dd");
@@ -1242,6 +1247,10 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
     private void JNDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNDepositoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JNDepositoActionPerformed
+
+    private void JComboEmpleados1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboEmpleados1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JComboEmpleados1ActionPerformed
 
     /**
      * @param args the command line arguments
