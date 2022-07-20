@@ -83,6 +83,14 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
                     "INNER JOIN EstadosUsuario u ON e.IdEstado = u.IdEstado\n" +
                     "LEFT JOIN DetalleEmpleadoDocumento t ON t.IdEmpleado = e.IdEmpleado\n" +
                     "INNER JOIN Puestos p ON p.IdPuesto = e.IdPuesto";
+        
+        
+        
+        
+        
+        
+        
+        
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);

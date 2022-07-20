@@ -49,29 +49,32 @@ public class Productos extends javax.swing.JFrame {
         initComponents();
          this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
-        listarE();
+        listarP();
     
         
     }
-     public void listarE(){
-        String[] registros = new String[5];
-        DefaultTableModel modelo =  (DefaultTableModel) JTableEnvio.getModel();
+     public void listarP(){
+        String[] registros = new String[6];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
 
-        String SQL = "select * from EmpresasEnvio";
+        String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.Nombre,pr.NombreEmpresa  FROM Productos p\n" +
+                      "INNER JOIN Proveedores pr ON pr.IdProveedor = p.IdProveedor\n" +
+                      "INNER JOIN Categorias c ON c.IdCategoria = p.IdCategoria";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                registros[0] = rs.getString("IdEmpresaEnvio");
-                registros[1] = rs.getString("NombreEmpresa");
-                registros[2] = rs.getString("Tarifa");
-                registros[3] = rs.getString("Telefono");
-                registros[4] = rs.getString("CorreoElectronico");
+                registros[0] = rs.getString("IdProducto");
+                registros[1] = rs.getString("Nombre");
+                registros[2] = rs.getString("Descripcion");
+                registros[3] = rs.getString("Precio");
+                registros[4] = rs.getString("Nombre");
+                registros[5] = rs.getString("NombreEmpresa");
                 modelo.addRow(registros);
             }
 
-            JTableEnvio.setModel(modelo);
+            JTableProductos.setModel(modelo);
             
 
         } catch (SQLException e) {
@@ -81,7 +84,7 @@ public class Productos extends javax.swing.JFrame {
      
      
      private void limpiartabla(){
-        DefaultTableModel modelo =  (DefaultTableModel) JTableEnvio.getModel();
+        DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
         while (modelo.getRowCount() > 0)
         {
         modelo.removeRow(0);
@@ -97,23 +100,24 @@ public class Productos extends javax.swing.JFrame {
     
    private void buscarNombre(){
         String[] registros = new String[5];
-        DefaultTableModel modelo =  (DefaultTableModel) JTableEnvio.getModel();
+        DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
         
-         String SQL = "SELECT * FROM EmpresasEnvio e WHERE e.NombreEmpresa LIKE '"+JTextbuscar.getText()+"%'";
+         String SQL = "SELECT * FROM Productos p WHERE p.Nombre LIKE '"+JTextbuscar.getText()+"%'";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
              while (rs.next()) {
-                registros[0] = rs.getString("IdEmpresaEnvio");
-                registros[1] = rs.getString("NombreEmpresa");
-                registros[2] = rs.getString("Tarifa");
-                registros[3] = rs.getString("Telefono");
-                registros[4] = rs.getString("CorreoElectronico");
+                registros[0] = rs.getString("IdProducto");
+                registros[1] = rs.getString("Nombre");
+                registros[2] = rs.getString("Descripcion");
+                registros[3] = rs.getString("Precio");
+                registros[4] = rs.getString("Nombre");
+                registros[5] = rs.getString("NombreEmpresa");
                 modelo.addRow(registros);
             }
 
-            JTableEnvio.setModel(modelo);
+            JTableProductos.setModel(modelo);
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -192,7 +196,7 @@ public class Productos extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
         jScrollPane2 = new javax.swing.JScrollPane();
-        JTableEnvio = new rojerusan.RSTableMetro1();
+        JTableProductos = new rojerusan.RSTableMetro1();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -609,7 +613,7 @@ public class Productos extends javax.swing.JFrame {
         rSButtonIcon_new7.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new7.setText("Agregar Productos");
         rSButtonIcon_new7.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new7.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        rSButtonIcon_new7.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_SHOPPING_CART);
         rSButtonIcon_new7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new7ActionPerformed(evt);
@@ -710,7 +714,7 @@ public class Productos extends javax.swing.JFrame {
         jLabel11.setText("Modulo Productos");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SHOPPING_BASKET);
+        rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_MALL);
         rSLabelIcon17.setInheritsPopupMenu(true);
         rSLabelIcon17.setName(""); // NOI18N
 
@@ -792,28 +796,28 @@ public class Productos extends javax.swing.JFrame {
             }
         });
 
-        JTableEnvio.setModel(new javax.swing.table.DefaultTableModel(
+        JTableProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Codigo Empresa de Envío", "Nombre Empresa", "Tarifa", "Telefono", "Correo Electronico"
+                "Codigo Producto", "Nombre  Producto", "Descripcion", "Precio", "Categoria", "Proveedor"
             }
         ));
-        JTableEnvio.setToolTipText("");
-        JTableEnvio.setBackgoundHead(new java.awt.Color(60, 76, 143));
-        JTableEnvio.setBackgoundHover(new java.awt.Color(60, 76, 143));
-        JTableEnvio.setColorSecondary(new java.awt.Color(255, 255, 255));
-        JTableEnvio.setEffectHover(true);
-        JTableEnvio.setHighHead(50);
-        JTableEnvio.setRowHeight(50);
-        JTableEnvio.setShowHorizontalLines(true);
-        JTableEnvio.addMouseListener(new java.awt.event.MouseAdapter() {
+        JTableProductos.setToolTipText("");
+        JTableProductos.setBackgoundHead(new java.awt.Color(60, 76, 143));
+        JTableProductos.setBackgoundHover(new java.awt.Color(60, 76, 143));
+        JTableProductos.setColorSecondary(new java.awt.Color(255, 255, 255));
+        JTableProductos.setEffectHover(true);
+        JTableProductos.setHighHead(50);
+        JTableProductos.setRowHeight(50);
+        JTableProductos.setShowHorizontalLines(true);
+        JTableProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JTableEnvioMouseClicked(evt);
+                JTableProductosMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(JTableEnvio);
+        jScrollPane2.setViewportView(JTableProductos);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -1054,12 +1058,12 @@ public class Productos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rSButtonIcon_new10ActionPerformed
 
-    private void JTableEnvioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableEnvioMouseClicked
+    private void JTableProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableProductosMouseClicked
         
-        int seleccion = JTableEnvio.rowAtPoint(evt.getPoint());
-        codenvio =   String.valueOf(JTableEnvio.getValueAt(seleccion, 0));
+        int seleccion = JTableProductos.rowAtPoint(evt.getPoint());
+        codenvio =   String.valueOf(JTableProductos.getValueAt(seleccion, 0));
          System.out.println("THIs" +codenvio);
-    }//GEN-LAST:event_JTableEnvioMouseClicked
+    }//GEN-LAST:event_JTableProductosMouseClicked
 
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
 
@@ -1205,7 +1209,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Header;
-    private rojerusan.RSTableMetro1 JTableEnvio;
+    private rojerusan.RSTableMetro1 JTableProductos;
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel MenuIcon;
     private javax.swing.JPanel dashboardview;
