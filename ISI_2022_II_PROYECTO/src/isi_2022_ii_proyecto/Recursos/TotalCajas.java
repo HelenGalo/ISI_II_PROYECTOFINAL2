@@ -104,7 +104,7 @@ public class TotalCajas extends javax.swing.JFrame {
          String valor="";
    
          String SQL = "SELECT count('db.IdCaja') FROM Caja cb\n" +
-                     "WHERE cb.IdEstado=1;";
+                      "WHERE cb.IdEstado=1;";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -131,7 +131,7 @@ public class TotalCajas extends javax.swing.JFrame {
            String valor="";
    
         String SQL = "SELECT count('db.IdCaja') FROM Caja cb\n" +
-                     "WHERE cb.IdEstadoCaja=0;";
+                     "WHERE cb.IdEstado=0;";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
