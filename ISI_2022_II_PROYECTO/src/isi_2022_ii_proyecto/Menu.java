@@ -1368,6 +1368,9 @@ public class Menu extends javax.swing.JFrame {
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
         // TODO add your handling code here:
+        Caja caja = new Caja();
+        caja.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
 
     private void BOTONENVIOMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONENVIOMouseEntered

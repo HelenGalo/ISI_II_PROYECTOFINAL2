@@ -6,6 +6,7 @@
 package isi_2022_ii_proyecto.Recursos;
 
 import isi_2022_ii_proyecto.Banco;
+import isi_2022_ii_proyecto.Caja;
 import rojeru_san.complementos.RSUtilities;
 
 /**
@@ -14,6 +15,15 @@ import rojeru_san.complementos.RSUtilities;
  */
 public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
     Banco bafectado;
+    Caja cafectado;
+    String tipo;
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    public void setCafectado(Caja cafectado) {
+        this.cafectado = cafectado;
+    }
 
     public void setBafectado(Banco bafectado) {
         this.bafectado = bafectado;
@@ -143,9 +153,18 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
 
     private void rSButtonIcon_new2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new2ActionPerformed
         // TODO add your handling code here:
-        bafectado.deshabilitar();
-        bafectado.limpiartabla();
-        this.dispose();
+        if(tipo=="DBanco"){
+            bafectado.deshabilitar();
+            bafectado.limpiartabla();
+            this.dispose();
+        }
+        
+          if(tipo=="DCaja"){
+            cafectado.deshabilitar();
+            cafectado.limpiartabla();
+            this.dispose();
+        }
+        
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     /**

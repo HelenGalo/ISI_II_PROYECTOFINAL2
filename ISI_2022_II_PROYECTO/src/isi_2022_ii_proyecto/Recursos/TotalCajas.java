@@ -31,10 +31,16 @@ public class TotalCajas extends javax.swing.JFrame {
         initComponents();
         RSUtilities.setOpaqueWindow(this, false);
         RSUtilities.setOpacityComponent(this.jPanel1, 150);
+        iniciar();
+   
+    }
+    
+    public void iniciar(){
         cajasDeshabilitadas();
         cajasHabilitadas();
         cajaCerradas();
         cajasAbiertas();
+        totalEfectivoCaja();
     }
     
     
@@ -53,8 +59,8 @@ public class TotalCajas extends javax.swing.JFrame {
                
                 
             }
-            System.out.println("CAJA C "+valor);
-            LCajasCerradas.setText("y"+valor);
+            
+            jLabel46.setText(valor);
       
             
             
@@ -68,7 +74,7 @@ public class TotalCajas extends javax.swing.JFrame {
     
     
     public void cajasAbiertas(){
-          String valor="";
+          String valor;
    
          String SQL = "SELECT count('db.IdCaja') FROM Caja cb\n" +
                      "WHERE cb.IdEstadoCaja=2;";
@@ -79,10 +85,10 @@ public class TotalCajas extends javax.swing.JFrame {
             while (rs.next()) {
                 valor = rs.getString("count('db.IdCaja')");
               
-               
+                jLabel40.setText(valor);
                 
             }
-            LCajasCerradas.setText(valor);
+           
       
             
             
@@ -109,7 +115,7 @@ public class TotalCajas extends javax.swing.JFrame {
                
                 
             }
-            LCajasCerradas.setText(valor);
+            jLabel45.setText(valor);
       
             
             
@@ -136,7 +142,8 @@ public class TotalCajas extends javax.swing.JFrame {
                
                 
             }
-            LCajasCerradas.setText(valor);
+            System.out.println("c" +valor);
+            jLabel48.setText(valor);
       
             
             
@@ -152,8 +159,8 @@ public class TotalCajas extends javax.swing.JFrame {
     public void totalEfectivoCaja(){
           String valor="";
    
-        String SQL = "SELECT ifnull(sum(cb.TotalenCaja),0) as 'Tot' FROM Caja cb\n" +
-                     "WHERE cb.IdEstado=1 AND cb.IdEstadoCaja=2";
+        String SQL = "SELECT ifnull(sum(cb.TotalCaja),0) as 'Tot' FROM Caja cb\n" +
+                     "WHERE cb.IdEstado=1 AND cb.IdEstadoCaja=2;";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -164,16 +171,17 @@ public class TotalCajas extends javax.swing.JFrame {
                
                 
             }
-            jLabel41.setText("L."+valor);
+            
       
-            
-            
+            jLabel15.setText("L."+valor);
 
            
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+        
+        
     }
     
    
@@ -219,17 +227,17 @@ public class TotalCajas extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
-        jLabel34 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
-        LCajasCerradas = new javax.swing.JLabel();
         rSButtonPane2 = new rojerusan.RSButtonPane();
-        jLabel41 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel46 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -457,12 +465,6 @@ public class TotalCajas extends javax.swing.JFrame {
         jLabel31.setText("Numero de Cajas Inahabilitadas:");
         jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 250, 40));
 
-        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel32.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setText("0");
-        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, 140, 40));
-
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -487,45 +489,33 @@ public class TotalCajas extends javax.swing.JFrame {
         });
         jPanel3.add(rSButtonIcon_new13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 160, 50));
 
-        jLabel34.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel34.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel34.setText("0");
-        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, 140, 40));
-
-        jLabel36.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel36.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel36.setText("0");
-        jPanel3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 140, 40));
-
-        LCajasCerradas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        LCajasCerradas.setForeground(new java.awt.Color(153, 0, 255));
-        LCajasCerradas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LCajasCerradas.setText("0");
-        jPanel3.add(LCajasCerradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 140, 40));
-
         rSButtonPane2.setBackground(new java.awt.Color(0, 204, 102));
         rSButtonPane2.setColorHover(new java.awt.Color(0, 55, 133));
         rSButtonPane2.setColorNormal(new java.awt.Color(0, 204, 102));
 
-        jLabel41.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel41.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel41.setText("0.00");
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 36)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("0");
+        jLabel15.setFocusable(false);
+        jLabel15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout rSButtonPane2Layout = new javax.swing.GroupLayout(rSButtonPane2);
         rSButtonPane2.setLayout(rSButtonPane2Layout);
         rSButtonPane2Layout.setHorizontalGroup(
             rSButtonPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSButtonPane2Layout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
         rSButtonPane2Layout.setVerticalGroup(
             rSButtonPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rSButtonPane2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(47, 47, 47))
+                .addGap(29, 29, 29)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         jPanel3.add(rSButtonPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, 220, 100));
@@ -533,8 +523,8 @@ public class TotalCajas extends javax.swing.JFrame {
         jLabel40.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(153, 0, 255));
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel40.setText("Total de Activos en Cajas:");
-        jPanel3.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 320, 40));
+        jLabel40.setText("0");
+        jPanel3.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 130, 40));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
@@ -542,6 +532,30 @@ public class TotalCajas extends javax.swing.JFrame {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel12.setText("RESUMEN DE CAJAS");
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 260, 50));
+
+        jLabel42.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel42.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel42.setText("Total de Activos en Cajas:");
+        jPanel3.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 320, 40));
+
+        jLabel45.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel45.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel45.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel45.setText("0");
+        jPanel3.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, 130, 40));
+
+        jLabel46.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel46.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel46.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel46.setText("0");
+        jPanel3.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, 130, 40));
+
+        jLabel48.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel48.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel48.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel48.setText("0");
+        jPanel3.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 130, 40));
 
         rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 760, 410));
 
@@ -624,22 +638,22 @@ public class TotalCajas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel LCajasCerradas;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

@@ -1141,6 +1141,7 @@ public class Banco extends javax.swing.JFrame {
           
            ConfirmacionDeshabilitarCuenta c = new ConfirmacionDeshabilitarCuenta();
            c.setBafectado(this);
+           c.setTipo("DBanco");
            c.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
