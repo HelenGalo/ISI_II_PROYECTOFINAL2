@@ -51,42 +51,37 @@ public class BuscarCaja extends javax.swing.JFrame {
     }
     
     private void buscarNombre(){
-        String nombre="";
-        String descripcion="";
-        String fecha="";
-        String total="";
         
-        String SQL = "SELECT cb.IdCuenta, b.Nombre,tc.Descripcion, cb.FechaApertura, cb.TotalenCuenta from CuentasBancarias cb\n" +
-                     "INNER JOIN Bancos b ON b.IdBanco = cb.IdBanco\n" +
-                     "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta\n" +
-                     "WHERE cb.IdCuenta="+JTextbuscar.getText();
+        String usuario="";
+        String ecaja="";
+        String eucaja="";
+        String totalcaja="";
+        
+        String SQL = "SELECT u.Usuario, ec.Valor, eu.Descripcion, c.TotalCaja FROM Caja c\n"
+                + "INNER JOIN Usuarios u ON u.IdUsuario=c.IdUsuario\n"+
+                 "INNER JOIN EstadosCaja ec ON ec.IdEstado=c.IdEstadoCaja\n"+
+                 "INNER JOIN EstadosUsuario eu ON eu.IdEstado=c.IdEstado\n"+
+                 "WHERE c.IdCaja="+JTextbuscar.getText();
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                nombre = rs.getString("Nombre");
-                descripcion = rs.getString("Descripcion");
-                fecha = rs.getString("FechaApertura");
-                total = rs.getString("TotalenCuenta");
+           
+                usuario = rs.getString("u.Usuario");
+                ecaja = rs.getString("eu.Descripcion");
+                eucaja = rs.getString("ec.Valor");
+                totalcaja = rs.getString("c.TotalCaja");
                
                 
             }
-            jLabel32.setText(nombre);
-            jLabel34.setText(descripcion);
-            jLabel36.setText(fecha);
-            if(descripcion.equals("LEMPIRAS")){
-               jLabel37.setText("L."+total);
-           }else{
-                if(descripcion.equals("DOLARES")){
-                   jLabel37.setText("$."+total);
-                }
-           }
+       
+            jLabel34.setText(usuario);
+            jLabel39.setText(ecaja);
+            jLabel40.setText(eucaja);
+            jLabel37.setText("L."+totalcaja);
             
-            
-
-           
-            
+        
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
@@ -127,19 +122,18 @@ public class BuscarCaja extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         rSLabelIcon12 = new rojerusan.RSLabelIcon();
         jLabel14 = new javax.swing.JLabel();
-        rSButtonIcon_new12 = new newscomponents.RSButtonIcon_new();
         jLabel29 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
         rSButtonPane1 = new rojerusan.RSButtonPane();
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
         rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
         JTextbuscar = new rojeru_san.rsfield.RSTextFull();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -340,59 +334,22 @@ public class BuscarCaja extends javax.swing.JFrame {
 
         jPanel3.add(rSPanelOpacity2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 911, 50));
 
-        rSButtonIcon_new12.setBackground(new java.awt.Color(255, 153, 0));
-        rSButtonIcon_new12.setText("Ver Movimientos");
-        rSButtonIcon_new12.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
-        rSButtonIcon_new12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new12ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, 200, 50));
-
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel29.setText("Codigo de Caja:");
         jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 143, 40));
 
-        jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel31.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel31.setText("Institucion Bancaria:");
-        jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, 40));
-
-        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel32.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setText("Numero de Cuenta:");
-        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 170, 40));
-
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("Tipo de Cuenta:");
-        jPanel3.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 143, 40));
+        jLabel33.setText("Usuario Asignado:");
+        jPanel3.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 160, 40));
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(153, 0, 255));
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel34.setText("Numero de Cuenta:");
-        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, 170, 40));
-
-        jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel35.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel35.setText("Fecha de Apertura:");
-        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 143, 40));
-
-        jLabel36.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel36.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel36.setText("Fecha de Apertura:");
-        jPanel3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, 160, 40));
+        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 160, 40));
 
         rSButtonPane1.setBackground(new java.awt.Color(0, 204, 102));
         rSButtonPane1.setColorHover(new java.awt.Color(0, 55, 133));
@@ -407,20 +364,26 @@ public class BuscarCaja extends javax.swing.JFrame {
         rSButtonPane1.setLayout(rSButtonPane1Layout);
         rSButtonPane1Layout.setHorizontalGroup(
             rSButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            .addGroup(rSButtonPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addContainerGap())
         );
         rSButtonPane1Layout.setVerticalGroup(
             rSButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+            .addGroup(rSButtonPane1Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(70, 70, 70))
         );
 
-        jPanel3.add(rSButtonPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, -1, 150));
+        jPanel3.add(rSButtonPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, 180, 130));
 
         jLabel38.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(153, 0, 255));
         jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel38.setText("Total de Activos:");
-        jPanel3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(471, 60, 200, 60));
+        jLabel38.setText("Total de Activos en Caja:");
+        jPanel3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, 180, 60));
 
         rSButtonIcon_new13.setBackground(new java.awt.Color(102, 51, 255));
         rSButtonIcon_new13.setText("Cerrar Ventana");
@@ -443,6 +406,28 @@ public class BuscarCaja extends javax.swing.JFrame {
             }
         });
         jPanel3.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 180, -1));
+
+        jLabel39.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel39.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel3.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 160, 40));
+
+        jLabel40.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel3.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 160, 40));
+
+        jLabel41.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel41.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel41.setText("Estado de funcion:");
+        jPanel3.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 160, 40));
+
+        jLabel42.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel42.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel42.setText("Estado de Caja:");
+        jPanel3.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 160, 40));
 
         rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 760, 370));
 
@@ -489,16 +474,6 @@ public class BuscarCaja extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
-
-    private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
-        // TODO add your handling code here:
-        BancosMovimientos bm = new BancosMovimientos();
-        bm.setTipoc(jLabel34.getText());
-        bm.setCodigob(JTextbuscar.getText());
-        bm.setVisible(true);
-        banco.dispose();
-        this.dispose();
-    }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
 
     private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
         // TODO add your handling code here:
@@ -558,15 +533,15 @@ public class BuscarCaja extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -578,7 +553,6 @@ public class BuscarCaja extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel linesetting4;
     private javax.swing.JPanel linesetting5;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new13;
     private rojerusan.RSButtonPane rSButtonPane1;
     private rojeru_san.RSLabelHora rSLabelHora1;

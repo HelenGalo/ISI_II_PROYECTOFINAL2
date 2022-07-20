@@ -668,7 +668,7 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new3ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 210, -1));
+        menuhide.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 210, -1));
 
         linesetting6.setBackground(new java.awt.Color(20, 101, 187));
         linesetting6.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -739,7 +739,7 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new5ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 76, 210, -1));
+        menuhide.add(rSButtonIcon_new5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 210, -1));
 
         rSButtonIcon_new6.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new6.setText("Deshabilitar Caja");
@@ -750,7 +750,7 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new6ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 116, 210, -1));
+        menuhide.add(rSButtonIcon_new6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 210, -1));
 
         rSButtonIcon_new7.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new7.setText("Agregar Caja");
@@ -761,7 +761,7 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new7ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 156, 210, -1));
+        menuhide.add(rSButtonIcon_new7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 210, -1));
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new9.setText("Modificar Caja");
@@ -772,7 +772,7 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new9ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 196, 210, -1));
+        menuhide.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 210, -1));
 
         rSButtonIcon_new10.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new10.setText("Generar Cierre de Caja");
@@ -783,7 +783,7 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new10ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 210, -1));
+        menuhide.add(rSButtonIcon_new10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 210, -1));
 
         rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new11.setText("Imprimir Reporte Diario");
@@ -794,7 +794,7 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new11ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 236, 210, -1));
+        menuhide.add(rSButtonIcon_new11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 210, -1));
 
         rSButtonIcon_new12.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new12.setText("Aperturar Caja");
@@ -805,7 +805,7 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new12ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 210, -1));
+        menuhide.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 210, -1));
 
         rSButtonIcon_new13.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new13.setText("Cerrar Caja");
@@ -816,7 +816,7 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new13ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 210, -1));
+        menuhide.add(rSButtonIcon_new13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 210, -1));
 
         rSButtonIcon_new18.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new18.setText("Imprimir Cierre de Caja");
@@ -827,7 +827,7 @@ public class Caja extends javax.swing.JFrame {
                 rSButtonIcon_new18ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 210, -1));
+        menuhide.add(rSButtonIcon_new18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 210, -1));
 
         menu.add(menuhide, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, -1));
 
@@ -1177,6 +1177,8 @@ public class Caja extends javax.swing.JFrame {
 
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
         // TODO add your handling code here:
+        BuscarCaja bc = new BuscarCaja();
+        bc.setVisible(true);
 
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 
