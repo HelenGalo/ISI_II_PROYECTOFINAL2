@@ -7,6 +7,7 @@ package isi_2022_ii_proyecto.Recursos;
 
 import isi_2022_ii_proyecto.Banco;
 import isi_2022_ii_proyecto.Caja;
+import isi_2022_ii_proyecto.Envio;
 import isi_2022_ii_proyecto.Productos;
 import rojeru_san.complementos.RSUtilities;
 
@@ -18,6 +19,11 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
     Banco bafectado;
     Caja cafectado;
     Productos prodafectado;
+    Envio eafectado;
+
+    public void setEafectado(Envio eafectado) {
+        this.eafectado = eafectado;
+    }
 
     public void setProdafectado(Productos prodafectado) {
         this.prodafectado = prodafectado;
@@ -175,7 +181,11 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
           prodafectado.limpiartabla();
             this.dispose();
         }
-        
+          if(tipo=="DEnvio"){
+          eafectado.deshabilitar();
+          eafectado.limpiartabla();
+            this.dispose();
+        }
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     /**
@@ -224,5 +234,6 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
 
+    
     
 }

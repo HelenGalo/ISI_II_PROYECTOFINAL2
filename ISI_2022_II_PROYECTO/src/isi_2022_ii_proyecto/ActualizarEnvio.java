@@ -20,6 +20,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -44,7 +46,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
       String Tari="";
       String telefono="";
       String correo="";
-         int estado =1;
+      int estado =1;
  boolean estadosModificar=false;
 
     public void setEstadosModificar(boolean estadosModificar) {
@@ -64,7 +66,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         this.setExtendedState(this.MAXIMIZED_BOTH);
         inicializar();
         buscardatos();
-     
+        inicial();
     
         
     }
@@ -161,7 +163,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         String Tari="";
         String telefono="";
         String correo="";
-     
+    
         nombres = NombreC.getText();
         Tari = Tarifa.getText();
         telefono=TelC1.getText();
@@ -256,11 +258,41 @@ public class ActualizarEnvio extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
           a= false;
       }
+        if (validarC(CorreoC.getText())==false){
+            
+               JOptionPane.showMessageDialog(this, "El correo ingresado no es valido");
+              
+             a= false;
+        
+      
+             
+        
+        }
+       
        
       
        return a;
        
       
+    }
+    
+     public boolean validarC(String correo){
+             boolean a=true;
+        Pattern patron = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+           correo = CorreoC.getText();
+        Matcher comparar = patron.matcher(correo);
+       
+        if (comparar.find() == true) {
+           
+             JOptionPane.showMessageDialog(this,"El correo ingresado es válido.");
+             a=true;
+        } else {
+           JOptionPane.showMessageDialog(this,"El correo ingresado es inválido.");
+                   a=false;
+        }
+         return a;
     }
   
      
@@ -340,9 +372,9 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         JCodigoDisponible = new javax.swing.JLabel();
         NombreC = new rojeru_san.RSMTextFull();
         actuale = new javax.swing.JLabel();
-        JEstado = new rojerusan.RSComboMetro();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        JEstado = new rojerusan.RSComboMetro();
         rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
@@ -896,6 +928,11 @@ public class ActualizarEnvio extends javax.swing.JFrame {
                 CorreoCActionPerformed(evt);
             }
         });
+        CorreoC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                CorreoCKeyReleased(evt);
+            }
+        });
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
@@ -914,6 +951,11 @@ public class ActualizarEnvio extends javax.swing.JFrame {
                 TarifaActionPerformed(evt);
             }
         });
+        Tarifa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TarifaKeyTyped(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
@@ -930,6 +972,11 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         TelC1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TelC1ActionPerformed(evt);
+            }
+        });
+        TelC1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TelC1KeyTyped(evt);
             }
         });
 
@@ -964,11 +1011,26 @@ public class ActualizarEnvio extends javax.swing.JFrame {
                 NombreCActionPerformed(evt);
             }
         });
+        NombreC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NombreCKeyTyped(evt);
+            }
+        });
 
         actuale.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         actuale.setForeground(new java.awt.Color(153, 0, 255));
         actuale.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         actuale.setText("Actual Estado");
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel23.setText("Estado");
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setText("Actual Estado");
 
         JEstado.setColorArrow(new java.awt.Color(102, 0, 255));
         JEstado.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -989,37 +1051,10 @@ public class ActualizarEnvio extends javax.swing.JFrame {
             }
         });
 
-        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("Estado");
-
-        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel24.setText("Actual Estado");
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addComponent(rSPanelCircle1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(actuale, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(JEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(115, 115, 115)
                 .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1040,6 +1075,24 @@ public class ActualizarEnvio extends javax.swing.JFrame {
                 .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(110, 110, 110)
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(rSPanelCircle1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(actuale, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(JEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1057,7 +1110,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
                                 .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(actuale, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)
+                                .addGap(18, 18, 18)
                                 .addComponent(JEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(24, 24, 24)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1288,6 +1341,18 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
+    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
+       if(validar()==true){
+        ConfirmacionModificar me = new ConfirmacionModificar();
+        me.setAme(this);
+        me.setTipo("MEnvios");
+        me.setVisible(true);
+   }else{
+
+            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
+        }
+    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
+
     private void JEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JEstadoMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_JEstadoMouseClicked
@@ -1304,17 +1369,61 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JEstadoActionPerformed
 
-    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
-       if(validar()==true){
-        ConfirmacionModificar me = new ConfirmacionModificar();
-        me.setAme(this);
-        me.setTipo("MEnvios");
-        me.setVisible(true);
-   }else{
-
-            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
+    private void CorreoCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorreoCKeyReleased
+         if (evt.getKeyChar()=='\n'){
+          if (validarC(CorreoC.getText())==true){
+            
+               JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
         }
-    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
+          else{
+              JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+              
+          }
+    }//GEN-LAST:event_CorreoCKeyReleased
+
+    private void TelC1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelC1KeyTyped
+        int key = evt.getKeyChar();
+
+    boolean numeros = key >= 48 && key <= 57;
+        
+    if (!numeros)
+    {
+        evt.consume();
+    }
+
+    if (TelC1.getText().trim().length() == 10) {
+        evt.consume();
+
+    }
+    }//GEN-LAST:event_TelC1KeyTyped
+
+    private void TarifaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TarifaKeyTyped
+    
+     String [] v = {"0","1","2","3","4","5","6","7","8","9","."};
+     char c =evt.getKeyChar();
+     String s = "%" + c ;
+      s=s.replace("%", "");
+     if (s.equals(v[0])||s.equals(v[1])||s.equals(v[2])||s.equals(v[3])||s.equals(v[4])||s.equals(v[5])){}
+     else  if (s.equals(v[6])||s.equals(v[7])||s.equals(v[8])||s.equals(v[9])||s.equals(v[10])){}
+     else{
+         int k = Tarifa.getText().length()-1;
+         String n = Tarifa.getText().substring(0,k);
+        Tarifa.setText (n);}
+    }//GEN-LAST:event_TarifaKeyTyped
+
+    private void NombreCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyTyped
+       int key = evt.getKeyChar();
+
+    boolean mayusculas = key >= 65 && key <= 90;
+    boolean minusculas = key >= 97 && key <= 122;
+    boolean espacio = key == 32;
+            
+     if (!(minusculas || mayusculas || espacio))
+    {
+        evt.consume();
+    }
+    }//GEN-LAST:event_NombreCKeyTyped
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));

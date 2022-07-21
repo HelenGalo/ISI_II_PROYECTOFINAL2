@@ -172,6 +172,12 @@ public class Menu extends javax.swing.JFrame {
         BOTONENVIO = new rojeru_san.rspanel.RSPanelRound();
         rSLabelIcon17 = new rojerusan.RSLabelIcon();
         F5 = new rojeru_san.rslabel.RSLabelLineWrap();
+        BOTONPRO = new rojeru_san.rspanel.RSPanelRound();
+        rSLabelIcon18 = new rojerusan.RSLabelIcon();
+        F6 = new rojeru_san.rslabel.RSLabelLineWrap();
+        BOTONCAJA = new rojeru_san.rspanel.RSPanelRound();
+        rSLabelIcon19 = new rojerusan.RSLabelIcon();
+        F7 = new rojeru_san.rslabel.RSLabelLineWrap();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -252,7 +258,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -618,7 +624,7 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -693,7 +699,7 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
+                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
@@ -707,13 +713,14 @@ public class Menu extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
             .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSPanelOpacity1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -772,6 +779,8 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(2, Short.MAX_VALUE))
         );
 
+        jPanel3.add(rSPanelOpacity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1032, 42));
+
         BOTONCLIENTE.setBackground(new java.awt.Color(0, 55, 133));
         BOTONCLIENTE.setColorBackground(new java.awt.Color(0, 55, 133));
         BOTONCLIENTE.setColorBorde(new java.awt.Color(255, 255, 255));
@@ -819,6 +828,8 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(F, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
+
+        jPanel3.add(BOTONCLIENTE, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 151, -1, -1));
 
         BOTONEMPLEADO.setBackground(new java.awt.Color(0, 55, 133));
         BOTONEMPLEADO.setColorBackground(new java.awt.Color(0, 55, 133));
@@ -868,6 +879,8 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
+        jPanel3.add(BOTONEMPLEADO, new org.netbeans.lib.awtextra.AbsoluteConstraints(238, 151, 173, -1));
+
         BOTONPROVEEDORES.setBackground(new java.awt.Color(0, 55, 133));
         BOTONPROVEEDORES.setColorBackground(new java.awt.Color(0, 55, 133));
         BOTONPROVEEDORES.setColorBorde(new java.awt.Color(255, 255, 255));
@@ -915,6 +928,8 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(F3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(33, Short.MAX_VALUE))
         );
+
+        jPanel3.add(BOTONPROVEEDORES, new org.netbeans.lib.awtextra.AbsoluteConstraints(606, 151, 171, -1));
 
         BOTONUSUARIO.setBackground(new java.awt.Color(0, 55, 133));
         BOTONUSUARIO.setColorBackground(new java.awt.Color(0, 55, 133));
@@ -965,6 +980,8 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
+        jPanel3.add(BOTONUSUARIO, new org.netbeans.lib.awtextra.AbsoluteConstraints(423, 151, 171, -1));
+
         BOTONBANCO.setBackground(new java.awt.Color(0, 55, 133));
         BOTONBANCO.setColorBackground(new java.awt.Color(0, 55, 133));
         BOTONBANCO.setColorBorde(new java.awt.Color(255, 255, 255));
@@ -1013,7 +1030,10 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
+        jPanel3.add(BOTONBANCO, new org.netbeans.lib.awtextra.AbsoluteConstraints(789, 151, 172, -1));
+
         rSLabelAnimated1.setText("INFOTECNOLOGIA - GEVEC SYSTEM");
+        jPanel3.add(rSLabelAnimated1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 432, 252, 116));
 
         BOTONENVIO.setBackground(new java.awt.Color(0, 55, 133));
         BOTONENVIO.setColorBackground(new java.awt.Color(0, 55, 133));
@@ -1063,58 +1083,107 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 1030, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(BOTONENVIO, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(150, 150, 150)
-                        .addComponent(rSLabelAnimated1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                        .addGap(390, 390, 390))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(BOTONCLIENTE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BOTONEMPLEADO, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(BOTONUSUARIO, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(BOTONPROVEEDORES, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(BOTONBANCO, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        jPanel3.add(BOTONENVIO, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 172, -1));
+
+        BOTONPRO.setBackground(new java.awt.Color(0, 55, 133));
+        BOTONPRO.setColorBackground(new java.awt.Color(0, 55, 133));
+        BOTONPRO.setColorBorde(new java.awt.Color(255, 255, 255));
+        BOTONPRO.setPreferredSize(new java.awt.Dimension(170, 152));
+        BOTONPRO.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BOTONPROMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BOTONPROMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BOTONPROMouseExited(evt);
+            }
+        });
+
+        rSLabelIcon18.setForeground(new java.awt.Color(255, 255, 255));
+        rSLabelIcon18.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_MALL);
+
+        F6.setColorForeground(new java.awt.Color(255, 255, 255));
+        F6.setFuente(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
+        F6.setInheritsPopupMenu(true);
+        F6.setName("GBGHY"); // NOI18N
+        F6.setText("Productos");
+
+        javax.swing.GroupLayout BOTONPROLayout = new javax.swing.GroupLayout(BOTONPRO);
+        BOTONPRO.setLayout(BOTONPROLayout);
+        BOTONPROLayout.setHorizontalGroup(
+            BOTONPROLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BOTONPROLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(rSLabelIcon18, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BOTONPROLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(F6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(109, 109, 109)
-                                .addComponent(BOTONCLIENTE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(BOTONEMPLEADO, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(BOTONUSUARIO, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(BOTONPROVEEDORES, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(BOTONBANCO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(129, 129, 129)
-                        .addComponent(rSLabelAnimated1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(BOTONENVIO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        BOTONPROLayout.setVerticalGroup(
+            BOTONPROLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BOTONPROLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(rSLabelIcon18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(F6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
+
+        jPanel3.add(BOTONPRO, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 340, 172, -1));
+
+        BOTONCAJA.setBackground(new java.awt.Color(0, 55, 133));
+        BOTONCAJA.setColorBackground(new java.awt.Color(0, 55, 133));
+        BOTONCAJA.setColorBorde(new java.awt.Color(255, 255, 255));
+        BOTONCAJA.setPreferredSize(new java.awt.Dimension(170, 152));
+        BOTONCAJA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BOTONCAJAMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BOTONCAJAMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BOTONCAJAMouseExited(evt);
+            }
+        });
+
+        rSLabelIcon19.setForeground(new java.awt.Color(255, 255, 255));
+        rSLabelIcon19.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
+
+        F7.setColorForeground(new java.awt.Color(255, 255, 255));
+        F7.setFuente(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
+        F7.setInheritsPopupMenu(true);
+        F7.setName("GBGHY"); // NOI18N
+        F7.setText("Caja");
+
+        javax.swing.GroupLayout BOTONCAJALayout = new javax.swing.GroupLayout(BOTONCAJA);
+        BOTONCAJA.setLayout(BOTONCAJALayout);
+        BOTONCAJALayout.setHorizontalGroup(
+            BOTONCAJALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BOTONCAJALayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(rSLabelIcon19, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BOTONCAJALayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(F7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
+        );
+        BOTONCAJALayout.setVerticalGroup(
+            BOTONCAJALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BOTONCAJALayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(rSLabelIcon19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(F7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+
+        jPanel3.add(BOTONCAJA, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 172, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1142,7 +1211,7 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(79, 79, 79)
                 .addComponent(jLabel10)
                 .addGap(123, 123, 123)
@@ -1239,8 +1308,9 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIconOne5ActionPerformed
 
     private void rSButtonIcon_new1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new1ActionPerformed
-        // TODO add your handling code here:
-        
+          Productos p = new Productos();
+        p.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new1ActionPerformed
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
@@ -1407,6 +1477,34 @@ public class Menu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new10ActionPerformed
 
+    private void BOTONPROMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONPROMouseClicked
+       Productos p = new Productos();
+        p.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BOTONPROMouseClicked
+
+    private void BOTONPROMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONPROMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BOTONPROMouseEntered
+
+    private void BOTONPROMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONPROMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BOTONPROMouseExited
+
+    private void BOTONCAJAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONCAJAMouseClicked
+        Caja p = new Caja();
+        p.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BOTONCAJAMouseClicked
+
+    private void BOTONCAJAMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONCAJAMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BOTONCAJAMouseEntered
+
+    private void BOTONCAJAMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONCAJAMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BOTONCAJAMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -1444,9 +1542,11 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojeru_san.rspanel.RSPanelRound BOTONBANCO;
+    private rojeru_san.rspanel.RSPanelRound BOTONCAJA;
     private rojeru_san.rspanel.RSPanelRound BOTONCLIENTE;
     private rojeru_san.rspanel.RSPanelRound BOTONEMPLEADO;
     private rojeru_san.rspanel.RSPanelRound BOTONENVIO;
+    private rojeru_san.rspanel.RSPanelRound BOTONPRO;
     private rojeru_san.rspanel.RSPanelRound BOTONPROVEEDORES;
     private rojeru_san.rspanel.RSPanelRound BOTONUSUARIO;
     private rojeru_san.rslabel.RSLabelLineWrap F;
@@ -1455,6 +1555,8 @@ public class Menu extends javax.swing.JFrame {
     private rojeru_san.rslabel.RSLabelLineWrap F3;
     private rojeru_san.rslabel.RSLabelLineWrap F4;
     private rojeru_san.rslabel.RSLabelLineWrap F5;
+    private rojeru_san.rslabel.RSLabelLineWrap F6;
+    private rojeru_san.rslabel.RSLabelLineWrap F7;
     private javax.swing.JPanel Header;
     private javax.swing.JPanel MenuIcon;
     private javax.swing.JPanel dashboardview;
@@ -1515,6 +1617,8 @@ public class Menu extends javax.swing.JFrame {
     private rojerusan.RSLabelIcon rSLabelIcon15;
     private rojerusan.RSLabelIcon rSLabelIcon16;
     private rojerusan.RSLabelIcon rSLabelIcon17;
+    private rojerusan.RSLabelIcon rSLabelIcon18;
+    private rojerusan.RSLabelIcon rSLabelIcon19;
     private rojerusan.RSLabelIcon rSLabelIcon2;
     private rojerusan.RSLabelIcon rSLabelIcon3;
     private rojerusan.RSLabelIcon rSLabelIcon4;

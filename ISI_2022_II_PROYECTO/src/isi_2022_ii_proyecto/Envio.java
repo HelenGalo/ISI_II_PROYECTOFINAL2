@@ -6,6 +6,8 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionDeshabilitarCuenta;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.List;
@@ -53,11 +55,79 @@ public class Envio extends javax.swing.JFrame {
     
         
     }
-     public void listarE(){
+     public void deshabilitar(){
+        String SQL = "UPDATE EmpresasEnvio SET Estado=? Where IdEmpresaEnvio="+codenvio;
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+          
+            preparedStmt.setInt (1, 0);
+            preparedStmt.execute();
+            
+            VentanaEmergente1 ve = new VentanaEmergente1();
+            ve.setVisible(true);
+
+        } catch (Exception e) {
+            System.out.println("ERROR" + e.getMessage());   
+        }
+    }
+      public void listarh(){
         String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableEnvio.getModel();
 
-        String SQL = "select * from EmpresasEnvio";
+      String SQL = "Select e.IdEmpresaEnvio,e.NombreEmpresa,e.Tarifa,e.Telefono,e.CorreoElectronico,eu.Descripcion from  EmpresasEnvio e "+
+                    "INNER JOIN EstadosUsuario eu ON eu.IdEstado = e.Estado WHERE e.Estado=1" ;
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdEmpresaEnvio");
+                registros[1] = rs.getString("NombreEmpresa");
+                registros[2] = rs.getString("Tarifa");
+                registros[3] = rs.getString("Telefono");
+                registros[4] = rs.getString("CorreoElectronico");
+                modelo.addRow(registros);
+            }
+
+            JTableEnvio.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+       public void listarE(){
+        String[] registros = new String[5];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableEnvio.getModel();
+
+      String SQL = "Select e.IdEmpresaEnvio, e.NombreEmpresa,e.Tarifa,e.Telefono,e.CorreoElectronico,eu.Descripcion from  EmpresasEnvio e "+
+                    "INNER JOIN EstadosUsuario eu ON eu.IdEstado = e.Estado WHERE e.Estado=1" ;
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdEmpresaEnvio");
+                registros[1] = rs.getString("NombreEmpresa");
+                registros[2] = rs.getString("Tarifa");
+                registros[3] = rs.getString("Telefono");
+                registros[4] = rs.getString("CorreoElectronico");
+                modelo.addRow(registros);
+            }
+
+            JTableEnvio.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+     public void listarDesh(){
+        String[] registros = new String[5];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableEnvio.getModel();
+
+      String SQL = "Select e.IdEmpresaEnvio, e.NombreEmpresa,e.Tarifa,e.Telefono,e.CorreoElectronico,eu.Descripcion from  EmpresasEnvio e "+
+                    "INNER JOIN EstadosUsuario eu ON eu.IdEstado = e.Estado WHERE e.Estado=0" ;
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -80,7 +150,7 @@ public class Envio extends javax.swing.JFrame {
     }
      
      
-     private void limpiartabla(){
+     public void limpiartabla(){
         DefaultTableModel modelo =  (DefaultTableModel) JTableEnvio.getModel();
         while (modelo.getRowCount() > 0)
         {
@@ -195,6 +265,8 @@ public class Envio extends javax.swing.JFrame {
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
         jScrollPane2 = new javax.swing.JScrollPane();
         JTableEnvio = new rojerusan.RSTableMetro1();
+        habilitado = new newscomponents.RSButtonIcon_new();
+        deshabilitado = new newscomponents.RSButtonIcon_new();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -689,6 +761,7 @@ public class Envio extends javax.swing.JFrame {
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSPanelOpacity1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -796,6 +869,8 @@ public class Envio extends javax.swing.JFrame {
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
+        jPanel3.add(rSPanelOpacity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 976, 50));
+
         JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         JTextbuscar.setPlaceholder("Busqueda rapida");
         JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -808,6 +883,7 @@ public class Envio extends javax.swing.JFrame {
                 JTextbuscarKeyReleased(evt);
             }
         });
+        jPanel3.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 63, -1, -1));
 
         JTableEnvio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -832,28 +908,29 @@ public class Envio extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(JTableEnvio);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE))
-                .addGap(40, 40, 40))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 112, 906, 390));
+
+        habilitado.setBackground(new java.awt.Color(33, 150, 243));
+        habilitado.setText("Cuentas Habilitadas");
+        habilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        habilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
+        habilitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                habilitadoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(habilitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, -1, -1));
+
+        deshabilitado.setBackground(new java.awt.Color(255, 153, 51));
+        deshabilitado.setText("Cuentas Deshabilitadas");
+        deshabilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        deshabilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_OFF);
+        deshabilitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deshabilitadoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(deshabilitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 60, -1, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1034,10 +1111,15 @@ public class Envio extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 
     private void rSButtonIcon_new6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new6ActionPerformed
-        // TODO add your handling code here:
-        Proveedores proveedores = new Proveedores();
-        proveedores.setVisible(true);
-        this.dispose();
+        if(codenvio!=null){
+          
+           ConfirmacionDeshabilitarCuenta c = new ConfirmacionDeshabilitarCuenta();
+           c.setEafectado(this);
+           c.setTipo("DEnvio");
+           c.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+        }
     }//GEN-LAST:event_rSButtonIcon_new6ActionPerformed
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
@@ -1091,6 +1173,20 @@ public class Envio extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_JTextbuscarKeyReleased
+
+    private void habilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitadoActionPerformed
+        // TODO add your handling code here:
+        rSButtonIcon_new6.setEnabled(true);
+        limpiartabla();
+        listarh();
+    }//GEN-LAST:event_habilitadoActionPerformed
+
+    private void deshabilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deshabilitadoActionPerformed
+        // TODO add your handling code here:
+        rSButtonIcon_new6.setEnabled(false);
+        limpiartabla();
+        listarDesh();
+    }//GEN-LAST:event_deshabilitadoActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1194,6 +1290,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel MenuIcon;
     private javax.swing.JPanel dashboardview;
+    private newscomponents.RSButtonIcon_new deshabilitado;
+    private newscomponents.RSButtonIcon_new habilitado;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JPanel iconoshe;
     private javax.swing.JLabel jLabel10;
@@ -1253,4 +1351,5 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSLabelIcon rSLabelIcon9;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
+
 }

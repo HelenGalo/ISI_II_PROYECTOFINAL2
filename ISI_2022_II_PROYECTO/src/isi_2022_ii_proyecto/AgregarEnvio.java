@@ -21,6 +21,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -220,6 +222,14 @@ public class AgregarEnvio extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
           a= false;
       }
+         if (validarC(CorreoC.getText())==false){
+              
+             a= false;
+        
+      
+             
+        
+        }
        
        
       
@@ -228,7 +238,25 @@ public class AgregarEnvio extends javax.swing.JFrame {
       
     }
   
-     
+      public boolean validarC(String correo){
+             boolean a=true;
+        Pattern patron = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+           correo = CorreoC.getText();
+        Matcher comparar = patron.matcher(correo);
+       
+        if (comparar.find() == true) {
+           
+             JOptionPane.showMessageDialog(this,"El correo ingresado es válido.");
+             a=true;
+        } else {
+           JOptionPane.showMessageDialog(this,"El correo ingresado es inválido.");
+                   a=false;
+        }
+         return a;
+    }
+
 
     
    
@@ -859,6 +887,11 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 CorreoCActionPerformed(evt);
             }
         });
+        CorreoC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                CorreoCKeyReleased(evt);
+            }
+        });
         jPanel5.add(CorreoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 372, 440, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -893,7 +926,12 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 TarifaActionPerformed(evt);
             }
         });
-        jPanel5.add(Tarifa, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 172, 440, -1));
+        Tarifa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TarifaKeyTyped(evt);
+            }
+        });
+        jPanel5.add(Tarifa, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, 440, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
@@ -912,6 +950,11 @@ public class AgregarEnvio extends javax.swing.JFrame {
         TelC1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TelC1ActionPerformed(evt);
+            }
+        });
+        TelC1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TelC1KeyTyped(evt);
             }
         });
         jPanel5.add(TelC1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 312, 440, -1));
@@ -949,7 +992,12 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 NombreCActionPerformed(evt);
             }
         });
-        jPanel5.add(NombreC, new org.netbeans.lib.awtextra.AbsoluteConstraints(262, 252, 440, -1));
+        NombreC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NombreCKeyTyped(evt);
+            }
+        });
+        jPanel5.add(NombreC, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 440, -1));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(153, 0, 255));
@@ -1188,6 +1236,60 @@ public class AgregarEnvio extends javax.swing.JFrame {
     private void JEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JEstadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JEstadoActionPerformed
+
+    private void CorreoCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorreoCKeyReleased
+        if (evt.getKeyChar()=='\n'){
+          if (validarC(CorreoC.getText())==true){
+            
+               JOptionPane.showMessageDialog(this, "El correo ingresado  es valido");  
+        }
+          else{
+              JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+              
+          } 
+    }//GEN-LAST:event_CorreoCKeyReleased
+
+    private void TelC1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelC1KeyTyped
+       int key = evt.getKeyChar();
+
+    boolean numeros = key >= 48 && key <= 57;
+        
+    if (!numeros)
+    {
+        evt.consume();
+    }
+
+    if (TelC1.getText().trim().length() == 10) {
+        evt.consume();
+    }
+    }//GEN-LAST:event_TelC1KeyTyped
+
+    private void NombreCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyTyped
+     int key = evt.getKeyChar();
+
+    boolean mayusculas = key >= 65 && key <= 90;
+    boolean minusculas = key >= 97 && key <= 122;
+    boolean espacio = key == 32;
+            
+     if (!(minusculas || mayusculas || espacio))
+    {
+        evt.consume();
+    }
+    }//GEN-LAST:event_NombreCKeyTyped
+
+    private void TarifaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TarifaKeyTyped
+    String [] v = {"0","1","2","3","4","5","6","7","8","9","."};
+     char c =evt.getKeyChar();
+     String s = "%" + c ;
+      s=s.replace("%", "");
+     if (s.equals(v[0])||s.equals(v[1])||s.equals(v[2])||s.equals(v[3])||s.equals(v[4])||s.equals(v[5])){}
+     else  if (s.equals(v[6])||s.equals(v[7])||s.equals(v[8])||s.equals(v[9])||s.equals(v[10])){}
+     else{
+         int k = Tarifa.getText().length()-1;
+         String n = Tarifa.getText().substring(0,k);
+         Tarifa.setText (n);}
+    }//GEN-LAST:event_TarifaKeyTyped
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));

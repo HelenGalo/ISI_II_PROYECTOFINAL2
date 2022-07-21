@@ -70,13 +70,69 @@ public class Productos extends javax.swing.JFrame {
             System.out.println("ERROR" + e.getMessage());   
         }
     }
+       public void listardehabilitados(){
+        String[] registros = new String[6];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
+
+        String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.NombreCategoria,pr.NombreEmpresa  FROM Productos p\n" +
+                      "INNER JOIN Proveedores pr ON pr.IdProveedor = p.IdProveedor\n" +
+                      "INNER JOIN Categorias c ON c.IdCategoria = p.IdCategoria WHERE p.IdEstado=0";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdProducto");
+                registros[1] = rs.getString("Nombre");
+                registros[2] = rs.getString("Descripcion");
+                registros[3] = rs.getString("Precio");
+                registros[4] = rs.getString("NombreCategoria");
+                registros[5] = rs.getString("NombreEmpresa");
+                modelo.addRow(registros);
+            }
+
+            JTableProductos.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+       public void listarHabilitados(){
+        String[] registros = new String[6];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
+
+        String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.NombreCategoria,pr.NombreEmpresa  FROM Productos p\n" +
+                      "INNER JOIN Proveedores pr ON pr.IdProveedor = p.IdProveedor\n" +
+                      "INNER JOIN Categorias c ON c.IdCategoria = p.IdCategoria WHERE p.IdEstado=1";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdProducto");
+                registros[1] = rs.getString("Nombre");
+                registros[2] = rs.getString("Descripcion");
+                registros[3] = rs.getString("Precio");
+                registros[4] = rs.getString("NombreCategoria");
+                registros[5] = rs.getString("NombreEmpresa");
+                modelo.addRow(registros);
+            }
+
+            JTableProductos.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
      public void listarP(){
         String[] registros = new String[6];
         DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
 
         String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.NombreCategoria,pr.NombreEmpresa  FROM Productos p\n" +
                       "INNER JOIN Proveedores pr ON pr.IdProveedor = p.IdProveedor\n" +
-                      "INNER JOIN Categorias c ON c.IdCategoria = p.IdCategoria";
+                      "INNER JOIN Categorias c ON c.IdCategoria = p.IdCategoria WHERE p.IdEstado=1";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -214,7 +270,6 @@ public class Productos extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         rSLabelIcon12 = new rojerusan.RSLabelIcon();
         jLabel14 = new javax.swing.JLabel();
-        JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
         jScrollPane2 = new javax.swing.JScrollPane();
         JTableProductos = new rojerusan.RSTableMetro1();
         jPanel4 = new javax.swing.JPanel();
@@ -222,6 +277,9 @@ public class Productos extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        deshabilitado = new newscomponents.RSButtonIcon_new();
+        habilitado = new newscomponents.RSButtonIcon_new();
+        JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -819,19 +877,6 @@ public class Productos extends javax.swing.JFrame {
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
-        JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
-        JTextbuscar.setPlaceholder("Busqueda rapida");
-        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTextbuscarActionPerformed(evt);
-            }
-        });
-        JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                JTextbuscarKeyReleased(evt);
-            }
-        });
-
         JTableProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -859,23 +904,19 @@ public class Productos extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
+            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 1039, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2))
+                .addComponent(jScrollPane2)
                 .addGap(40, 40, 40))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(62, 62, 62)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -920,23 +961,66 @@ public class Productos extends javax.swing.JFrame {
             .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        deshabilitado.setBackground(new java.awt.Color(255, 153, 51));
+        deshabilitado.setText("Cuentas Deshabilitadas");
+        deshabilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        deshabilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_OFF);
+        deshabilitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deshabilitadoActionPerformed(evt);
+            }
+        });
+
+        habilitado.setBackground(new java.awt.Color(33, 150, 243));
+        habilitado.setText("Cuentas Habilitadas");
+        habilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        habilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
+        habilitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                habilitadoActionPerformed(evt);
+            }
+        });
+
+        JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        JTextbuscar.setPlaceholder("Busqueda rapida");
+        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTextbuscarActionPerformed(evt);
+            }
+        });
+        JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTextbuscarKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
         dashboardview.setLayout(dashboardviewLayout);
         dashboardviewLayout.setHorizontalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(89, 89, 89))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(dashboardviewLayout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(220, 220, 220)
+                .addComponent(habilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(deshabilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(dashboardviewLayout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dashboardviewLayout.setVerticalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
+                .addGap(9, 9, 9)
+                .addGroup(dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(habilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deshabilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1126,6 +1210,21 @@ public class Productos extends javax.swing.JFrame {
             bp.setVisible(true);
             bp.setProducto(this);
     }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
+
+    private void habilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitadoActionPerformed
+        // TODO add your handling code here:
+        rSButtonIcon_new6.setEnabled(true);
+        limpiartabla();
+        listarHabilitados();
+    }//GEN-LAST:event_habilitadoActionPerformed
+
+    private void deshabilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deshabilitadoActionPerformed
+        // TODO add your handling code here:
+        rSButtonIcon_new6.setEnabled(false);
+        limpiartabla();
+        listardehabilitados();
+
+    }//GEN-LAST:event_deshabilitadoActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1261,6 +1360,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel MenuIcon;
     private javax.swing.JPanel dashboardview;
+    private newscomponents.RSButtonIcon_new deshabilitado;
+    private newscomponents.RSButtonIcon_new habilitado;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JPanel iconoshe;
     private javax.swing.JLabel jLabel10;
