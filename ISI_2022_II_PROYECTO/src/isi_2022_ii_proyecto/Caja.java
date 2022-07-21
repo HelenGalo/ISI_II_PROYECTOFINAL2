@@ -1253,6 +1253,14 @@ public class Caja extends javax.swing.JFrame {
 
     private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
         // TODO add your handling code here:
+         if(codigoc!=null){
+          
+          AperturarCajas apc = new AperturarCajas();
+          apc.setCodigoc(codigoc);
+          apc.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+        }
     }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
 
     private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
