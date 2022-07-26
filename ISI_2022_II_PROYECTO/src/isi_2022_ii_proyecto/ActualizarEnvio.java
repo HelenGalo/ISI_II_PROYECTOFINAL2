@@ -68,7 +68,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         buscardatos();
       listarEstado();
     
-        
+     aviso.setVisible(false);
     }
      public void validarConfirmacion(){
         if(estadosModificar=true){
@@ -253,16 +253,11 @@ public class ActualizarEnvio extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
           a= false;
       }
-        if (validarC(CorreoC.getText())==false){
+       if (validarC(CorreoC.getText())==false){
+           a=false;
+       }
             
-               JOptionPane.showMessageDialog(this, "El correo ingresado no es valido");
-              
-             a= false;
-        
-      
-             
-        
-        }
+     
        
        
       
@@ -270,24 +265,16 @@ public class ActualizarEnvio extends javax.swing.JFrame {
        
       
     }
+        
     
      public boolean validarC(String correo){
-             boolean a=true;
+            
         Pattern patron = Pattern
-                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-           correo = CorreoC.getText();
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]+{2,}+\\.[A-Za-z]+{2}?)$");
         Matcher comparar = patron.matcher(correo);
-       
-        if (comparar.find() == true) {
-           
-             JOptionPane.showMessageDialog(this,"El correo ingresado es válido.");
-             a=true;
-        } else {
-           JOptionPane.showMessageDialog(this,"El correo ingresado es inválido.");
-                   a=false;
-        }
-         return a;
+        return comparar.find();
+     
     }
   
      
@@ -370,6 +357,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         JEstado = new rojerusan.RSComboMetro();
+        aviso = new javax.swing.JLabel();
         rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
@@ -460,9 +448,9 @@ public class ActualizarEnvio extends javax.swing.JFrame {
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(linesetting3Layout.createSequentialGroup()
                 .addGap(168, 168, 168)
-                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(138, 138, 138))
@@ -1046,30 +1034,15 @@ public class ActualizarEnvio extends javax.swing.JFrame {
             }
         });
 
+        aviso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso.setForeground(new java.awt.Color(255, 0, 0));
+        aviso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso.setText("*Correo invalido*");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
-                .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(Tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(TelC1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(110, 110, 110)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1081,13 +1054,34 @@ public class ActualizarEnvio extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(22, 22, 22)
                         .addComponent(actuale, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(JEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(JEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(115, 115, 115)
+                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(115, 115, 115)
+                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(Tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(130, 130, 130)
+                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(TelC1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(aviso, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1119,18 +1113,21 @@ public class ActualizarEnvio extends javax.swing.JFrame {
                         .addGap(2, 2, 2)
                         .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
+                        .addGap(17, 17, 17)
                         .addComponent(TelC1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(33, 33, 33)
+                .addGap(31, 31, 31)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(aviso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
@@ -1148,9 +1145,12 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
-            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 1014, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1158,11 +1158,11 @@ public class ActualizarEnvio extends javax.swing.JFrame {
                 .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
+                .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 98, -1, 540));
+        dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 98, -1, 560));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1344,7 +1344,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         me.setVisible(true);
    }else{
 
-            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
+            JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACION");
         }
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
@@ -1365,16 +1365,17 @@ public class ActualizarEnvio extends javax.swing.JFrame {
     }//GEN-LAST:event_JEstadoActionPerformed
 
     private void CorreoCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorreoCKeyReleased
-         if (evt.getKeyChar()=='\n'){
-          if (validarC(CorreoC.getText())==true){
-            
-               JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
+        // if (evt.getKeyChar()=='\n'){
+          if (validarC(CorreoC.getText())){
+              aviso.setVisible(false);
+             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
         }
           else{
-              JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+                    aviso.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
           }
               
-          }
+         // }
     }//GEN-LAST:event_CorreoCKeyReleased
 
     private void TelC1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelC1KeyTyped
@@ -1526,6 +1527,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.RSMTextFull Tarifa;
     private rojeru_san.RSMTextFull TelC1;
     private javax.swing.JLabel actuale;
+    private javax.swing.JLabel aviso;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
