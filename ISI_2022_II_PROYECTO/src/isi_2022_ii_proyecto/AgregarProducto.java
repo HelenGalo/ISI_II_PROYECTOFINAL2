@@ -60,7 +60,9 @@ public class AgregarProducto extends javax.swing.JFrame {
         this.setExtendedState(this.MAXIMIZED_BOTH);
         inicializar();
         buscardatos();
-         inicial();
+         ListarProveedor();
+         listarCategoria();
+         listarEstado();
         
     }
     public void inicializar(){
@@ -74,53 +76,74 @@ public class AgregarProducto extends javax.swing.JFrame {
             insertarP();
         }
     }
-     public void inicial(){
-         String SQL = "SELECT * FROM Categorias";
-         String cat="";
-         
-         String SQL1 = "SELECT * FROM Proveedores";
-         String pro="";
-         
-        String SQL2 = "SELECT * FROM EstadosUsuario";
-         String estadou="";
-         
+        
+        public void listarCategoria(){
+        JCategoria.addItem("Seleccionar Categoria");
+        JCategoria.setSelectedIndex(0);
+        String cat = "";
+        
+      String SQL = "SELECT C.NombreCategoria FROM Categorias C WHERE IdCategoria=1";
+        
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
 
-          
+            while (rs.next()) {
+              cat = rs.getString("C.NombreCategoria");
+               JCategoria.addItem(cat);
                
-           
+              
+                   
+               } 
+            } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
        
-          
-          
+    
+    }
+ 
+    
+      public void listarEstado(){
+        JEstado.addItem("Seleccionar Estado");
+        JEstado.setSelectedIndex(0);
+        String descripcion="";
+         
+        String SQL = "SELECT b.Descripcion From EstadosUsuario b";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-              cat = rs.getString("NombreCategoria");
-               JCategoria.addItem(cat);
-               
-                
+                descripcion =rs.getString("b.Descripcion");
+    
+                JEstado.addItem(descripcion);
             }
             
-            
-            Statement st1 = (Statement) con.createStatement();
-            ResultSet rs1 = st1.executeQuery(SQL1);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+      
+      
+     public void ListarProveedor(){
+         JProveedores.addItem("Selecionar Proveedor");
+         JProveedores.setSelectedIndex(0);
+         String pro ="";
+          String SQL = "SELECT p.NombreEmpresa FROM Proveedores p WHERE IdProveedor=1";
+             
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
 
-            while (rs1.next()) {
-               pro = rs1.getString("NombreEmpresa");
+            while (rs.next()) {
+               pro = rs.getString("p.NombreEmpresa");
                JProveedores.addItem(pro);
                
                 
             }
-            Statement st2 = (Statement) con.createStatement();
-            ResultSet rs2 = st2.executeQuery(SQL2);
+         
 
- 
 
-            while (rs2.next()) {
-               estadou = rs2.getString("Descripcion");
-              JEstado.addItem(estadou);
-            }
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -128,6 +151,8 @@ public class AgregarProducto extends javax.swing.JFrame {
        
     
     }
+    
+     
     
     public void buscardatos(){
           String SQL = "SELECT * FROM Productos WHERE IdProducto=(SELECT max(IdProducto) FROM Productos)";
@@ -157,14 +182,14 @@ public class AgregarProducto extends javax.swing.JFrame {
     }
      public int Obtenerestado(){
           String SQL = "SELECT * FROM EstadosUsuario g Where g.Descripcion="+"'"+JEstado.getSelectedItem().toString()+"'";
-          int idg=0;
+          int estado=0;
           
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                idg = rs.getInt("IdEstado");
+               estado = rs.getInt("IdEstado");
                
                 
             }
@@ -179,19 +204,19 @@ public class AgregarProducto extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        return idg;
+        return estado;
         
     }
         public int ObtenerCategoria(){
           String SQL = "SELECT * FROM Categorias c Where c.NombreCategoria="+"'"+JCategoria.getSelectedItem().toString()+"'";
-          int idg=0;
+          int idcat=0;
           
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                idg = rs.getInt("IdCategoria");
+                idcat = rs.getInt("IdCategoria");
                
                 
             }
@@ -199,19 +224,19 @@ public class AgregarProducto extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        return idg;
+        return idcat;
         
     }
             public int ObtenerProveedor(){
           String SQL = "SELECT * FROM Proveedores p Where p.NombreEmpresa="+"'"+JProveedores.getSelectedItem().toString()+"'";
-          int idg=0;
+          int idprov=0;
           
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                idg = rs.getInt("IdProveedor");
+                idprov= rs.getInt("IdProveedor");
                
                 
             }
@@ -219,7 +244,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        return idg;
+        return idprov;
         
     }
         
@@ -228,9 +253,9 @@ public class AgregarProducto extends javax.swing.JFrame {
         String nombre="";
         String descrip="";
         int precio = 0;
-        int proveedor=1;
-        int Categoria=1;
-        int estado =1;
+        int proveedor=0;
+        int Categoria=0;
+        int estado =0 ;
         
         
         

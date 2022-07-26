@@ -59,7 +59,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         this.setExtendedState(this.MAXIMIZED_BOTH);
         inicializar();
         buscardatos();
-        inicial();
+       listarEstado();
         
     
         
@@ -69,31 +69,29 @@ public class AgregarEnvio extends javax.swing.JFrame {
             insertar();
         }
     }
-    public void inicial(){
-     
-     
-    String SQL = "SELECT * FROM EstadosUsuario";
-         String estadou="";
+      
+      public void listarEstado(){
+        JEstado.addItem("Seleccionar Estado");
+        JEstado.setSelectedIndex(0);
+        String descripcion="";
          
-       try {
+        String SQL = "SELECT b.Descripcion From EstadosUsuario b";
+        try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
- 
-
             while (rs.next()) {
-               estadou = rs.getString("Descripcion");
-              JEstado.addItem(estadou);
-               
-                
+                descripcion =rs.getString("b.Descripcion");
+    
+                JEstado.addItem(descripcion);
             }
             
-              } catch (SQLException e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-       
-    
     }
+      
+   
     public void inicializar(){
        JCodigoDisponible.setText(envio);
     }
