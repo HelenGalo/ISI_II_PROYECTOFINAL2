@@ -5,6 +5,7 @@
  */
 package isi_2022_ii_proyecto.Recursos;
 
+import isi_2022_ii_proyecto.AgregarCaja;
 import isi_2022_ii_proyecto.AgregarCuentaBancaria;
 import isi_2022_ii_proyecto.AgregarEnvio;
 import isi_2022_ii_proyecto.AperturarCajas;
@@ -18,6 +19,11 @@ import rojeru_san.complementos.RSUtilities;
 public class ConfirmacionGuardar extends javax.swing.JFrame {
     AgregarCuentaBancaria gcuenta;
     AgregarEnvio genvio;
+    AgregarCaja gcaja;
+
+    public void setGcaja(AgregarCaja gcaja) {
+        this.gcaja = gcaja;
+    }
     
 
     public void setGenvio(AgregarEnvio genvio) {
@@ -164,9 +170,14 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
             gcuenta.validarConfirmacion();
             this.dispose();
         }
-         if(tipo=="GEnvios"){
+        if(tipo=="GEnvios"){
             genvio.setEstadoagregar(true);
             genvio.validarConfirmacion();
+            this.dispose();
+        }
+        if(tipo=="GCaja"){
+            gcaja.setEstadoagregar(true);
+            gcaja.validarConfirmacion();
             this.dispose();
         }
          

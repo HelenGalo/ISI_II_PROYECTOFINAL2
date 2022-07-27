@@ -15,7 +15,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -34,134 +36,225 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
      * Creates new form AgregarCliente
      */
     boolean a = true;
-    String codigoe="";
-    String rol="";
+    String codigou="";
+    String rol=null;
+    Hashtable<String, String> cifrador = new Hashtable<String, String>();
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    int id=0;
-        int idUsuario=0;
-        int IdEmpleado=0;
-        String Contra="";
-        int Intentos=0;
-        int IdRol=0;
-        String Usuario="";
-    HashMap<String, Integer> empleados = new HashMap<String, Integer>();
-    HashMap<String, Integer> puestos = new HashMap<String, Integer>();
+    String corredor1="";
+    String contradC="";
+
+    public void setCodigou(String codigou) {
+        this.codigou = codigou;
+        MostrarUsuario();
+    }
+ 
   
     
     public ActualizarUsuarios() {
         initComponents();
-     
+        inicializarValoresC();
+    }
+       
+    
+    public void inicializarValoresC(){
+        cifrador.put("A", "E3:$%^");
+        cifrador.put("B", "Aq2=!#");
+        cifrador.put("C", "Zzp1@*");
+        cifrador.put("D", "lkh4$5");
+        cifrador.put("E", "^7192H");
+        cifrador.put("F", "%=zXQ+");
+        cifrador.put("G", "00FvT-");
+        cifrador.put("H", "&Cas45");
+        cifrador.put("I", "P4fdW3");
+        cifrador.put("J", "bgCo3l");
+        cifrador.put("K", "Someb3");
+        cifrador.put("L", "gDmen+");
+        cifrador.put("M", "Very03");
+        cifrador.put("N", "02ne#$");
+        cifrador.put("Ñ", "88df4#");
+        cifrador.put("O", "F#0002");
+        cifrador.put("P", "R%StUP");
+        cifrador.put("Q", "IDa7-*");
+        cifrador.put("R", "*-*.O.");
+        cifrador.put("S", "^0^663");
+        cifrador.put("T", "W@a&&e");
+        cifrador.put("U", "KOK#%)");
+        cifrador.put("V", "(-+)*$");
+        cifrador.put("W", "%hjkl1");
+        cifrador.put("X", "58l(%%");
+        cifrador.put("Y", "=34Sap");
+        cifrador.put("Z", "SaP012");
         
-    }
-       public void setId(int id) {
-        this.id = id;
-    }
-        public void listarEmpleados(){
-          String nombres="";
-          String apellidos="";
-          int idEmpleado=0;
-          
-         
-         
-          
-          
-          
- 
-       
-       
-
-        String SQL = "SELECT e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido FROM Empleados e\n" +
-                    "LEFT JOIN Usuarios u ON e.IdEmpleado = u.IdEmpleado\n" +
-                    "WHERE u.IdEmpleado is null;";
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                idEmpleado =rs.getInt("IdEmpleado");
-                nombres =rs.getString("PrimerNombre")+" "+rs.getString("SegundoNombre");
-                apellidos = rs.getString("PrimerApellido")+" "+rs.getString("SegundoApellido");
-                JComboEmpleados.addItem(nombres+" "+apellidos);
-                empleados.put(nombres+" "+apellidos,idEmpleado);
-            }
-
-            System.out.println(empleados);
-            for(int i=1; i<=3;i++){
-            JIntentos.addItem(i);
-            };
-            
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        //Cifrador de minusculas
+        cifrador.put("a", "dFGH46");
+        cifrador.put("b", "678Mza");
+        cifrador.put("c", "AS23Df");
+        cifrador.put("d", "ZXSR#4");
+        cifrador.put("e", "POPU27");
+        cifrador.put("f", "Iik&!4");
+        cifrador.put("g", "!-//+!");
+        cifrador.put("h", "F%^Nñd");
+        cifrador.put("i", "la34F4");
+        cifrador.put("j", "WcGh34");
+        cifrador.put("k", "-*=Mi");
+        cifrador.put("l", "ndSt92");
+        cifrador.put("m", "Kl2$!=");
+        cifrador.put("n", "*1V4hl");
+        cifrador.put("ñ", "Ru/e40");
+        cifrador.put("o", "00Fx#2");
+        cifrador.put("p", "1ce5G/");
+        cifrador.put("q", "*fht@)");
+        cifrador.put("r", "(45gR*");
+        cifrador.put("s", "!#$Tre");
+        cifrador.put("t", "^g%#^!");
+        cifrador.put("u", "M4%@Xx");
+        cifrador.put("v", "X-XO.0");
+        cifrador.put("w", "aQjf$%");
+        cifrador.put("x", "H3hl8*");
+        cifrador.put("y", "_-_93r");
+        cifrador.put("z", "7*7*+/");
+        
+        //cifrador de numeros
+        cifrador.put("0", "gGL4+/");
+        cifrador.put("1", "0UvUZ4");
+        cifrador.put("2", "5-5fJ%");
+        cifrador.put("3", "/1de89");
+        cifrador.put("4", "(89)bV");
+        cifrador.put("5", "LoLP40");
+        cifrador.put("6", "Mkl3^5");
+        cifrador.put("7", "$%$Kam");
+        cifrador.put("8", "BDuDu2");
+        cifrador.put("9", "K11LTL");
+        
+        //crifrador de simbolos
+        cifrador.put("$", "Le%(tm");
+        cifrador.put("#", "H0WYou");
+        cifrador.put("@", "L1K3Th");
+        cifrador.put("%", "aT--+^");
+        cifrador.put("/", "Inf@ou");
+        cifrador.put("&", "JaSJs*");
+        cifrador.put("*", "$$##/*/");
+        cifrador.put("-", "D&oNTA");
+        cifrador.put("+", "NGE/*/");
+        cifrador.put("!", "+----*");
+        cifrador.put("^", "!0!$$$");
+        cifrador.put("(", "BnM3%*");
+        cifrador.put(")", "LQ56^s");
+        cifrador.put("_", "HJond#");
+        cifrador.put("=", "Za3Dpe");
+        cifrador.put(".", "Ho(+)D");
     }
     
-    public void buscardatos(){
-          String SQL = "SELECT * FROM Usuarios u WHERE u.IdUsuario=(SELECT max(IdUsuario) FROM Usuarios)";
-          
-          
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                id = rs.getInt("IdUsuario");
-               
-                
-            }
-
-            
-            System.out.println("SIN SUMAR"+String.valueOf(id));
-            id = id +1;
-            System.out.println(String.valueOf(id));
-            JCodigoDisponible.setText(String.valueOf(id));
-            
-           
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
     
-     public void Actualizaru(){
-     
+    private String encriptar(String c){
+        String contra = c;
+        char puntero;
+        String contraC = "";
+        //Cifrador de mayusculas//
         
-        idUsuario = Integer.parseInt(JCodigoDisponible.getText());
-        IdEmpleado = empleados.get(JComboEmpleados.getSelectedItem().toString());
-        Usuario=Juser3.getText();
-        System.out.println(idUsuario);
-          System.out.println(IdEmpleado);
-        char [] arrayC=rSMPassView1.getPassword();
-        Contra= new String(arrayC);
-          Intentos = Integer.parseInt(String.valueOf(JIntentos.getSelectedItem()));
+       
+        for(int i=0;i<8;i++){
+            puntero = contra.charAt(i);
+            contraC = contraC + cifrador.get(String.valueOf(puntero));
+            
+        
+            
+        }
+        
+      return contraC;
+        
+    }
+   
+    public int ObtenerIdRol(){
+        int idrol=0;
+    
         try {
                 String sql = "SELECT r.IdRol FROM Roles r Where r.Nombre="+"'"+rol+"'";
                 Statement st = (Statement) con.createStatement();
                 ResultSet rs = st.executeQuery(sql);
                 while (rs.next()){
-                    IdRol=rs.getInt("IdRol");
+                    idrol=rs.getInt("IdRol");
                 }
         } catch (Exception e) {
                JOptionPane.showMessageDialog(this, e.getMessage());
                 
         }
+        return idrol;
+    }
+    
+    private void buscar(Hashtable ri){
+        
+        Enumeration llaves = ri.keys();
+         while (llaves.hasMoreElements()) {
+                Object key = llaves.nextElement();
+                Object elemnt = cifrador.get(key);
+                if(cifrador.get(key).equals(corredor1)){
+                    contradC = contradC + key.toString();
+                  
+                
+                }
+
+            }
+    }
+    
+    private String desencriptar(String C){
+        String contraC = C;
+        char puntero;
+        
+        
+        int cont=0;
+        int cont1=0;
+       
+        for (int i=0; i<8; i++){
+            corredor1="";
+            for( int j=cont1; j<6+cont; j++){
+                puntero = contraC.charAt(j);
+                corredor1 = corredor1 + String.valueOf(puntero);
+               
+          
+            }
+       
             
-        System.out.println(String.valueOf(idUsuario)+" "+String.valueOf(IdEmpleado)+" "+Contra+String.valueOf(Intentos)+" "+ String.valueOf(IdRol)+" "+Usuario);
+            buscar(cifrador);
+            cont = cont + 6;
+            cont1=cont1+6;
+            
+                
+            }
+ 
+         return contradC;
+            
+           
+      
+        }
+ 
+    
+    public void ActualizarUsuario(){
+         
+        char [] arrayC=rSMPassView1.getPassword();
+        String contra="";
+        contra = String.valueOf(arrayC);
+        String contraf = encriptar(contra);
+        int intentos=0;
+        intentos =Integer.valueOf(JIntentos.getSelectedItem().toString());
+        int idrol =0;
+        idrol = ObtenerIdRol();
+ 
+    
+            
         
            
-        String SQL = "UPDATE Usuarios SET IdEmpleado=?,Contrase=?,Intentos=?,IdRol=?,Usuario=? WHERE IdUsuario="+"'"+id+"'";
+        String SQL = "UPDATE Usuarios SET Contrase=?,Intentos=?,IdRol=? WHERE IdUsuario="+JCodigoDisponible.getText();
   
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
-            preparedStmt.setInt (1, IdEmpleado);
-            preparedStmt.setString(2, Contra);
-            preparedStmt.setInt(3, Intentos);
-            preparedStmt.setInt(4, IdRol);
-            preparedStmt.setString(5, Usuario);
+            preparedStmt.setString(1, contraf);
+            preparedStmt.setInt(2, intentos);
+            preparedStmt.setInt(3,idrol);
             preparedStmt.execute();
             
-             JOptionPane.showMessageDialog(null, "Registro actualizado Exitosamente");
+            JOptionPane.showMessageDialog(null, "Registro actualizado Exitosamente");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -169,30 +262,34 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
          
      }
     
-        public void MostrarUsuario(){
+    public void MostrarUsuario(){
+      
+        int IdRol=0;
+        String Contra="";
+        String Usuario="";
+        int intentos=0;
      
 
-        String SQL = "Select * from Usuarios Where IdUsuario="+id;
+        String SQL = "Select * from Usuarios Where IdUsuario="+codigou;
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-               IdEmpleado =rs.getInt("IdEmpleado");
-                IdRol =rs.getInt("IdRol");
+               IdRol =rs.getInt("IdRol");
                Contra =rs.getString("Contrase");
                Usuario =rs.getString("Usuario");
-               Intentos = rs.getInt("Intentos");
+               intentos = rs.getInt("Intentos");
        
               
             }
             
-            JComboEmpleados.setSelectedItem(String.valueOf(IdEmpleado));
-              Juser3.setText(Usuario);
-            rSMPassView1.setText(Contra);
-            JIntentos.setSelectedItem(String.valueOf(Intentos));
-            Jrol.setText(String.valueOf(IdRol));
-            JCodigoDisponible.setText(String.valueOf(id));
+            
+          
+            Juser3.setText(Usuario);
+            rSMPassView2.setText(desencriptar(Contra));
+            JIntentos.setSelectedItem(String.valueOf(intentos));
+            JCodigoDisponible.setText(String.valueOf(codigou));
             
        
             
@@ -207,16 +304,23 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
     }
     
  
-        
     public Boolean validar(){
-        char [] arrayC=rSMPassView1.getPassword();
+        char [] arrayC=rSMPassView2.getPassword();
         String acceso= new String(arrayC);
-        if(JCodigoDisponible.getText().isEmpty() || JComboEmpleados.getSelectedItem().toString().isEmpty() || Jrol.getText().isEmpty() 
-                || JIntentos.getSelectedItem().toString().isEmpty() || acceso.isEmpty() || rol.isEmpty() ){
-            
+        
+        char [] arrayCC=rSMPassView1.getPassword();
+        String accesoC= new String(arrayCC);
+        
+        if(JCodigoDisponible.getText().isEmpty() || JIntentos.getSelectedItem().toString().isEmpty() || acceso.isEmpty() || rol==null || accesoC.isEmpty() ){
             return false;
         }else{
-            return true;
+            if(acceso.equals(accesoC)){
+                return true;
+            }else{
+               JOptionPane.showMessageDialog(this, "Contra no son iguales");
+               return false;
+            }
+            
         }
     }
     
@@ -283,10 +387,7 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         rSLabelIcon12 = new rojerusan.RSLabelIcon();
         jLabel14 = new javax.swing.JLabel();
-        Jrol = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        JComboEmpleados = new rojerusan.RSComboMetro();
-        jLabel18 = new javax.swing.JLabel();
         rSPanelCircle1 = new rojeru_san.rspanel.RSPanelCircle();
         JCodigoDisponible = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -297,6 +398,18 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         rSButtonIcon_new8 = new newscomponents.RSButtonIcon_new();
         Juser3 = new javax.swing.JLabel();
+        rSPanelRound1 = new rojeru_san.rspanel.RSPanelRound();
+        rSPanelRound2 = new rojeru_san.rspanel.RSPanelRound();
+        rSRadioButtonMaterial1 = new RSMaterialComponent.RSRadioButtonMaterial();
+        rSRadioButtonMaterial2 = new RSMaterialComponent.RSRadioButtonMaterial();
+        rSRadioButtonMaterial3 = new RSMaterialComponent.RSRadioButtonMaterial();
+        rSRadioButtonMaterial5 = new RSMaterialComponent.RSRadioButtonMaterial();
+        rSRadioButtonMaterial6 = new RSMaterialComponent.RSRadioButtonMaterial();
+        rSRadioButtonMaterial7 = new RSMaterialComponent.RSRadioButtonMaterial();
+        rSRadioButtonMaterial8 = new RSMaterialComponent.RSRadioButtonMaterial();
+        rSRadioButtonMaterial9 = new RSMaterialComponent.RSRadioButtonMaterial();
+        jLabel23 = new javax.swing.JLabel();
+        rSMPassView2 = new rojeru_san.RSMPassView();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -647,7 +760,7 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -829,42 +942,15 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
 
         jPanel3.add(rSPanelOpacity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 50));
 
-        Jrol.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Jrol.setForeground(new java.awt.Color(153, 0, 255));
-        Jrol.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Jrol.setText("Rol");
-        jPanel3.add(Jrol, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 110, 260, 30));
-
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("CodigoUsuario Disponible:");
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 190, 40));
-
-        JComboEmpleados.setColorArrow(new java.awt.Color(102, 0, 255));
-        JComboEmpleados.setColorFondo(new java.awt.Color(60, 76, 143));
-        JComboEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JComboEmpleadosMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                JComboEmpleadosMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                JComboEmpleadosMouseExited(evt);
-            }
-        });
-        jPanel3.add(JComboEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 260, 30));
-
-        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("Nombre del Empleado:");
-        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 190, 30));
+        jLabel17.setText("CodigoUsuario:");
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 130, 40));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
 
-        JCodigoDisponible.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        JCodigoDisponible.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         JCodigoDisponible.setForeground(new java.awt.Color(255, 255, 255));
         JCodigoDisponible.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         JCodigoDisponible.setText("1");
@@ -873,55 +959,62 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         rSPanelCircle1.setLayout(rSPanelCircle1Layout);
         rSPanelCircle1Layout.setHorizontalGroup(
             rSPanelCircle1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelCircle1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(rSPanelCircle1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         rSPanelCircle1Layout.setVerticalGroup(
             rSPanelCircle1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rSPanelCircle1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 70, 70));
+        jPanel3.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, 90, 90));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(153, 0, 255));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("ASIGNACION DE ROLES");
-        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 60, 260, 30));
+        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 80, 260, 30));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(153, 0, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("Contraseña:");
-        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 180, 40));
+        jLabel20.setText("Confirmar Contraseña:");
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 180, 40));
 
         JIntentos.setBorder(null);
+        JIntentos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar Numero de Intentos", "1", "2", "3" }));
+        JIntentos.setToolTipText("");
         JIntentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JIntentosActionPerformed(evt);
             }
         });
-        jPanel3.add(JIntentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 260, -1));
+        jPanel3.add(JIntentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, 260, -1));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(153, 0, 255));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("Intentos:");
-        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 180, 30));
+        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 180, 30));
 
-        rSMPassView1.setText("rSMPassView1");
-        jPanel3.add(rSMPassView1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, 260, -1));
+        rSMPassView1.setPlaceholder("Confirmar Contraseña");
+        rSMPassView1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSMPassView1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rSMPassView1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 430, 260, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Usuario:");
-        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 180, 30));
+        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 180, 30));
 
         rSButtonIcon_new8.setBackground(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new8.setText("Guardar");
@@ -939,7 +1032,140 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         Juser3.setForeground(new java.awt.Color(153, 0, 255));
         Juser3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Juser3.setText("user");
-        jPanel3.add(Juser3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 260, 30));
+        jPanel3.add(Juser3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 260, 30));
+
+        rSPanelRound1.setColorBackground(new java.awt.Color(60, 76, 143));
+        rSPanelRound1.setColorBorde(new java.awt.Color(60, 76, 143));
+
+        rSPanelRound2.setColorBackground(new java.awt.Color(255, 255, 255));
+        rSPanelRound2.setColorBorde(new java.awt.Color(60, 76, 143));
+
+        rSRadioButtonMaterial1.setText("Gerente Comercial");
+        rSRadioButtonMaterial1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButtonMaterial1ActionPerformed(evt);
+            }
+        });
+
+        rSRadioButtonMaterial2.setText("Superusuario");
+        rSRadioButtonMaterial2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButtonMaterial2ActionPerformed(evt);
+            }
+        });
+
+        rSRadioButtonMaterial3.setText("Jefe Almacen");
+        rSRadioButtonMaterial3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButtonMaterial3ActionPerformed(evt);
+            }
+        });
+
+        rSRadioButtonMaterial5.setText("Gerente General");
+        rSRadioButtonMaterial5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButtonMaterial5ActionPerformed(evt);
+            }
+        });
+
+        rSRadioButtonMaterial6.setText("Vendedor");
+        rSRadioButtonMaterial6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButtonMaterial6ActionPerformed(evt);
+            }
+        });
+
+        rSRadioButtonMaterial7.setText("Cajero");
+        rSRadioButtonMaterial7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButtonMaterial7ActionPerformed(evt);
+            }
+        });
+
+        rSRadioButtonMaterial8.setText("Supervisor");
+        rSRadioButtonMaterial8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButtonMaterial8ActionPerformed(evt);
+            }
+        });
+
+        rSRadioButtonMaterial9.setText("Jefe Logistica");
+        rSRadioButtonMaterial9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButtonMaterial9ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout rSPanelRound2Layout = new javax.swing.GroupLayout(rSPanelRound2);
+        rSPanelRound2.setLayout(rSPanelRound2Layout);
+        rSPanelRound2Layout.setHorizontalGroup(
+            rSPanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelRound2Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(rSPanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(rSRadioButtonMaterial1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(rSRadioButtonMaterial5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(rSRadioButtonMaterial6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(rSRadioButtonMaterial3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(rSRadioButtonMaterial7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(rSRadioButtonMaterial9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelRound2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(rSPanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelRound2Layout.createSequentialGroup()
+                        .addComponent(rSRadioButtonMaterial2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelRound2Layout.createSequentialGroup()
+                        .addComponent(rSRadioButtonMaterial8, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30))))
+        );
+        rSPanelRound2Layout.setVerticalGroup(
+            rSPanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelRound2Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(rSRadioButtonMaterial2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rSRadioButtonMaterial1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rSRadioButtonMaterial5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rSRadioButtonMaterial6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rSRadioButtonMaterial7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rSRadioButtonMaterial3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rSRadioButtonMaterial9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rSRadioButtonMaterial8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
+        );
+
+        javax.swing.GroupLayout rSPanelRound1Layout = new javax.swing.GroupLayout(rSPanelRound1);
+        rSPanelRound1.setLayout(rSPanelRound1Layout);
+        rSPanelRound1Layout.setHorizontalGroup(
+            rSPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelRound1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(rSPanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+        rSPanelRound1Layout.setVerticalGroup(
+            rSPanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelRound1Layout.createSequentialGroup()
+                .addGap(0, 13, Short.MAX_VALUE)
+                .addComponent(rSPanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel3.add(rSPanelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 130, 250, 370));
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel23.setText("Contraseña:");
+        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 180, 40));
+        jPanel3.add(rSMPassView2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 350, 260, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1094,8 +1320,7 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
     private void rSButtonIcon_new8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new8ActionPerformed
         // TODO add your handling code here:
         if(validar()==true){
-            
-                Actualizaru();
+            ActualizarUsuario();
            
              
         }else{
@@ -1108,44 +1333,106 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JIntentosActionPerformed
 
-    private void JComboEmpleadosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleadosMouseExited
+    private void rSRadioButtonMaterial1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial1ActionPerformed
         // TODO add your handling code here:
-        try {
-            int idEmpleado=0;
-            String primername="";
-            String primerapellido="";
-            String usuario="";
+        rSRadioButtonMaterial2.setSelected(false);
+        rSRadioButtonMaterial3.setSelected(false);
+        rSRadioButtonMaterial5.setSelected(false);
+        rSRadioButtonMaterial6.setSelected(false);
+        rSRadioButtonMaterial7.setSelected(false);
+        rSRadioButtonMaterial8.setSelected(false);
+        rSRadioButtonMaterial9.setSelected(false);
+        rol=rSRadioButtonMaterial1.getText();
+    }//GEN-LAST:event_rSRadioButtonMaterial1ActionPerformed
 
-            String name = JComboEmpleados.getSelectedItem().toString();
-            int idEmpleadov = empleados.get(name);
-            String SQL = "Select e.IdEmpleado, e.PrimerNombre,e.PrimerApellido FROM Empleados e Where e.IdEmpleado="+idEmpleadov;
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                idEmpleado =rs.getInt("IdEmpleado");
-                primername =rs.getString("PrimerNombre");
-                primerapellido =rs.getString("PrimerApellido");
-
-            }
-
-            usuario= primername.toLowerCase()+"."+primerapellido.toLowerCase()+String.valueOf(idEmpleado);
-
-            Jrol.setText(usuario);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-    }//GEN-LAST:event_JComboEmpleadosMouseExited
-
-    private void JComboEmpleadosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleadosMouseEntered
+    private void rSRadioButtonMaterial2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboEmpleadosMouseEntered
+        rSRadioButtonMaterial1.setSelected(false);
+        rSRadioButtonMaterial3.setSelected(false);
+        rSRadioButtonMaterial5.setSelected(false);
+        rSRadioButtonMaterial6.setSelected(false);
+        rSRadioButtonMaterial7.setSelected(false);
+        rSRadioButtonMaterial8.setSelected(false);
+        rSRadioButtonMaterial9.setSelected(false);
+        rol=rSRadioButtonMaterial2.getText();
 
-    private void JComboEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleadosMouseClicked
+    }//GEN-LAST:event_rSRadioButtonMaterial2ActionPerformed
+
+    private void rSRadioButtonMaterial3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial3ActionPerformed
         // TODO add your handling code here:
+        rSRadioButtonMaterial2.setSelected(false);
+        rSRadioButtonMaterial6.setSelected(false);
+        rSRadioButtonMaterial1.setSelected(false);
+        rSRadioButtonMaterial5.setSelected(false);
+        rSRadioButtonMaterial7.setSelected(false);
+        rSRadioButtonMaterial8.setSelected(false);
+        rSRadioButtonMaterial9.setSelected(false);
+        rol=rSRadioButtonMaterial3.getText();
+    }//GEN-LAST:event_rSRadioButtonMaterial3ActionPerformed
 
-    }//GEN-LAST:event_JComboEmpleadosMouseClicked
+    private void rSRadioButtonMaterial5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial5ActionPerformed
+        // TODO add your handling code here:
+        rSRadioButtonMaterial2.setSelected(false);
+        rSRadioButtonMaterial3.setSelected(false);
+        rSRadioButtonMaterial1.setSelected(false);
+        rSRadioButtonMaterial6.setSelected(false);
+        rSRadioButtonMaterial7.setSelected(false);
+        rSRadioButtonMaterial8.setSelected(false);
+        rSRadioButtonMaterial9.setSelected(false);
+        rol=rSRadioButtonMaterial5.getText();
+    }//GEN-LAST:event_rSRadioButtonMaterial5ActionPerformed
+
+    private void rSRadioButtonMaterial6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial6ActionPerformed
+        // TODO add your handling code here:
+        rSRadioButtonMaterial2.setSelected(false);
+        rSRadioButtonMaterial3.setSelected(false);
+        rSRadioButtonMaterial1.setSelected(false);
+        rSRadioButtonMaterial5.setSelected(false);
+        rSRadioButtonMaterial7.setSelected(false);
+        rSRadioButtonMaterial8.setSelected(false);
+        rSRadioButtonMaterial9.setSelected(false);
+        rol=rSRadioButtonMaterial6.getText();
+    }//GEN-LAST:event_rSRadioButtonMaterial6ActionPerformed
+
+    private void rSRadioButtonMaterial7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial7ActionPerformed
+        // TODO add your handling code here:
+        rSRadioButtonMaterial2.setSelected(false);
+        rSRadioButtonMaterial3.setSelected(false);
+        rSRadioButtonMaterial1.setSelected(false);
+        rSRadioButtonMaterial5.setSelected(false);
+        rSRadioButtonMaterial6.setSelected(false);
+        rSRadioButtonMaterial8.setSelected(false);
+        rSRadioButtonMaterial9.setSelected(false);
+        rol=rSRadioButtonMaterial7.getText();
+    }//GEN-LAST:event_rSRadioButtonMaterial7ActionPerformed
+
+    private void rSRadioButtonMaterial8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial8ActionPerformed
+        // TODO add your handling code here:
+        rSRadioButtonMaterial2.setSelected(false);
+        rSRadioButtonMaterial3.setSelected(false);
+        rSRadioButtonMaterial1.setSelected(false);
+        rSRadioButtonMaterial5.setSelected(false);
+        rSRadioButtonMaterial7.setSelected(false);
+        rSRadioButtonMaterial6.setSelected(false);
+        rSRadioButtonMaterial9.setSelected(false);
+        rol=rSRadioButtonMaterial8.getText();
+    }//GEN-LAST:event_rSRadioButtonMaterial8ActionPerformed
+
+    private void rSRadioButtonMaterial9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial9ActionPerformed
+        // TODO add your handling code here:
+        rSRadioButtonMaterial2.setSelected(false);
+        rSRadioButtonMaterial3.setSelected(false);
+        rSRadioButtonMaterial1.setSelected(false);
+        rSRadioButtonMaterial5.setSelected(false);
+        rSRadioButtonMaterial7.setSelected(false);
+        rSRadioButtonMaterial8.setSelected(false);
+        rSRadioButtonMaterial6.setSelected(false);
+        rol=rSRadioButtonMaterial9.getText();
+    }//GEN-LAST:event_rSRadioButtonMaterial9ActionPerformed
+
+    private void rSMPassView1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMPassView1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSMPassView1ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1222,9 +1509,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Header;
     private javax.swing.JLabel JCodigoDisponible;
-    private rojerusan.RSComboMetro JComboEmpleados;
     private rojerusan.RSComboMetro JIntentos;
-    private javax.swing.JLabel Jrol;
     private javax.swing.JLabel Juser3;
     private javax.swing.JPanel MenuIcon;
     private javax.swing.JPanel dashboardview;
@@ -1235,11 +1520,11 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1287,7 +1572,18 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSLabelIcon rSLabelIcon8;
     private rojerusan.RSLabelIcon rSLabelIcon9;
     private rojeru_san.RSMPassView rSMPassView1;
+    private rojeru_san.RSMPassView rSMPassView2;
     private rojeru_san.rspanel.RSPanelCircle rSPanelCircle1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
+    private rojeru_san.rspanel.RSPanelRound rSPanelRound1;
+    private rojeru_san.rspanel.RSPanelRound rSPanelRound2;
+    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial1;
+    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial2;
+    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial3;
+    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial5;
+    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial6;
+    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial7;
+    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial8;
+    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial9;
     // End of variables declaration//GEN-END:variables
 }

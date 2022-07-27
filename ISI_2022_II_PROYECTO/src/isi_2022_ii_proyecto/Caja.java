@@ -1224,8 +1224,8 @@ public class Caja extends javax.swing.JFrame {
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
         // TODO add your handling code here:
-        AgregarClientes ag = new AgregarClientes();
-        ag.setVisible(true);
+        AgregarCaja ac = new AgregarCaja();
+        ac.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
 

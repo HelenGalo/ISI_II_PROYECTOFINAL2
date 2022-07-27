@@ -31,7 +31,7 @@ public class Usuario extends javax.swing.JFrame {
     /**
      * Creates new form Usuario
      */
-    String codigou="";
+    String codigou=null;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     boolean a = true;
@@ -39,6 +39,113 @@ public class Usuario extends javax.swing.JFrame {
         initComponents();
         listar();
     }
+    
+    
+      public void listar(){
+        String[] registros = new String[6];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
+
+       
+         String SQL = "Select u.IdUsuario, e.PrimerNombre, e.PrimerApellido, u.Intentos, r.Nombre, u.Usuario FROM Usuarios u\n" +
+                      "INNER JOIN Empleados e ON u.IdEmpleado = e.IdEmpleado\n" +
+                      "INNER JOIN Roles r ON u.IdRol = r.IdRol";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdUsuario");
+                registros[1] = rs.getString("PrimerNombre");
+                registros[2] = rs.getString("PrimerApellido");
+                registros[3] = rs.getString("Nombre");
+                registros[4] = rs.getString("Intentos");
+                registros[5] = rs.getString("Usuario");
+                modelo.addRow(registros);
+            }
+
+            JTableEmpleado.setModel(modelo);
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    
+      private void limpiartabla(){
+        DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
+        while (modelo.getRowCount() > 0)
+        {
+        modelo.removeRow(0);
+        }
+        
+        
+        
+       
+        
+     
+    }
+      
+      
+        private void buscarNombre(){
+        String[] registros = new String[6];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
+        
+         String SQL = "Select u.IdUsuario, e.PrimerNombre, e.PrimerApellido, u.Intentos, r.Nombre, u.Usuario FROM Usuarios u\n" +
+                      "INNER JOIN Empleados e ON u.IdEmpleado = e.IdEmpleado\n" +
+                      "INNER JOIN Roles r ON u.IdRol = r.IdRol Where e.PrimerNombre LIKE'"+JTextbuscar.getText()+"%'";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdUsuario");
+                registros[1] = rs.getString("PrimerNombre");
+                registros[2] = rs.getString("PrimerApellido");
+                registros[3] = rs.getString("Nombre");
+                registros[4] = rs.getString("Intentos");
+                registros[5] = rs.getString("Usuario");
+                modelo.addRow(registros);
+            }
+
+            JTableEmpleado.setModel(modelo);
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    
+    
+    public void  changecolor(JPanel hover, Color rand){
+     hover.setBackground(rand);
+ }
+    public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
+        if(numberbool == 1){
+            h1.setBackground(new Color(25,29,74));
+            h2.setBackground(new Color(5,10,46));
+        }
+        else{
+             h1.setBackground(new Color(5,10,46));
+            h2.setBackground(new Color(25,29,74));
+        }
+    }
+    public void changeimage(JLabel button, String resourcheimg){
+        ImageIcon aimg = new ImageIcon(getClass().getResource(resourcheimg));
+        button.setIcon(aimg);
+        
+    }
+    
+    public void hideshow(JPanel menushowhide, boolean dashboard , JLabel button){
+        if(dashboard == true){
+            menushowhide.setPreferredSize(new Dimension(50,menushowhide.getHeight()));
+           // changeimage(button, "C:\\Users\\orell\\OneDrive\\Documents\\NetBeansProjects\\ISI_2022_II_PROYECTOFINAL\\ISI_2022_II_PROYECTO\\src\\isi_2022_ii_proyecto\\image\\menu_32px");
+        }
+        else{
+             menushowhide.setPreferredSize(new Dimension(270,menushowhide.getHeight()));
+             // changeimage(button, "C:\\Users\\orell\\OneDrive\\Documents\\NetBeansProjects\\ISI_2022_II_PROYECTOFINAL\\ISI_2022_II_PROYECTO\\src\\isi_2022_ii_proyecto\\image\\back_32px");
+        }
+    }   
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -489,7 +596,7 @@ public class Usuario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -685,7 +792,7 @@ public class Usuario extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CodigoEmpleado", "Nombres", "Apellidos", "Identificacion", "Puesto"
+                "CodigoUsuario", "Primer Nombre", "Primer Apellido", "Rol", "Intentos", "Usuario"
             }
         ));
         JTableEmpleado.setColorSecondary(new java.awt.Color(153, 153, 255));
@@ -857,9 +964,16 @@ public class Usuario extends javax.swing.JFrame {
 
     private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
         // TODO add your handling code here:
-        ActualizarUsuarios acu = new ActualizarUsuarios();
-        acu.setVisible(true);
-        this.setVisible(false);
+         if(codigou!=null){
+          ActualizarUsuarios acu = new ActualizarUsuarios();
+          acu.setCodigou(codigou);
+          acu.setVisible(true);
+          this.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+        }
+        
+       
     }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
 
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
@@ -918,113 +1032,7 @@ public class Usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_JTextbuscarActionPerformed
 
     
-    
-      public void listar(){
-        String[] registros = new String[7];
-        DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
-
-       
-         String SQL = "Select u.IdUsuario, e.PrimerNombre, e.PrimerApellido, u.Contrase, u.Intentos, r.Nombre, u.Usuario FROM Usuarios u\n" +
-                      "INNER JOIN Empleados e ON u.IdEmpleado = e.IdEmpleado\n" +
-                      "INNER JOIN Roles r ON u.IdRol = r.IdRol";
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                registros[0] = rs.getString("IdUsuario");
-                registros[1] = rs.getString("PrimerNombre");
-                registros[2] = rs.getString("PrimerApellido");
-                registros[3] = rs.getString("Contrase");
-                registros[4] = rs.getString("Intentos");
-                registros[5] = rs.getString("Nombre");
-                registros[6] = rs.getString("Usuario");
-                modelo.addRow(registros);
-            }
-
-            JTableEmpleado.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    
-      private void limpiartabla(){
-        DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
-        while (modelo.getRowCount() > 0)
-        {
-        modelo.removeRow(0);
-        }
-        
-        
-        
-       
-        
      
-    }
-      
-      
-        private void buscarNombre(){
-        String[] registros = new String[7];
-        DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
-        
-         String SQL = "Select u.IdUsuario, e.PrimerNombre, e.PrimerApellido, u.Contrase, u.Intentos, r.Nombre, u.Usuario FROM Usuarios u\n" +
-                      "INNER JOIN Empleados e ON u.IdEmpleado = e.IdEmpleado\n" +
-                      "INNER JOIN Roles r ON u.IdRol = r.IdRol Where e.PrimerNombre LIKE'"+JTextbuscar.getText()+"%'";
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                registros[0] = rs.getString("IdUsuario");
-                registros[1] = rs.getString("PrimerNombre");
-                registros[2] = rs.getString("PrimerApellido");
-                registros[3] = rs.getString("Contrase");
-                registros[4] = rs.getString("Intentos");
-                registros[5] = rs.getString("Nombre");
-                registros[6] = rs.getString("Usuario");
-                modelo.addRow(registros);
-            }
-
-            JTableEmpleado.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        
-    }
-    
-    
-    public void  changecolor(JPanel hover, Color rand){
-     hover.setBackground(rand);
- }
-    public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
-        if(numberbool == 1){
-            h1.setBackground(new Color(25,29,74));
-            h2.setBackground(new Color(5,10,46));
-        }
-        else{
-             h1.setBackground(new Color(5,10,46));
-            h2.setBackground(new Color(25,29,74));
-        }
-    }
-    public void changeimage(JLabel button, String resourcheimg){
-        ImageIcon aimg = new ImageIcon(getClass().getResource(resourcheimg));
-        button.setIcon(aimg);
-        
-    }
-    
-    public void hideshow(JPanel menushowhide, boolean dashboard , JLabel button){
-        if(dashboard == true){
-            menushowhide.setPreferredSize(new Dimension(50,menushowhide.getHeight()));
-           // changeimage(button, "C:\\Users\\orell\\OneDrive\\Documents\\NetBeansProjects\\ISI_2022_II_PROYECTOFINAL\\ISI_2022_II_PROYECTO\\src\\isi_2022_ii_proyecto\\image\\menu_32px");
-        }
-        else{
-             menushowhide.setPreferredSize(new Dimension(270,menushowhide.getHeight()));
-             // changeimage(button, "C:\\Users\\orell\\OneDrive\\Documents\\NetBeansProjects\\ISI_2022_II_PROYECTOFINAL\\ISI_2022_II_PROYECTO\\src\\isi_2022_ii_proyecto\\image\\back_32px");
-        }
-    }    
     /**
      * @param args the command line arguments
      */

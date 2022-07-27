@@ -869,7 +869,7 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
            if(code.isEmpty()==false){
           
            ActualizarEmpleado ac = new ActualizarEmpleado();
-           ac.setEmpleado(code);
+           ac.setCempleado(code);
            ac.Mostrar();
            ac.setVisible(true); 
            this.setVisible(false);

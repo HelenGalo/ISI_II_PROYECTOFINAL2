@@ -1,274 +1,174 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
-import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionGuardar;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.sql.Connection;
-import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import rojeru_san.complementos.RSUtilities;
+
 /**
  *
- * @author orell
+ * @author Edwin Rafael
  */
-public class ActualizarEmpleado extends javax.swing.JFrame {
+public class AgregarCaja extends javax.swing.JFrame {
+      ConexionBD conexion = new ConexionBD();
+      Connection con = conexion.conexion();
+      int id=0;
+      boolean estadoagregar=false;
+
+    public void setEstadoagregar(boolean estadoagregar) {
+        this.estadoagregar = estadoagregar;
+    }
+
 
     /**
-     * Creates new form AgregarCliente
+     * Creates new form AgregarCuentaBancaria
      */
-    boolean a = true;
-    String empleado;
-    ConexionBD conexion = new ConexionBD();
-    Connection con = conexion.conexion();
-    int id=0;
-    private String rol;
-   
-    String codigoe="";
-
-   
-    HashMap<String, Integer> puestos = new HashMap<String, Integer>();
-    HashMap<String, Integer> documentos = new HashMap<String, Integer>();
-
-    public void setCempleado(String cempleado) {
-        this.codigoe= cempleado;
-    }
+    public AgregarCaja()   {
+        RSUtilities.setFullScreenJFrame(this);
+        initComponents();
+        buscardatos();
+        listarUsuarios();
+        listarEstado();
+        rSButtonIcon_new12.setVisible(false);
      
        
-    public ActualizarEmpleado() {
-        initComponents();
-        inicializar();
-        buscardatos();
+      
     }
     
-    public void Mostrar(){
-       String primernombre="";
-       String segundonombre="";
-       String Papellido="";
-       String Sapellido="";
-       String correo="";
-       String genero="";
-       String puesto="";
-       String numeroCta="";
-       String estado="";
-       String IdTipodocumento="";
-       SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
-       Date Fn = null;
-       Date Fc = null;
-       String fechan="";
-       String fechac="";
-       String direccion="";
-       
-       String SQL = "Select * from Empleados Where IdEmpleado="+Integer.parseInt(codigoe);
+    public void validarConfirmacion(){
+        if(estadoagregar=true){
+            insertar();
+        }
+    }
+    
+    
+    public boolean validar(){
+        return false;
+    }
+    
+   
+    
+    
+     public int ObtenerIdUsuarios(){
+        int idbanco=0;
+         
+        String SQL = "SELECT u.IdUsuario From Usuarios u Where u.Usuario='"+JComboEmpleados1.getSelectedItem().toString()+"';";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-              primernombre=rs.getString("PrimerNombre");
-              segundonombre =rs.getString("SegundoNombre");
-              Papellido =rs.getString("PrimerApellido");
-              Sapellido =rs.getString("SegundoApellido");
-              correo = rs.getString("CorreoElectronico");
-              puesto= String.valueOf(rs.getInt("IdPuesto"));
-              direccion = rs.getString("DireccionEmpleado");
-              numeroCta = String.valueOf(rs.getInt("NumeroCuenta"));
-              fechan =rs.getString("FechaNacimiento");
-              fechac=rs.getString("FechaContratacion");
-                
-                      
-              
-              
+                idbanco =rs.getInt("u.IdUsuario");
             }
             
-            try {
-                    Fn= formateador.parse(fechan);
-                    FN.setDatoFecha(Fn);
-                } catch (ParseException ex) {
-                    Logger.getLogger(ActualizarEmpleado.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                try {
-                    Fc = formateador.parse(fechac);
-                    FC.setDatoFecha(Fc);
-                } catch (ParseException ex) {
-                    Logger.getLogger(ActualizarEmpleado.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
-            pnomb.setText(primernombre);
-            segundonom.setText(segundonombre);
-            ape1.setText(Papellido);
-            ape2.setText(Sapellido);
-            correo1.setText(correo);
-            cuenta.setText(String.valueOf(numeroCta));
-            JCodigoDisponible.setText(codigoe);
-            
-       
-            
-
            
-       
-            
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+        return idbanco;
     }
     
-     public void actualizar(){
-        
-       String primernombre="";
-       String segundonombre="";
-       String Papellido="";
-       String Sapellido="";
-       String formato="yyyy/MM/dd";
-       String correo="";
-       int genero=1;
-       int puesto=1;
-       int numeroCta=1;
-       int estado=0;
-       int IdTipodocumento=1;
-       
-       Date FechaN=FN.getDatoFecha();
-       Date FechaC=FC.getDatoFecha();
-       SimpleDateFormat formateador = new SimpleDateFormat(formato);
-       String Fn = formateador.format(FechaN);
-       String Fc =formateador.format(FechaC);
-        
-       
-        primernombre=pnomb.getText();
-        segundonombre=segundonom.getText();
-        Papellido = ape1.getText();
-        Sapellido= ape2.getText();
-        genero=Obtenergenero();
-        correo = correo1.getText();
-        puesto=Obtenerpuesto();
-        
-        numeroCta=Integer.parseInt(cuenta.getText());
-        
-        estado=Obtenerestado();
-        
-        IdTipodocumento=ObtenerTipoD();
-        String direccion="";
+     
+     public int ObtenerIdEstado(){
+        int idusuario=0;
+         
+        String SQL = "SELECT u.IdEstado From EstadosUsuario u Where u.Descripcion='"+JComboEmpleados.getSelectedItem().toString()+"';";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
 
+            while (rs.next()) {
+                idusuario =rs.getInt("u.IdEstado");
+            }
+            
+           
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return idusuario;
+    }
+    
+    public void nuevaregistrocaja(){
+        JComboEmpleados1.removeAllItems();
+        buscardatos();
+        listarUsuarios();
+        jLabel26.setText("");
+        jLabel18.setText("");
+        desbloquearbotong();
+        
+    }
+    
+   
+    public void insertar(){
+       int idcaja =Integer.parseInt(JCodigoDisponible.getText());
+       int idusuario=ObtenerIdUsuarios();
+    
+       int idestado=ObtenerIdEstado();
+      
+     
+        
         
  
-        String SQL = "UPDATE Empleados SET PrimerNombre=?, SegundoNombre=?, FechaNacimiento=?, IdTipoDocumento=?, CorreoElectronico=?, IdGenero=?, DireccionEmpleado=?, IdPuesto=?, FechaContratacion=?, NumeroCuenta=?, IdEstado=?, PrimerApellido=?,\n"
-                + "SegundoApellido=? WHERE IdEmpleado="+JCodigoDisponible.getText()+";";
+       String SQL = "INSERT INTO Caja (IdCaja, IdUsuario, IdEstado, TotalCaja, IdEstadoCaja) VALUES(?, ?, ?, ?, ?)";
         try {
-           PreparedStatement preparedStmt = con.prepareStatement(SQL);;
-         
-            preparedStmt.setString (1, primernombre);
-            preparedStmt.setString   (2, segundonombre);
-            preparedStmt.setString(3, Fn);
-            preparedStmt.setInt(4, IdTipodocumento);
-            preparedStmt.setString(5, correo);
-            preparedStmt.setInt(6, genero);
-            preparedStmt.setString(7, direccion);
-            preparedStmt.setInt(8, puesto);
-            preparedStmt.setString(9, Fc);
-            preparedStmt.setInt(10, numeroCta);
-            preparedStmt.setInt(11, estado);
-            preparedStmt.setString(12, Papellido);
-            preparedStmt.setString(13, Sapellido);
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, idcaja);
+            preparedStmt.setInt(2, idusuario);
+            preparedStmt.setInt(3, idestado);
+            preparedStmt.setFloat(4, 0.00f);
+            preparedStmt.setInt(5, 1);
+          
             preparedStmt.execute();
-            JOptionPane.showMessageDialog(this, "Registro Guardado");
-
-        } catch (SQLException e) {
-            System.out.println("ERROR AL REGISTRAR: " + e.getMessage());
-        }
-        
-        
-        
-       
-    }
-    public void inicializar(){
-         String SQL = "SELECT * FROM TipoDocumento";
-         String des="";
-         
-         String SQL1 = "SELECT * FROM Puestos";
-         String puesto="";
-         
-         String SQL2 = "SELECT * FROM EstadosUsuario";
-         String estadou="";
-         
-         String SQL3 = "SELECT * FROM Generos";
-         String genero="";
-          
-          
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-               des = rs.getString("Descripcion");
-               JComboTipo2.addItem(des);
-               
-                
-            }
-            
-            
-            Statement st1 = (Statement) con.createStatement();
-            ResultSet rs1 = st1.executeQuery(SQL1);
-
-            while (rs1.next()) {
-               des = rs1.getString("Nombre");
-               JComboGen1.addItem(des);
-               
-                
-            }
-            
-            Statement st2 = (Statement) con.createStatement();
-            ResultSet rs2 = st2.executeQuery(SQL2);
-
-            while (rs2.next()) {
-               des = rs2.getString("Descripcion");
-               JComboEstado.addItem(des);
-               
-                
-            }
-            
-            
-            Statement st3 = (Statement) con.createStatement();
-            ResultSet rs3 = st3.executeQuery(SQL3);
-
-            while (rs3.next()) {
-               des = rs3.getString("Nombre");
-               JCombopuesto.addItem(des);
-               
-                
-            }
-
-            
-    
-            
            
+            VentanaEmergente1 ve = new VentanaEmergente1();
+            ve.setVisible(true);
+            bloquearbotong();
 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
+        
+        
+        
        
-    
     }
+    
+    public void bloquearbotong(){
+        rSButtonIcon_new11.setEnabled(false);
+        rSButtonIcon_new12.setVisible(true);
+    }
+    
+    public void desbloquearbotong(){
+        rSButtonIcon_new11.setEnabled(true);
+        rSButtonIcon_new12.setVisible(false);
+    }
+    
+    
     
     public void buscardatos(){
-          String SQL = "SELECT * FROM Empleados WHERE IdEmpleado=(SELECT max(IdEmpleado) FROM Empleados)";
+          String SQL = "SELECT * FROM Caja c WHERE c.IdCaja=(SELECT max(IdCaja) FROM Caja)";
           
           
         try {
@@ -276,15 +176,15 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                id = rs.getInt("IdEmpleado");
+                id = rs.getInt("IdCaja");
                
                 
             }
 
             
-            System.out.println("SIN SUMAR"+String.valueOf(id));
-            id = id +1;
  
+            id = id +1;
+    
             JCodigoDisponible.setText(String.valueOf(id));
             
            
@@ -294,129 +194,52 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         }
     }
     
-    
-    public int ObtenerTipoD(){
-          String SQL = "SELECT t.IdTipoDocumento FROM TipoDocumento t Where t.Descripcion="+"'"+JComboTipo2.getSelectedItem().toString()+"'";
-          int idp=0;
-          
+    public void listarUsuarios(){
+        JComboEmpleados1.addItem("Seleccionar Usuario");
+        String usuario="";
+         
+        String SQL = "SELECT u.Usuario FROM Usuarios u\n" +
+                    "LEFT JOIN Caja c ON c.IdUsuario = u.IdUsuario\n" +
+                    "WHERE c.IdCaja IS NULL AND u.IdEstado=1;";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                idp = rs.getInt("IdTipoDocumento");
-               
-                
+                usuario =rs.getString("u.Usuario");
+    
+                JComboEmpleados1.addItem(usuario);
             }
-
             
-            
- 
-            
-            
-           
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        return idp;
-        
     }
     
+ 
     
-    
-     public int Obtenerpuesto(){
-          String SQL = "SELECT p.IdPuesto FROM Puestos p Where p.Nombre="+"'"+JComboGen1.getSelectedItem().toString()+"'";
-          int idp=0;
-          
+    public void listarEstado(){
+        JComboEmpleados.addItem("Seleccionar Estado");
+        JComboEmpleados.setSelectedIndex(0);
+        String descripcion="";
+         
+        String SQL = "SELECT b.Descripcion From EstadosUsuario b";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                idp = rs.getInt("IdPuesto");
-               
-                
-            }
-
-            
-            
- 
-            
-            
-           
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        return idp;
-        
-    }
+                descripcion =rs.getString("b.Descripcion");
     
-    
-    public int Obtenergenero(){
-          String SQL = "SELECT g.IdGenero FROM Generos g Where g.Nombre="+"'"+JCombopuesto.getSelectedItem().toString()+"'";
-          int idg=0;
-          
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                idg = rs.getInt("IdGenero");
-               
-                
+                JComboEmpleados.addItem(descripcion);
             }
-
             
-            
- 
-            
-            
-           
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        return idg;
-        
     }
     
-     public int Obtenerestado(){
-          String SQL = "SELECT g.IdEstado FROM EstadosUsuario g Where g.Descripcion="+"'"+JComboEstado.getSelectedItem().toString()+"'";
-          int idg=0;
-          
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
 
-            while (rs.next()) {
-                idg = rs.getInt("IdEstado");
-               
-                
-            }
-
-            
-            
- 
-            
-            
-           
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        return idg;
-        
-    }
-    
-   
-    
-    public Boolean validar(){
-      
-        return true;
-      
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -426,7 +249,6 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        rSYearDateBeanInfo1 = new rojerusan.RSYearDateBeanInfo();
         jPanel1 = new javax.swing.JPanel();
         Header = new javax.swing.JPanel();
         iconminmaxclose = new javax.swing.JPanel();
@@ -435,10 +257,10 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         linesetting4 = new javax.swing.JPanel();
         linesetting5 = new javax.swing.JPanel();
-        linesetting3 = new javax.swing.JPanel();
-        rSButtonIconOne3 = new RSMaterialComponent.RSButtonIconOne();
-        rSButtonIconOne4 = new RSMaterialComponent.RSButtonIconOne();
-        rSButtonIconOne5 = new RSMaterialComponent.RSButtonIconOne();
+        linesetting13 = new javax.swing.JPanel();
+        rSButtonIconOne6 = new RSMaterialComponent.RSButtonIconOne();
+        rSButtonIconOne7 = new RSMaterialComponent.RSButtonIconOne();
+        rSButtonIconOne8 = new RSMaterialComponent.RSButtonIconOne();
         menu = new javax.swing.JPanel();
         MenuIcon = new javax.swing.JPanel();
         linesetting = new javax.swing.JPanel();
@@ -464,6 +286,11 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         dashboardview = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        rSLabelIcon1 = new rojerusan.RSLabelIcon();
+        jLabel6 = new javax.swing.JLabel();
+        rSLabelIcon2 = new rojerusan.RSLabelIcon();
+        rSLabelHora1 = new rojeru_san.RSLabelHora();
         jPanel3 = new javax.swing.JPanel();
         rSPanelOpacity1 = new RSMaterialComponent.RSPanelOpacity();
         rSLabelIcon6 = new rojerusan.RSLabelIcon();
@@ -478,48 +305,28 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         rSLabelIcon12 = new rojerusan.RSLabelIcon();
         jLabel14 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        Genero = new javax.swing.JLabel();
+        JComboEmpleados = new rojerusan.RSComboMetro();
+        jLabel18 = new javax.swing.JLabel();
         rSPanelCircle1 = new rojeru_san.rspanel.RSPanelCircle();
         JCodigoDisponible = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        rSButtonIcon_new8 = new newscomponents.RSButtonIcon_new();
-        ape2 = new rojeru_san.RSMTextFull();
-        cuenta = new rojeru_san.RSMTextFull();
-        segundonom = new rojeru_san.RSMTextFull();
-        ident1 = new rojeru_san.RSMTextFull();
-        JComboEstado = new rojerusan.RSComboMetro();
-        jLabel23 = new javax.swing.JLabel();
-        CorreoAE = new javax.swing.JLabel();
-        JCombopuesto = new rojerusan.RSComboMetro();
-        pnomb = new rojeru_san.RSMTextFull();
-        CorreoAE1 = new javax.swing.JLabel();
-        correo1 = new rojeru_san.RSMTextFull();
-        estado = new javax.swing.JLabel();
-        JComboGen1 = new rojerusan.RSComboMetro();
-        jLabel24 = new javax.swing.JLabel();
-        JComboTipo2 = new rojerusan.RSComboMetro();
+        jLabel25 = new javax.swing.JLabel();
+        JComboEmpleados1 = new rojerusan.RSComboMetro();
+        jLabel19 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
-        ape1 = new rojeru_san.RSMTextFull();
-        FechaContracion1 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        FN = new rojeru_san.componentes.RSDateChooser();
-        FC = new rojeru_san.componentes.RSDateChooser();
-        jPanel4 = new javax.swing.JPanel();
-        rSLabelIcon1 = new rojerusan.RSLabelIcon();
-        jLabel6 = new javax.swing.JLabel();
-        rSLabelIcon2 = new rojerusan.RSLabelIcon();
-        rSLabelHora1 = new rojeru_san.RSLabelHora();
+        rSButtonIcon_new11 = new newscomponents.RSButtonIcon_new();
+        rSButtonIcon_new12 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
         Header.setPreferredSize(new java.awt.Dimension(800, 50));
-        Header.setLayout(new java.awt.BorderLayout());
 
         iconminmaxclose.setBackground(new java.awt.Color(5, 10, 46));
 
@@ -531,10 +338,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         );
         iconminmaxcloseLayout.setVerticalGroup(
             iconminmaxcloseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-
-        Header.add(iconminmaxclose, java.awt.BorderLayout.LINE_END);
 
         jPanel2.setBackground(new java.awt.Color(20, 101, 187));
 
@@ -553,7 +358,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         linesetting4.setLayout(linesetting4Layout);
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 838, Short.MAX_VALUE)
+            .addGap(0, 603, Short.MAX_VALUE)
         );
         linesetting4Layout.setVerticalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -564,52 +369,52 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         linesetting5.setPreferredSize(new java.awt.Dimension(50, 10));
         linesetting5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        linesetting3.setBackground(new java.awt.Color(20, 101, 187));
-        linesetting3.setPreferredSize(new java.awt.Dimension(50, 10));
+        linesetting13.setBackground(new java.awt.Color(20, 101, 187));
+        linesetting13.setPreferredSize(new java.awt.Dimension(50, 10));
 
-        rSButtonIconOne3.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIconOne3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FULLSCREEN);
-        rSButtonIconOne3.addActionListener(new java.awt.event.ActionListener() {
+        rSButtonIconOne6.setBackground(new java.awt.Color(20, 101, 187));
+        rSButtonIconOne6.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FULLSCREEN);
+        rSButtonIconOne6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIconOne3ActionPerformed(evt);
+                rSButtonIconOne6ActionPerformed(evt);
             }
         });
 
-        rSButtonIconOne4.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIconOne4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
-        rSButtonIconOne4.addActionListener(new java.awt.event.ActionListener() {
+        rSButtonIconOne7.setBackground(new java.awt.Color(20, 101, 187));
+        rSButtonIconOne7.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        rSButtonIconOne7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIconOne4ActionPerformed(evt);
+                rSButtonIconOne7ActionPerformed(evt);
             }
         });
 
-        rSButtonIconOne5.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIconOne5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REMOVE);
-        rSButtonIconOne5.addActionListener(new java.awt.event.ActionListener() {
+        rSButtonIconOne8.setBackground(new java.awt.Color(20, 101, 187));
+        rSButtonIconOne8.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REMOVE);
+        rSButtonIconOne8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIconOne5ActionPerformed(evt);
+                rSButtonIconOne8ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout linesetting3Layout = new javax.swing.GroupLayout(linesetting3);
-        linesetting3.setLayout(linesetting3Layout);
-        linesetting3Layout.setHorizontalGroup(
-            linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(linesetting3Layout.createSequentialGroup()
-                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout linesetting13Layout = new javax.swing.GroupLayout(linesetting13);
+        linesetting13.setLayout(linesetting13Layout);
+        linesetting13Layout.setHorizontalGroup(
+            linesetting13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(linesetting13Layout.createSequentialGroup()
+                .addComponent(rSButtonIconOne8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rSButtonIconOne6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(rSButtonIconOne7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        linesetting3Layout.setVerticalGroup(
-            linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(linesetting3Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        linesetting13Layout.setVerticalGroup(
+            linesetting13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(linesetting13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(linesetting13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rSButtonIconOne8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonIconOne6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonIconOne7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -623,13 +428,13 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
-                .addGap(13, 13, 13)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addGap(253, 253, 253)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 2, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 837, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65))
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
+                .addGap(278, 278, 278)
+                .addComponent(linesetting13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -639,10 +444,25 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(linesetting4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(linesetting5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(linesetting13, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        Header.add(jPanel2, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout HeaderLayout = new javax.swing.GroupLayout(Header);
+        Header.setLayout(HeaderLayout);
+        HeaderLayout.setHorizontalGroup(
+            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(iconminmaxclose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        HeaderLayout.setVerticalGroup(
+            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(iconminmaxclose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1369, -1));
+
+        menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
@@ -821,6 +641,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        menu.add(MenuIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 672));
+
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
 
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
@@ -855,7 +677,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -863,11 +685,12 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         linesetting6Layout.setVerticalGroup(
             linesetting6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(linesetting6Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(linesetting6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         linesetting12.setBackground(new java.awt.Color(0, 55, 133));
@@ -877,19 +700,31 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 linesetting12MouseClicked(evt);
             }
         });
-        linesetting12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Empleados");
-        linesetting12.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 210, 40));
+        jLabel3.setText("Caja");
 
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Modificar");
-        linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
+        jLabel12.setText("Agregar");
+
+        javax.swing.GroupLayout linesetting12Layout = new javax.swing.GroupLayout(linesetting12);
+        linesetting12.setLayout(linesetting12Layout);
+        linesetting12Layout.setHorizontalGroup(
+            linesetting12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        linesetting12Layout.setVerticalGroup(
+            linesetting12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(linesetting12Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout menuhideLayout = new javax.swing.GroupLayout(menuhide);
         menuhide.setLayout(menuhideLayout);
@@ -897,7 +732,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
         );
         menuhideLayout.setVerticalGroup(
             menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -905,26 +740,58 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(500, 500, 500)
+                .addGap(510, 510, 510)
                 .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
-        menu.setLayout(menuLayout);
-        menuLayout.setHorizontalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addComponent(MenuIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menuhide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        menuLayout.setVerticalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
-            .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        menu.add(menuhide, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, -1));
+
+        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 46, 260, -1));
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MENU);
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel6.setText("MODULO CAJA");
+
+        rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
+
+        rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 823, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -944,7 +811,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Modificar Empleado");
+        jLabel8.setText("Agregar Caja");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -956,7 +823,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Empleado");
+        jLabel11.setText("Modulo Caja");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -972,7 +839,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Listado de Empleados");
+        jLabel14.setText("Listado de Usuarios");
 
         rSPanelOpacity1.setLayer(rSLabelIcon6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -1035,23 +902,43 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
-        jPanel3.add(rSPanelOpacity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1050, 50));
+        jPanel3.add(rSPanelOpacity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 50));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Codigo Empleado Disponible:");
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 220, 50));
+        jLabel17.setText("CodigoCaja Disponible:");
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 190, 40));
 
-        Genero.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Genero.setForeground(new java.awt.Color(153, 0, 255));
-        Genero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Genero.setText("Genero:");
-        jPanel3.add(Genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, 150, 30));
+        JComboEmpleados.setColorArrow(new java.awt.Color(102, 0, 255));
+        JComboEmpleados.setColorFondo(new java.awt.Color(60, 76, 143));
+        JComboEmpleados.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JComboEmpleadosItemStateChanged(evt);
+            }
+        });
+        JComboEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JComboEmpleadosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JComboEmpleadosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JComboEmpleadosMouseExited(evt);
+            }
+        });
+        jPanel3.add(JComboEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, 270, 30));
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("Asignar Usuario:");
+        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 330, 190, 40));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
 
-        JCodigoDisponible.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        JCodigoDisponible.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         JCodigoDisponible.setForeground(new java.awt.Color(255, 255, 255));
         JCodigoDisponible.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         JCodigoDisponible.setText("1");
@@ -1060,321 +947,159 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         rSPanelCircle1.setLayout(rSPanelCircle1Layout);
         rSPanelCircle1Layout.setHorizontalGroup(
             rSPanelCircle1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelCircle1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(rSPanelCircle1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         rSPanelCircle1Layout.setVerticalGroup(
             rSPanelCircle1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rSPanelCircle1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 70, 70));
+        jPanel3.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, 110, 110));
 
-        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("Puesto:");
-        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 420, 140, 30));
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("Usuario Seleccionado:");
+        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 230, 180, 30));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("Apellidos del Empleado:");
-        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 190, 30));
+        jLabel22.setText("Estado:");
+        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 150, 30));
 
-        rSButtonIcon_new8.setBackground(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new8.setText("Guardar");
-        rSButtonIcon_new8.setBackgroundHover(new java.awt.Color(153, 0, 255));
-        rSButtonIcon_new8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        rSButtonIcon_new8.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
-        rSButtonIcon_new8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new8ActionPerformed(evt);
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel25.setText("Estado Seleccionado:");
+        jPanel3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 330, 190, 40));
+
+        JComboEmpleados1.setColorArrow(new java.awt.Color(102, 0, 255));
+        JComboEmpleados1.setColorFondo(new java.awt.Color(60, 76, 143));
+        JComboEmpleados1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JComboEmpleados1ItemStateChanged(evt);
             }
         });
-        jPanel3.add(rSButtonIcon_new8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 110, 40));
-
-        ape2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ape2.setPlaceholder("Ingresa nombre");
-        ape2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ape2ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(ape2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 130, -1));
-
-        cuenta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        cuenta.setPlaceholder("Ingrese Cuenta");
-        cuenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cuentaActionPerformed(evt);
-            }
-        });
-        jPanel3.add(cuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 230, 220, 30));
-
-        segundonom.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        segundonom.setPlaceholder("Ingresa nombre");
-        segundonom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                segundonomActionPerformed(evt);
-            }
-        });
-        jPanel3.add(segundonom, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 130, -1));
-
-        ident1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ident1.setPlaceholder("Ingresa nombre");
-        ident1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ident1ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(ident1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, 280, -1));
-
-        JComboEstado.setColorArrow(new java.awt.Color(102, 0, 255));
-        JComboEstado.setColorFondo(new java.awt.Color(60, 76, 143));
-        JComboEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+        JComboEmpleados1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JComboEstadoMouseClicked(evt);
+                JComboEmpleados1MouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                JComboEstadoMouseEntered(evt);
+                JComboEmpleados1MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                JComboEstadoMouseExited(evt);
+                JComboEmpleados1MouseExited(evt);
             }
         });
-        JComboEstado.addActionListener(new java.awt.event.ActionListener() {
+        JComboEmpleados1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JComboEstadoActionPerformed(evt);
+                JComboEmpleados1ActionPerformed(evt);
             }
         });
-        jPanel3.add(JComboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 300, 220, 30));
+        jPanel3.add(JComboEmpleados1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 270, 30));
 
-        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("Nombre del Empleado:");
-        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 190, 30));
-
-        CorreoAE.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        CorreoAE.setForeground(new java.awt.Color(153, 0, 255));
-        CorreoAE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CorreoAE.setText("Numero cuenta:");
-        jPanel3.add(CorreoAE, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 240, 150, 30));
-
-        JCombopuesto.setColorArrow(new java.awt.Color(102, 0, 255));
-        JCombopuesto.setColorFondo(new java.awt.Color(60, 76, 143));
-        JCombopuesto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JCombopuestoMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                JCombopuestoMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                JCombopuestoMouseExited(evt);
-            }
-        });
-        JCombopuesto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JCombopuestoActionPerformed(evt);
-            }
-        });
-        jPanel3.add(JCombopuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 360, 220, 30));
-
-        pnomb.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        pnomb.setPlaceholder("Ingresa nombre");
-        pnomb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pnombActionPerformed(evt);
-            }
-        });
-        jPanel3.add(pnomb, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 140, -1));
-
-        CorreoAE1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        CorreoAE1.setForeground(new java.awt.Color(153, 0, 255));
-        CorreoAE1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CorreoAE1.setText("Correo Electronico:");
-        jPanel3.add(CorreoAE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, 150, 30));
-
-        correo1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        correo1.setPlaceholder("Ingrese Correo");
-        correo1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                correo1ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(correo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 170, 220, 30));
-
-        estado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        estado.setForeground(new java.awt.Color(153, 0, 255));
-        estado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        estado.setText("Estado:");
-        jPanel3.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, 160, 30));
-
-        JComboGen1.setColorArrow(new java.awt.Color(102, 0, 255));
-        JComboGen1.setColorFondo(new java.awt.Color(60, 76, 143));
-        JComboGen1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JComboGen1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                JComboGen1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                JComboGen1MouseExited(evt);
-            }
-        });
-        JComboGen1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JComboGen1ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(JComboGen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 420, 220, 30));
-
-        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel24.setText("No. Identificacion:");
-        jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, 170, 30));
-
-        JComboTipo2.setColorArrow(new java.awt.Color(102, 0, 255));
-        JComboTipo2.setColorFondo(new java.awt.Color(60, 76, 143));
-        JComboTipo2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JComboTipo2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                JComboTipo2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                JComboTipo2MouseExited(evt);
-            }
-        });
-        JComboTipo2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JComboTipo2ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(JComboTipo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 390, 280, 30));
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("Asignar Usuario:");
+        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 160, 30));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(153, 0, 255));
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel26.setText("Tipo documento");
-        jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 170, 30));
+        jLabel26.setText("Asignar Usuario:");
+        jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 230, 190, 30));
 
-        ape1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ape1.setPlaceholder("Ingresa nombre");
-        ape1.addActionListener(new java.awt.event.ActionListener() {
+        rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
+        rSButtonIcon_new11.setText("Guardar Caja");
+        rSButtonIcon_new11.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
+        rSButtonIcon_new11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ape1ActionPerformed(evt);
+                rSButtonIcon_new11ActionPerformed(evt);
             }
         });
-        jPanel3.add(ape1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, 140, -1));
 
-        FechaContracion1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        FechaContracion1.setForeground(new java.awt.Color(153, 0, 255));
-        FechaContracion1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        FechaContracion1.setText("Fecha Contratacion:");
-        jPanel3.add(FechaContracion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 90, 150, 40));
-
-        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel27.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel27.setText("Fecha de nacimiento");
-        jPanel3.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 180, 30));
-        jPanel3.add(FN, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, -1, -1));
-        jPanel3.add(FC, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 90, -1, -1));
-
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MENU);
-        jPanel4.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
-
-        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(102, 0, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO EMPLEADO");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
-
-        rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
-        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, 60, 50));
-
-        rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
-        jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
+        rSButtonIcon_new12.setBackground(new java.awt.Color(33, 150, 243));
+        rSButtonIcon_new12.setText("Nueva Caja");
+        rSButtonIcon_new12.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
+        rSButtonIcon_new12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new12ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
         dashboardview.setLayout(dashboardviewLayout);
         dashboardviewLayout.setHorizontalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1156, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1047, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addGroup(dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(dashboardviewLayout.createSequentialGroup()
+                        .addComponent(rSButtonIcon_new11, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(rSButtonIcon_new12, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dashboardviewLayout.setVerticalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
+                .addGap(29, 29, 29)
+                .addGroup(dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rSButtonIcon_new11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonIcon_new12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1416, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 1109, 668));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
-
-        setSize(new java.awt.Dimension(1362, 716));
-        setLocationRelativeTo(null);
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rSButtonIconOne3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne3ActionPerformed
+    private void rSButtonIconOne6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne6ActionPerformed
         // TODO add your handling code here:
         this.setExtendedState(this.MAXIMIZED_BOTH);
-    }//GEN-LAST:event_rSButtonIconOne3ActionPerformed
+    }//GEN-LAST:event_rSButtonIconOne6ActionPerformed
 
-    private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne4ActionPerformed
+    private void rSButtonIconOne7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne7ActionPerformed
         try {
             // TODO add your handling code here:
             con.close();
         } catch (SQLException ex) {
-            Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error: de exe"+ ex.getMessage());
         }
         System.exit(0);
-    }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
+    }//GEN-LAST:event_rSButtonIconOne7ActionPerformed
 
-    private void rSButtonIconOne5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne5ActionPerformed
+    private void rSButtonIconOne8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne8ActionPerformed
         // TODO add your handling code here:
         this.setExtendedState(ICONIFIED);
-    }//GEN-LAST:event_rSButtonIconOne5ActionPerformed
+    }//GEN-LAST:event_rSButtonIconOne8ActionPerformed
 
     private void linesetting7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linesetting7MouseEntered
         // TODO add your handling code here:
@@ -1430,151 +1155,76 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-        Empleados em= new Empleados();
-        em.setVisible(true);
-        this.setVisible(false);
+        Caja caja = new Caja();
+        caja.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
     private void linesetting12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linesetting12MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_linesetting12MouseClicked
 
-    private void rSButtonIcon_new8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new8ActionPerformed
+    private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
         // TODO add your handling code here:
-        if(validar()==true){
-
-        actualizar();
-
+       
+       if(validar()==true){
+            ConfirmacionGuardar cg = new ConfirmacionGuardar();
+            cg.setGcaja(this);
+            cg.setTipo("GCaja");
+            cg.setVisible(true);
         }else{
-            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
         }
-
-    }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
-
-    private void ape2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ape2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ape2ActionPerformed
-
-    private void cuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cuentaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cuentaActionPerformed
-
-    private void segundonomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_segundonomActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_segundonomActionPerformed
-
-    private void ident1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ident1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ident1ActionPerformed
-
-    private void JComboEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEstadoMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_JComboEstadoMouseClicked
-
-    private void JComboEstadoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEstadoMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JComboEstadoMouseEntered
-
-    private void JComboEstadoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEstadoMouseExited
-        // TODO add your handling code here:
+ 
         
-    }//GEN-LAST:event_JComboEstadoMouseExited
+      
+    }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
 
-    private void JComboEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboEstadoActionPerformed
+    private void JComboEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleadosMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboEstadoActionPerformed
 
-    private void JCombopuestoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JCombopuestoMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JCombopuestoMouseClicked
+    }//GEN-LAST:event_JComboEmpleadosMouseClicked
 
-    private void JCombopuestoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JCombopuestoMouseEntered
+    private void JComboEmpleadosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleadosMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_JCombopuestoMouseEntered
+    }//GEN-LAST:event_JComboEmpleadosMouseEntered
 
-    private void JCombopuestoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JCombopuestoMouseExited
+    private void JComboEmpleadosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleadosMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_JCombopuestoMouseExited
+       
+    }//GEN-LAST:event_JComboEmpleadosMouseExited
 
-    private void JCombopuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCombopuestoActionPerformed
+    private void JComboEmpleados1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleados1MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_JCombopuestoActionPerformed
+    }//GEN-LAST:event_JComboEmpleados1MouseClicked
 
-    private void pnombActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pnombActionPerformed
+    private void JComboEmpleados1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleados1MouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_pnombActionPerformed
+    }//GEN-LAST:event_JComboEmpleados1MouseEntered
 
-    private void correo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correo1ActionPerformed
+    private void JComboEmpleados1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleados1MouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_correo1ActionPerformed
+    }//GEN-LAST:event_JComboEmpleados1MouseExited
 
-    private void JComboTipo2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboTipo2MouseClicked
+    private void JComboEmpleados1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboEmpleados1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboTipo2MouseClicked
+    }//GEN-LAST:event_JComboEmpleados1ActionPerformed
 
-    private void JComboTipo2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboTipo2MouseEntered
+    private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboTipo2MouseEntered
+        nuevaregistrocaja();
+    }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
 
-    private void JComboTipo2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboTipo2MouseExited
+    private void JComboEmpleados1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JComboEmpleados1ItemStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboTipo2MouseExited
+        jLabel26.setText(JComboEmpleados1.getSelectedItem().toString());
+    }//GEN-LAST:event_JComboEmpleados1ItemStateChanged
 
-    private void JComboTipo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboTipo2ActionPerformed
+    private void JComboEmpleadosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JComboEmpleadosItemStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboTipo2ActionPerformed
+        jLabel18.setText(JComboEmpleados.getSelectedItem().toString());
+    }//GEN-LAST:event_JComboEmpleadosItemStateChanged
 
-    private void JComboGen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboGen1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JComboGen1ActionPerformed
-
-    private void JComboGen1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JComboGen1MouseExited
-
-    private void JComboGen1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JComboGen1MouseEntered
-
-    private void JComboGen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboGen1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JComboGen1MouseClicked
-
-    private void ape1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ape1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ape1ActionPerformed
-public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
-        if(numberbool == 1){
-            h1.setBackground(new Color(25,29,74));
-            h2.setBackground(new Color(5,10,46));
-        }
-        else{
-             h1.setBackground(new Color(5,10,46));
-            h2.setBackground(new Color(25,29,74));
-        }
-    }
-    public void changeimage(JLabel button, String resourcheimg){
-        ImageIcon aimg = new ImageIcon(getClass().getResource(resourcheimg));
-        button.setIcon(aimg);
-        
-    }
-    
-    public void hideshow(JPanel menushowhide, boolean dashboard , JLabel button){
-        if(dashboard == true){
-            menushowhide.setPreferredSize(new Dimension(50,menushowhide.getHeight()));
-           // changeimage(button, "/image/menu_32px.png");
-        }
-        else{
-             menushowhide.setPreferredSize(new Dimension(270,menushowhide.getHeight()));
-              //changeimage(button, "/image/back_32px.png");
-        }
-    } 
-       public void  changecolor(JPanel hover, Color rand){
-     hover.setBackground(rand);
- }
-    
-  
     /**
      * @param args the command line arguments
      */
@@ -1592,61 +1242,45 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ActualizarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarCaja.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ActualizarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarCaja.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ActualizarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarCaja.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ActualizarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarCaja.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ActualizarEmpleado().setVisible(true);
+                new AgregarCaja().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel CorreoAE;
-    private javax.swing.JLabel CorreoAE1;
-    private rojeru_san.componentes.RSDateChooser FC;
-    private rojeru_san.componentes.RSDateChooser FN;
-    private javax.swing.JLabel FechaContracion1;
-    private javax.swing.JLabel Genero;
     private javax.swing.JPanel Header;
     private javax.swing.JLabel JCodigoDisponible;
-    private rojerusan.RSComboMetro JComboEstado;
-    private rojerusan.RSComboMetro JComboGen1;
-    private rojerusan.RSComboMetro JComboTipo2;
-    private rojerusan.RSComboMetro JCombopuesto;
+    private rojerusan.RSComboMetro JComboEmpleados;
+    private rojerusan.RSComboMetro JComboEmpleados1;
     private javax.swing.JPanel MenuIcon;
-    private rojeru_san.RSMTextFull ape1;
-    private rojeru_san.RSMTextFull ape2;
-    private rojeru_san.RSMTextFull correo1;
-    private rojeru_san.RSMTextFull cuenta;
     private javax.swing.JPanel dashboardview;
-    private javax.swing.JLabel estado;
     private javax.swing.JPanel iconminmaxclose;
-    private rojeru_san.RSMTextFull ident1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1664,8 +1298,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel linesetting10;
     private javax.swing.JPanel linesetting11;
     private javax.swing.JPanel linesetting12;
+    private javax.swing.JPanel linesetting13;
     private javax.swing.JPanel linesetting2;
-    private javax.swing.JPanel linesetting3;
     private javax.swing.JPanel linesetting4;
     private javax.swing.JPanel linesetting5;
     private javax.swing.JPanel linesetting6;
@@ -1674,12 +1308,12 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel linesetting9;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel menuhide;
-    private rojeru_san.RSMTextFull pnomb;
-    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
-    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
-    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne6;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne7;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne8;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new11;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new8;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon10;
@@ -1696,13 +1330,5 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSLabelIcon rSLabelIcon9;
     private rojeru_san.rspanel.RSPanelCircle rSPanelCircle1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
-    private rojerusan.RSYearDateBeanInfo rSYearDateBeanInfo1;
-    private rojeru_san.RSMTextFull segundonom;
     // End of variables declaration//GEN-END:variables
-
-    void setId(String code) {
-       
-    }
-
-    
 }
