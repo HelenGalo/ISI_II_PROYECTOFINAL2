@@ -69,6 +69,8 @@ public class ActualizarEnvio extends javax.swing.JFrame {
       listarEstado();
     
      aviso.setVisible(false);
+     aviso2.setVisible(false);
+     avisoT.setVisible(false);
     }
      public void validarConfirmacion(){
         if(estadosModificar=true){
@@ -236,18 +238,20 @@ public class ActualizarEnvio extends javax.swing.JFrame {
       }
       
        if(Tarifa.getText().isEmpty()){
-          JOptionPane.showMessageDialog(this, "Por favor ingrese Tarifa");
+          JOptionPane.showMessageDialog(this, "Por favor ingrese una Tarifa");
           a= false;
       }
-        if(Tarifa.getText().contentEquals(paramString())){
-          JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
-          a= false;
-      }
+          if (Validartarifa(Tarifa.getText())==false){
+           a=false;
+       }
        
         if(TelC1.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un telefono valido");
           a= false;
       }
+          if (validarT(TelC1.getText())==false){
+           a=false;
+       }
         
        if(CorreoC.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
@@ -271,10 +275,28 @@ public class ActualizarEnvio extends javax.swing.JFrame {
             
         Pattern patron = Pattern
                 .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]+{2,}+\\.[A-Za-z]+{2}?)$");
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})+(\\.[A-Za-z]{2,3})$");
         Matcher comparar = patron.matcher(correo);
         return comparar.find();
      
+    }
+     
+    
+ public boolean validarT(String cel){
+            
+        Pattern patron = Pattern
+                .compile("^[389]?[0-9]{3}?[-]?[0-9]{4}$");        
+        Matcher comparar = patron.matcher(cel);
+        return comparar.find();
+     
+    }
+
+
+ public boolean Validartarifa(String tarifa){
+        Pattern patron = Pattern
+                .compile("^[0-9]{1,3}+(\\,[0-9]+)*(\\.[0-9]{2})$");        
+        Matcher comparar = patron.matcher(tarifa);
+        return comparar.find();
     }
   
      
@@ -358,6 +380,8 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         JEstado = new rojerusan.RSComboMetro();
         aviso = new javax.swing.JLabel();
+        avisoT = new javax.swing.JLabel();
+        aviso2 = new javax.swing.JLabel();
         rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
@@ -447,11 +471,11 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         linesetting3Layout.setHorizontalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(linesetting3Layout.createSequentialGroup()
-                .addGap(168, 168, 168)
-                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(82, Short.MAX_VALUE)
+                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(138, 138, 138))
         );
@@ -898,11 +922,13 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel29.setText("Nombre Empresa:");
+        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 146, 170, 40));
 
         CorreoC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         CorreoC.setPlaceholder("Ingresar Correo Electronico");
@@ -916,16 +942,19 @@ public class ActualizarEnvio extends javax.swing.JFrame {
                 CorreoCKeyReleased(evt);
             }
         });
+        jPanel5.add(CorreoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(349, 372, 440, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Tarifa:");
+        jPanel5.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 216, 180, 40));
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(153, 0, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel32.setText("Correo Electronico:");
+        jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 380, 190, 40));
 
         Tarifa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Tarifa.setPlaceholder("Tarifa");
@@ -935,20 +964,26 @@ public class ActualizarEnvio extends javax.swing.JFrame {
             }
         });
         Tarifa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TarifaKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 TarifaKeyTyped(evt);
             }
         });
+        jPanel5.add(Tarifa, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 214, 440, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("Codigo EmpresaEnvio:");
+        jPanel5.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 174, 50));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel33.setText("Telefono:");
+        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, 180, 40));
 
         TelC1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TelC1.setPlaceholder("Ingresa el numero Telefono");
@@ -958,10 +993,14 @@ public class ActualizarEnvio extends javax.swing.JFrame {
             }
         });
         TelC1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TelC1KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 TelC1KeyTyped(evt);
             }
         });
+        jPanel5.add(TelC1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 300, 440, -1));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -987,6 +1026,8 @@ public class ActualizarEnvio extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel5.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 70, 70));
+
         NombreC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NombreC.setPlaceholder("Ingresa nombre");
         NombreC.addActionListener(new java.awt.event.ActionListener() {
@@ -999,21 +1040,25 @@ public class ActualizarEnvio extends javax.swing.JFrame {
                 NombreCKeyTyped(evt);
             }
         });
+        jPanel5.add(NombreC, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 144, 440, -1));
 
         actuale.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         actuale.setForeground(new java.awt.Color(153, 0, 255));
         actuale.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         actuale.setText("Actual Estado");
+        jPanel5.add(actuale, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 40, 110, 30));
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(153, 0, 255));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("Estado");
+        jPanel5.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 90, 60, 30));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(153, 0, 255));
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel24.setText("Actual Estado");
+        jPanel5.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 40, 110, 30));
 
         JEstado.setColorArrow(new java.awt.Color(102, 0, 255));
         JEstado.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -1033,102 +1078,25 @@ public class ActualizarEnvio extends javax.swing.JFrame {
                 JEstadoActionPerformed(evt);
             }
         });
+        jPanel5.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(638, 88, 180, 30));
 
         aviso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         aviso.setForeground(new java.awt.Color(255, 0, 0));
         aviso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         aviso.setText("*Correo invalido*");
+        jPanel5.add(aviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(801, 389, 170, 25));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addComponent(rSPanelCircle1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(actuale, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(JEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
-                .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(Tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(TelC1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addComponent(aviso, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rSPanelCircle1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(actuale, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(JEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(TelC1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(aviso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        avisoT.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        avisoT.setForeground(new java.awt.Color(255, 0, 0));
+        avisoT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        avisoT.setText("*Formato invalído*");
+        jPanel5.add(avisoT, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 240, 180, -1));
+
+        aviso2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso2.setForeground(new java.awt.Color(255, 0, 0));
+        aviso2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso2.setText("*Teléfono invalído*");
+        jPanel5.add(aviso2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 320, 180, -1));
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new9.setText("Modificar Cambios");
@@ -1145,12 +1113,14 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 1014, Short.MAX_VALUE)
+            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 1027, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 46, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1158,7 +1128,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
                 .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1373,39 +1343,23 @@ public class ActualizarEnvio extends javax.swing.JFrame {
           else{
                     aviso.setVisible(true);
               //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
-          }
+          } 
               
          // }
     }//GEN-LAST:event_CorreoCKeyReleased
 
     private void TelC1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelC1KeyTyped
-        int key = evt.getKeyChar();
-
-    boolean numeros = key >= 48 && key <= 57;
-        
-    if (!numeros)
-    {
-        evt.consume();
-    }
-
-    if (TelC1.getText().trim().length() == 10) {
+         if (TelC1.getText().trim().length() == 9) {
         evt.consume();
 
     }
+
+    
     }//GEN-LAST:event_TelC1KeyTyped
 
     private void TarifaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TarifaKeyTyped
     
-     String [] v = {"0","1","2","3","4","5","6","7","8","9","."};
-     char c =evt.getKeyChar();
-     String s = "%" + c ;
-      s=s.replace("%", "");
-     if (s.equals(v[0])||s.equals(v[1])||s.equals(v[2])||s.equals(v[3])||s.equals(v[4])||s.equals(v[5])){}
-     else  if (s.equals(v[6])||s.equals(v[7])||s.equals(v[8])||s.equals(v[9])||s.equals(v[10])){}
-     else{
-         int k = Tarifa.getText().length()-1;
-         String n = Tarifa.getText().substring(0,k);
-        Tarifa.setText (n);}
+ 
     }//GEN-LAST:event_TarifaKeyTyped
 
     private void NombreCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyTyped
@@ -1420,6 +1374,29 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         evt.consume();
     }
     }//GEN-LAST:event_NombreCKeyTyped
+
+    private void TelC1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelC1KeyReleased
+          if (validarT(TelC1.getText())){
+              aviso2.setVisible(false);
+             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
+        }
+          else{
+                    aviso2.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+       
+    }//GEN-LAST:event_TelC1KeyReleased
+
+    private void TarifaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TarifaKeyReleased
+      if (Validartarifa(Tarifa.getText())){
+              avisoT.setVisible(false);
+             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
+        }
+          else{
+                    avisoT.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+    }//GEN-LAST:event_TarifaKeyReleased
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1528,6 +1505,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.RSMTextFull TelC1;
     private javax.swing.JLabel actuale;
     private javax.swing.JLabel aviso;
+    private javax.swing.JLabel aviso2;
+    private javax.swing.JLabel avisoT;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;

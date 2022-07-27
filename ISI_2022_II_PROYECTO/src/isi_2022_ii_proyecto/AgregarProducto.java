@@ -63,7 +63,7 @@ public class AgregarProducto extends javax.swing.JFrame {
          ListarProveedor();
          listarCategoria();
          listarEstado();
-        
+        avisoT.setVisible(false);
     }
     public void inicializar(){
          JCodigoDisponible1.setText(prod);
@@ -304,11 +304,11 @@ public class AgregarProducto extends javax.swing.JFrame {
       }
       
  
-     
-        if(pre.getText().contentEquals(paramString())){
-          JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
-          a= false;
-      }
+        if(Validartarifa(pre.getText())==false)  {
+                   a= false;     
+                }
+                
+        
      
        if(Descrip1.getText().isEmpty()){
        
@@ -341,6 +341,13 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         
    
+ public boolean Validartarifa(String tarifa){
+        Pattern patron = Pattern
+                .compile("^[0-9]{1,3}+(\\,[0-9]+)*(\\.[0-9]{2})$");        
+        Matcher comparar = patron.matcher(tarifa);
+        return comparar.find();
+    }
+
 
     
    
@@ -425,6 +432,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         Descrip1 = new rojeru_san.RSMTextFull();
         jLabel21 = new javax.swing.JLabel();
         JEstado = new rojerusan.RSComboMetro();
+        avisoT = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -997,6 +1005,11 @@ public class AgregarProducto extends javax.swing.JFrame {
                 preActionPerformed(evt);
             }
         });
+        pre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                preKeyReleased(evt);
+            }
+        });
         jPanel5.add(pre, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, 380, 40));
 
         rSPanelCircle2.setBackground(new java.awt.Color(60, 76, 143));
@@ -1151,6 +1164,12 @@ public class AgregarProducto extends javax.swing.JFrame {
             }
         });
         jPanel5.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 320, 180, 30));
+
+        avisoT.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        avisoT.setForeground(new java.awt.Color(255, 0, 0));
+        avisoT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        avisoT.setText("*Formato invalído*");
+        jPanel5.add(avisoT, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, 180, -1));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -1372,6 +1391,17 @@ public class AgregarProducto extends javax.swing.JFrame {
     private void JEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JEstadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JEstadoActionPerformed
+
+    private void preKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_preKeyReleased
+          if (Validartarifa(pre.getText())){
+              avisoT.setVisible(false);
+             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
+        }
+          else{
+                    avisoT.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+    }//GEN-LAST:event_preKeyReleased
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1463,6 +1493,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSComboMetro JProveedores;
     private javax.swing.JPanel MenuIcon;
     private rojeru_san.RSMTextFull NombreP;
+    private javax.swing.JLabel avisoT;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel17;

@@ -70,6 +70,7 @@ public class ActualizarProductos extends javax.swing.JFrame {
         listarEstado();
        ListarProveedor();
        listarCategoria();
+       avisoT.setVisible(false);
         
     }
         public void validarConfirmacion(){
@@ -327,6 +328,10 @@ public class ActualizarProductos extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
           a= false;
       }
+        
+         if(Validartarifa(pre.getText())==false)  {
+                   a= false;     
+                }
      
        if(Descrip1.getText().isEmpty()){
        
@@ -351,6 +356,12 @@ public class ActualizarProductos extends javax.swing.JFrame {
              return a;
       }
   
+public boolean Validartarifa(String tarifa){
+        Pattern patron = Pattern
+                .compile("^[0-9]{1,3}+(\\,[0-9]+)*(\\.[0-9]{2})$");        
+        Matcher comparar = patron.matcher(tarifa);
+        return comparar.find();
+    }
 
         
    
@@ -443,6 +454,7 @@ public class ActualizarProductos extends javax.swing.JFrame {
         JEstado = new rojerusan.RSComboMetro();
         Estado2 = new javax.swing.JLabel();
         actuale = new javax.swing.JLabel();
+        avisoT = new javax.swing.JLabel();
         rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1016,6 +1028,11 @@ public class ActualizarProductos extends javax.swing.JFrame {
                 preActionPerformed(evt);
             }
         });
+        pre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                preKeyReleased(evt);
+            }
+        });
         jPanel5.add(pre, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 286, 380, 40));
 
         rSPanelCircle2.setBackground(new java.awt.Color(60, 76, 143));
@@ -1194,6 +1211,12 @@ public class ActualizarProductos extends javax.swing.JFrame {
         actuale.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         actuale.setText("estado");
         jPanel5.add(actuale, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 120, 40));
+
+        avisoT.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        avisoT.setForeground(new java.awt.Color(255, 0, 0));
+        avisoT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        avisoT.setText("*Formato invalído*");
+        jPanel5.add(avisoT, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, 180, -1));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -1429,6 +1452,17 @@ public class ActualizarProductos extends javax.swing.JFrame {
     private void JEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JEstadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JEstadoActionPerformed
+
+    private void preKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_preKeyReleased
+         if (Validartarifa(pre.getText())){
+              avisoT.setVisible(false);
+             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
+        }
+          else{
+                    avisoT.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+    }//GEN-LAST:event_preKeyReleased
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1541,6 +1575,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel actualCat;
     private javax.swing.JLabel actuale;
     private javax.swing.JLabel actualp;
+    private javax.swing.JLabel avisoT;
     private javax.swing.JLabel categoria;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JLabel jLabel12;

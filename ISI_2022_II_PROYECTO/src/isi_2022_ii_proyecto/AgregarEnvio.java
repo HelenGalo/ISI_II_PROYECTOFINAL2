@@ -60,9 +60,11 @@ public class AgregarEnvio extends javax.swing.JFrame {
         inicializar();
         buscardatos();
        listarEstado();
-        
-    
-        
+       
+        aviso.setVisible(false);
+          avisoT.setVisible(false);
+         aviso2.setVisible(false);
+       
     }
       public void validarConfirmacion(){
         if(estadoagregar=true){
@@ -202,15 +204,24 @@ public class AgregarEnvio extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese Tarifa");
           a= false;
       }
-        if(Tarifa.getText().contentEquals(paramString())){
-          JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
+        if(Validartarifa(Tarifa.getText())==false){
           a= false;
       }
        
         if(TelC1.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un telefono valido");
           a= false;
+          
+          
       }
+          if (validarT(TelC1.getText())==false){
+              
+             a= false;
+        
+      
+             
+        
+        }
         if(JEstado.getSelectedItem().toString().isEmpty()){
             JOptionPane.showMessageDialog(this, "Por favor seleccione un estado");
           a= false;
@@ -236,27 +247,30 @@ public class AgregarEnvio extends javax.swing.JFrame {
       
     }
   
-      public boolean validarC(String correo){
-             boolean a=true;
+ public boolean validarC(String correo){
+            
         Pattern patron = Pattern
-                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-           correo = CorreoC.getText();
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})+(\\.[A-Za-z]{2,3})$");
         Matcher comparar = patron.matcher(correo);
-       
-        if (comparar.find() == true) {
-           
-             JOptionPane.showMessageDialog(this,"El correo ingresado es válido.");
-             a=true;
-        } else {
-           JOptionPane.showMessageDialog(this,"El correo ingresado es inválido.");
-                   a=false;
-        }
-         return a;
+        return comparar.find();
+     
+    }
+    public boolean validarT(String cel){
+            
+        Pattern patron = Pattern
+                .compile("^[389]?[0-9]{3}?[-]?[0-9]{4}$");        
+        Matcher comparar = patron.matcher(cel);
+        return comparar.find();
+     
     }
 
-
-    
+    public boolean Validartarifa(String tarifa){
+        Pattern patron = Pattern
+                .compile("^[0-9]{1,3}+(\\,[0-9]+)*(\\.[0-9]{2})$");        
+        Matcher comparar = patron.matcher(tarifa);
+        return comparar.find();
+    }
    
 
     /**
@@ -322,7 +336,6 @@ public class AgregarEnvio extends javax.swing.JFrame {
         jLabel29 = new javax.swing.JLabel();
         CorreoC = new rojeru_san.RSMTextFull();
         jLabel22 = new javax.swing.JLabel();
-        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         jLabel32 = new javax.swing.JLabel();
         Tarifa = new rojeru_san.RSMTextFull();
         jLabel17 = new javax.swing.JLabel();
@@ -333,11 +346,16 @@ public class AgregarEnvio extends javax.swing.JFrame {
         NombreC = new rojeru_san.RSMTextFull();
         jLabel21 = new javax.swing.JLabel();
         JEstado = new rojerusan.RSComboMetro();
+        aviso2 = new javax.swing.JLabel();
+        aviso = new javax.swing.JLabel();
+        avisoT = new javax.swing.JLabel();
+        aviso4 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        guardar = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -760,6 +778,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         );
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
+        dashboardview.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -782,7 +801,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -790,7 +809,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Empresa Envío");
+        jLabel11.setText("Modúlo Empresa Envío");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -879,7 +898,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 170, 40));
 
         CorreoC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        CorreoC.setPlaceholder("Ingresar Correo Electronico");
+        CorreoC.setPlaceholder("");
         CorreoC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CorreoCActionPerformed(evt);
@@ -898,33 +917,23 @@ public class AgregarEnvio extends javax.swing.JFrame {
         jLabel22.setText("Tarifa:");
         jPanel5.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 180, 40));
 
-        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new9.setText("Guardar");
-        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
-        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
-        rSButtonIcon_new9.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new9ActionPerformed(evt);
-            }
-        });
-        jPanel5.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(445, 433, 128, 41));
-
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(153, 0, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setText("Correo Electronico:");
+        jLabel32.setText("Correo Electrónico:");
         jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 372, 190, 40));
 
         Tarifa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Tarifa.setPlaceholder("Tarifa");
+        Tarifa.setPlaceholder("");
         Tarifa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TarifaActionPerformed(evt);
             }
         });
         Tarifa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TarifaKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 TarifaKeyTyped(evt);
             }
@@ -934,23 +943,26 @@ public class AgregarEnvio extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Codigo EmpresaEnvio:");
+        jLabel17.setText("Código EmpresaEnvío:");
         jPanel5.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 90, 174, 50));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("Telefono:");
+        jLabel33.setText("Teléfono:");
         jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 312, 180, 40));
 
         TelC1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TelC1.setPlaceholder("Ingresa el numero Telefono");
+        TelC1.setPlaceholder("                               ");
         TelC1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TelC1ActionPerformed(evt);
             }
         });
         TelC1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TelC1KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 TelC1KeyTyped(evt);
             }
@@ -984,7 +996,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         jPanel5.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 70, 70));
 
         NombreC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NombreC.setPlaceholder("Ingresa nombre");
+        NombreC.setPlaceholder("");
         NombreC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NombreCActionPerformed(evt);
@@ -1023,12 +1035,36 @@ public class AgregarEnvio extends javax.swing.JFrame {
         });
         jPanel5.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 100, 180, 30));
 
+        aviso2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso2.setForeground(new java.awt.Color(255, 0, 0));
+        aviso2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso2.setText("*Teléfono invalído*");
+        jPanel5.add(aviso2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 340, 180, -1));
+
+        aviso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso.setForeground(new java.awt.Color(255, 0, 0));
+        aviso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso.setText("*Correo invalido*");
+        jPanel5.add(aviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 400, 180, -1));
+
+        avisoT.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        avisoT.setForeground(new java.awt.Color(255, 0, 0));
+        avisoT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        avisoT.setText("*Formato invalído*");
+        jPanel5.add(avisoT, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 260, 180, -1));
+
+        aviso4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso4.setForeground(new java.awt.Color(255, 0, 0));
+        aviso4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso4.setText("**");
+        jPanel5.add(aviso4, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 190, 180, -1));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
-            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1038,18 +1074,20 @@ public class AgregarEnvio extends javax.swing.JFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 110, 970, 530));
+
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MENU);
-        jPanel4.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
+        jPanel4.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO EMPRESA ENVÍO");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 823, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
         jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, 60, 50));
@@ -1057,24 +1095,18 @@ public class AgregarEnvio extends javax.swing.JFrame {
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
 
-        javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
-        dashboardview.setLayout(dashboardviewLayout);
-        dashboardviewLayout.setHorizontalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(89, 89, 89))
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        dashboardviewLayout.setVerticalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
-        );
+        dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1102, -1));
+
+        guardar.setBackground(new java.awt.Color(33, 150, 243));
+        guardar.setText("Guardar Empresa");
+        guardar.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        guardar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
+        guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarActionPerformed(evt);
+            }
+        });
+        dashboardview.add(guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 200, 40));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1189,21 +1221,6 @@ public class AgregarEnvio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CorreoCActionPerformed
 
-    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
-        // TODO add your handling code here:
-       if(validar()==true){
-        ConfirmacionGuardar ge = new  ConfirmacionGuardar();
-        ge.setGenvio(this);
-        ge.setTipo("GEnvios");
-        ge.setVisible(true);
-         
-
-        }else{
-
-            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
-        }
-    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
-
     private void TarifaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TarifaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TarifaActionPerformed
@@ -1236,30 +1253,22 @@ public class AgregarEnvio extends javax.swing.JFrame {
     }//GEN-LAST:event_JEstadoActionPerformed
 
     private void CorreoCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorreoCKeyReleased
-        if (evt.getKeyChar()=='\n'){
-          if (validarC(CorreoC.getText())==true){
-            
-               JOptionPane.showMessageDialog(this, "El correo ingresado  es valido");  
+    if (validarC(CorreoC.getText())){
+              aviso.setVisible(false);
+             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
         }
           else{
-              JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+                    aviso.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
           }
-              
-          } 
+            
     }//GEN-LAST:event_CorreoCKeyReleased
 
     private void TelC1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelC1KeyTyped
-       int key = evt.getKeyChar();
 
-    boolean numeros = key >= 48 && key <= 57;
-        
-    if (!numeros)
-    {
+           if (TelC1.getText().trim().length() == 9) {
         evt.consume();
-    }
 
-    if (TelC1.getText().trim().length() == 10) {
-        evt.consume();
     }
     }//GEN-LAST:event_TelC1KeyTyped
 
@@ -1277,7 +1286,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
     }//GEN-LAST:event_NombreCKeyTyped
 
     private void TarifaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TarifaKeyTyped
-    String [] v = {"0","1","2","3","4","5","6","7","8","9","."};
+    /*String [] v = {"0","1","2","3","4","5","6","7","8","9","."};
      char c =evt.getKeyChar();
      String s = "%" + c ;
       s=s.replace("%", "");
@@ -1286,8 +1295,49 @@ public class AgregarEnvio extends javax.swing.JFrame {
      else{
          int k = Tarifa.getText().length()-1;
          String n = Tarifa.getText().substring(0,k);
-         Tarifa.setText (n);}
+         Tarifa.setText (n);}*/
     }//GEN-LAST:event_TarifaKeyTyped
+
+    private void TelC1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelC1KeyReleased
+        
+           if(validarT(TelC1.getText())){
+              aviso2.setVisible(false);
+             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
+        }
+          else{
+                    aviso2.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+         
+         
+    }//GEN-LAST:event_TelC1KeyReleased
+
+    private void TarifaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TarifaKeyReleased
+           if (Validartarifa(Tarifa.getText())){
+              avisoT.setVisible(false);
+             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
+        }
+          else{
+                    avisoT.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+    }//GEN-LAST:event_TarifaKeyReleased
+
+    private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
+        // TODO add your handling code here:
+       if(validar()==true){
+        ConfirmacionGuardar ge = new  ConfirmacionGuardar();
+        ge.setGenvio(this);
+        ge.setTipo("GEnvios");
+        ge.setVisible(true);
+         
+
+        }else{
+
+            JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
+        }
+
+    }//GEN-LAST:event_guardarActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1378,7 +1428,12 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.RSMTextFull NombreC;
     private rojeru_san.RSMTextFull Tarifa;
     private rojeru_san.RSMTextFull TelC1;
+    private javax.swing.JLabel aviso;
+    private javax.swing.JLabel aviso2;
+    private javax.swing.JLabel aviso4;
+    private javax.swing.JLabel avisoT;
     private javax.swing.JPanel dashboardview;
+    private newscomponents.RSButtonIcon_new guardar;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JPanel icono;
     private javax.swing.JLabel jLabel10;
@@ -1423,7 +1478,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new9;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon10;

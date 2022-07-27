@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -86,6 +88,8 @@ public class ActualizarProveedor extends javax.swing.JFrame {
        this.setLocationRelativeTo(null);
        this.setExtendedState(this.MAXIMIZED_BOTH);
       inicializar();
+       aviso.setVisible(false);
+       aviso2.setVisible(false);
     }
     
  
@@ -160,11 +164,17 @@ public class ActualizarProveedor extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un telefono valido");
           a= false;
       }
+        if (validarT(Tel.getText())==false){
+           a=false;
+       }
         
        if(CorreoP.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
           a= false;
       }
+       if (validarC(CorreoP.getText())==false){
+           a=false;
+       }
        
        if(JEstado.getSelectedItem().toString().isEmpty()){
             JOptionPane.showMessageDialog(this, "Por favor seleccione un estado valido");
@@ -210,9 +220,25 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         }
     }
        
-      
+       public boolean validarC(String correo){
+            
+        Pattern patron = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})+(\\.[A-Za-z]{2,3})$");
+        Matcher comparar = patron.matcher(correo);
+        return comparar.find();
+     
+    }
     
-        
+        public boolean validarT(String cel){
+            
+        Pattern patron = Pattern
+                .compile("^[389]?[0-9]{3}?[-]?[0-9]{4}$");        
+        Matcher comparar = patron.matcher(cel);
+        return comparar.find();
+     
+    }
+
         
        
  
@@ -289,6 +315,8 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         NombreE1 = new rojeru_san.RSMTextFull();
         DireccionE = new rojeru_san.RSMTextFull();
         Tel = new rojeru_san.RSMTextFull();
+        aviso2 = new javax.swing.JLabel();
+        aviso = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -843,6 +871,11 @@ public class ActualizarProveedor extends javax.swing.JFrame {
                 CorreoPActionPerformed(evt);
             }
         });
+        CorreoP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                CorreoPKeyReleased(evt);
+            }
+        });
         jPanel3.add(CorreoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 460, -1));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
@@ -938,7 +971,27 @@ public class ActualizarProveedor extends javax.swing.JFrame {
                 TelActionPerformed(evt);
             }
         });
+        Tel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TelKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TelKeyTyped(evt);
+            }
+        });
         jPanel3.add(Tel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 460, -1));
+
+        aviso2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso2.setForeground(new java.awt.Color(255, 0, 0));
+        aviso2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso2.setText("*Teléfono invalído*");
+        jPanel3.add(aviso2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 320, 180, -1));
+
+        aviso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso.setForeground(new java.awt.Color(255, 0, 0));
+        aviso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso.setText("*Correo invalido*");
+        jPanel3.add(aviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 390, 170, 25));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1116,6 +1169,36 @@ public class ActualizarProveedor extends javax.swing.JFrame {
     private void TelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TelActionPerformed
+
+    private void CorreoPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorreoPKeyReleased
+          if (validarC(CorreoP.getText())){
+              aviso.setVisible(false);
+             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
+        }
+          else{
+                    aviso.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+    }//GEN-LAST:event_CorreoPKeyReleased
+
+    private void TelKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelKeyReleased
+        if (validarT(Tel.getText())){
+              aviso2.setVisible(false);
+             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
+        }
+          else{
+                    aviso2.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+    }//GEN-LAST:event_TelKeyReleased
+
+    private void TelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelKeyTyped
+          if (Tel.getText().trim().length() == 9) {
+        evt.consume();
+
+    }
+
+    }//GEN-LAST:event_TelKeyTyped
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1194,6 +1277,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel MenuIcon;
     private rojeru_san.RSMTextFull NombreE1;
     private rojeru_san.RSMTextFull Tel;
+    private javax.swing.JLabel aviso;
+    private javax.swing.JLabel aviso2;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
