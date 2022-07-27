@@ -159,13 +159,15 @@ public class ActualizarCaja extends javax.swing.JFrame {
         rSComboMetro3.addItem("Seleccionar Usuario");
         String descripcion="";
          
-        String SQL = "SELECT b.Usuario From Usuarios b WHERE b.IdEstado=1";
+        String SQL = "SELECT u.Usuario FROM Usuarios u\n" +
+                     "LEFT JOIN Caja c ON c.IdUsuario = u.IdUsuario\n" +
+                     "WHERE c.IdCaja IS NULL AND u.IdEstado=1;";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                descripcion =rs.getString("b.Usuario");
+                descripcion =rs.getString("u.Usuario");
     
                 rSComboMetro3.addItem(descripcion);
             }
