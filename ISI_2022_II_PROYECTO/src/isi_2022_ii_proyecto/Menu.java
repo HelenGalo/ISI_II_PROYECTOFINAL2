@@ -258,7 +258,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,9 +310,9 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(13, 13, 13)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -624,7 +624,7 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -699,7 +699,7 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
+                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
@@ -713,7 +713,7 @@ public class Menu extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
             .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -1033,7 +1033,7 @@ public class Menu extends javax.swing.JFrame {
         jPanel3.add(BOTONBANCO, new org.netbeans.lib.awtextra.AbsoluteConstraints(789, 151, 172, -1));
 
         rSLabelAnimated1.setText("INFOTECNOLOGIA - GEVEC SYSTEM");
-        jPanel3.add(rSLabelAnimated1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 432, 252, 116));
+        jPanel3.add(rSLabelAnimated1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 536, 252, 40));
 
         BOTONENVIO.setBackground(new java.awt.Color(0, 55, 133));
         BOTONENVIO.setColorBackground(new java.awt.Color(0, 55, 133));
@@ -1083,7 +1083,7 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
-        jPanel3.add(BOTONENVIO, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 172, -1));
+        jPanel3.add(BOTONENVIO, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 320, 172, -1));
 
         BOTONPRO.setBackground(new java.awt.Color(0, 55, 133));
         BOTONPRO.setColorBackground(new java.awt.Color(0, 55, 133));
@@ -1133,7 +1133,7 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
-        jPanel3.add(BOTONPRO, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 340, 172, -1));
+        jPanel3.add(BOTONPRO, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 172, -1));
 
         BOTONCAJA.setBackground(new java.awt.Color(0, 55, 133));
         BOTONCAJA.setColorBackground(new java.awt.Color(0, 55, 133));
@@ -1183,7 +1183,7 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
-        jPanel3.add(BOTONCAJA, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 172, -1));
+        jPanel3.add(BOTONCAJA, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, 172, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 

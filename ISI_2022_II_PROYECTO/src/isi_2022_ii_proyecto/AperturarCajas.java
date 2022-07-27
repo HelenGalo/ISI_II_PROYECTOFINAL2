@@ -9,12 +9,18 @@ import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ConfirmacionGuardar;
 import isi_2022_ii_proyecto.Recursos.ConfirmacionModificar;
 import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
+import isi_2022_ii_proyecto.Recursos.VentanaFondosIns;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -45,7 +51,7 @@ public class AperturarCajas extends javax.swing.JFrame {
     
     public void validarConfirmacion(){
         if(estadosModificar=true){
-            /*modificar();*/
+            aperturar();
         }
     }
     
@@ -122,7 +128,7 @@ public class AperturarCajas extends javax.swing.JFrame {
         rSComboMetro3.addItem("Seleccionar Cuenta");
         String nombre="";
          
-        String SQL = "SELECT b.NCuenta From CuentasBancarias b Where b.IdEstado=1";
+        String SQL = "SELECT b.NCuenta From CuentasBancarias b Where b.IdEstado=1 and b.IdTipoMoneda=1";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -136,6 +142,108 @@ public class AperturarCajas extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    public void aperturar(){
+        float monto = 0.00f;
+        monto =Float.valueOf(JTextbuscar.getText());
+ 
+       String SQL = "UPDATE Caja SET IdEstadoCaja=?, TotalCaja=? WHERE IdCaja="+JCodigoDisponible.getText();
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, 2);   
+            preparedStmt.setFloat(2, monto);         
+            preparedStmt.execute();
+            actualizarCuentaBancaria(monto);
+            
+           
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+        
+    }
+    
+    
+    public void actualizarCuentaBancaria(float m){
+        float diferenciamonto=0.00f;
+        diferenciamonto= Float.valueOf(jLabel42.getText())-m;
+        
+        String SQL = "UPDATE CuentasBancarias SET TotalenCuenta=? WHERE NCuenta='"+rSComboMetro3.getSelectedItem().toString()+"';";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setFloat(1, diferenciamonto);         
+            preparedStmt.execute();
+            agregarDetalleBancario(m);
+            
+            
+            
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    public void agregarDetalleBancario(float m){
+        int idcuenta=0;
+        idcuenta=ObtenerIdCuenta();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String hora = dtf.format(LocalDateTime.now());
+        SimpleDateFormat dtf1 = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar calendar = Calendar.getInstance();
+
+        Date dateObj = calendar.getTime();
+        String fecha = dtf1.format(dateObj);
+         
+        String SQL = "INSERT INTO DetallesBancarios (IdCuenta,IdTipoTransaccion, Valor, Descripcion, Hora, Fecha) VALUES"
+                + "(?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, idcuenta);
+            preparedStmt.setInt(2, 2);
+            preparedStmt.setFloat(3, m);
+            preparedStmt.setString   (4, "CARGO DE CAJA C."+JCodigoDisponible.getText());
+            preparedStmt.setString(5, hora);
+            preparedStmt.setString(6, fecha);
+            preparedStmt.execute();
+            
+            VentanaEmergente1 ve = new VentanaEmergente1();
+            ve.setVisible(true);
+            bloquearb();
+            
+
+        } catch (Exception e) {
+            System.out.println("ERROR" + e.getMessage());
+        }
+    }
+    
+    
+   
+    
+    public int ObtenerIdCuenta(){
+        int idcuenta=0;
+         
+        String SQL = "SELECT cb.IdCuenta From CuentasBancarias cb Where cb.NCuenta='"+rSComboMetro3.getSelectedItem().toString()+"';";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idcuenta =rs.getInt("cb.IdCuenta");
+    
+                
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return idcuenta;
+    }
+    
+    
+    public void bloquearb(){
+        rSButtonIcon_new13.setEnabled(false);
     }
     
     
@@ -158,6 +266,7 @@ public class AperturarCajas extends javax.swing.JFrame {
         RSUtilities.setOpaqueWindow(this, false);
         RSUtilities.setOpacityComponent(this.jPanel1, 150);
         listarCuentasB();
+        JTextbuscar.setEditable(false);
        
         
     }
@@ -189,7 +298,6 @@ public class AperturarCajas extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
-        rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -212,7 +320,6 @@ public class AperturarCajas extends javax.swing.JFrame {
         jLabel29 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
-        jLabel42 = new javax.swing.JLabel();
         rSComboMetro3 = new rojerusan.RSComboMetro();
         rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new14 = new newscomponents.RSButtonIcon_new();
@@ -223,8 +330,9 @@ public class AperturarCajas extends javax.swing.JFrame {
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
-        jLabel44 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        rSButtonIconTwo1 = new RSMaterialComponent.RSButtonIconTwo();
+        jLabel42 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -248,13 +356,10 @@ public class AperturarCajas extends javax.swing.JFrame {
         jLabel6.setText("MODULO CAJA");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 60));
 
-        rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
-        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 10, 60, 40));
-
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
-        jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 108, -1));
+        jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 108, -1));
 
-        rSPanelOpacity1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 910, 60));
+        rSPanelOpacity1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 940, 60));
 
         jPanel2.setBackground(new java.awt.Color(20, 101, 187));
 
@@ -273,7 +378,7 @@ public class AperturarCajas extends javax.swing.JFrame {
         linesetting4.setLayout(linesetting4Layout);
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 58, Short.MAX_VALUE)
+            .addGap(0, 73, Short.MAX_VALUE)
         );
         linesetting4Layout.setVerticalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,9 +401,9 @@ public class AperturarCajas extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(253, 253, 253)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
                 .addGap(362, 362, 362))
         );
         jPanel2Layout.setVerticalGroup(
@@ -311,7 +416,7 @@ public class AperturarCajas extends javax.swing.JFrame {
             .addComponent(linesetting5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        rSPanelOpacity1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, -1));
+        rSPanelOpacity1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -423,7 +528,7 @@ public class AperturarCajas extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.add(rSPanelOpacity2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 911, 50));
+        jPanel3.add(rSPanelOpacity2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 50));
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
@@ -435,17 +540,12 @@ public class AperturarCajas extends javax.swing.JFrame {
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel33.setText("Monto a Cargar:");
-        jPanel3.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 130, 40));
+        jPanel3.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 130, 40));
 
         jLabel38.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(153, 0, 255));
         jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 190, 130, 40));
-
-        jLabel42.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel42.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel3.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 240, 160, 40));
+        jPanel3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 220, 50, 40));
 
         rSComboMetro3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -460,11 +560,12 @@ public class AperturarCajas extends javax.swing.JFrame {
                 rSComboMetro3ActionPerformed(evt);
             }
         });
-        jPanel3.add(rSComboMetro3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 180, -1));
+        jPanel3.add(rSComboMetro3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 190, 30));
 
         rSButtonIcon_new13.setBackground(new java.awt.Color(102, 51, 255));
         rSButtonIcon_new13.setText("Aperturar Caja");
         rSButtonIcon_new13.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new13.setFocusable(false);
         rSButtonIcon_new13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rSButtonIcon_new13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
         rSButtonIcon_new13.addActionListener(new java.awt.event.ActionListener() {
@@ -477,6 +578,7 @@ public class AperturarCajas extends javax.swing.JFrame {
         rSButtonIcon_new14.setBackground(new java.awt.Color(102, 51, 255));
         rSButtonIcon_new14.setText("Cancelar");
         rSButtonIcon_new14.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new14.setFocusable(false);
         rSButtonIcon_new14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rSButtonIcon_new14.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
         rSButtonIcon_new14.addActionListener(new java.awt.event.ActionListener() {
@@ -484,7 +586,7 @@ public class AperturarCajas extends javax.swing.JFrame {
                 rSButtonIcon_new14ActionPerformed(evt);
             }
         });
-        jPanel3.add(rSButtonIcon_new14, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 320, 140, 50));
+        jPanel3.add(rSButtonIcon_new14, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 320, 140, 50));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -515,41 +617,40 @@ public class AperturarCajas extends javax.swing.JFrame {
         JTextbuscar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JTextbuscar.setPlaceholder("Ingrese el monto");
         JTextbuscar.setSoloNumeros(true);
+        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTextbuscarActionPerformed(evt);
+            }
+        });
         JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 JTextbuscarKeyReleased(evt);
             }
         });
-        jPanel3.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, 180, -1));
+        jPanel3.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 190, -1));
 
         jLabel39.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel39.setForeground(new java.awt.Color(153, 0, 255));
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel39.setText("No. Cuenta:");
-        jPanel3.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 130, 40));
+        jPanel3.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 130, 40));
 
         jLabel40.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(153, 0, 255));
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel3.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 140, 130, 40));
+        jPanel3.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 150, 170, 40));
 
         jLabel41.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel41.setForeground(new java.awt.Color(153, 0, 255));
         jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel41.setText("Saldo Disponible");
-        jPanel3.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, 150, 40));
+        jPanel3.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, 150, 40));
 
         jLabel43.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel43.setForeground(new java.awt.Color(153, 0, 255));
         jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel43.setText("Institucion Bancaria:");
-        jPanel3.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, 150, 40));
-
-        jLabel44.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel44.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel44.setText("Status");
-        jPanel3.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 240, 160, 40));
+        jPanel3.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 150, 150, 40));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
@@ -558,15 +659,29 @@ public class AperturarCajas extends javax.swing.JFrame {
         jLabel12.setText("CARGAR CAJA");
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 150, 50));
 
-        rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 800, 370));
+        rSButtonIconTwo1.setBackground(new java.awt.Color(60, 76, 143));
+        rSButtonIconTwo1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        rSButtonIconTwo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIconTwo1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rSButtonIconTwo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 30, 30));
+
+        jLabel42.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel42.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel3.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 220, 120, 40));
+
+        rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 830, 370));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 937, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -594,13 +709,14 @@ public class AperturarCajas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
-        if(Integer.parseInt(JTextbuscar.getText())<=Integer.parseInt(jLabel40.getText())){
-            ConfirmacionGuardar cm = new ConfirmacionGuardar();
-            cm.setAc(this);
-            cm.setTipo("MCaja");
+        if(Float.valueOf(JTextbuscar.getText())<=Float.valueOf(jLabel42.getText())){
+            ConfirmacionModificar cm = new ConfirmacionModificar();
+            cm.setAca(this);
+            cm.setTipo("ACaja");
             cm.setVisible(true);
         }else{
-            
+            VentanaFondosIns vfi = new VentanaFondosIns();
+            vfi.setVisible(true);
         }
        
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
@@ -627,10 +743,20 @@ public class AperturarCajas extends javax.swing.JFrame {
 
     private void rSComboMetro3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSComboMetro3MouseExited
         // TODO add your handling code here:
-         jLabel40.setText(ObtenerNBancos());
-        jLabel38.setText("L."+ObtenerTCuenta());
-        jLabel42.setText(Listarestadocaja());
+      
     }//GEN-LAST:event_rSComboMetro3MouseExited
+
+    private void rSButtonIconTwo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconTwo1ActionPerformed
+        // TODO add your handling code here:
+        jLabel40.setText(ObtenerNBancos());
+        jLabel42.setText(ObtenerTCuenta());
+        jLabel38.setText("L.");
+        JTextbuscar.setEditable(true);
+    }//GEN-LAST:event_rSButtonIconTwo1ActionPerformed
+
+    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTextbuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -699,7 +825,6 @@ public class AperturarCajas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -711,6 +836,7 @@ public class AperturarCajas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel linesetting4;
     private javax.swing.JPanel linesetting5;
+    private RSMaterialComponent.RSButtonIconTwo rSButtonIconTwo1;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new13;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new14;
     private rojerusan.RSComboMetro rSComboMetro3;
@@ -718,7 +844,6 @@ public class AperturarCajas extends javax.swing.JFrame {
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon12;
     private rojerusan.RSLabelIcon rSLabelIcon17;
-    private rojerusan.RSLabelIcon rSLabelIcon2;
     private rojerusan.RSLabelIcon rSLabelIcon6;
     private rojerusan.RSLabelIcon rSLabelIcon8;
     private rojeru_san.rspanel.RSPanelCircle rSPanelCircle1;

@@ -127,10 +127,10 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
     }
     
     public void insertar(){
-        int idcuenta=Integer.parseInt(JCodigoDisponible.getText());
-        int idbanco=ObtenerBancos();
-        int tipocuenta=ObtenerTipoCuenta();
-        String fechaapertura=rSLabelFecha1.getFecha();
+       int idcuenta=Integer.parseInt(JCodigoDisponible.getText());
+       int idbanco=ObtenerBancos();
+       int tipocuenta=ObtenerTipoCuenta();
+       String fechaapertura=rSLabelFecha1.getFecha();
        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
        Float totalencuenta=Float.valueOf(JNDeposito.getText());
        int idestado=ObtenerEstado();
@@ -1202,6 +1202,8 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
 
     private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
         // TODO add your handling code here:
+       
+      
         ConfirmacionGuardar cg = new ConfirmacionGuardar();
         cg.setGcuenta(this);
         cg.setTipo("GBancos");

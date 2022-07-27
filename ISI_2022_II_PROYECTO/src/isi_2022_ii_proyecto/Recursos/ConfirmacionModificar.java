@@ -9,6 +9,7 @@ import isi_2022_ii_proyecto.ActualizarCaja;
 import isi_2022_ii_proyecto.ActualizarEnvio;
 import isi_2022_ii_proyecto.ActualizarProductos;
 import isi_2022_ii_proyecto.AgregarCuentaBancaria;
+import isi_2022_ii_proyecto.AperturarCajas;
 import isi_2022_ii_proyecto.Banco;
 import isi_2022_ii_proyecto.ModificarCuentaB;
 import rojeru_san.complementos.RSUtilities;
@@ -21,6 +22,13 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
     ModificarCuentaB mcuentab;
     ActualizarEnvio ame;
     ActualizarCaja ac;
+    
+    
+    AperturarCajas aca;
+
+    public void setAca(AperturarCajas aca) {
+        this.aca = aca;
+    }
 
     public void setAc(ActualizarCaja ac) {
         this.ac = ac;
@@ -183,6 +191,13 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
         if(tipo=="MCaja"){
             ac.setEstadosModificar(true);
             ac.validarConfirmacion();
+            this.dispose();
+        }
+        
+         if(tipo=="ACaja"){
+            aca.setEstadosModificar(true);
+            aca.validarConfirmacion();
+ 
             this.dispose();
         }
         

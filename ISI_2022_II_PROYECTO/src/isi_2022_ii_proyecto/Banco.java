@@ -74,12 +74,13 @@ public class Banco extends javax.swing.JFrame {
     }
 
       public void listar(){
-        String[] registros = new String[4];
+        String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
 
-        String SQL = "SELECT cb.IdCuenta, b.Nombre,tc.Descripcion, cb.TotalenCuenta FROM CuentasBancarias cb\n" +
+        String SQL = "SELECT cb.IdCuenta, b.Nombre, tc.Descripcion, tm.Moneda, cb.TotalenCuenta FROM CuentasBancarias cb\n" +
                     "INNER JOIN Bancos b ON b.IdBanco = cb.IdBanco\n" +
-                    "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta WHERE cb.IdEstado=1";
+                    "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta\n"+
+                "INNER JOIN TipoMoneda tm ON tm.IdTipoMoneda = cb.IdTipoMoneda WHERE cb.IdEstado=1";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -88,7 +89,8 @@ public class Banco extends javax.swing.JFrame {
                 registros[0] = rs.getString("IdCuenta");
                 registros[1] = rs.getString("Nombre");
                 registros[2] = rs.getString("Descripcion");
-                registros[3] = rs.getString("TotalenCuenta");
+                registros[3] = rs.getString("Moneda");
+                registros[4] = rs.getString("TotalenCuenta");
                 modelo.addRow(registros);
             }
 
@@ -101,12 +103,13 @@ public class Banco extends javax.swing.JFrame {
     }
      
       public void listarHabilitados(){
-        String[] registros = new String[4];
+        String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
 
-        String SQL = "SELECT cb.IdCuenta, b.Nombre,tc.Descripcion, cb.TotalenCuenta FROM CuentasBancarias cb\n" +
+        String SQL = "SELECT cb.IdCuenta, b.Nombre, tc.Descripcion, tm.Moneda, cb.TotalenCuenta FROM CuentasBancarias cb\n" +
                     "INNER JOIN Bancos b ON b.IdBanco = cb.IdBanco\n" +
-                    "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta WHERE cb.IdEstado=1";
+                    "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta\n"+
+                "INNER JOIN TipoMoneda tm ON tm.IdTipoMoneda = cb.IdTipoMoneda WHERE cb.IdEstado=1";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -115,7 +118,8 @@ public class Banco extends javax.swing.JFrame {
                 registros[0] = rs.getString("IdCuenta");
                 registros[1] = rs.getString("Nombre");
                 registros[2] = rs.getString("Descripcion");
-                registros[3] = rs.getString("TotalenCuenta");
+                registros[3] = rs.getString("Moneda");
+                registros[4] = rs.getString("TotalenCuenta");
                 modelo.addRow(registros);
             }
 
@@ -127,12 +131,13 @@ public class Banco extends javax.swing.JFrame {
         }
     }
       public void listarDeshabilitados(){
-        String[] registros = new String[4];
+        String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
 
-        String SQL = "SELECT cb.IdCuenta, b.Nombre,tc.Descripcion, cb.TotalenCuenta FROM CuentasBancarias cb\n" +
+        String SQL = "SELECT cb.IdCuenta, b.Nombre, tc.Descripcion, tm.Moneda, cb.TotalenCuenta FROM CuentasBancarias cb\n" +
                     "INNER JOIN Bancos b ON b.IdBanco = cb.IdBanco\n" +
-                    "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta WHERE cb.IdEstado=0";
+                    "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta\n"+
+                "INNER JOIN TipoMoneda tm ON tm.IdTipoMoneda = cb.IdTipoMoneda WHERE cb.IdEstado=0";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -141,7 +146,8 @@ public class Banco extends javax.swing.JFrame {
                 registros[0] = rs.getString("IdCuenta");
                 registros[1] = rs.getString("Nombre");
                 registros[2] = rs.getString("Descripcion");
-                registros[3] = rs.getString("TotalenCuenta");
+                registros[3] = rs.getString("Moneda");
+                registros[4] = rs.getString("TotalenCuenta");
                 modelo.addRow(registros);
             }
 
@@ -172,11 +178,11 @@ public class Banco extends javax.swing.JFrame {
     private void buscarNombre(){
         String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
-        
-         String SQL = "SELECT cb.IdCuenta, b.Nombre,tc.Descripcion, cb.TotalenCuenta from CuentasBancarias cb\n" +
+
+        String SQL = "SELECT cb.IdCuenta, b.Nombre, tc.Descripcion, tm.Moneda, cb.TotalenCuenta FROM CuentasBancarias cb\n" +
                     "INNER JOIN Bancos b ON b.IdBanco = cb.IdBanco\n" +
-                    "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta\n" +
-                    "WHERE b.Nombre LIKE'"+JTextbuscar.getText()+"%'";
+                    "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta\n"+
+                "INNER JOIN TipoMoneda tm ON tm.IdTipoMoneda = cb.IdTipoMoneda WHERE b.Nombre LIKE '"+JTextbuscar.getText()+"%';";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -185,12 +191,14 @@ public class Banco extends javax.swing.JFrame {
                 registros[0] = rs.getString("IdCuenta");
                 registros[1] = rs.getString("Nombre");
                 registros[2] = rs.getString("Descripcion");
-                registros[3] = rs.getString("TotalenCuenta");
+                registros[3] = rs.getString("Moneda");
+                registros[4] = rs.getString("TotalenCuenta");
                 modelo.addRow(registros);
             }
 
             JTableBancos.setModel(modelo);
             
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
@@ -868,7 +876,7 @@ public class Banco extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Numero de Cuenta", "Institucion Bancaria", "Tipo de Cuenta", "Total en Cuenta"
+                "Numero de Cuenta", "Institucion Bancaria", "Tipo de Cuenta", "Tipo de Moneda", "Total en Cuenta"
             }
         ));
         JTableBancos.setBackgoundHead(new java.awt.Color(60, 76, 143));
@@ -1129,8 +1137,9 @@ public class Banco extends javax.swing.JFrame {
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
         // TODO add your handling code here:
         BuscarCuentaB bc = new BuscarCuentaB();
-        bc.setVisible(true);
         bc.setBanco(this);
+        bc.setVisible(true);
+        
 
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 

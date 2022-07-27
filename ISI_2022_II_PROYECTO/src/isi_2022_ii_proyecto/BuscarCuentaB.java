@@ -56,9 +56,9 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         String fecha="";
         String total="";
         
-        String SQL = "SELECT cb.IdCuenta, b.Nombre,tc.Descripcion, cb.FechaApertura, cb.TotalenCuenta from CuentasBancarias cb\n" +
+        String SQL = "SELECT cb.IdCuenta, b.Nombre,tm.Moneda, cb.FechaApertura, cb.TotalenCuenta from CuentasBancarias cb\n" +
                      "INNER JOIN Bancos b ON b.IdBanco = cb.IdBanco\n" +
-                     "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta\n" +
+                     "INNER JOIN TipoMoneda tm ON tm.IdTipoMoneda = cb.IdTipoMoneda\n" +
                      "WHERE cb.IdCuenta="+JTextbuscar.getText();
         try {
             Statement st = (Statement) con.createStatement();
@@ -66,7 +66,7 @@ public class BuscarCuentaB extends javax.swing.JFrame {
 
             while (rs.next()) {
                 nombre = rs.getString("Nombre");
-                descripcion = rs.getString("Descripcion");
+                descripcion = rs.getString("Moneda");
                 fecha = rs.getString("FechaApertura");
                 total = rs.getString("TotalenCuenta");
                
@@ -75,11 +75,12 @@ public class BuscarCuentaB extends javax.swing.JFrame {
             jLabel32.setText(nombre);
             jLabel34.setText(descripcion);
             jLabel36.setText(fecha);
+            
             if(descripcion.equals("LEMPIRAS")){
-               jLabel37.setText("L."+total);
+               jLabel12.setText("L."+total);
            }else{
                 if(descripcion.equals("DOLARES")){
-                   jLabel37.setText("$."+total);
+                   jLabel12.setText("$."+total);
                 }
            }
             
@@ -136,7 +137,7 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         rSButtonPane1 = new rojerusan.RSButtonPane();
-        jLabel37 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
         rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
         JTextbuscar = new rojeru_san.rsfield.RSTextFull();
@@ -398,20 +399,27 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         rSButtonPane1.setColorHover(new java.awt.Color(0, 55, 133));
         rSButtonPane1.setColorNormal(new java.awt.Color(0, 204, 102));
 
-        jLabel37.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel37.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel37.setText("0.00");
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel12.setFont(new java.awt.Font("Franklin Gothic Heavy", 1, 36)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("0.00");
 
         javax.swing.GroupLayout rSButtonPane1Layout = new javax.swing.GroupLayout(rSButtonPane1);
         rSButtonPane1.setLayout(rSButtonPane1Layout);
         rSButtonPane1Layout.setHorizontalGroup(
             rSButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            .addGroup(rSButtonPane1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         rSButtonPane1Layout.setVerticalGroup(
             rSButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSButtonPane1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.add(rSButtonPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, -1, 150));
@@ -553,6 +561,7 @@ public class BuscarCuentaB extends javax.swing.JFrame {
     private rojeru_san.rsfield.RSTextFull JTextbuscar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel29;
@@ -562,7 +571,6 @@ public class BuscarCuentaB extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

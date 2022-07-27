@@ -533,6 +533,7 @@ public class Inicio extends javax.swing.JFrame {
 
         rSLabelBorderRound1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rSLabelBorderRound1.setText("Recuperar Acceso");
+        rSLabelBorderRound1.setFocusable(false);
         panelRound1.add(rSLabelBorderRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 390, 250, 40));
 
         Jtextuser.setPlaceholder("Ingresa tu usuario...");
@@ -583,6 +584,7 @@ public class Inicio extends javax.swing.JFrame {
         rSButtonRound1.setText("Iniciar Sesion");
         rSButtonRound1.setColorHover(new java.awt.Color(255, 255, 255));
         rSButtonRound1.setColorTextHover(new java.awt.Color(19, 99, 223));
+        rSButtonRound1.setFocusable(false);
         rSButtonRound1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 rSButtonRound1MouseEntered(evt);
