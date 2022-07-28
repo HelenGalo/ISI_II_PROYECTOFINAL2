@@ -6,6 +6,8 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionModificar;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.List;
@@ -52,13 +54,25 @@ public class ActualizarCliente extends javax.swing.JFrame {
     
     HashMap<String, Integer> empleados = new HashMap<String, Integer>();
 
-  
+   boolean estadosModificar=false;
+
+    public void setEstadosModificar(boolean estadosModificar) {
+        this.estadosModificar = estadosModificar;
+    }
+    
+    public void validarConfirmacion(){
+        if(estadosModificar=true){
+            actualizar();
+        }
+     }
+    
     
     public ActualizarCliente() {
         initComponents();
-        inicializar();
+         listarEstado();
         this.setExtendedState(this.MAXIMIZED_BOTH);
         aviso.setVisible(false);
+        aviso2.setVisible(false);
         
     }
     
@@ -80,7 +94,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
          int estado=Obtenerestado();
         
         
-        String SQL = "UPDATE  Clientes SET Nombres=?,Apellidos=?,DireccionCliente=?,Telefono=?,CorreoElectronico=?,IdEstado=? WHERE IdCliente="+"'"+id+"'";
+        String SQL = "UPDATE  Clientes SET Nombres=?,Apellidos=?,DireccionCliente=?,Telefono=?,CorreoElectronico=?,Estado=? WHERE IdCliente="+"'"+id+"'";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
           
@@ -92,42 +106,33 @@ public class ActualizarCliente extends javax.swing.JFrame {
             preparedStmt.setInt(6, estado);
             preparedStmt.execute();
             
-            JOptionPane.showMessageDialog(null, "Registro actualizado Exitosamente");
+          VentanaEmergente1 ve = new VentanaEmergente1();
+             ve.setVisible(true);
 
         } catch (Exception e) {
             System.out.println("ERROR" + e.getMessage());   
         }
               
     }
-        public void inicializar(){
-         String SQL = "SELECT e.Descripcion FROM EstadosUsuario e";
-         String des="";
-          
+        public void listarEstado(){
+        JComboEstado.addItem("Seleccionar Estado");
+        JComboEstado.setSelectedIndex(0);
+        String descripcion="";
+         
+        String SQL = "SELECT b.Descripcion From EstadosUsuario b";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-               des = rs.getString("Descripcion");
-               JComboEstado.addItem(des);
-               
-                
+                descripcion =rs.getString("b.Descripcion");
+    
+                JComboEstado.addItem(descripcion);
             }
             
-      
- 
-    
-            
-           
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-       
-    
-    
-        
-       
     }
         public int Obtenerestado(){
           String SQL = "SELECT * FROM EstadosUsuario g Where g.Descripcion="+"'"+JComboEstado.getSelectedItem().toString()+"'";
@@ -172,6 +177,15 @@ public class ActualizarCliente extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
           a= false;
       }
+        if (validarT(TelC.getText())==false){
+            
+              
+             a= false;
+        
+      
+             
+        
+        }
        
         if(DireccionC.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese una direccion");
@@ -206,26 +220,34 @@ public class ActualizarCliente extends javax.swing.JFrame {
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})+(\\.[A-Za-z]{2,3})$");
         Matcher comparar = patron.matcher(correo);
         return comparar.find();
+     }
+      public boolean validarT(String cel){
+            
+        Pattern patron = Pattern
+                .compile("^[389]?[0-9]{3}?[-]?[0-9]{4}$");        
+        Matcher comparar = patron.matcher(cel);
+        return comparar.find();
      
     }
     
     
-    
   
       public void MostrarCliente(){
-
-        String SQL = "Select * from Clientes Where IdCliente="+"'"+id+"'";
+        String estado="";
+        String SQL = "Select c.Nombres,c.Apellidos,c.DireccionCliente,c.Telefono,c.CorreoElectronico, eu.Descripcion from Clientes c  "+
+                    "INNER JOIN EstadosUsuario eu ON eu.IdEstado = c.Estado \n" +
+                     "Where IdCliente="+"'"+id+"'";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                nombres =rs.getString("Nombres");
-                apellidos =rs.getString("Apellidos");
-                direccion =rs.getString("DireccionCliente");
-                telefono =rs.getString("Telefono");
-                correo =rs.getString("CorreoElectronico");
-                
+                nombres =rs.getString("c.Nombres");
+                apellidos =rs.getString("c.Apellidos");
+                direccion =rs.getString("c.DireccionCliente");
+                telefono =rs.getString("c.Telefono");
+                correo =rs.getString("c.CorreoElectronico");
+                 estado=rs.getString("eu.Descripcion"); 
               
             }
             
@@ -234,6 +256,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
             TelC.setText(telefono);
             DireccionC.setText(direccion);
             CorreoC.setText(correo);
+             actuale.setText(estado);
             JCodigoDisponible1.setText(id);
 
            
@@ -316,7 +339,6 @@ public class ActualizarCliente extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         DireccionC = new rojeru_san.RSMTextFull();
-        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         rSPanelCircle2 = new rojeru_san.rspanel.RSPanelCircle();
         JCodigoDisponible1 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
@@ -331,12 +353,15 @@ public class ActualizarCliente extends javax.swing.JFrame {
         JComboEstado = new rojerusan.RSComboMetro();
         Estado = new javax.swing.JLabel();
         aviso = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        actuale = new javax.swing.JLabel();
+        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
+        aviso2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
@@ -471,8 +496,6 @@ public class ActualizarCliente extends javax.swing.JFrame {
             HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-
-        jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1416, -1));
 
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
@@ -695,7 +718,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(linesetting6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(rSLabelIcon5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -753,8 +776,6 @@ public class ActualizarCliente extends javax.swing.JFrame {
             .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
             .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, -1, -1));
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
 
@@ -900,17 +921,6 @@ public class ActualizarCliente extends javax.swing.JFrame {
             }
         });
 
-        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new9.setText("Guardar Cambios");
-        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
-        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
-        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new9ActionPerformed(evt);
-            }
-        });
-
         rSPanelCircle2.setBackground(new java.awt.Color(60, 76, 143));
 
         JCodigoDisponible1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -976,6 +986,14 @@ public class ActualizarCliente extends javax.swing.JFrame {
                 TelCActionPerformed(evt);
             }
         });
+        TelC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TelCKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TelCKeyTyped(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
@@ -1029,6 +1047,32 @@ public class ActualizarCliente extends javax.swing.JFrame {
         aviso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         aviso.setText("*Correo invalido*");
 
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setText("Actual Estado");
+
+        actuale.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        actuale.setForeground(new java.awt.Color(153, 0, 255));
+        actuale.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        actuale.setText("Actual Estado");
+
+        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new9.setText("Modificar Cambios");
+        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
+        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new9ActionPerformed(evt);
+            }
+        });
+
+        aviso2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso2.setForeground(new java.awt.Color(255, 0, 0));
+        aviso2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso2.setText("*Teléfono invalído*");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -1048,15 +1092,17 @@ public class ActualizarCliente extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(62, 62, 62)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(168, 168, 168)
-                        .addComponent(ApellidoC, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(ApellidoC, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(TelC, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(TelC, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addComponent(aviso2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1073,10 +1119,12 @@ public class ActualizarCliente extends javax.swing.JFrame {
                 .addGap(70, 70, 70)
                 .addComponent(Estado, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addComponent(JComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(840, 840, 840)
-                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(JComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(actuale, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1093,15 +1141,18 @@ public class ActualizarCliente extends javax.swing.JFrame {
                     .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ApellidoC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
-                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ApellidoC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TelC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                    .addComponent(TelC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(aviso2)))
+                .addGap(23, 23, 23)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CorreoC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1117,8 +1168,11 @@ public class ActualizarCliente extends javax.swing.JFrame {
                     .addComponent(Estado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(JComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(actuale, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(40, 40, 40)
                 .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1145,7 +1199,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(89, 89, 89))
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1156, Short.MAX_VALUE)
         );
         dashboardviewLayout.setVerticalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1153,10 +1207,27 @@ public class ActualizarCliente extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
-        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, 716));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1416, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -1263,17 +1334,6 @@ public class ActualizarCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreCActionPerformed
 
-    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
-        // TODO add your handling code here:
-        if(validar()==true){
-
-            actualizar();
-
-        }else{
-            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
-        }
-    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
-
     private void DireccionCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DireccionCActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DireccionCActionPerformed
@@ -1306,6 +1366,35 @@ public class ActualizarCliente extends javax.swing.JFrame {
           }
             
     }//GEN-LAST:event_CorreoCKeyReleased
+
+    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
+        if(validar()==true){
+            ConfirmacionModificar cl = new ConfirmacionModificar();
+            cl.setAcliente(this);
+            cl.setTipo("Mclientes");
+            cl.setVisible(true);
+        }else{
+
+            JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACION");
+        }
+    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
+
+    private void TelCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelCKeyReleased
+       if (validarT(TelC.getText())){
+              aviso2.setVisible(false);
+             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
+        }
+          else{
+                    aviso2.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+    }//GEN-LAST:event_TelCKeyReleased
+
+    private void TelCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelCKeyTyped
+         if (TelC.getText().trim().length() == 9) {
+        evt.consume();
+         }
+    }//GEN-LAST:event_TelCKeyTyped
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1398,7 +1487,9 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel MenuIcon;
     private rojeru_san.RSMTextFull NombreC;
     private rojeru_san.RSMTextFull TelC;
+    private javax.swing.JLabel actuale;
     private javax.swing.JLabel aviso;
+    private javax.swing.JLabel aviso2;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
@@ -1408,6 +1499,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel31;
@@ -1462,4 +1554,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.rspanel.RSPanelCircle rSPanelCircle2;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
+
+  
+
+  
 }

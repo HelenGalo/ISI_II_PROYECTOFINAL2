@@ -6,6 +6,8 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionModificar;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.Connection;
@@ -50,32 +52,10 @@ public class ActualizarProveedor extends javax.swing.JFrame {
     }
      
    
-       public void inicializar(){
-         String SQL = "SELECT e.Descripcion FROM EstadosUsuario e";
-         String des="";
-          
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
+        boolean estadosModificar=false;
 
-            while (rs.next()) {
-               des = rs.getString("Descripcion");
-               JEstado.addItem(des);
-               
-                
-            }
-            
-      
- 
-    
-            
-           
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-       
-    
+    public void setEstadosModificar(boolean estadosModificar) {
+        this.estadosModificar = estadosModificar;
     } 
      
      
@@ -87,11 +67,37 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         initComponents();
        this.setLocationRelativeTo(null);
        this.setExtendedState(this.MAXIMIZED_BOTH);
-      inicializar();
+         listarEstado();
        aviso.setVisible(false);
        aviso2.setVisible(false);
     }
+    public void validarConfirmacion(){
+        if(estadosModificar=true){
+            actualizar();
+        }
+    }
+  
+       
+        public void listarEstado(){
+        JEstado.addItem("Seleccionar Estado");
+        JEstado.setSelectedIndex(0);
+        String descripcion="";
+         
+        String SQL = "SELECT b.Descripcion From EstadosUsuario b";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                descripcion =rs.getString("b.Descripcion");
     
+                JEstado.addItem(descripcion);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }    
  
     
       public void actualizar(){
@@ -106,11 +112,12 @@ public class ActualizarProveedor extends javax.swing.JFrame {
             
             preparedStmt.setString (1, NombreE);
             preparedStmt.setString  (2, direccion);
-            preparedStmt.setInt(3, Integer.parseInt(telefono));
+            preparedStmt.setString(3, telefono);
             preparedStmt.setString(4, correo);
             preparedStmt.setInt(5, estadop);
             preparedStmt.execute();
-             JOptionPane.showMessageDialog(null, "Registro actualizado Exitosamente");
+              VentanaEmergente1 ve = new VentanaEmergente1();
+             ve.setVisible(true);
 
         } catch (Exception e) {
             System.out.println("ERROR" + e.getMessage());
@@ -187,18 +194,20 @@ public class ActualizarProveedor extends javax.swing.JFrame {
     }
     
        public void MostrarProveedores(){
-
-        String SQL = "Select * from Proveedores Where IdProveedor="+id;
+        String estado="";
+        String SQL = "Select p.NombreEmpresa, p,DireccionEmpresa,p.Telefono,p.CorreoElectronico, eu.Descripcion  from Proveedores p "+
+                    "INNER JOIN EstadosUsuario eu ON eu.IdEstado = p.Estado\n" +
+                    "Where IdProveedor="+id;
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-               Nombreem =rs.getString("NombreEmpresa");
-                DirE =rs.getString("DireccionEmpresa");
-                tele =rs.getString("Telefono");
-                correopro =rs.getString("CorreoElectronico");
-                
+               Nombreem =rs.getString("p.NombreEmpresa");
+                DirE =rs.getString("p.DireccionEmpresa");
+                tele =rs.getString("p.Telefono");
+                correopro =rs.getString("p. CorreoElectronico");
+                estado=rs.getString("eu.Descripcion");
               
             }
             
@@ -207,7 +216,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
             Tel.setText(tele);
             CorreoP.setText(correopro);
             JCodigoDisponible.setText(String.valueOf(id));
-            
+            actual.setText(estado);
        
             
 
@@ -310,13 +319,15 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         JEstado = new rojerusan.RSComboMetro();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        rSButtonIcon_new8 = new newscomponents.RSButtonIcon_new();
         jLabel23 = new javax.swing.JLabel();
         NombreE1 = new rojeru_san.RSMTextFull();
         DireccionE = new rojeru_san.RSMTextFull();
         Tel = new rojeru_san.RSMTextFull();
         aviso2 = new javax.swing.JLabel();
         aviso = new javax.swing.JLabel();
+        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
+        actual = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -739,6 +750,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         );
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
+        dashboardview.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -865,6 +877,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         jLabel18.setText("Nombre de la empresa:");
         jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 190, 30));
 
+        CorreoP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         CorreoP.setPlaceholder("Ingresar Correo Electronico");
         CorreoP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -916,13 +929,13 @@ public class ActualizarProveedor extends javax.swing.JFrame {
                 JEstadoActionPerformed(evt);
             }
         });
-        jPanel3.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, 260, -1));
+        jPanel3.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 440, 260, -1));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(153, 0, 255));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("Estado:");
-        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 180, 30));
+        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 440, 180, 30));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
@@ -930,24 +943,13 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         jLabel22.setText("Direccion de la empresa");
         jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 180, 30));
 
-        rSButtonIcon_new8.setBackground(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new8.setText("Guardar");
-        rSButtonIcon_new8.setBackgroundHover(new java.awt.Color(153, 0, 255));
-        rSButtonIcon_new8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        rSButtonIcon_new8.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
-        rSButtonIcon_new8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new8ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(rSButtonIcon_new8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 110, 40));
-
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(153, 0, 255));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("Correo Electronico:");
         jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 180, 40));
 
+        NombreE1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NombreE1.setPlaceholder("Ingresa nombre Empresas..");
         NombreE1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -965,6 +967,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         });
         jPanel3.add(DireccionE, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, 460, -1));
 
+        Tel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Tel.setPlaceholder("Ingresa el numero Telefono");
         Tel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -993,6 +996,32 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         aviso.setText("*Correo invalido*");
         jPanel3.add(aviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 390, 170, 25));
 
+        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new9.setText("Modificar Cambios");
+        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
+        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new9ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 220, 40));
+
+        actual.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        actual.setForeground(new java.awt.Color(153, 0, 255));
+        actual.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        actual.setText("Estado:");
+        jPanel3.add(actual, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, 180, 30));
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel25.setText("Actual Estado:");
+        jPanel3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, 180, 30));
+
+        dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 98, -1, 540));
+
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1012,24 +1041,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
 
-        javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
-        dashboardview.setLayout(dashboardviewLayout);
-        dashboardviewLayout.setHorizontalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(89, 89, 89))
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        dashboardviewLayout.setVerticalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
-        );
+        dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1156, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1145,15 +1157,6 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JEstadoActionPerformed
 
-    private void rSButtonIcon_new8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new8ActionPerformed
-        // TODO add your handling code here:
-        if(validar()==true){
-
-            actualizar();
-
-        }
-    }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
-
     private void CorreoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorreoPActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CorreoPActionPerformed
@@ -1199,6 +1202,18 @@ public class ActualizarProveedor extends javax.swing.JFrame {
     }
 
     }//GEN-LAST:event_TelKeyTyped
+
+    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
+        if(validar()==true){
+            ConfirmacionModificar p = new ConfirmacionModificar();
+            p.setAp(this);
+            p.setTipo("MProv");
+            p.setVisible(true);
+        }else{
+
+            JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACION");
+        }
+    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1277,6 +1292,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel MenuIcon;
     private rojeru_san.RSMTextFull NombreE1;
     private rojeru_san.RSMTextFull Tel;
+    private javax.swing.JLabel actual;
     private javax.swing.JLabel aviso;
     private javax.swing.JLabel aviso2;
     private javax.swing.JPanel dashboardview;
@@ -1292,6 +1308,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1323,7 +1340,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new8;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new9;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon10;

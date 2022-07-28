@@ -6,8 +6,10 @@
 package isi_2022_ii_proyecto.Recursos;
 
 import isi_2022_ii_proyecto.AgregarCaja;
+import isi_2022_ii_proyecto.AgregarClientes;
 import isi_2022_ii_proyecto.AgregarCuentaBancaria;
 import isi_2022_ii_proyecto.AgregarEnvio;
+import isi_2022_ii_proyecto.AgregarProveedor;
 import isi_2022_ii_proyecto.AperturarCajas;
 import isi_2022_ii_proyecto.Banco;
 import rojeru_san.complementos.RSUtilities;
@@ -20,6 +22,21 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
     AgregarCuentaBancaria gcuenta;
     AgregarEnvio genvio;
     AgregarCaja gcaja;
+    AgregarProveedor gprov;
+    AgregarClientes gcliente;
+
+    public void setGcliente(AgregarClientes gcliente) {
+        this.gcliente = gcliente;
+    }
+
+    
+    
+    
+    public void setGprov(AgregarProveedor gprov) {
+        this.gprov = gprov;
+    }
+    
+    
 
     public void setGcaja(AgregarCaja gcaja) {
         this.gcaja = gcaja;
@@ -180,9 +197,18 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
             gcaja.validarConfirmacion();
             this.dispose();
         }
+        if(tipo=="GProveedor"){
+            gprov.setEstadoagregar(true);
+            gprov.validarConfirmacion();
+            this.dispose();
+        }
          
         
-         
+          if(tipo=="GCliente"){
+            gcliente.setEstadoagregar(true);
+            gcliente.validarConfirmacion();
+            this.dispose();
+        }
         
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
@@ -233,4 +259,6 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
     private RSMaterialComponent.RSLabelIcon rSLabelIcon1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
+
+  
 }

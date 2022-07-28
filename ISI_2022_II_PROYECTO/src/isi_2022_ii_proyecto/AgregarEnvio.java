@@ -157,7 +157,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         String Tari="";
         String telefono="";
         String correo="";
-        int estado = 1;
+        int estado = 0;
         
         nombres = NombreC.getText();
         Tari = Tarifa.getText();

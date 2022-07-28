@@ -6,8 +6,11 @@
 package isi_2022_ii_proyecto.Recursos;
 
 import isi_2022_ii_proyecto.ActualizarCaja;
+import isi_2022_ii_proyecto.ActualizarCliente;
+import isi_2022_ii_proyecto.ActualizarEmpleado;
 import isi_2022_ii_proyecto.ActualizarEnvio;
 import isi_2022_ii_proyecto.ActualizarProductos;
+import isi_2022_ii_proyecto.ActualizarProveedor;
 import isi_2022_ii_proyecto.AgregarCuentaBancaria;
 import isi_2022_ii_proyecto.AperturarCajas;
 import isi_2022_ii_proyecto.Banco;
@@ -22,10 +25,29 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
     ModificarCuentaB mcuentab;
     ActualizarEnvio ame;
     ActualizarCaja ac;
-    
-    
+    ActualizarProveedor ap;
     AperturarCajas aca;
+    ActualizarCliente acliente;
+    ActualizarEmpleado aemp;
 
+    public void setAcliente(ActualizarCliente acliente) {
+        this.acliente = acliente;
+    }
+
+    public void setAemp(ActualizarEmpleado aemp) {
+        this.aemp = aemp;
+    }
+   
+    
+
+    public void setAp(ActualizarProveedor ap) {
+        this.ap = ap;
+    }
+
+    
+    
+    
+    
     public void setAca(AperturarCajas aca) {
         this.aca = aca;
     }
@@ -203,7 +225,24 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
         
         
 
-        
+         if(tipo=="MProv"){
+            ap.setEstadosModificar(true);
+            ap.validarConfirmacion();
+ 
+            this.dispose();
+        }
+          if(tipo=="Mclientes"){
+            acliente.setEstadosModificar(true);
+            acliente.validarConfirmacion();
+ 
+            this.dispose();
+        }
+            if(tipo=="Memp"){
+            aemp.setEstadosModificar(true);
+            aemp.validarConfirmacion();
+ 
+            this.dispose();
+        }
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     /**
@@ -257,6 +296,10 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
     private RSMaterialComponent.RSLabelIcon rSLabelIcon1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
+
+   
+
+   
 
     
 
