@@ -8,6 +8,7 @@ package isi_2022_ii_proyecto.Recursos;
 import isi_2022_ii_proyecto.AgregarCaja;
 import isi_2022_ii_proyecto.AgregarClientes;
 import isi_2022_ii_proyecto.AgregarCuentaBancaria;
+import isi_2022_ii_proyecto.AgregarEmpleado;
 import isi_2022_ii_proyecto.AgregarEnvio;
 import isi_2022_ii_proyecto.AgregarProveedor;
 import isi_2022_ii_proyecto.AperturarCajas;
@@ -24,7 +25,14 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
     AgregarCaja gcaja;
     AgregarProveedor gprov;
     AgregarClientes gcliente;
+    AgregarEmpleado gemp;
 
+    public void setGemp(AgregarEmpleado gemp) {
+        this.gemp = gemp;
+    }
+
+    
+    
     public void setGcliente(AgregarClientes gcliente) {
         this.gcliente = gcliente;
     }
@@ -207,6 +215,11 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
           if(tipo=="GCliente"){
             gcliente.setEstadoagregar(true);
             gcliente.validarConfirmacion();
+            this.dispose();
+        }
+            if(tipo=="GEmpleado"){
+            gemp.setEstadoagregar(true);
+            gemp.validarConfirmacion();
             this.dispose();
         }
         

@@ -7,8 +7,11 @@ package isi_2022_ii_proyecto.Recursos;
 
 import isi_2022_ii_proyecto.Banco;
 import isi_2022_ii_proyecto.Caja;
+import isi_2022_ii_proyecto.Cliente;
+import isi_2022_ii_proyecto.Empleados;
 import isi_2022_ii_proyecto.Envio;
 import isi_2022_ii_proyecto.Productos;
+import isi_2022_ii_proyecto.Proveedores;
 import rojeru_san.complementos.RSUtilities;
 
 /**
@@ -20,6 +23,22 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
     Caja cafectado;
     Productos prodafectado;
     Envio eafectado;
+    Cliente clafectado;
+    Empleados empafectado;
+    Proveedores provafectado;
+
+  
+
+    public void setEmple(Empleados empafectado){
+        this.empafectado = empafectado;
+    }
+    public void setClienteafec(Cliente clafectado){
+        this.clafectado = clafectado;
+    }
+    
+     public void setProvafect(Proveedores provafectado){
+        this.provafectado = provafectado; 
+    }
 
     public void setEafectado(Envio eafectado) {
         this.eafectado = eafectado;
@@ -186,6 +205,20 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
           eafectado.limpiartabla();
             this.dispose();
         }
+           if(tipo=="DCliente"){
+           clafectado.deshabilitar();
+           clafectado.limpiartabla();
+        }
+           if(tipo=="Dproveedor"){
+          provafectado.deshabilitarpro();
+          provafectado.limpiartabla();
+            this.dispose();
+        }  
+           if(tipo=="Dempleado"){
+            empafectado.deshabilitarem();
+            empafectado.limpiartabla();
+            this.dispose();
+        } 
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     /**
@@ -233,6 +266,12 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
     private RSMaterialComponent.RSLabelIcon rSLabelIcon1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
+
+   
+
+ 
+
+  
 
     
     

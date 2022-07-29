@@ -7,6 +7,7 @@ package isi_2022_ii_proyecto;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
 import isi_2022_ii_proyecto.Recursos.ConfirmacionGuardar;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.List;
@@ -185,8 +186,8 @@ public class AgregarClientes extends javax.swing.JFrame {
             preparedStmt.setInt(7, estado);
             preparedStmt.execute();
             
-            JOptionPane.showMessageDialog(null, "Registro Guardado Exitosamente");
-
+                 VentanaEmergente1 ve = new VentanaEmergente1();
+             ve.setVisible(true);
         } catch (Exception e) {
             System.out.println("ERROR" + e.getMessage());
         }

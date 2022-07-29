@@ -6,6 +6,8 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionGuardar;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.Connection;
@@ -19,6 +21,8 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -42,7 +46,11 @@ public class AgregarEmpleado extends javax.swing.JFrame {
    
     String codigoe="";
 
-   
+    boolean estadoagregar=false;
+
+    public void setEstadoagregar(boolean estadoagregar) {
+        this.estadoagregar = estadoagregar;
+    }
     HashMap<String, Integer> puestos = new HashMap<String, Integer>();
     HashMap<String, Integer> documentos = new HashMap<String, Integer>();
 
@@ -54,19 +62,34 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         initComponents();
         inicializar();
         buscardatos();
+        aviso.setVisible(false);
     }
     
-    public void inicializar(){
+        public void validarConfirmacion(){
+        if(estadoagregar=true){
+            insertar();
+        }
+    }
+    
+     public void inicializar(){
          String SQL = "SELECT * FROM TipoDocumento";
+         JComboTipo2.addItem("Seleccionar Documento");
+         JComboTipo2.setSelectedIndex(0);
          String des="";
          
          String SQL1 = "SELECT * FROM Puestos";
+             JCombopuesto.addItem("Seleccionar Genero");
+           JCombopuesto.setSelectedIndex(0);
          String puesto="";
          
          String SQL2 = "SELECT * FROM EstadosUsuario";
+        JComboEstado.addItem("Seleccionar Estado");
+        JComboEstado.setSelectedIndex(0);
          String estadou="";
          
          String SQL3 = "SELECT * FROM Generos";
+          JComboGen1.addItem("Seleccionar Genero");
+        JComboGen1.setSelectedIndex(0);
          String genero="";
           
           
@@ -124,6 +147,8 @@ public class AgregarEmpleado extends javax.swing.JFrame {
        
     
     }
+    
+
     
     public void buscardatos(){
           String SQL = "SELECT * FROM Empleados WHERE IdEmpleado=(SELECT max(IdEmpleado) FROM Empleados)";
@@ -290,10 +315,10 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         
         
         correo=correoE.getText();
-        primernombre = NombreE5.getText();
-        segundonombre = NombreE3.getText();
-        Papellido = NombreE6.getText();
-        Sapellido = NombreE2.getText();
+        primernombre = primern.getText();
+        segundonombre = segundon.getText();
+        Papellido = Apellidop.getText();
+        Sapellido = Apellido2.getText();
         genero=Obtenergenero();
        
         puesto=Obtenerpuesto();
@@ -328,8 +353,8 @@ public class AgregarEmpleado extends javax.swing.JFrame {
             preparedStmt.setString(13, Papellido);
             preparedStmt.setString(14, Sapellido);
             preparedStmt.execute();
-            JOptionPane.showMessageDialog(this, "Registro Guardado");
-
+                VentanaEmergente1 ve = new VentanaEmergente1();
+             ve.setVisible(true);
         } catch (SQLException e) {
             System.out.println("ERROR AL REGISTRAR: " + e.getMessage());
         }
@@ -338,11 +363,58 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         
        
     }
+  public Boolean validar(){
+        boolean a=true;
+      if(primern.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
+          a= false;
+      }
+      
+       if(segundon.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
+          a= false;
+      }
+        if(Apellidop.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un apellido valido");
+          a= false;
+      }
+         
+       
+        if(Apellido2.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un apellido valido");
+          a= false;
+      }
+        if(cuenta.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
+          a= false;
+      }
+        
+       if(correoE.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
+          a= false;
+      }
+       if (validarC(correoE.getText())==false){
+           a=false;
+       }
+            
+     
+       
+       
+      
+       return a;
+       
+      
+    }
+        
     
-    public Boolean validar(){
-      
-        return true;
-      
+     public boolean validarC(String correo){
+            
+        Pattern patron = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})+(\\.[A-Za-z]{2,3})$");
+        Matcher comparar = patron.matcher(correo);
+        return comparar.find();
+     
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -410,16 +482,15 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         JCodigoDisponible = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        rSButtonIcon_new8 = new newscomponents.RSButtonIcon_new();
-        NombreE2 = new rojeru_san.RSMTextFull();
+        Apellido2 = new rojeru_san.RSMTextFull();
         cuenta = new rojeru_san.RSMTextFull();
-        NombreE3 = new rojeru_san.RSMTextFull();
+        segundon = new rojeru_san.RSMTextFull();
         NombreE4 = new rojeru_san.RSMTextFull();
         JComboEstado = new rojerusan.RSComboMetro();
         jLabel23 = new javax.swing.JLabel();
         CorreoAE = new javax.swing.JLabel();
         JCombopuesto = new rojerusan.RSComboMetro();
-        NombreE5 = new rojeru_san.RSMTextFull();
+        primern = new rojeru_san.RSMTextFull();
         CorreoAE1 = new javax.swing.JLabel();
         correoE = new rojeru_san.RSMTextFull();
         estado = new javax.swing.JLabel();
@@ -427,21 +498,24 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         JComboTipo2 = new rojerusan.RSComboMetro();
         jLabel26 = new javax.swing.JLabel();
-        NombreE6 = new rojeru_san.RSMTextFull();
+        Apellidop = new rojeru_san.RSMTextFull();
         FechaContracion1 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         FN = new rojeru_san.componentes.RSDateChooser();
         FC = new rojeru_san.componentes.RSDateChooser();
+        aviso = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        guardar = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
@@ -570,6 +644,10 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         );
 
         Header.add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1416, -1));
+
+        menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
@@ -748,6 +826,8 @@ public class AgregarEmpleado extends javax.swing.JFrame {
                 .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        menu.add(MenuIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 711));
+
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
 
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
@@ -836,20 +916,9 @@ public class AgregarEmpleado extends javax.swing.JFrame {
                 .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
-        menu.setLayout(menuLayout);
-        menuLayout.setHorizontalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addComponent(MenuIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menuhide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        menuLayout.setVerticalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
-            .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        menu.add(menuhide, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, -1));
+
+        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 48, -1, 720));
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
 
@@ -1014,26 +1083,14 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         jLabel22.setText("Apellidos del Empleado:");
         jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 190, 30));
 
-        rSButtonIcon_new8.setBackground(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new8.setText("Guardar");
-        rSButtonIcon_new8.setBackgroundHover(new java.awt.Color(153, 0, 255));
-        rSButtonIcon_new8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        rSButtonIcon_new8.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
-        rSButtonIcon_new8.addActionListener(new java.awt.event.ActionListener() {
+        Apellido2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Apellido2.setPlaceholder("Ingresa nombre");
+        Apellido2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new8ActionPerformed(evt);
+                Apellido2ActionPerformed(evt);
             }
         });
-        jPanel3.add(rSButtonIcon_new8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 110, 40));
-
-        NombreE2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NombreE2.setPlaceholder("Ingresa nombre");
-        NombreE2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreE2ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(NombreE2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 130, -1));
+        jPanel3.add(Apellido2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 130, -1));
 
         cuenta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         cuenta.setPlaceholder("Ingrese Cuenta");
@@ -1044,14 +1101,14 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         });
         jPanel3.add(cuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 230, 220, 30));
 
-        NombreE3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NombreE3.setPlaceholder("Ingresa nombre");
-        NombreE3.addActionListener(new java.awt.event.ActionListener() {
+        segundon.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        segundon.setPlaceholder("Ingresa nombre");
+        segundon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreE3ActionPerformed(evt);
+                segundonActionPerformed(evt);
             }
         });
-        jPanel3.add(NombreE3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 130, -1));
+        jPanel3.add(segundon, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 130, -1));
 
         NombreE4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NombreE4.setPlaceholder("Ingresa nombre");
@@ -1114,14 +1171,14 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         });
         jPanel3.add(JCombopuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 360, 220, 30));
 
-        NombreE5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NombreE5.setPlaceholder("Ingresa nombre");
-        NombreE5.addActionListener(new java.awt.event.ActionListener() {
+        primern.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        primern.setPlaceholder("");
+        primern.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreE5ActionPerformed(evt);
+                primernActionPerformed(evt);
             }
         });
-        jPanel3.add(NombreE5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 140, -1));
+        jPanel3.add(primern, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 140, -1));
 
         CorreoAE1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         CorreoAE1.setForeground(new java.awt.Color(153, 0, 255));
@@ -1136,13 +1193,18 @@ public class AgregarEmpleado extends javax.swing.JFrame {
                 correoEActionPerformed(evt);
             }
         });
+        correoE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                correoEKeyReleased(evt);
+            }
+        });
         jPanel3.add(correoE, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 170, 220, 30));
 
         estado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         estado.setForeground(new java.awt.Color(153, 0, 255));
         estado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         estado.setText("Estado:");
-        jPanel3.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, 160, 30));
+        jPanel3.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 300, 160, 30));
 
         JComboGen1.setColorArrow(new java.awt.Color(102, 0, 255));
         JComboGen1.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -1196,14 +1258,14 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         jLabel26.setText("Tipo documento");
         jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 170, 30));
 
-        NombreE6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NombreE6.setPlaceholder("Ingresa nombre");
-        NombreE6.addActionListener(new java.awt.event.ActionListener() {
+        Apellidop.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Apellidop.setPlaceholder("Ingresa nombre");
+        Apellidop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreE6ActionPerformed(evt);
+                ApellidopActionPerformed(evt);
             }
         });
-        jPanel3.add(NombreE6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, 140, -1));
+        jPanel3.add(Apellidop, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, 140, -1));
 
         FechaContracion1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         FechaContracion1.setForeground(new java.awt.Color(153, 0, 255));
@@ -1218,6 +1280,12 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         jPanel3.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 180, 30));
         jPanel3.add(FN, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, -1, -1));
         jPanel3.add(FC, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 90, -1, -1));
+
+        aviso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso.setForeground(new java.awt.Color(255, 0, 0));
+        aviso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso.setText("*Correo invalido*");
+        jPanel3.add(aviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 140, 170, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1238,44 +1306,40 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
 
+        guardar.setBackground(new java.awt.Color(33, 150, 243));
+        guardar.setText("Guardar Empleado");
+        guardar.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        guardar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
+        guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
         dashboardview.setLayout(dashboardviewLayout);
         dashboardviewLayout.setHorizontalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1156, Short.MAX_VALUE)
             .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1047, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addGroup(dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1041, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dashboardviewLayout.setVerticalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1416, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
+        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -1366,29 +1430,17 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_linesetting12MouseClicked
 
-    private void rSButtonIcon_new8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new8ActionPerformed
+    private void Apellido2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Apellido2ActionPerformed
         // TODO add your handling code here:
-        if(validar()==true){
-
-            insertar();
-
-        }else{
-            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
-        }
-
-    }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
-
-    private void NombreE2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreE2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NombreE2ActionPerformed
+    }//GEN-LAST:event_Apellido2ActionPerformed
 
     private void cuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cuentaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cuentaActionPerformed
 
-    private void NombreE3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreE3ActionPerformed
+    private void segundonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_segundonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NombreE3ActionPerformed
+    }//GEN-LAST:event_segundonActionPerformed
 
     private void NombreE4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreE4ActionPerformed
         // TODO add your handling code here:
@@ -1428,9 +1480,9 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JCombopuestoActionPerformed
 
-    private void NombreE5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreE5ActionPerformed
+    private void primernActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primernActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NombreE5ActionPerformed
+    }//GEN-LAST:event_primernActionPerformed
 
     private void correoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correoEActionPerformed
         // TODO add your handling code here:
@@ -1468,9 +1520,35 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JComboGen1MouseClicked
 
-    private void NombreE6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreE6ActionPerformed
+    private void ApellidopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApellidopActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NombreE6ActionPerformed
+    }//GEN-LAST:event_ApellidopActionPerformed
+
+    private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
+        // TODO add your handling code here:
+        if(validar()==true){
+            ConfirmacionGuardar ge = new  ConfirmacionGuardar();
+            ge.setGemp(this);
+            ge.setTipo("GEmpleado");
+            ge.setVisible(true);
+
+        }else{
+
+            JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
+        }
+    }//GEN-LAST:event_guardarActionPerformed
+
+    private void correoEKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_correoEKeyReleased
+       if (validarC(correoE.getText())){
+              aviso.setVisible(false);
+             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
+        }
+          else{
+                    aviso.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+            
+    }//GEN-LAST:event_correoEKeyReleased
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1539,6 +1617,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private rojeru_san.RSMTextFull Apellido2;
+    private rojeru_san.RSMTextFull Apellidop;
     private javax.swing.JLabel CorreoAE;
     private javax.swing.JLabel CorreoAE1;
     private rojeru_san.componentes.RSDateChooser FC;
@@ -1552,15 +1632,13 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSComboMetro JComboTipo2;
     private rojerusan.RSComboMetro JCombopuesto;
     private javax.swing.JPanel MenuIcon;
-    private rojeru_san.RSMTextFull NombreE2;
-    private rojeru_san.RSMTextFull NombreE3;
     private rojeru_san.RSMTextFull NombreE4;
-    private rojeru_san.RSMTextFull NombreE5;
-    private rojeru_san.RSMTextFull NombreE6;
+    private javax.swing.JLabel aviso;
     private rojeru_san.RSMTextFull correoE;
     private rojeru_san.RSMTextFull cuenta;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JLabel estado;
+    private newscomponents.RSButtonIcon_new guardar;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1601,11 +1679,11 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel linesetting9;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel menuhide;
+    private rojeru_san.RSMTextFull primern;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new8;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon10;
@@ -1623,6 +1701,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.rspanel.RSPanelCircle rSPanelCircle1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     private rojerusan.RSYearDateBeanInfo rSYearDateBeanInfo1;
+    private rojeru_san.RSMTextFull segundon;
     // End of variables declaration//GEN-END:variables
 
     

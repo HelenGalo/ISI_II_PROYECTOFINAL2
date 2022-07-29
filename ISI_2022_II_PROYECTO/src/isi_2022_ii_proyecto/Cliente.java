@@ -6,10 +6,13 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionDeshabilitarCuenta;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -40,8 +43,24 @@ public class Cliente extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
         listar();
+        
       
        
+    }
+     public void deshabilitar(){
+        String SQL = "UPDATE Clientes SET Estado=? Where IdCliente="+codigoc;
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+          
+            preparedStmt.setInt (1, 0);
+            preparedStmt.execute();
+            
+            VentanaEmergente1 ve = new VentanaEmergente1();
+            ve.setVisible(true);
+
+        } catch (Exception e) {
+            System.out.println("ERROR" + e.getMessage());   
+        }
     }
 
     /**
@@ -108,12 +127,14 @@ public class Cliente extends javax.swing.JFrame {
         rSLabelIcon17 = new rojerusan.RSLabelIcon();
         jScrollPane2 = new javax.swing.JScrollPane();
         JTableEmpleado = new rojerusan.RSTableMetro1();
-        JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        deshabilitado = new newscomponents.RSButtonIcon_new();
+        habilitado = new newscomponents.RSButtonIcon_new();
+        JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(java.awt.Color.white);
@@ -563,6 +584,7 @@ public class Cliente extends javax.swing.JFrame {
         );
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
+        dashboardview.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -674,19 +696,7 @@ public class Cliente extends javax.swing.JFrame {
 
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 960, 390));
 
-        JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
-        JTextbuscar.setPlaceholder("Busqueda rapida");
-        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTextbuscarActionPerformed(evt);
-            }
-        });
-        JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                JTextbuscarKeyReleased(evt);
-            }
-        });
-        jPanel3.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, -1, -1));
+        dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 112, 1030, 500));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -731,24 +741,43 @@ public class Cliente extends javax.swing.JFrame {
                 .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
-        dashboardview.setLayout(dashboardviewLayout);
-        dashboardviewLayout.setHorizontalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(89, 89, 89))
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        dashboardviewLayout.setVerticalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
-        );
+        dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 1160, -1));
+
+        deshabilitado.setBackground(new java.awt.Color(255, 153, 51));
+        deshabilitado.setText("Cuentas Deshabilitadas");
+        deshabilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        deshabilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_OFF);
+        deshabilitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deshabilitadoActionPerformed(evt);
+            }
+        });
+        dashboardview.add(deshabilitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 60, 220, -1));
+
+        habilitado.setBackground(new java.awt.Color(33, 150, 243));
+        habilitado.setText("Cuentas Habilitadas");
+        habilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        habilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
+        habilitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                habilitadoActionPerformed(evt);
+            }
+        });
+        dashboardview.add(habilitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, -1, -1));
+
+        JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        JTextbuscar.setPlaceholder("Busqueda rapida");
+        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTextbuscarActionPerformed(evt);
+            }
+        });
+        JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTextbuscarKeyReleased(evt);
+            }
+        });
+        dashboardview.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -768,7 +797,7 @@ public class Cliente extends javax.swing.JFrame {
                 .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(49, 49, 49)
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 637, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -865,10 +894,15 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 
     private void rSButtonIcon_new6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new6ActionPerformed
-        // TODO add your handling code here:
-        Proveedores proveedores = new Proveedores();
-        proveedores.setVisible(true);
-        this.dispose();
+       if(codigoc!=null){
+          
+           ConfirmacionDeshabilitarCuenta cliente = new ConfirmacionDeshabilitarCuenta();
+           cliente.setClienteafec(this);
+           cliente.setTipo("DCliente");
+           cliente.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+        }
     }//GEN-LAST:event_rSButtonIcon_new6ActionPerformed
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
@@ -926,25 +960,94 @@ public class Cliente extends javax.swing.JFrame {
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
         
     }//GEN-LAST:event_JTextbuscarActionPerformed
+
+    private void deshabilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deshabilitadoActionPerformed
+        // TODO add your handling code here:
+        rSButtonIcon_new6.setEnabled(false);
+        limpiartabla();
+        listardh();
+    }//GEN-LAST:event_deshabilitadoActionPerformed
+
+    private void habilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitadoActionPerformed
+        // TODO add your handling code here:
+        rSButtonIcon_new6.setEnabled(true);
+        limpiartabla();
+        listarh();
+    }//GEN-LAST:event_habilitadoActionPerformed
     public void  changecolor(JPanel hover, Color rand){
      hover.setBackground(rand);
  }
     
      public void listar(){
-        String[] registros = new String[5];
+        String[] registros = new String[6];
         DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
-
-        String SQL = "select * from Clientes";
+String SQL = "select c.IdCliente,c.Nombres,c.Apellidos,c.Telefono, c.CorreoElectronico,eu.Descripcion from Clientes c \n"
+                + "INNER JOIN EstadosUsuario eu ON eu.IdEstado = c.Estado WHERE c.Estado=1" ;
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                registros[0] = rs.getString("IdCliente");
-                registros[1] = rs.getString("Nombres");
-                registros[2] = rs.getString("Apellidos");
-                registros[3] = rs.getString("Telefono");
-                registros[4] = rs.getString("CorreoElectronico");
+                registros[0] = rs.getString("c.IdCliente");
+                registros[1] = rs.getString("c.Nombres");
+                registros[2] = rs.getString("c.Apellidos");
+                registros[3] = rs.getString("c.Telefono");
+                registros[4] = rs.getString("c.CorreoElectronico");
+                registros[5] = rs.getString("eu.Descripcion");
+                modelo.addRow(registros);
+            }
+
+            JTableEmpleado.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+     public void listarh(){
+        String[] registros = new String[6];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
+
+        String SQL = "select c.IdCliente,c.Nombres,c.Apellidos,c.Telefono, c.CorreoElectronico,eu.Descripcion from Clientes c \n"
+                + "INNER JOIN EstadosUsuario eu ON eu.IdEstado = c.Estado WHERE c.Estado=1" ;
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("c.IdCliente");
+                registros[1] = rs.getString("c.Nombres");
+                registros[2] = rs.getString("c.Apellidos");
+                registros[3] = rs.getString("c.Telefono");
+                registros[4] = rs.getString("c.CorreoElectronico");
+                registros[5] = rs.getString("eu.Descripcion");
+                modelo.addRow(registros);
+            }
+
+            JTableEmpleado.setModel(modelo);
+            
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+     public void listardh(){
+        String[] registros = new String[6];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
+
+        String SQL = "select c.IdCliente,c.Nombres,c.Apellidos,c.Telefono, c.CorreoElectronico,eu.Descripcion from Clientes c \n"
+                + "INNER JOIN EstadosUsuario eu ON eu.IdEstado = c.Estado WHERE c.Estado=0" ;
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("c.IdCliente");
+                registros[1] = rs.getString("c.Nombres");
+                registros[2] = rs.getString("c.Apellidos");
+                registros[3] = rs.getString("c.Telefono");
+                registros[4] = rs.getString("c.CorreoElectronico");
+                registros[5] = rs.getString("eu.Descripcion");
                 modelo.addRow(registros);
             }
 
@@ -956,8 +1059,7 @@ public class Cliente extends javax.swing.JFrame {
         }
     }
      
-     
-     private void limpiartabla(){
+     public void limpiartabla(){
         DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
         while (modelo.getRowCount() > 0)
         {
@@ -1076,6 +1178,8 @@ public class Cliente extends javax.swing.JFrame {
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel MenuIcon;
     private javax.swing.JPanel dashboardview;
+    private newscomponents.RSButtonIcon_new deshabilitado;
+    private newscomponents.RSButtonIcon_new habilitado;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

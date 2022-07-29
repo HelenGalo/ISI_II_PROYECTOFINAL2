@@ -67,7 +67,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
        
     public ActualizarEmpleado() {
         initComponents();
-        inicializar();
+         inicializar();
         buscardatos();
         aviso.setVisible(false);
     }
@@ -82,7 +82,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
        String puesto="";
        String numeroCta="";
        String estado="";
-       String IdTipodocumento="";
+       String Tipodocumento="";
        SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
        Date Fn = null;
        Date Fc = null;
@@ -90,23 +90,30 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
        String fechac="";
        String direccion="";
        
-       String SQL = "Select * from Empleados Where IdEmpleado="+Integer.parseInt(codigoe);
+       String SQL = "Select e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido, e.CorreoElectronico,e.DireccionEmpleado, e.NumeroCuenta, e.FechaNacimiento,e.FechaContratacion, p.Nombre,t.Descripcion, eu.Descripcion,g.Nombre from Empleados e \n"
+               + "INNER JOIN EstadosUsuario eu ON eu.IdEstado = e.IdEstado\n" +
+               "INNER JOIN Generos g ON g.IdGenero = e.IdGenero\n" +
+               "INNER JOIN Puestos p ON p.IdPuesto = e.IdPuesto\n" +
+               "INNER JOIN TipoDocumento t ON t.IdTipoDocumento = e.IdTipoDocumento\n" +
+               "Where IdEmpleado="+Integer.parseInt(codigoe);
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-              primernombre=rs.getString("PrimerNombre");
-              segundonombre =rs.getString("SegundoNombre");
-              Papellido =rs.getString("PrimerApellido");
-              Sapellido =rs.getString("SegundoApellido");
-              correo = rs.getString("CorreoElectronico");
-              puesto= String.valueOf(rs.getInt("IdPuesto"));
-              direccion = rs.getString("DireccionEmpleado");
-              numeroCta = String.valueOf(rs.getInt("NumeroCuenta"));
-              fechan =rs.getString("FechaNacimiento");
-              fechac=rs.getString("FechaContratacion");
-                
+              primernombre=rs.getString("e.PrimerNombre");
+              segundonombre =rs.getString("e.SegundoNombre");
+              Papellido =rs.getString("e.PrimerApellido");
+              Sapellido =rs.getString("e.SegundoApellido");
+              correo = rs.getString("e.CorreoElectronico");
+              direccion = rs.getString("e.DireccionEmpleado");
+              numeroCta = String.valueOf(rs.getInt("e.NumeroCuenta"));
+              fechan =rs.getString("e.FechaNacimiento");
+              fechac=rs.getString("e.FechaContratacion");
+              estado=rs.getString("eu.Descripcion");
+              genero=rs.getString("g.Nombre");
+              puesto=rs.getString("p.Nombre");
+              Tipodocumento=rs.getString("t.Descripcion");
                       
               
               
@@ -132,7 +139,11 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             correo1.setText(correo);
             cuenta.setText(String.valueOf(numeroCta));
             JCodigoDisponible.setText(codigoe);
-            
+            ActualT.setText(Tipodocumento);
+            actualg.setText(genero);
+            actualp.setText(puesto);
+            actual.setText(estado);
+           
        
             
 
@@ -556,7 +567,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         Genero = new javax.swing.JLabel();
         rSPanelCircle1 = new rojeru_san.rspanel.RSPanelCircle();
         JCodigoDisponible = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
+        actualp = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         ape2 = new rojeru_san.RSMTextFull();
         cuenta = new rojeru_san.RSMTextFull();
@@ -573,19 +584,27 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         JComboGen1 = new rojerusan.RSComboMetro();
         jLabel24 = new javax.swing.JLabel();
         JComboTipo2 = new rojerusan.RSComboMetro();
-        jLabel26 = new javax.swing.JLabel();
+        ActualT = new javax.swing.JLabel();
         ape1 = new rojeru_san.RSMTextFull();
         FechaContracion1 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         FN = new rojeru_san.componentes.RSDateChooser();
         FC = new rojeru_san.componentes.RSDateChooser();
-        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         aviso = new javax.swing.JLabel();
+        actual = new javax.swing.JLabel();
+        estado2 = new javax.swing.JLabel();
+        actualg = new javax.swing.JLabel();
+        Genero1 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -982,7 +1001,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(500, 500, 500)
-                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
+                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
@@ -996,7 +1015,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
             .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -1123,7 +1142,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         Genero.setForeground(new java.awt.Color(153, 0, 255));
         Genero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Genero.setText("Genero:");
-        jPanel3.add(Genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, 150, 30));
+        jPanel3.add(Genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 390, 150, 30));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -1151,11 +1170,11 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
         jPanel3.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 70, 70));
 
-        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("Puesto:");
-        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 420, 140, 30));
+        actualp.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        actualp.setForeground(new java.awt.Color(153, 0, 255));
+        actualp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        actualp.setText("Actual Puesto");
+        jPanel3.add(actualp, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 430, 140, 30));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
@@ -1197,7 +1216,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 ident1ActionPerformed(evt);
             }
         });
-        jPanel3.add(ident1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, 280, -1));
+        jPanel3.add(ident1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 470, 280, -1));
 
         JComboEstado.setColorArrow(new java.awt.Color(102, 0, 255));
         JComboEstado.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -1217,7 +1236,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 JComboEstadoActionPerformed(evt);
             }
         });
-        jPanel3.add(JComboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 300, 220, 30));
+        jPanel3.add(JComboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 310, 220, 30));
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(153, 0, 255));
@@ -1249,7 +1268,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 JCombopuestoActionPerformed(evt);
             }
         });
-        jPanel3.add(JCombopuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 360, 220, 30));
+        jPanel3.add(JCombopuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 390, 220, 30));
 
         pnomb.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pnomb.setPlaceholder("Ingresa nombre");
@@ -1284,7 +1303,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         estado.setForeground(new java.awt.Color(153, 0, 255));
         estado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         estado.setText("Estado:");
-        jPanel3.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, 160, 30));
+        jPanel3.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 310, 160, 30));
 
         JComboGen1.setColorArrow(new java.awt.Color(102, 0, 255));
         JComboGen1.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -1304,13 +1323,13 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 JComboGen1ActionPerformed(evt);
             }
         });
-        jPanel3.add(JComboGen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 420, 220, 30));
+        jPanel3.add(JComboGen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 470, 220, 30));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(153, 0, 255));
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel24.setText("No. Identificacion:");
-        jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, 170, 30));
+        jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 480, 170, 30));
 
         JComboTipo2.setColorArrow(new java.awt.Color(102, 0, 255));
         JComboTipo2.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -1330,13 +1349,13 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 JComboTipo2ActionPerformed(evt);
             }
         });
-        jPanel3.add(JComboTipo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 390, 280, 30));
+        jPanel3.add(JComboTipo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 280, 30));
 
-        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel26.setText("Tipo documento");
-        jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 170, 30));
+        ActualT.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        ActualT.setForeground(new java.awt.Color(153, 0, 255));
+        ActualT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ActualT.setText("Tipo documento");
+        jPanel3.add(ActualT, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, 170, 30));
 
         ape1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ape1.setPlaceholder("Ingresa nombre");
@@ -1361,23 +1380,59 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jPanel3.add(FN, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, -1, -1));
         jPanel3.add(FC, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 90, -1, -1));
 
-        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new9.setText("Modificar Cambios");
-        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
-        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
-        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new9ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, -1, 40));
-
         aviso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         aviso.setForeground(new java.awt.Color(255, 0, 0));
         aviso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         aviso.setText("*Correo invalido*");
         jPanel3.add(aviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 140, 170, 25));
+
+        actual.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        actual.setForeground(new java.awt.Color(153, 0, 255));
+        actual.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        actual.setText("Actual Estado:");
+        jPanel3.add(actual, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 270, 160, 30));
+
+        estado2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        estado2.setForeground(new java.awt.Color(153, 0, 255));
+        estado2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        estado2.setText("Actual Estado:");
+        jPanel3.add(estado2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 270, 160, 30));
+
+        actualg.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        actualg.setForeground(new java.awt.Color(153, 0, 255));
+        actualg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        actualg.setText("Actual Genero:");
+        jPanel3.add(actualg, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 350, 150, 30));
+
+        Genero1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Genero1.setForeground(new java.awt.Color(153, 0, 255));
+        Genero1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Genero1.setText("Genero:");
+        jPanel3.add(Genero1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 350, 150, 30));
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("Puesto:");
+        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 470, 140, 30));
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel25.setText("Puesto:");
+        jPanel3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 430, 140, 30));
+
+        jLabel28.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setText("Tipo documento");
+        jPanel3.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 170, 30));
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel29.setText("Tipo documento");
+        jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, 170, 30));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1398,6 +1453,17 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
 
+        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new9.setText("Modificar Cambios");
+        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
+        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new9ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
         dashboardview.setLayout(dashboardviewLayout);
         dashboardviewLayout.setHorizontalGroup(
@@ -1405,16 +1471,20 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1156, Short.MAX_VALUE)
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1047, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1047, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dashboardviewLayout.setVerticalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1712,12 +1782,14 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ActualT;
     private javax.swing.JLabel CorreoAE;
     private javax.swing.JLabel CorreoAE1;
     private rojeru_san.componentes.RSDateChooser FC;
     private rojeru_san.componentes.RSDateChooser FN;
     private javax.swing.JLabel FechaContracion1;
     private javax.swing.JLabel Genero;
+    private javax.swing.JLabel Genero1;
     private javax.swing.JPanel Header;
     private javax.swing.JLabel JCodigoDisponible;
     private rojerusan.RSComboMetro JComboEstado;
@@ -1725,6 +1797,9 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSComboMetro JComboTipo2;
     private rojerusan.RSComboMetro JCombopuesto;
     private javax.swing.JPanel MenuIcon;
+    private javax.swing.JLabel actual;
+    private javax.swing.JLabel actualg;
+    private javax.swing.JLabel actualp;
     private rojeru_san.RSMTextFull ape1;
     private rojeru_san.RSMTextFull ape2;
     private javax.swing.JLabel aviso;
@@ -1732,6 +1807,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.RSMTextFull cuenta;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JLabel estado;
+    private javax.swing.JLabel estado2;
     private javax.swing.JPanel iconminmaxclose;
     private rojeru_san.RSMTextFull ident1;
     private javax.swing.JLabel jLabel10;
@@ -1740,12 +1816,14 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

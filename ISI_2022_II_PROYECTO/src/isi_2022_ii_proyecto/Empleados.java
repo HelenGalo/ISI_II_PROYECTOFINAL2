@@ -8,10 +8,13 @@ package isi_2022_ii_proyecto;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Interfaces.Metodos;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionDeshabilitarCuenta;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -41,7 +44,21 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         listar();
     }
     
-    
+    public void deshabilitarem(){
+        String SQL = "UPDATE Empleados SET IdEstado=? Where IdEmpleado="+code;
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+          
+            preparedStmt.setInt (1, 0);
+            preparedStmt.execute();
+            
+            VentanaEmergente1 ve = new VentanaEmergente1();
+            ve.setVisible(true);
+
+        } catch (Exception e) {
+            System.out.println("ERROR" + e.getMessage());   
+        }
+    }
     public void  changecolor(JPanel hover, Color rand){
      hover.setBackground(rand);
  }
@@ -70,8 +87,77 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
              menushowhide.setPreferredSize(new Dimension(270,menushowhide.getHeight()));
              // changeimage(button, "C:\\Users\\orell\\OneDrive\\Documents\\NetBeansProjects\\ISI_2022_II_PROYECTOFINAL\\ISI_2022_II_PROYECTO\\src\\isi_2022_ii_proyecto\\image\\back_32px");
         }
-    }    
-    
+    }  
+    public void listardesh(){
+        String[] registros = new String[5];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
+
+        String SQL = "SELECT e.IdEmpleado,e.PrimerNombre,e.PrimerApellido,t.Valor,p.Nombre FROM Empleados e\n" +
+                    "INNER JOIN EstadosUsuario u ON e.IdEstado = u.IdEstado\n" +
+                    "LEFT JOIN DetalleEmpleadoDocumento t ON t.IdEmpleado = e.IdEmpleado\n" +
+                    "INNER JOIN Puestos p ON p.IdPuesto = e.IdPuesto WHERE e.IdEstado= 0 ";
+        
+        
+        
+        
+        
+        
+        
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdEmpleado");
+                registros[1] = rs.getString("PrimerNombre");
+                registros[2] = rs.getString("PrimerApellido");
+                registros[3] = rs.getString("Valor");
+                registros[4] = rs.getString("Nombre");
+                modelo.addRow(registros);
+            }
+
+            JTableEmpleado.setModel(modelo);
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    public void listarh(){
+        String[] registros = new String[5];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
+
+        String SQL = "SELECT e.IdEmpleado,e.PrimerNombre,e.PrimerApellido,t.Valor,p.Nombre FROM Empleados e\n" +
+                    "INNER JOIN EstadosUsuario u ON e.IdEstado = u.IdEstado\n" +
+                    "LEFT JOIN DetalleEmpleadoDocumento t ON t.IdEmpleado = e.IdEmpleado\n" +
+                    "INNER JOIN Puestos p ON p.IdPuesto = e.IdPuesto WHERE e.IdEstado= 1 ";
+        
+        
+        
+        
+        
+        
+        
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = rs.getString("IdEmpleado");
+                registros[1] = rs.getString("PrimerNombre");
+                registros[2] = rs.getString("PrimerApellido");
+                registros[3] = rs.getString("Valor");
+                registros[4] = rs.getString("Nombre");
+                modelo.addRow(registros);
+            }
+
+            JTableEmpleado.setModel(modelo);
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     
    
@@ -177,12 +263,14 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         rSLabelIcon17 = new rojerusan.RSLabelIcon();
         jScrollPane2 = new javax.swing.JScrollPane();
         JTableEmpleado = new rojerusan.RSTableMetro1();
-        JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        habilitado = new newscomponents.RSButtonIcon_new();
+        deshabilitado = new newscomponents.RSButtonIcon_new();
+        JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(150, 170));
@@ -665,6 +753,7 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         );
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
+        dashboardview.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -770,19 +859,7 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
 
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 960, 390));
 
-        JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
-        JTextbuscar.setPlaceholder("Busqueda rapida");
-        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTextbuscarActionPerformed(evt);
-            }
-        });
-        JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                JTextbuscarKeyReleased(evt);
-            }
-        });
-        jPanel3.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, -1, -1));
+        dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 111, 1030, 520));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -802,24 +879,43 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
 
-        javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
-        dashboardview.setLayout(dashboardviewLayout);
-        dashboardviewLayout.setHorizontalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(89, 89, 89))
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        dashboardviewLayout.setVerticalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
-        );
+        dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1156, -1));
+
+        habilitado.setBackground(new java.awt.Color(33, 150, 243));
+        habilitado.setText("Cuentas Habilitadas");
+        habilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        habilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
+        habilitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                habilitadoActionPerformed(evt);
+            }
+        });
+        dashboardview.add(habilitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, -1, -1));
+
+        deshabilitado.setBackground(new java.awt.Color(255, 153, 51));
+        deshabilitado.setText("Cuentas Deshabilitadas");
+        deshabilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        deshabilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_OFF);
+        deshabilitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deshabilitadoActionPerformed(evt);
+            }
+        });
+        dashboardview.add(deshabilitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 60, -1, -1));
+
+        JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        JTextbuscar.setPlaceholder("Busqueda rapida");
+        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTextbuscarActionPerformed(evt);
+            }
+        });
+        JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTextbuscarKeyReleased(evt);
+            }
+        });
+        dashboardview.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -853,7 +949,14 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
 
     private void rSButtonIcon_new6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new6ActionPerformed
-        // TODO add your handling code here:
+         if(code!=null){
+          ConfirmacionDeshabilitarCuenta em = new ConfirmacionDeshabilitarCuenta();
+           em.setEmple(this);
+           em.setTipo("Dempleado");
+           em.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+        }
     
     }//GEN-LAST:event_rSButtonIcon_new6ActionPerformed
 
@@ -1006,7 +1109,21 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         
     }//GEN-LAST:event_JTextbuscarActionPerformed
 
-    private void limpiartabla(){
+    private void habilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitadoActionPerformed
+        // TODO add your handling code here:
+        rSButtonIcon_new6.setEnabled(true);
+        limpiartabla();
+        listarh();
+    }//GEN-LAST:event_habilitadoActionPerformed
+
+    private void deshabilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deshabilitadoActionPerformed
+        // TODO add your handling code here:
+        rSButtonIcon_new6.setEnabled(false);
+        limpiartabla();
+        listardesh();
+    }//GEN-LAST:event_deshabilitadoActionPerformed
+
+    public void limpiartabla(){
         DefaultTableModel modelo =  (DefaultTableModel) JTableEmpleado.getModel();
         while (modelo.getRowCount() > 0)
         {
@@ -1093,6 +1210,8 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel MenuIcon;
     private javax.swing.JPanel dashboardview;
+    private newscomponents.RSButtonIcon_new deshabilitado;
+    private newscomponents.RSButtonIcon_new habilitado;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
