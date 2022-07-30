@@ -16,9 +16,9 @@ public class ConexionBD {
      Connection conectar = null;
 
     public Connection conexion() {
-
+    
         try {
-            String url = "jdbc:mysql://162.241.62.192:3306/fhopenet_GEVEC";
+            String url = "jdbc:mysql://162.241.62.192:3306/fhopenet_GEVEC?useSSL=false&allowPublicKeyRetrieval=true";
             String usuario = "fhopenet_gestionador";
             String password = "#+6ePODf*=,}";
             
