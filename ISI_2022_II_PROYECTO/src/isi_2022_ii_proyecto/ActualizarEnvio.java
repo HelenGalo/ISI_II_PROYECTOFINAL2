@@ -71,6 +71,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
      aviso.setVisible(false);
      aviso2.setVisible(false);
      avisoT.setVisible(false);
+     avisonom.setVisible(false);
     }
      public void validarConfirmacion(){
         if(estadosModificar=true){
@@ -154,8 +155,8 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         return idg;
         
     }
-
-      public void actualizarE(){
+  public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
+      public boolean actualizarE(){
         String nombres="";
         String Tari="";
         String telefono="";
@@ -181,14 +182,24 @@ public class ActualizarEnvio extends javax.swing.JFrame {
           VentanaEmergente1 ve = new VentanaEmergente1();
              ve.setVisible(true);
 
-        } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());
+       } catch (SQLException  e) {
+                String msj = "ERROR";
+                if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
+                  
+                    msj = "El registro ya se encuentra en la base de datos";
+                }
+                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.PLAIN_MESSAGE);
+                return false;
+        
+        }catch (Exception e) {
+               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.PLAIN_MESSAGE);
+            return false;
         }
-        
-        
+        return true;
+    }
         
        
-    }
+    
 
       public void MostrarE(){
         
@@ -236,6 +247,9 @@ public class ActualizarEnvio extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
           a= false;
       }
+      if (validarNombre(NombreC.getText())==false){
+           a=false;
+       }
       
        if(Tarifa.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese una Tarifa");
@@ -285,7 +299,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
  public boolean validarT(String cel){
             
         Pattern patron = Pattern
-                .compile("^[389]?[0-9]{3}?[-]?[0-9]{4}$");        
+                .compile("^[389]?[0-9]{4}?[0-9]{4}$");        
         Matcher comparar = patron.matcher(cel);
         return comparar.find();
      
@@ -298,6 +312,29 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         Matcher comparar = patron.matcher(tarifa);
         return comparar.find();
     }
+ 
+    public  boolean validarNombre(String mNombre){
+    boolean check=false;
+    
+    /*Verificamos que no sea null*/ 
+    if(mNombre != null){
+        /* 1ª Condición: que la letra inicial sea mayúscula*/
+        boolean isFirstUpper=Character.isUpperCase(mNombre.charAt(0));
+
+        /* 2ª Condición: que el tamaño sea >= 3 y <= 15*/
+        int stringSize=mNombre.length();
+        boolean isValidSize=(stringSize >= 3 && stringSize <= 15);
+
+        /* 3ª Condición: que contenga al menos un espacio*/
+        boolean isSpaced=mNombre.contains(" ");
+
+        /* Verificamos que las tres condiciones son verdaderas*/
+        check= ( (isFirstUpper==true)  && (isFirstUpper && isValidSize &&  isSpaced) );
+    }
+    /*Devolvemos el estado de la validación*/
+    return check;
+}
+
   
      
 
@@ -382,6 +419,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         aviso = new javax.swing.JLabel();
         avisoT = new javax.swing.JLabel();
         aviso2 = new javax.swing.JLabel();
+        avisonom = new javax.swing.JLabel();
         rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
@@ -1035,6 +1073,9 @@ public class ActualizarEnvio extends javax.swing.JFrame {
             }
         });
         NombreC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                NombreCKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 NombreCKeyTyped(evt);
             }
@@ -1096,6 +1137,12 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         aviso2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         aviso2.setText("*Teléfono invalído*");
         jPanel5.add(aviso2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 320, 180, -1));
+
+        avisonom.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        avisonom.setForeground(new java.awt.Color(255, 0, 0));
+        avisonom.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        avisonom.setText("*Formato invalido*");
+        jPanel5.add(avisonom, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 170, 180, -1));
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new9.setText("Modificar Cambios");
@@ -1375,16 +1422,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
     }//GEN-LAST:event_TarifaKeyTyped
 
     private void NombreCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyTyped
-       int key = evt.getKeyChar();
-
-    boolean mayusculas = key >= 65 && key <= 90;
-    boolean minusculas = key >= 97 && key <= 122;
-    boolean espacio = key == 32;
-            
-     if (!(minusculas || mayusculas || espacio))
-    {
-        evt.consume();
-    }
+  
     }//GEN-LAST:event_NombreCKeyTyped
 
     private void TelC1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelC1KeyReleased
@@ -1409,6 +1447,15 @@ public class ActualizarEnvio extends javax.swing.JFrame {
               //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
           }
     }//GEN-LAST:event_TarifaKeyReleased
+
+    private void NombreCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyReleased
+        if(validarNombre(NombreC.getText())){
+            avisonom.setVisible(false);
+        } else{
+                    avisonom.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+    }//GEN-LAST:event_NombreCKeyReleased
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1519,6 +1566,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel aviso;
     private javax.swing.JLabel aviso2;
     private javax.swing.JLabel avisoT;
+    private javax.swing.JLabel avisonom;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;

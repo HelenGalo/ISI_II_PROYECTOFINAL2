@@ -1,6 +1,7 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+
  */
 package isi_2022_ii_proyecto;
 
@@ -13,6 +14,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.List;
 import java.sql.Array;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,6 +31,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import static sun.jvm.hotspot.HelloWorld.e;
 /**
  *
  * @author orell
@@ -64,6 +67,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         aviso.setVisible(false);
           avisoT.setVisible(false);
          aviso2.setVisible(false);
+          aviso4.setVisible(false);
        
     }
       public void validarConfirmacion(){
@@ -151,8 +155,8 @@ public class AgregarEnvio extends javax.swing.JFrame {
         return idg;
         
     }
-
-      public void insertar(){
+     public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
+      public boolean insertar(){
         String nombres="";
         String Tari="";
         String telefono="";
@@ -166,7 +170,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         estado = Obtenerestado();
         
         String SQL = "INSERT INTO EmpresasEnvio(IdEmpresaEnvio,NombreEmpresa,Tarifa,Telefono,CorreoElectronico,Estado) VALUES"
-                + "(?, ?, ?, ?, ?)";
+                + "(?, ?, ?, ?, ?,?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, id);
@@ -174,30 +178,37 @@ public class AgregarEnvio extends javax.swing.JFrame {
             preparedStmt.setString   (3, Tari);
             preparedStmt.setString(4, telefono);
             preparedStmt.setString(5, correo);
-             preparedStmt.setInt(7, estado);
+             preparedStmt.setInt(6, estado);
             preparedStmt.execute();
             
            VentanaEmergente1 ve = new VentanaEmergente1();
              ve.setVisible(true);
-
-        } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());
+             
+      } catch (SQLException  e) {
+                String msj = "ERROR";
+                if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
+                  
+                    msj = "EL REGISTRO EXISTE EN LA BASE DE DATOS";
+                }
+                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
+                return false;
+        
+        }catch (Exception e) {
+               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
-        
-        
-        
-       
+        return true;
     }
-
       
-       
-    
-        
+         
     public Boolean validar(){
         boolean a=true;
       if(NombreC.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
           a= false;
+      }
+      if(validarNombre(NombreC.getText())==false){
+             a= false;
       }
       
        if(Tarifa.getText().isEmpty()){
@@ -259,7 +270,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
     public boolean validarT(String cel){
             
         Pattern patron = Pattern
-                .compile("^[389]?[0-9]{3}?[-]?[0-9]{4}$");        
+                .compile("^[389]?[0-9]{4}?[0-9]{4}$");         
         Matcher comparar = patron.matcher(cel);
         return comparar.find();
      
@@ -271,6 +282,27 @@ public class AgregarEnvio extends javax.swing.JFrame {
         Matcher comparar = patron.matcher(tarifa);
         return comparar.find();
     }
+    public static boolean validarNombre(String Nombre){
+    boolean check=false;
+    
+    /*Verificamos que no sea null*/ 
+    if(Nombre != null){
+        /* 1ª Condición: que la letra inicial sea mayúscula*/
+        boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
+
+        /* 2ª Condición: que el tamaño sea >= 3 y <= 15*/
+        int stringSize=Nombre.length();
+        boolean isValidSize=(stringSize >= 3 && stringSize <= 15);
+
+        /* 3ª Condición: que contenga al menos un espacio*/
+        boolean isSpaced=Nombre.contains(" ");
+
+        /* Verificamos que las tres condiciones son verdaderas*/
+        check= ( (isFirstUpper==true)  && (isFirstUpper && isValidSize &&  isSpaced) );
+    }
+    /*Devolvemos el estado de la validación*/
+    return check;
+}
    
 
     /**
@@ -954,6 +986,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
 
         TelC1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TelC1.setPlaceholder("                               ");
+        TelC1.setSoloNumeros(true);
         TelC1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TelC1ActionPerformed(evt);
@@ -1003,6 +1036,9 @@ public class AgregarEnvio extends javax.swing.JFrame {
             }
         });
         NombreC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                NombreCKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 NombreCKeyTyped(evt);
             }
@@ -1056,7 +1092,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         aviso4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         aviso4.setForeground(new java.awt.Color(255, 0, 0));
         aviso4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        aviso4.setText("**");
+        aviso4.setText("*Formato invalido*");
         jPanel5.add(aviso4, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 190, 180, -1));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -1338,6 +1374,15 @@ public class AgregarEnvio extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_guardarActionPerformed
+
+    private void NombreCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyReleased
+          if(validarNombre(NombreC.getText())){
+            aviso4.setVisible(false);
+        } else{
+                    aviso4.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+    }//GEN-LAST:event_NombreCKeyReleased
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1495,4 +1540,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.rspanel.RSPanelCircle rSPanelCircle1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
+
+    
 }

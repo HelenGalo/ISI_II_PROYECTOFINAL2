@@ -240,7 +240,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
      public boolean validarT(String cel){
             
         Pattern patron = Pattern
-                .compile("^[389]?[0-9]{3}?[-]?[0-9]{4}$");        
+                .compile("^[389]?[0-9]{4}?[0-9]{4}$");          
         Matcher comparar = patron.matcher(cel);
         return comparar.find();
      

@@ -677,7 +677,7 @@ public class Cliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo Cliente", "Nombres", "Apellidos", "Telefono", "Correo Electronico"
+                "Codigo Cliente", "Nombres", "Apellidos", "Telefono", "Correo Electronico", "Estado"
             }
         ));
         JTableEmpleado.setBackgoundHead(new java.awt.Color(60, 76, 143));
