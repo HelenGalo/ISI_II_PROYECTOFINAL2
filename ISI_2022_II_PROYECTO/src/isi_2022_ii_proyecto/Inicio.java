@@ -534,6 +534,11 @@ public class Inicio extends javax.swing.JFrame {
         rSLabelBorderRound1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rSLabelBorderRound1.setText("Recuperar Acceso");
         rSLabelBorderRound1.setFocusable(false);
+        rSLabelBorderRound1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rSLabelBorderRound1MouseClicked(evt);
+            }
+        });
         panelRound1.add(rSLabelBorderRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 390, 250, 40));
 
         Jtextuser.setPlaceholder("Ingresa tu usuario...");
@@ -813,6 +818,13 @@ public class Inicio extends javax.swing.JFrame {
     private void fullmax3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fullmax3MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_fullmax3MouseClicked
+
+    private void rSLabelBorderRound1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSLabelBorderRound1MouseClicked
+        // TODO add your handling code here:
+        RecuperarContraseña rc = new RecuperarContraseña();
+        rc.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_rSLabelBorderRound1MouseClicked
 
     /**
      * @param args the command line arguments
