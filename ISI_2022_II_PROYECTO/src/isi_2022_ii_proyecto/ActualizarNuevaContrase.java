@@ -7,6 +7,8 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.Conteo;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente2;
 import java.awt.Color;
 
 
@@ -25,22 +27,26 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import rojeru_san.complementos.RSUtilities;
 
 /**
  *
  * @author Edwin Rafael
  */
-public class Inicio extends javax.swing.JFrame {
+public class ActualizarNuevaContrase extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    String usuario;
-    String acceso;
-    String vacceso="";
+    
     Hashtable<String, String> cifrador = new Hashtable<String, String>();
-    String contradC="";
-    String corredor1="";
-    int intentos;
-    String des = "";
+
+    
+    public void setIdusuario(int idusuario) {
+        this.idusuario = idusuario;
+        buscarusuario(idusuario);
+     
+    }
+    
+    int idusuario;
 
     
  
@@ -49,9 +55,11 @@ public class Inicio extends javax.swing.JFrame {
      * Creates new form Inicio
      */
    
-    public Inicio() {
-        initComponents(); 
-        this.setLocationRelativeTo(null);
+    public ActualizarNuevaContrase() {
+        RSUtilities.setFullScreenJFrame(this);
+        initComponents();
+        RSUtilities.setOpaqueWindow(this, false);
+        RSUtilities.setOpacityComponent(this.jPanel1, 150);
         inicializarValoresC();
         
         
@@ -148,94 +156,47 @@ public class Inicio extends javax.swing.JFrame {
         cifrador.put(".", "Ho(+)D");
     }
     
-    public void obtenerInt(){
-          String Sql = "Select u.Intentos from Usuarios u Where u.Usuario="+"'"+usuario+"'";
-         try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(Sql);
-            while (rs.next()) {
-                intentos = rs.getInt("Intentos");
-            }
-            
-        
-        
-        
-         }catch(Exception e){
-             System.out.println("Error "+e.getMessage());
-             
-             
-          
-                    }
-        
-    }
+  
     
     
     
-    
-    private void buscar(Hashtable ri){
-        
-        Enumeration llaves = ri.keys();
-         while (llaves.hasMoreElements()) {
-                Object key = llaves.nextElement();
-                Object elemnt = cifrador.get(key);
-                if(cifrador.get(key).equals(corredor1)){
-                    contradC = contradC + key.toString();
-                  
-                
-                }
-
-            }
-    }
-    
-    private String desencriptar(String C){
-        String contraC = C;
-        char puntero;
-        
-        
-        int cont=0;
-        int cont1=0;
-       
-        for (int i=0; i<8; i++){
-            corredor1="";
-            for( int j=cont1; j<6+cont; j++){
-                puntero = contraC.charAt(j);
-                corredor1 = corredor1 + String.valueOf(puntero);
-               
-          
-            }
-       
-            
-            buscar(cifrador);
-            cont = cont + 6;
-            cont1=cont1+6;
-            
-                
-            }
  
-         return contradC;
-            
+    
+    public void buscarusuario(int id){
+        String usuario="";
+        String SQL = "SELECT u.Usuario FROM Usuarios u Where u.IdUsuario="+id;
            
-      
-        }
-    
-           
-    
-    
-    private void temporizador(){
-        Conteo n1 = new Conteo();
-        n1.setBarra(rSProgressCircleAnimated1);
-        n1.setInicio(this);
-        Thread h1 = new Thread(n1);
-        h1.start();
+         
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                usuario =rs.getString("u.Usuario");
+              
+            }
+    }catch(Exception e){
+        
+    }
+        
+        JUser.setText(usuario);
     }
     
+    
+           
+    
+    
+     
     
     private boolean validar(){
        
-        char [] arrayC=Jpassword.getPassword();
+        char [] arrayC=Jpassword1.getPassword();
         String acceso= new String(arrayC);
         
-        if(Jtextuser.getText().isEmpty() || acceso.isEmpty()){
+        char [] arrayC1=Jpassword.getPassword();
+        String acceso1= new String(arrayC1);
+        
+        if(acceso.isEmpty() ||acceso.isEmpty()  ){
             JOptionPane.showMessageDialog(rootPane, "Los valores estan vacios");
             return false;
         }else{
@@ -243,137 +204,75 @@ public class Inicio extends javax.swing.JFrame {
         }
     }
     
-    
-    private void refrescarIntentos(){
+    private String encriptar(String c){
+        String contra = c;
+        char puntero;
+        String contraC = "";
+        //Cifrador de mayusculas//
         
-        
-       String Sql = "Select u.Intentos from Usuarios u Where u.Usuario="+"'"+usuario+"'";
-         try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(Sql);
-            while (rs.next()) {
-                intentos = rs.getInt("Intentos");
-            }
+       
+        for(int i=0;i<8;i++){
+            puntero = contra.charAt(i);
+            contraC = contraC + cifrador.get(String.valueOf(puntero));
             
         
-        
-        
-         }catch(Exception e){
-             System.out.println("Error "+e.getMessage());
-             
-             
-          
-                    }
-        
-        
-        
-        String SQL1 = "UPDATE Usuarios u SET u.Intentos=? WHERE u.Usuario="+"'"+usuario+"'";
-  
-        try {
-            int intentosAct= intentos-1;
-            PreparedStatement preparedStmt = con.prepareStatement(SQL1);
-            preparedStmt.setInt (1, intentosAct);
-            preparedStmt.execute();
             
-             JOptionPane.showMessageDialog(null, "Intentos Refresacados");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
         }
         
+      return contraC;
+        
     }
     
-    private void obteneracceso(){
-      
-        char [] arrayC=Jpassword.getPassword();
+    
+    private void actualizarcontrasenueva(){
+        char [] arrayC=Jpassword1.getPassword();
+        String acceso= new String(arrayC);
         
+        char [] arrayC1=Jpassword.getPassword();
+        String acceso1= new String(arrayC1);
+        int intentos= 3;
         
-        usuario=Jtextuser.getText();
-        acceso= new String(arrayC);
-        String Sql;
-        
-        Sql = "Select u.Contrase from Usuarios u Where u.Usuario="+"'"+usuario+"'";
-         try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(Sql);
-            while (rs.next()) {
-                vacceso = rs.getString("Contrase");
+        if(acceso.equals(acceso1)){
+            String SQL1 = "UPDATE Usuarios u SET u.Intentos=?, u.Contrase=? WHERE u.Usuario="+"'"+JUser.getText()+"';";
+  
+            try {
+                
+                PreparedStatement preparedStmt = con.prepareStatement(SQL1);
+                preparedStmt.setInt (1, intentos);
+                preparedStmt.setString (2, encriptar(acceso1));
+                preparedStmt.execute();
+                
+                VentanaEmergente2 v = new VentanaEmergente2();
+                v.setAnc(this);
+                v.setVisible(true);
+
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
             }
-            
+        }
         
+    
         
-        
-         }catch(Exception e){
-             System.out.println("Error "+e.getMessage());
-          
-                    }
-         
-         
-         System.out.println("contra ingre "+acceso);
-         System.out.println("user "+usuario);
-         System.out.println("contra reci "+vacceso);
-         System.out.println("contra reci "+vacceso.length());
-         if(vacceso.length()==0){
-            JOptionPane.showMessageDialog(null, "Acceso denegado, por favor revise las credenciales");
-         }else{
-            obtenerInt();
-            temporizador(); 
-         }
-         
+       
         
     }
+    
+   
     
     public void  changecolor(JPanel hover, Color rand){
      hover.setBackground(rand);
     }
     
-    public void logearse(){
-        contradC="";
+    public void cerrarc(){
         try {
-            des = desencriptar(vacceso);
-        } catch (Exception e) {
-            des = null;
-        }
-        
-        System.out.println("la contra es: "+vacceso);
-        System.out.println("la contrase des es: "+des);
-        System.out.println("la contra1 es: "+acceso);
-        if(des==null){
-             System.out.println("la contrase des es: null");
-        }
-           
-        if(acceso.equals(des)){
-            
-             if(intentos>0){
-                 
-                try {
-                    con.close();
-                    Menu me = new Menu();
-                    me.setUsuario(usuario.toString());
-                    me.setVisible(true);
-                    me.refrescarInt();
-                    this.dispose();
-                 } catch (SQLException ex) {
-                    System.out.println("Error: "+ ex.getMessage());
-             }
-             }else{
-                 JOptionPane.showMessageDialog(null, "Acceso denegado, usuario bloqueado, contacte al administrador");
-             }
-             
-           
-             
-        }else{
-            if(intentos>0){
-                 refrescarIntentos();
-                 JOptionPane.showMessageDialog(null, "Acceso denegado, por favor revise las credenciales");
-             }else{
-                 JOptionPane.showMessageDialog(null, "Acceso denegado, usuario bloqueado, contacte al administrador");
-             }
-             
-             
-             
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ActualizarNuevaContrase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -392,15 +291,10 @@ public class Inicio extends javax.swing.JFrame {
         panelRound5 = new isi_2022_ii_proyecto.Recursos.PanelRound();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        rSLabelIcon5 = new rojerusan.RSLabelIcon();
+        F1 = new rojeru_san.rslabel.RSLabelLineWrap();
+        JUser = new javax.swing.JLabel();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
-        rSLabelBorderRound1 = new rojeru_san.rslabel.RSLabelBorderRound();
-        Jtextuser = new rojeru_san.RSMTextFull();
         Jpassword = new rojeru_san.RSMPassView();
-        rSProgressCircleAnimated1 = new rojerusan.RSProgressCircleAnimated();
         rSLabelFecha2 = new rojeru_san.RSLabelFecha();
         F = new rojeru_san.rslabel.RSLabelLineWrap();
         fullmax3 = new javax.swing.JLabel();
@@ -409,7 +303,9 @@ public class Inicio extends javax.swing.JFrame {
         rSLabelIcon3 = new rojerusan.RSLabelIcon();
         rSButtonRound1 = new rojerusan.RSButtonRound();
         rSLabelIcon4 = new rojerusan.RSLabelIcon();
-        F1 = new rojeru_san.rslabel.RSLabelLineWrap();
+        jLabel7 = new javax.swing.JLabel();
+        Jpassword1 = new rojeru_san.RSMPassView();
+        rSLabelIcon5 = new rojerusan.RSLabelIcon();
         Header = new javax.swing.JPanel();
         iconminmaxclose = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -425,7 +321,7 @@ public class Inicio extends javax.swing.JFrame {
         setBackground(new java.awt.Color(252, 235, 255));
         setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(236, 245, 251));
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setPreferredSize(new java.awt.Dimension(1444, 834));
 
         panelRound1.setBackground(new java.awt.Color(255, 255, 255));
@@ -507,56 +403,33 @@ public class Inicio extends javax.swing.JFrame {
         jLabel4.setText("GEVEC");
         panelRound2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("contacto con el Administrador");
-        panelRound2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 210, 30));
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Si aún no cuentas con un usuario, ponte en contacto ");
-        panelRound2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 390, 30));
+        F1.setForeground(new java.awt.Color(255, 255, 255));
+        F1.setColorForeground(new java.awt.Color(255, 255, 255));
+        F1.setFuente(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
+        F1.setInheritsPopupMenu(true);
+        F1.setName("GBGHY"); // NOI18N
+        F1.setText("FAITH HOPE COMPANY © 2022");
+        panelRound2.add(F1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 281, 29));
 
         panelRound1.add(panelRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 410, 460));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(19, 99, 223));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Inicia session con tu cuenta");
-        panelRound1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 230, 30));
-
-        rSLabelIcon5.setForeground(new java.awt.Color(19, 99, 223));
-        rSLabelIcon5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SELECT_ALL);
-        panelRound1.add(rSLabelIcon5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 400, 30, 20));
+        JUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        JUser.setForeground(new java.awt.Color(19, 99, 223));
+        JUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        JUser.setText("Usuario");
+        panelRound1.add(JUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 250, 30));
         panelRound1.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 110, -1));
 
-        rSLabelBorderRound1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSLabelBorderRound1.setText("Recuperar Acceso");
-        rSLabelBorderRound1.setFocusable(false);
-        rSLabelBorderRound1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rSLabelBorderRound1MouseClicked(evt);
-            }
-        });
-        panelRound1.add(rSLabelBorderRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 390, 250, 40));
-
-        Jtextuser.setPlaceholder("Ingresa tu usuario...");
-        panelRound1.add(Jtextuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, -1));
-        panelRound1.add(Jpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, -1, -1));
-
-        rSProgressCircleAnimated1.setForeground(new java.awt.Color(19, 99, 223));
-        rSProgressCircleAnimated1.setString("");
-        rSProgressCircleAnimated1.setVisible(false);
-        panelRound1.add(rSProgressCircleAnimated1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 40, 40));
+        Jpassword.setPlaceholder("Confirmar Contraseña");
+        panelRound1.add(Jpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 330, -1, -1));
         panelRound1.add(rSLabelFecha2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 110, 20));
 
         F.setColorForeground(new java.awt.Color(19, 99, 223));
         F.setFuente(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
         F.setInheritsPopupMenu(true);
         F.setName("GBGHY"); // NOI18N
-        F.setText("B I E N V E N I D O");
-        panelRound1.add(F, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 160, 20));
+        F.setText("N U E V A  C O N T R A S E Ñ A");
+        panelRound1.add(F, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 270, 20));
 
         fullmax3.setBackground(new java.awt.Color(5, 10, 46));
         fullmax3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -579,14 +452,14 @@ public class Inicio extends javax.swing.JFrame {
         panelRound1.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 70, 70));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ASSIGNMENT_IND);
-        panelRound1.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 30, 30));
+        panelRound1.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 30, 30));
 
         rSLabelIcon3.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
         panelRound1.add(rSLabelIcon3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 30, 20));
 
         rSButtonRound1.setBackground(new java.awt.Color(19, 99, 223));
-        rSButtonRound1.setText("Iniciar Sesion");
+        rSButtonRound1.setText("Cambiar Contraseña");
         rSButtonRound1.setColorHover(new java.awt.Color(255, 255, 255));
         rSButtonRound1.setColorTextHover(new java.awt.Color(19, 99, 223));
         rSButtonRound1.setFocusable(false);
@@ -600,15 +473,20 @@ public class Inicio extends javax.swing.JFrame {
                 rSButtonRound1ActionPerformed(evt);
             }
         });
-        panelRound1.add(rSButtonRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 340, 250, -1));
+        panelRound1.add(rSButtonRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 400, 250, -1));
 
-        rSLabelIcon4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SCREEN_LOCK_ROTATION);
-        panelRound1.add(rSLabelIcon4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 30, 30));
+        rSLabelIcon4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SCREEN_LOCK_PORTRAIT);
+        panelRound1.add(rSLabelIcon4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 30, 30));
 
-        F1.setFuente(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
-        F1.setInheritsPopupMenu(true);
-        F1.setName("GBGHY"); // NOI18N
-        F1.setText("FAITH HOPE COMPANY © 2022");
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(19, 99, 223));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Ingrese una nueva contraseña, de 8 caracteres en total.");
+        panelRound1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 390, 30));
+        panelRound1.add(Jpassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, -1, -1));
+
+        rSLabelIcon5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SCREEN_LOCK_ROTATION);
+        panelRound1.add(rSLabelIcon5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 30, 30));
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
@@ -749,36 +627,30 @@ public class Inicio extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, 1114, Short.MAX_VALUE)
+            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(136, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(F1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(F1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1114, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
@@ -787,8 +659,13 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne4ActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
+        try {
+            // TODO add your handling code here:
+            con.close();
+            System.exit(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(ActualizarNuevaContrase.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
 
     private void rSButtonIconOne5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne5ActionPerformed
@@ -797,9 +674,16 @@ public class Inicio extends javax.swing.JFrame {
 
     private void rSButtonRound1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonRound1ActionPerformed
         // TODO add your handling code here:
+        
         if(validar()==true){
-            obteneracceso();
+            actualizarcontrasenueva();
+        }else{
+            
         }
+      
+
+        
+        
     }//GEN-LAST:event_rSButtonRound1ActionPerformed
 
     private void rSButtonRound1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSButtonRound1MouseEntered
@@ -819,18 +703,6 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fullmax3MouseClicked
 
-    private void rSLabelBorderRound1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSLabelBorderRound1MouseClicked
-        try {
-            // TODO add your handling code here:
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        RecuperarContraseña rc = new RecuperarContraseña();
-        rc.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_rSLabelBorderRound1MouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -848,21 +720,23 @@ public class Inicio extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarNuevaContrase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarNuevaContrase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarNuevaContrase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarNuevaContrase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Inicio().setVisible(true);
+                new ActualizarNuevaContrase().setVisible(true);
                
                
             }
@@ -873,17 +747,16 @@ public class Inicio extends javax.swing.JFrame {
     private rojeru_san.rslabel.RSLabelLineWrap F;
     private rojeru_san.rslabel.RSLabelLineWrap F1;
     private javax.swing.JPanel Header;
+    private javax.swing.JLabel JUser;
     private rojeru_san.RSMPassView Jpassword;
-    private rojeru_san.RSMTextFull Jtextuser;
+    private rojeru_san.RSMPassView Jpassword1;
     private javax.swing.JLabel fullmax3;
     private javax.swing.JPanel iconminmaxclose;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel linesetting3;
@@ -897,7 +770,6 @@ public class Inicio extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private rojerusan.RSButtonRound rSButtonRound1;
-    private rojeru_san.rslabel.RSLabelBorderRound rSLabelBorderRound1;
     private rojeru_san.RSLabelFecha rSLabelFecha2;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
@@ -905,7 +777,6 @@ public class Inicio extends javax.swing.JFrame {
     private rojerusan.RSLabelIcon rSLabelIcon3;
     private rojerusan.RSLabelIcon rSLabelIcon4;
     private rojerusan.RSLabelIcon rSLabelIcon5;
-    private rojerusan.RSProgressCircleAnimated rSProgressCircleAnimated1;
     // End of variables declaration//GEN-END:variables
 }
 

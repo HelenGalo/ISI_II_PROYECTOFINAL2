@@ -7,6 +7,7 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.Conteo;
+import isi_2022_ii_proyecto.Recursos.MInformacionCorreo;
 import java.awt.Color;
 
 
@@ -24,6 +25,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -48,11 +51,12 @@ public class RecuperarContraseña extends javax.swing.JFrame {
     Hashtable<String, String> cifrador = new Hashtable<String, String>();
     String contradC="";
     String corredor1="";
-    int intentos;
     String des = "";
     String codigoacceso="";
     String codigoplano="";
     String correo="";
+    boolean a=false;
+    boolean b=false;
 
     
  
@@ -64,13 +68,51 @@ public class RecuperarContraseña extends javax.swing.JFrame {
     public RecuperarContraseña() {
         initComponents(); 
         this.setLocationRelativeTo(null);
+        label1.setVisible(false);
+        inicializarValoresC();
+        
        
         
         
         
         
     }
+   
     
+    public void MostrarMensaje(){
+        MInformacionCorreo mic = new MInformacionCorreo();
+        mic.setVisible(true);
+    }
+    
+    
+    public boolean ExistenciaCorreo(){
+        String correo="";
+        String SQL = "SELECT e.CorreoElectronico FROM Empleados e\n" +
+                    "Where e.CorreoElectronico='"+rSTextFullRound1.getText()+"';";
+           
+         
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                correo =rs.getString("e.CorreoElectronico");
+              
+            }
+        }catch(Exception e ){
+            System.out.println("ERROR"+ e.getMessage());
+        
+        }
+        
+        if(correo.isEmpty()){
+            return false;
+            
+        }else{
+            return true;
+        }
+        
+        
+    }
     
    
 
@@ -83,512 +125,512 @@ public class RecuperarContraseña extends javax.swing.JFrame {
             int value = random.nextInt((9 - 1) + 1) + 1;
             codigoacceso = codigoacceso + String.valueOf(value)+" ";
             codigoplano = codigoplano+String.valueOf(value);
-            System.out.println(value);
+            
         }
         
         
         
-           String p="<!DOCTYPE HTML PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional //EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
-"<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\n" +
-"<head>\n" +
-"<!--[if gte mso 9]>\n" +
-"<xml>\n" +
-"  <o:OfficeDocumentSettings>\n" +
-"    <o:AllowPNG/>\n" +
-"    <o:PixelsPerInch>96</o:PixelsPerInch>\n" +
-"  </o:OfficeDocumentSettings>\n" +
-"</xml>\n" +
-"<![endif]-->\n" +
-"  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" +
-"  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-"  <meta name=\"x-apple-disable-message-reformatting\">\n" +
-"  <!--[if !mso]><!--><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><!--<![endif]-->\n" +
-"  <title></title>\n" +
-"  \n" +
-"    <style type=\"text/css\">\n" +
-"      @media only screen and (min-width: 620px) {\n" +
-"  .u-row {\n" +
-"    width: 600px !important;\n" +
-"  }\n" +
-"  .u-row .u-col {\n" +
-"    vertical-align: top;\n" +
-"  }\n" +
-"\n" +
-"  .u-row .u-col-50 {\n" +
-"    width: 300px !important;\n" +
-"  }\n" +
-"\n" +
-"  .u-row .u-col-100 {\n" +
-"    width: 600px !important;\n" +
-"  }\n" +
-"\n" +
-"}\n" +
-"\n" +
-"@media (max-width: 620px) {\n" +
-"  .u-row-container {\n" +
-"    max-width: 100% !important;\n" +
-"    padding-left: 0px !important;\n" +
-"    padding-right: 0px !important;\n" +
-"  }\n" +
-"  .u-row .u-col {\n" +
-"    min-width: 320px !important;\n" +
-"    max-width: 100% !important;\n" +
-"    display: block !important;\n" +
-"  }\n" +
-"  .u-row {\n" +
-"    width: calc(100% - 40px) !important;\n" +
-"  }\n" +
-"  .u-col {\n" +
-"    width: 100% !important;\n" +
-"  }\n" +
-"  .u-col > div {\n" +
-"    margin: 0 auto;\n" +
-"  }\n" +
-"}\n" +
-"body {\n" +
-"  margin: 0;\n" +
-"  padding: 0;\n" +
-"}\n" +
-"\n" +
-"table,\n" +
-"tr,\n" +
-"td {\n" +
-"  vertical-align: top;\n" +
-"  border-collapse: collapse;\n" +
-"}\n" +
-"\n" +
-"p {\n" +
-"  margin: 0;\n" +
-"}\n" +
-"\n" +
-".ie-container table,\n" +
-".mso-container table {\n" +
-"  table-layout: fixed;\n" +
-"}\n" +
-"\n" +
-"* {\n" +
-"  line-height: inherit;\n" +
-"}\n" +
-"\n" +
-"a[x-apple-data-detectors='true'] {\n" +
-"  color: inherit !important;\n" +
-"  text-decoration: none !important;\n" +
-"}\n" +
-"\n" +
-"table, td { color: #000000; } a { color: #161a39; text-decoration: underline; }\n" +
-"    </style>\n" +
-"  \n" +
-"  \n" +
-"\n" +
-"<!--[if !mso]><!--><link href=\"https://fonts.googleapis.com/css?family=Lato:400,700&display=swap\" rel=\"stylesheet\" type=\"text/css\"><!--<![endif]-->\n" +
-"\n" +
-"</head>\n" +
-"\n" +
-"<body class=\"clean-body u_body\" style=\"margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #f9f9f9;color: #000000\">\n" +
-"  <!--[if IE]><div class=\"ie-container\"><![endif]-->\n" +
-"  <!--[if mso]><div class=\"mso-container\"><![endif]-->\n" +
-"  <table style=\"border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #f9f9f9;width:100%\" cellpadding=\"0\" cellspacing=\"0\">\n" +
-"  <tbody>\n" +
-"  <tr style=\"vertical-align: top\">\n" +
-"    <td style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
-"    <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td align=\"center\" style=\"background-color: #f9f9f9;\"><![endif]-->\n" +
-"    \n" +
-"\n" +
-"<div class=\"u-row-container\" style=\"padding: 0px;background-color: #f9f9f9\">\n" +
-"  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #f9f9f9;\">\n" +
-"    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
-"      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: #f9f9f9;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #f9f9f9;\"><![endif]-->\n" +
-"      \n" +
-"<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
-"<div class=\"u-col u-col-100\" style=\"max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;\">\n" +
-"  <div style=\"height: 100%;width: 100% !important;\">\n" +
-"  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
-"  \n" +
-"<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
-"  <tbody>\n" +
-"    <tr>\n" +
-"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:15px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
-"        \n" +
-"  <table height=\"0px\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #f9f9f9;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
-"    <tbody>\n" +
-"      <tr style=\"vertical-align: top\">\n" +
-"        <td style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
-"          <span>&#160;</span>\n" +
-"        </td>\n" +
-"      </tr>\n" +
-"    </tbody>\n" +
-"  </table>\n" +
-"\n" +
-"      </td>\n" +
-"    </tr>\n" +
-"  </tbody>\n" +
-"</table>\n" +
-"\n" +
-"  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
-"  </div>\n" +
-"</div>\n" +
-"<!--[if (mso)|(IE)]></td><![endif]-->\n" +
-"      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
-"    </div>\n" +
-"  </div>\n" +
-"</div>\n" +
-"\n" +
-"\n" +
-"\n" +
-"<div class=\"u-row-container\" style=\"padding: 0px;background-color: transparent\">\n" +
-"  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ffffff;\">\n" +
-"    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
-"      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: transparent;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #ffffff;\"><![endif]-->\n" +
-"      \n" +
-"<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
-"<div class=\"u-col u-col-100\" style=\"max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;\">\n" +
-"  <div style=\"height: 100%;width: 100% !important;\">\n" +
-"  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
-"  \n" +
-"<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
-"  <tbody>\n" +
-"    <tr>\n" +
-"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:25px 10px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
-"        \n" +
-"<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n" +
-"  <tr>\n" +
-"    <td style=\"padding-right: 0px;padding-left: 0px;\" align=\"center\">\n" +
-"      \n" +
-"     <img src=\"https://drive.google.com/uc?id=1kgKK3DHWpqc-b0q9P67-VnHn7J6EOqzZ\" role=\"presentation\" width=\"130\" class=\"sc-cHGsZl bHiaRe\" style=\"max-width: 128px; display: block;\">\n" +
-"      \n" +
-"    </td>\n" +
-"  </tr>\n" +
-"</table>\n" +
-"\n" +
-"      </td>\n" +
-"    </tr>\n" +
-"  </tbody>\n" +
-"</table>\n" +
-"\n" +
-"  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
-"  </div>\n" +
-"</div>\n" +
-"<!--[if (mso)|(IE)]></td><![endif]-->\n" +
-"      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
-"    </div>\n" +
-"  </div>\n" +
-"</div>\n" +
-"\n" +
-"\n" +
-"\n" +
-"<div class=\"u-row-container\" style=\"padding: 0px;background-color: transparent\">\n" +
-"  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #161a39;\">\n" +
-"    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
-"      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: transparent;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #161a39;\"><![endif]-->\n" +
-"      \n" +
-"<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
-"<div class=\"u-col u-col-100\" style=\"max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;\">\n" +
-"  <div style=\"height: 100%;width: 100% !important;\">\n" +
-"  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
-"  \n" +
-"<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
-"  <tbody>\n" +
-"    <tr>\n" +
-"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:35px 10px 10px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
-"        \n" +
-"<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n" +
-"  <tr>\n" +
-"    <td style=\"padding-right: 0px;padding-left: 0px;\" align=\"center\">\n" +
-"      \n" +
-"      <img align=\"center\" border=\"0\" src=\"images/image-6.png\" alt=\"Image\" title=\"Image\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 10%;max-width: 58px;\" width=\"58\"/>\n" +
-"      \n" +
-"    </td>\n" +
-"  </tr>\n" +
-"</table>\n" +
-"\n" +
-"      </td>\n" +
-"    </tr>\n" +
-"  </tbody>\n" +
-"</table>\n" +
-"\n" +
-"<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
-"  <tbody>\n" +
-"    <tr>\n" +
-"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:0px 10px 30px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
-"        \n" +
-"  <div style=\"line-height: 140%; text-align: left; word-wrap: break-word;\">\n" +
-"    <p style=\"font-size: 14px; line-height: 140%; text-align: center;\"><span style=\"font-size: 28px; line-height: 39.2px; color: #ffffff; font-family: Lato, sans-serif;\">Porfavor restablece tu contraseña</span></p>\n" +
-"  </div>\n" +
-"\n" +
-"      </td>\n" +
-"    </tr>\n" +
-"  </tbody>\n" +
-"</table>\n" +
-"\n" +
-"  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
-"  </div>\n" +
-"</div>\n" +
-"<!--[if (mso)|(IE)]></td><![endif]-->\n" +
-"      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
-"    </div>\n" +
-"  </div>\n" +
-"</div>\n" +
-"\n" +
-"\n" +
-"\n" +
-"<div class=\"u-row-container\" style=\"padding: 0px;background-color: transparent\">\n" +
-"  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ffffff;\">\n" +
-"    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
-"      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: transparent;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #ffffff;\"><![endif]-->\n" +
-"      \n" +
-"<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
-"<div class=\"u-col u-col-100\" style=\"max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;\">\n" +
-"  <div style=\"height: 100%;width: 100% !important;\">\n" +
-"  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
-"  \n" +
-"<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
-"  <tbody>\n" +
-"    <tr>\n" +
-"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:40px 40px 30px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
-"        \n" +
-"  <div style=\"line-height: 140%; text-align: left; word-wrap: break-word;\">\n" +
-"    <p style=\"font-size: 14px; line-height: 140%;\"><span style=\"font-size: 18px; line-height: 25.2px; color: #666666;\">Hola,</span></p>\n" +
-"<p style=\"font-size: 14px; line-height: 140%;\"> </p>\n" +
-"<p style=\"font-size: 14px; line-height: 140%;\"><span style=\"font-size: 18px; line-height: 25.2px; color: #666666;\">Hemos recibido tu solicitud para cambiar tu contraseña, tu código de acceso es:<br /><br /></span></p>\n" +
-"<p style=\"font-size: 14px; line-height: 140%; text-align: center;\"><span style=\"font-size: 24px; line-height: 33.6px; color: #f1c40f;\"><strong><span style=\"line-height: 33.6px; font-size: 24px;\">"+codigoacceso+"</span></strong></span></p>\n" +
-"<p style=\"font-size: 14px; line-height: 140%;\"> </p>\n" +
-"<p style=\"line-height: 140%; font-size: 14px;\"><span style=\"color: #666666; font-size: 14px; line-height: 19.6px;\"><span style=\"line-height: 19.6px; font-size: 14px;\"><span style=\"font-size: 18px; line-height: 25.2px;\">Por favor ingresa el código en el sistema <strong>GEVEC </strong>para restablecer la contraseña.</span></span></span></p>\n" +
-"  </div>\n" +
-"\n" +
-"      </td>\n" +
-"    </tr>\n" +
-"  </tbody>\n" +
-"</table>\n" +
-"\n" +
-"<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
-"  <tbody>\n" +
-"    <tr>\n" +
-"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:40px 40px 30px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
-"        \n" +
-"  <div style=\"line-height: 140%; text-align: left; word-wrap: break-word;\">\n" +
-"    <p style=\"font-size: 14px; line-height: 140%;\"><span style=\"color: #888888; font-size: 14px; line-height: 19.6px;\"><em><span style=\"font-size: 16px; line-height: 22.4px;\">Por favor ignora este mensaje si no has solicitado cambiar tu contraseña. </span></em></span></p>\n" +
-"  </div>\n" +
-"\n" +
-"      </td>\n" +
-"    </tr>\n" +
-"  </tbody>\n" +
-"</table>\n" +
-"\n" +
-"  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
-"  </div>\n" +
-"</div>\n" +
-"<!--[if (mso)|(IE)]></td><![endif]-->\n" +
-"      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
-"    </div>\n" +
-"  </div>\n" +
-"</div>\n" +
-"\n" +
-"\n" +
-"\n" +
-"<div class=\"u-row-container\" style=\"padding: 0px;background-color: transparent\">\n" +
-"  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #18163a;\">\n" +
-"    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
-"      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: transparent;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #18163a;\"><![endif]-->\n" +
-"      \n" +
-"<!--[if (mso)|(IE)]><td align=\"center\" width=\"300\" style=\"width: 300px;padding: 20px 20px 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
-"<div class=\"u-col u-col-50\" style=\"max-width: 320px;min-width: 300px;display: table-cell;vertical-align: top;\">\n" +
-"  <div style=\"height: 100%;width: 100% !important;\">\n" +
-"  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 20px 20px 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
-"  \n" +
-"<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
-"  <tbody>\n" +
-"    <tr>\n" +
-"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
-"        \n" +
-"  <div style=\"line-height: 140%; text-align: left; word-wrap: break-word;\">\n" +
-"    <p style=\"font-size: 14px; line-height: 140%;\"><span style=\"font-size: 16px; line-height: 22.4px; color: #ecf0f1;\">Contacto</span></p>\n" +
-"<p style=\"font-size: 14px; line-height: 140%;\"><span style=\"font-size: 14px; line-height: 19.6px; color: #ecf0f1;\">Tegucigalpa</span><span style=\"font-size: 14px; line-height: 19.6px; color: #ecf0f1;\"> | TI@fhope.net</span></p>\n" +
-"  </div>\n" +
-"\n" +
-"      </td>\n" +
-"    </tr>\n" +
-"  </tbody>\n" +
-"</table>\n" +
-"\n" +
-"  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
-"  </div>\n" +
-"</div>\n" +
-"<!--[if (mso)|(IE)]></td><![endif]-->\n" +
-"<!--[if (mso)|(IE)]><td align=\"center\" width=\"300\" style=\"width: 300px;padding: 0px 0px 0px 20px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
-"<div class=\"u-col u-col-50\" style=\"max-width: 320px;min-width: 300px;display: table-cell;vertical-align: top;\">\n" +
-"  <div style=\"height: 100%;width: 100% !important;\">\n" +
-"  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px 0px 0px 20px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
-"  \n" +
-"<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
-"  <tbody>\n" +
-"    <tr>\n" +
-"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:25px 10px 10px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
-"        \n" +
-"<div align=\"left\">\n" +
-"  <div style=\"display: table; max-width:187px;\">\n" +
-"  <!--[if (mso)|(IE)]><table width=\"187\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"border-collapse:collapse;\" align=\"left\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse; mso-table-lspace: 0pt;mso-table-rspace: 0pt; width:187px;\"><tr><![endif]-->\n" +
-"  \n" +
-"    \n" +
-"    <!--[if (mso)|(IE)]><td width=\"32\" style=\"width:32px; padding-right: 15px;\" valign=\"top\"><![endif]-->\n" +
-"    <table align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"32\" height=\"32\" style=\"width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 15px\">\n" +
-"      <tbody><tr style=\"vertical-align: top\"><td align=\"left\" valign=\"middle\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
-"        <a href=\" \" title=\"Facebook\" target=\"_blank\">\n" +
-"          <img src=\"images/image-1.png\" alt=\"Facebook\" title=\"Facebook\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
-"        </a>\n" +
-"      </td></tr>\n" +
-"    </tbody></table>\n" +
-"    <!--[if (mso)|(IE)]></td><![endif]-->\n" +
-"    \n" +
-"    <!--[if (mso)|(IE)]><td width=\"32\" style=\"width:32px; padding-right: 15px;\" valign=\"top\"><![endif]-->\n" +
-"    <table align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"32\" height=\"32\" style=\"width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 15px\">\n" +
-"      <tbody><tr style=\"vertical-align: top\"><td align=\"left\" valign=\"middle\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
-"        <a href=\" \" title=\"Twitter\" target=\"_blank\">\n" +
-"          <img src=\"images/image-3.png\" alt=\"Twitter\" title=\"Twitter\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
-"        </a>\n" +
-"      </td></tr>\n" +
-"    </tbody></table>\n" +
-"    <!--[if (mso)|(IE)]></td><![endif]-->\n" +
-"    \n" +
-"    <!--[if (mso)|(IE)]><td width=\"32\" style=\"width:32px; padding-right: 15px;\" valign=\"top\"><![endif]-->\n" +
-"    <table align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"32\" height=\"32\" style=\"width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 15px\">\n" +
-"      <tbody><tr style=\"vertical-align: top\"><td align=\"left\" valign=\"middle\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
-"        <a href=\" \" title=\"Instagram\" target=\"_blank\">\n" +
-"          <img src=\"images/image-2.png\" alt=\"Instagram\" title=\"Instagram\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
-"        </a>\n" +
-"      </td></tr>\n" +
-"    </tbody></table>\n" +
-"    <!--[if (mso)|(IE)]></td><![endif]-->\n" +
-"    \n" +
-"    <!--[if (mso)|(IE)]><td width=\"32\" style=\"width:32px; padding-right: 0px;\" valign=\"top\"><![endif]-->\n" +
-"    <table align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"32\" height=\"32\" style=\"width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 0px\">\n" +
-"      <tbody><tr style=\"vertical-align: top\"><td align=\"left\" valign=\"middle\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
-"        <a href=\" \" title=\"LinkedIn\" target=\"_blank\">\n" +
-"          <img src=\"images/image-4.png\" alt=\"LinkedIn\" title=\"LinkedIn\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
-"        </a>\n" +
-"      </td></tr>\n" +
-"    </tbody></table>\n" +
-"    <!--[if (mso)|(IE)]></td><![endif]-->\n" +
-"    \n" +
-"    \n" +
-"    <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
-"  </div>\n" +
-"</div>\n" +
-"\n" +
-"      </td>\n" +
-"    </tr>\n" +
-"  </tbody>\n" +
-"</table>\n" +
-"\n" +
-"<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
-"  <tbody>\n" +
-"    <tr>\n" +
-"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:5px 10px 10px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
-"        \n" +
-"  <div style=\"line-height: 140%; text-align: left; word-wrap: break-word;\">\n" +
-"    <p style=\"line-height: 140%; font-size: 14px;\"><span style=\"font-size: 14px; line-height: 19.6px;\"><span style=\"color: #ecf0f1; font-size: 14px; line-height: 19.6px;\"><span style=\"line-height: 19.6px; font-size: 14px;\">Faith Hope Companu©  All Rights Reserved</span></span></span></p>\n" +
-"  </div>\n" +
-"\n" +
-"      </td>\n" +
-"    </tr>\n" +
-"  </tbody>\n" +
-"</table>\n" +
-"\n" +
-"  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
-"  </div>\n" +
-"</div>\n" +
-"<!--[if (mso)|(IE)]></td><![endif]-->\n" +
-"      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
-"    </div>\n" +
-"  </div>\n" +
-"</div>\n" +
-"\n" +
-"\n" +
-"\n" +
-"<div class=\"u-row-container\" style=\"padding: 0px;background-color: #f9f9f9\">\n" +
-"  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #1c103b;\">\n" +
-"    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
-"      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: #f9f9f9;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #1c103b;\"><![endif]-->\n" +
-"      \n" +
-"<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
-"<div class=\"u-col u-col-100\" style=\"max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;\">\n" +
-"  <div style=\"height: 100%;width: 100% !important;\">\n" +
-"  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
-"  \n" +
-"<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
-"  <tbody>\n" +
-"    <tr>\n" +
-"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:15px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
-"        \n" +
-"  <table height=\"0px\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #1c103b;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
-"    <tbody>\n" +
-"      <tr style=\"vertical-align: top\">\n" +
-"        <td style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
-"          <span>&#160;</span>\n" +
-"        </td>\n" +
-"      </tr>\n" +
-"    </tbody>\n" +
-"  </table>\n" +
-"\n" +
-"      </td>\n" +
-"    </tr>\n" +
-"  </tbody>\n" +
-"</table>\n" +
-"\n" +
-"  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
-"  </div>\n" +
-"</div>\n" +
-"<!--[if (mso)|(IE)]></td><![endif]-->\n" +
-"      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
-"    </div>\n" +
-"  </div>\n" +
-"</div>\n" +
-"\n" +
-"\n" +
-"\n" +
-"<div class=\"u-row-container\" style=\"padding: 0px;background-color: transparent\">\n" +
-"  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #f9f9f9;\">\n" +
-"    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
-"      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: transparent;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #f9f9f9;\"><![endif]-->\n" +
-"      \n" +
-"<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
-"<div class=\"u-col u-col-100\" style=\"max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;\">\n" +
-"  <div style=\"height: 100%;width: 100% !important;\">\n" +
-"  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
-"  \n" +
-"<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
-"  <tbody>\n" +
-"    <tr>\n" +
-"      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:0px 40px 30px 20px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
-"        \n" +
-"  <div style=\"line-height: 140%; text-align: left; word-wrap: break-word;\">\n" +
-"    \n" +
-"  </div>\n" +
-"\n" +
-"      </td>\n" +
-"    </tr>\n" +
-"  </tbody>\n" +
-"</table>\n" +
-"\n" +
-"  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
-"  </div>\n" +
-"</div>\n" +
-"<!--[if (mso)|(IE)]></td><![endif]-->\n" +
-"      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
-"    </div>\n" +
-"  </div>\n" +
-"</div>\n" +
-"\n" +
-"\n" +
-"    <!--[if (mso)|(IE)]></td></tr></table><![endif]-->\n" +
-"    </td>\n" +
-"  </tr>\n" +
-"  </tbody>\n" +
-"  </table>\n" +
-"  <!--[if mso]></div><![endif]-->\n" +
-"  <!--[if IE]></div><![endif]-->\n" +
-"</body>\n" +
-"\n" +
-"</html>";
+        String p="<!DOCTYPE HTML PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional //EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
+        "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\n" +
+        "<head>\n" +
+        "<!--[if gte mso 9]>\n" +
+        "<xml>\n" +
+        "  <o:OfficeDocumentSettings>\n" +
+        "    <o:AllowPNG/>\n" +
+        "    <o:PixelsPerInch>96</o:PixelsPerInch>\n" +
+        "  </o:OfficeDocumentSettings>\n" +
+        "</xml>\n" +
+        "<![endif]-->\n" +
+        "  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" +
+        "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+        "  <meta name=\"x-apple-disable-message-reformatting\">\n" +
+        "  <!--[if !mso]><!--><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><!--<![endif]-->\n" +
+        "  <title></title>\n" +
+        "  \n" +
+        "    <style type=\"text/css\">\n" +
+        "      @media only screen and (min-width: 620px) {\n" +
+        "  .u-row {\n" +
+        "    width: 600px !important;\n" +
+        "  }\n" +
+        "  .u-row .u-col {\n" +
+        "    vertical-align: top;\n" +
+        "  }\n" +
+        "\n" +
+        "  .u-row .u-col-50 {\n" +
+        "    width: 300px !important;\n" +
+        "  }\n" +
+        "\n" +
+        "  .u-row .u-col-100 {\n" +
+        "    width: 600px !important;\n" +
+        "  }\n" +
+        "\n" +
+        "}\n" +
+        "\n" +
+        "@media (max-width: 620px) {\n" +
+        "  .u-row-container {\n" +
+        "    max-width: 100% !important;\n" +
+        "    padding-left: 0px !important;\n" +
+        "    padding-right: 0px !important;\n" +
+        "  }\n" +
+        "  .u-row .u-col {\n" +
+        "    min-width: 320px !important;\n" +
+        "    max-width: 100% !important;\n" +
+        "    display: block !important;\n" +
+        "  }\n" +
+        "  .u-row {\n" +
+        "    width: calc(100% - 40px) !important;\n" +
+        "  }\n" +
+        "  .u-col {\n" +
+        "    width: 100% !important;\n" +
+        "  }\n" +
+        "  .u-col > div {\n" +
+        "    margin: 0 auto;\n" +
+        "  }\n" +
+        "}\n" +
+        "body {\n" +
+        "  margin: 0;\n" +
+        "  padding: 0;\n" +
+        "}\n" +
+        "\n" +
+        "table,\n" +
+        "tr,\n" +
+        "td {\n" +
+        "  vertical-align: top;\n" +
+        "  border-collapse: collapse;\n" +
+        "}\n" +
+        "\n" +
+        "p {\n" +
+        "  margin: 0;\n" +
+        "}\n" +
+        "\n" +
+        ".ie-container table,\n" +
+        ".mso-container table {\n" +
+        "  table-layout: fixed;\n" +
+        "}\n" +
+        "\n" +
+        "* {\n" +
+        "  line-height: inherit;\n" +
+        "}\n" +
+        "\n" +
+        "a[x-apple-data-detectors='true'] {\n" +
+        "  color: inherit !important;\n" +
+        "  text-decoration: none !important;\n" +
+        "}\n" +
+        "\n" +
+        "table, td { color: #000000; } a { color: #161a39; text-decoration: underline; }\n" +
+        "    </style>\n" +
+        "  \n" +
+        "  \n" +
+        "\n" +
+        "<!--[if !mso]><!--><link href=\"https://fonts.googleapis.com/css?family=Lato:400,700&display=swap\" rel=\"stylesheet\" type=\"text/css\"><!--<![endif]-->\n" +
+        "\n" +
+        "</head>\n" +
+        "\n" +
+        "<body class=\"clean-body u_body\" style=\"margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #f9f9f9;color: #000000\">\n" +
+        "  <!--[if IE]><div class=\"ie-container\"><![endif]-->\n" +
+        "  <!--[if mso]><div class=\"mso-container\"><![endif]-->\n" +
+        "  <table style=\"border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #f9f9f9;width:100%\" cellpadding=\"0\" cellspacing=\"0\">\n" +
+        "  <tbody>\n" +
+        "  <tr style=\"vertical-align: top\">\n" +
+        "    <td style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
+        "    <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td align=\"center\" style=\"background-color: #f9f9f9;\"><![endif]-->\n" +
+        "    \n" +
+        "\n" +
+        "<div class=\"u-row-container\" style=\"padding: 0px;background-color: #f9f9f9\">\n" +
+        "  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #f9f9f9;\">\n" +
+        "    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
+        "      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: #f9f9f9;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #f9f9f9;\"><![endif]-->\n" +
+        "      \n" +
+        "<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
+        "<div class=\"u-col u-col-100\" style=\"max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;\">\n" +
+        "  <div style=\"height: 100%;width: 100% !important;\">\n" +
+        "  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
+        "  \n" +
+        "<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
+        "  <tbody>\n" +
+        "    <tr>\n" +
+        "      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:15px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
+        "        \n" +
+        "  <table height=\"0px\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #f9f9f9;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
+        "    <tbody>\n" +
+        "      <tr style=\"vertical-align: top\">\n" +
+        "        <td style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
+        "          <span>&#160;</span>\n" +
+        "        </td>\n" +
+        "      </tr>\n" +
+        "    </tbody>\n" +
+        "  </table>\n" +
+        "\n" +
+        "      </td>\n" +
+        "    </tr>\n" +
+        "  </tbody>\n" +
+        "</table>\n" +
+        "\n" +
+        "  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "<!--[if (mso)|(IE)]></td><![endif]-->\n" +
+        "      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
+        "    </div>\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "\n" +
+        "\n" +
+        "\n" +
+        "<div class=\"u-row-container\" style=\"padding: 0px;background-color: transparent\">\n" +
+        "  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ffffff;\">\n" +
+        "    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
+        "      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: transparent;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #ffffff;\"><![endif]-->\n" +
+        "      \n" +
+        "<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
+        "<div class=\"u-col u-col-100\" style=\"max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;\">\n" +
+        "  <div style=\"height: 100%;width: 100% !important;\">\n" +
+        "  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
+        "  \n" +
+        "<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
+        "  <tbody>\n" +
+        "    <tr>\n" +
+        "      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:25px 10px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
+        "        \n" +
+        "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n" +
+        "  <tr>\n" +
+        "    <td style=\"padding-right: 0px;padding-left: 0px;\" align=\"center\">\n" +
+        "      \n" +
+        "     <img src=\"https://drive.google.com/uc?id=1kgKK3DHWpqc-b0q9P67-VnHn7J6EOqzZ\" role=\"presentation\" width=\"130\" class=\"sc-cHGsZl bHiaRe\" style=\"max-width: 128px; display: block;\">\n" +
+        "      \n" +
+        "    </td>\n" +
+        "  </tr>\n" +
+        "</table>\n" +
+        "\n" +
+        "      </td>\n" +
+        "    </tr>\n" +
+        "  </tbody>\n" +
+        "</table>\n" +
+        "\n" +
+        "  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "<!--[if (mso)|(IE)]></td><![endif]-->\n" +
+        "      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
+        "    </div>\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "\n" +
+        "\n" +
+        "\n" +
+        "<div class=\"u-row-container\" style=\"padding: 0px;background-color: transparent\">\n" +
+        "  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #161a39;\">\n" +
+        "    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
+        "      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: transparent;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #161a39;\"><![endif]-->\n" +
+        "      \n" +
+        "<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
+        "<div class=\"u-col u-col-100\" style=\"max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;\">\n" +
+        "  <div style=\"height: 100%;width: 100% !important;\">\n" +
+        "  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
+        "  \n" +
+        "<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
+        "  <tbody>\n" +
+        "    <tr>\n" +
+        "      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:35px 10px 10px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
+        "        \n" +
+        "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n" +
+        "  <tr>\n" +
+        "    <td style=\"padding-right: 0px;padding-left: 0px;\" align=\"center\">\n" +
+        "      \n" +
+        "      <img align=\"center\" border=\"0\" src=\"images/image-6.png\" alt=\"Image\" title=\"Image\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 10%;max-width: 58px;\" width=\"58\"/>\n" +
+        "      \n" +
+        "    </td>\n" +
+        "  </tr>\n" +
+        "</table>\n" +
+        "\n" +
+        "      </td>\n" +
+        "    </tr>\n" +
+        "  </tbody>\n" +
+        "</table>\n" +
+        "\n" +
+        "<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
+        "  <tbody>\n" +
+        "    <tr>\n" +
+        "      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:0px 10px 30px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
+        "        \n" +
+        "  <div style=\"line-height: 140%; text-align: left; word-wrap: break-word;\">\n" +
+        "    <p style=\"font-size: 14px; line-height: 140%; text-align: center;\"><span style=\"font-size: 28px; line-height: 39.2px; color: #ffffff; font-family: Lato, sans-serif;\">Porfavor restablece tu contraseña</span></p>\n" +
+        "  </div>\n" +
+        "\n" +
+        "      </td>\n" +
+        "    </tr>\n" +
+        "  </tbody>\n" +
+        "</table>\n" +
+        "\n" +
+        "  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "<!--[if (mso)|(IE)]></td><![endif]-->\n" +
+        "      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
+        "    </div>\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "\n" +
+        "\n" +
+        "\n" +
+        "<div class=\"u-row-container\" style=\"padding: 0px;background-color: transparent\">\n" +
+        "  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ffffff;\">\n" +
+        "    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
+        "      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: transparent;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #ffffff;\"><![endif]-->\n" +
+        "      \n" +
+        "<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
+        "<div class=\"u-col u-col-100\" style=\"max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;\">\n" +
+        "  <div style=\"height: 100%;width: 100% !important;\">\n" +
+        "  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
+        "  \n" +
+        "<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
+        "  <tbody>\n" +
+        "    <tr>\n" +
+        "      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:40px 40px 30px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
+        "        \n" +
+        "  <div style=\"line-height: 140%; text-align: left; word-wrap: break-word;\">\n" +
+        "    <p style=\"font-size: 14px; line-height: 140%;\"><span style=\"font-size: 18px; line-height: 25.2px; color: #666666;\">Hola,</span></p>\n" +
+        "<p style=\"font-size: 14px; line-height: 140%;\"> </p>\n" +
+        "<p style=\"font-size: 14px; line-height: 140%;\"><span style=\"font-size: 18px; line-height: 25.2px; color: #666666;\">Hemos recibido tu solicitud para cambiar tu contraseña, tu código de acceso es:<br /><br /></span></p>\n" +
+        "<p style=\"font-size: 14px; line-height: 140%; text-align: center;\"><span style=\"font-size: 24px; line-height: 33.6px; color: #f1c40f;\"><strong><span style=\"line-height: 33.6px; font-size: 24px;\">"+codigoacceso+"</span></strong></span></p>\n" +
+        "<p style=\"font-size: 14px; line-height: 140%;\"> </p>\n" +
+        "<p style=\"line-height: 140%; font-size: 14px;\"><span style=\"color: #666666; font-size: 14px; line-height: 19.6px;\"><span style=\"line-height: 19.6px; font-size: 14px;\"><span style=\"font-size: 18px; line-height: 25.2px;\">Por favor ingresa el código en el sistema <strong>GEVEC </strong>para restablecer la contraseña.</span></span></span></p>\n" +
+        "  </div>\n" +
+        "\n" +
+        "      </td>\n" +
+        "    </tr>\n" +
+        "  </tbody>\n" +
+        "</table>\n" +
+        "\n" +
+        "<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
+        "  <tbody>\n" +
+        "    <tr>\n" +
+        "      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:40px 40px 30px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
+        "        \n" +
+        "  <div style=\"line-height: 140%; text-align: left; word-wrap: break-word;\">\n" +
+        "    <p style=\"font-size: 14px; line-height: 140%;\"><span style=\"color: #888888; font-size: 14px; line-height: 19.6px;\"><em><span style=\"font-size: 16px; line-height: 22.4px;\">Por favor ignora este mensaje si no has solicitado cambiar tu contraseña. </span></em></span></p>\n" +
+        "  </div>\n" +
+        "\n" +
+        "      </td>\n" +
+        "    </tr>\n" +
+        "  </tbody>\n" +
+        "</table>\n" +
+        "\n" +
+        "  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "<!--[if (mso)|(IE)]></td><![endif]-->\n" +
+        "      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
+        "    </div>\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "\n" +
+        "\n" +
+        "\n" +
+        "<div class=\"u-row-container\" style=\"padding: 0px;background-color: transparent\">\n" +
+        "  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #18163a;\">\n" +
+        "    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
+        "      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: transparent;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #18163a;\"><![endif]-->\n" +
+        "      \n" +
+        "<!--[if (mso)|(IE)]><td align=\"center\" width=\"300\" style=\"width: 300px;padding: 20px 20px 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
+        "<div class=\"u-col u-col-50\" style=\"max-width: 320px;min-width: 300px;display: table-cell;vertical-align: top;\">\n" +
+        "  <div style=\"height: 100%;width: 100% !important;\">\n" +
+        "  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 20px 20px 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
+        "  \n" +
+        "<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
+        "  <tbody>\n" +
+        "    <tr>\n" +
+        "      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
+        "        \n" +
+        "  <div style=\"line-height: 140%; text-align: left; word-wrap: break-word;\">\n" +
+        "    <p style=\"font-size: 14px; line-height: 140%;\"><span style=\"font-size: 16px; line-height: 22.4px; color: #ecf0f1;\">Contacto</span></p>\n" +
+        "<p style=\"font-size: 14px; line-height: 140%;\"><span style=\"font-size: 14px; line-height: 19.6px; color: #ecf0f1;\">Tegucigalpa</span><span style=\"font-size: 14px; line-height: 19.6px; color: #ecf0f1;\"> | TI@fhope.net</span></p>\n" +
+        "  </div>\n" +
+        "\n" +
+        "      </td>\n" +
+        "    </tr>\n" +
+        "  </tbody>\n" +
+        "</table>\n" +
+        "\n" +
+        "  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "<!--[if (mso)|(IE)]></td><![endif]-->\n" +
+        "<!--[if (mso)|(IE)]><td align=\"center\" width=\"300\" style=\"width: 300px;padding: 0px 0px 0px 20px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
+        "<div class=\"u-col u-col-50\" style=\"max-width: 320px;min-width: 300px;display: table-cell;vertical-align: top;\">\n" +
+        "  <div style=\"height: 100%;width: 100% !important;\">\n" +
+        "  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px 0px 0px 20px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
+        "  \n" +
+        "<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
+        "  <tbody>\n" +
+        "    <tr>\n" +
+        "      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:25px 10px 10px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
+        "        \n" +
+        "<div align=\"left\">\n" +
+        "  <div style=\"display: table; max-width:187px;\">\n" +
+        "  <!--[if (mso)|(IE)]><table width=\"187\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"border-collapse:collapse;\" align=\"left\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse; mso-table-lspace: 0pt;mso-table-rspace: 0pt; width:187px;\"><tr><![endif]-->\n" +
+        "  \n" +
+        "    \n" +
+        "    <!--[if (mso)|(IE)]><td width=\"32\" style=\"width:32px; padding-right: 15px;\" valign=\"top\"><![endif]-->\n" +
+        "    <table align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"32\" height=\"32\" style=\"width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 15px\">\n" +
+        "      <tbody><tr style=\"vertical-align: top\"><td align=\"left\" valign=\"middle\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
+        "        <a href=\" \" title=\"Facebook\" target=\"_blank\">\n" +
+        "          <img src=\"images/image-1.png\" alt=\"Facebook\" title=\"Facebook\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
+        "        </a>\n" +
+        "      </td></tr>\n" +
+        "    </tbody></table>\n" +
+        "    <!--[if (mso)|(IE)]></td><![endif]-->\n" +
+        "    \n" +
+        "    <!--[if (mso)|(IE)]><td width=\"32\" style=\"width:32px; padding-right: 15px;\" valign=\"top\"><![endif]-->\n" +
+        "    <table align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"32\" height=\"32\" style=\"width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 15px\">\n" +
+        "      <tbody><tr style=\"vertical-align: top\"><td align=\"left\" valign=\"middle\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
+        "        <a href=\" \" title=\"Twitter\" target=\"_blank\">\n" +
+        "          <img src=\"images/image-3.png\" alt=\"Twitter\" title=\"Twitter\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
+        "        </a>\n" +
+        "      </td></tr>\n" +
+        "    </tbody></table>\n" +
+        "    <!--[if (mso)|(IE)]></td><![endif]-->\n" +
+        "    \n" +
+        "    <!--[if (mso)|(IE)]><td width=\"32\" style=\"width:32px; padding-right: 15px;\" valign=\"top\"><![endif]-->\n" +
+        "    <table align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"32\" height=\"32\" style=\"width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 15px\">\n" +
+        "      <tbody><tr style=\"vertical-align: top\"><td align=\"left\" valign=\"middle\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
+        "        <a href=\" \" title=\"Instagram\" target=\"_blank\">\n" +
+        "          <img src=\"images/image-2.png\" alt=\"Instagram\" title=\"Instagram\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
+        "        </a>\n" +
+        "      </td></tr>\n" +
+        "    </tbody></table>\n" +
+        "    <!--[if (mso)|(IE)]></td><![endif]-->\n" +
+        "    \n" +
+        "    <!--[if (mso)|(IE)]><td width=\"32\" style=\"width:32px; padding-right: 0px;\" valign=\"top\"><![endif]-->\n" +
+        "    <table align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"32\" height=\"32\" style=\"width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 0px\">\n" +
+        "      <tbody><tr style=\"vertical-align: top\"><td align=\"left\" valign=\"middle\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
+        "        <a href=\" \" title=\"LinkedIn\" target=\"_blank\">\n" +
+        "          <img src=\"images/image-4.png\" alt=\"LinkedIn\" title=\"LinkedIn\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
+        "        </a>\n" +
+        "      </td></tr>\n" +
+        "    </tbody></table>\n" +
+        "    <!--[if (mso)|(IE)]></td><![endif]-->\n" +
+        "    \n" +
+        "    \n" +
+        "    <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "\n" +
+        "      </td>\n" +
+        "    </tr>\n" +
+        "  </tbody>\n" +
+        "</table>\n" +
+        "\n" +
+        "<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
+        "  <tbody>\n" +
+        "    <tr>\n" +
+        "      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:5px 10px 10px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
+        "        \n" +
+        "  <div style=\"line-height: 140%; text-align: left; word-wrap: break-word;\">\n" +
+        "    <p style=\"line-height: 140%; font-size: 14px;\"><span style=\"font-size: 14px; line-height: 19.6px;\"><span style=\"color: #ecf0f1; font-size: 14px; line-height: 19.6px;\"><span style=\"line-height: 19.6px; font-size: 14px;\">Faith Hope Companu©  All Rights Reserved</span></span></span></p>\n" +
+        "  </div>\n" +
+        "\n" +
+        "      </td>\n" +
+        "    </tr>\n" +
+        "  </tbody>\n" +
+        "</table>\n" +
+        "\n" +
+        "  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "<!--[if (mso)|(IE)]></td><![endif]-->\n" +
+        "      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
+        "    </div>\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "\n" +
+        "\n" +
+        "\n" +
+        "<div class=\"u-row-container\" style=\"padding: 0px;background-color: #f9f9f9\">\n" +
+        "  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #1c103b;\">\n" +
+        "    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
+        "      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: #f9f9f9;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #1c103b;\"><![endif]-->\n" +
+        "      \n" +
+        "<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
+        "<div class=\"u-col u-col-100\" style=\"max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;\">\n" +
+        "  <div style=\"height: 100%;width: 100% !important;\">\n" +
+        "  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
+        "  \n" +
+        "<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
+        "  <tbody>\n" +
+        "    <tr>\n" +
+        "      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:15px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
+        "        \n" +
+        "  <table height=\"0px\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #1c103b;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
+        "    <tbody>\n" +
+        "      <tr style=\"vertical-align: top\">\n" +
+        "        <td style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%\">\n" +
+        "          <span>&#160;</span>\n" +
+        "        </td>\n" +
+        "      </tr>\n" +
+        "    </tbody>\n" +
+        "  </table>\n" +
+        "\n" +
+        "      </td>\n" +
+        "    </tr>\n" +
+        "  </tbody>\n" +
+        "</table>\n" +
+        "\n" +
+        "  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "<!--[if (mso)|(IE)]></td><![endif]-->\n" +
+        "      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
+        "    </div>\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "\n" +
+        "\n" +
+        "\n" +
+        "<div class=\"u-row-container\" style=\"padding: 0px;background-color: transparent\">\n" +
+        "  <div class=\"u-row\" style=\"Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #f9f9f9;\">\n" +
+        "    <div style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n" +
+        "      <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding: 0px;background-color: transparent;\" align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px;\"><tr style=\"background-color: #f9f9f9;\"><![endif]-->\n" +
+        "      \n" +
+        "<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\" valign=\"top\"><![endif]-->\n" +
+        "<div class=\"u-col u-col-100\" style=\"max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;\">\n" +
+        "  <div style=\"height: 100%;width: 100% !important;\">\n" +
+        "  <!--[if (!mso)&(!IE)]><!--><div style=\"padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;\"><!--<![endif]-->\n" +
+        "  \n" +
+        "<table style=\"font-family:'Lato',sans-serif;\" role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\">\n" +
+        "  <tbody>\n" +
+        "    <tr>\n" +
+        "      <td style=\"overflow-wrap:break-word;word-break:break-word;padding:0px 40px 30px 20px;font-family:'Lato',sans-serif;\" align=\"left\">\n" +
+        "        \n" +
+        "  <div style=\"line-height: 140%; text-align: left; word-wrap: break-word;\">\n" +
+        "    \n" +
+        "  </div>\n" +
+        "\n" +
+        "      </td>\n" +
+        "    </tr>\n" +
+        "  </tbody>\n" +
+        "</table>\n" +
+        "\n" +
+        "  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "<!--[if (mso)|(IE)]></td><![endif]-->\n" +
+        "      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->\n" +
+        "    </div>\n" +
+        "  </div>\n" +
+        "</div>\n" +
+        "\n" +
+        "\n" +
+        "    <!--[if (mso)|(IE)]></td></tr></table><![endif]-->\n" +
+        "    </td>\n" +
+        "  </tr>\n" +
+        "  </tbody>\n" +
+        "  </table>\n" +
+        "  <!--[if mso]></div><![endif]-->\n" +
+        "  <!--[if IE]></div><![endif]-->\n" +
+        "</body>\n" +
+        "\n" +
+        "</html>";
            Properties props = new Properties();
            props.put("mail.smtp.auth", "true");
            props.put("mail.smtp.starttls.enable", "true");
@@ -616,8 +658,7 @@ public class RecuperarContraseña extends javax.swing.JFrame {
                
 
                Transport.send(message);
-               JOptionPane.showMessageDialog(this, "Revise su correo, para restablecer la contraseña");
-               enviarcodigoBD(codigoplano);
+               enviarcodigoBD(encriptar(codigoplano));
 
            } catch (MessagingException e) {
                throw new RuntimeException(e);
@@ -625,12 +666,32 @@ public class RecuperarContraseña extends javax.swing.JFrame {
        }
     
     
+    
+    private String encriptar(String c){
+        String contra = c;
+        char puntero;
+        String contraC = "";
+        //Cifrador de mayusculas//
+        
+       
+        for(int i=0;i<6;i++){
+            puntero = contra.charAt(i);
+            contraC = contraC + cifrador.get(String.valueOf(puntero));
+            
+        
+            
+        }
+        
+      return contraC;
+        
+    }
+    
     public void enviarcodigoBD(String code){
         int idUsuario=0;
-        int codigo=0;
+        String codigo="";
         
         idUsuario = obtenerID();
-        codigo = Integer.valueOf(code);
+        codigo = code;
         System.out.println("EL ID ES: "+idUsuario);
       
             
@@ -643,10 +704,9 @@ public class RecuperarContraseña extends javax.swing.JFrame {
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, idUsuario);
-            preparedStmt.setInt (2, codigo);
+            preparedStmt.setString (2, codigo);
             preparedStmt.execute();
             
-            JOptionPane.showMessageDialog(this, "Usuario Guardado");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -746,26 +806,7 @@ public class RecuperarContraseña extends javax.swing.JFrame {
         cifrador.put(".", "Ho(+)D");
     }
     
-    public void obtenerInt(){
-          String Sql = "Select u.Intentos from Usuarios u Where u.Usuario="+"'"+usuario+"'";
-         try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(Sql);
-            while (rs.next()) {
-                intentos = rs.getInt("Intentos");
-            }
-            
-        
-        
-        
-         }catch(Exception e){
-             System.out.println("Error "+e.getMessage());
-             
-             
-          
-                    }
-        
-    }
+   
     
     public int obtenerID(){
         
@@ -835,20 +876,86 @@ public class RecuperarContraseña extends javax.swing.JFrame {
       
         }
     
+    
+    
+    public boolean validacionesTexto(){
+        
+        if(rSTextFullRound1.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
+          return false;
+        }else{
+            return true;
+        }
+        
+        
+         
+    }
+    
+    
+    public boolean verificar(){
+        if (validarCDominio(rSTextFullRound1.getText())==false && validarCVariosD(rSTextFullRound1.getText())==false){
+            System.out.println("FALLO");
+             return false;
+        }else{
+            return true;
+         }
+       
+    }
+    
+    public boolean validarCVariosD(String correo){
+            
+        Pattern patron = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})+(\\.[A-Za-z]{2,3})$");
+        Matcher comparar = patron.matcher(correo);
+        return comparar.find();
+     
+    }
+    
+    public boolean validarCDominio(String correo){
+            
+        Pattern patron = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})$");
+        Matcher comparar = patron.matcher(correo);
+        return comparar.find();
+     
+    }
+    
+    
            
     
-    
-    
-    
-    
-
-    
- 
+   
     
     public void  changecolor(JPanel hover, Color rand){
      hover.setBackground(rand);
     }
     
+     public void cerrarc(){
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ActualizarNuevaContrase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public void deshabilitar(){
+        rSTextFullRound1.setEditable(false);
+        rSButtonRound1.setEnabled(false);
+    }
+     
+    public void regresar(){
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RecuperarContraseña.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Inicio i = new Inicio();
+        i.setVisible(true);
+        this.dispose();
+    }
     
 
     /**
@@ -862,16 +969,18 @@ public class RecuperarContraseña extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         panelRound1 = new isi_2022_ii_proyecto.Recursos.PanelRound();
-        jLabel6 = new javax.swing.JLabel();
+        label1 = new javax.swing.JLabel();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
         rSLabelFecha2 = new rojeru_san.RSLabelFecha();
         F = new rojeru_san.rslabel.RSLabelLineWrap();
         fullmax3 = new javax.swing.JLabel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
-        rSLabelIcon3 = new rojerusan.RSLabelIcon();
         rSButtonRound1 = new rojerusan.RSButtonRound();
         rSTextFullRound1 = new rojeru_san.rsfield.RSTextFullRound();
+        rSLabelIcon3 = new rojerusan.RSLabelIcon();
+        rSButtonRound2 = new rojerusan.RSButtonRound();
+        jLabel7 = new javax.swing.JLabel();
         F1 = new rojeru_san.rslabel.RSLabelLineWrap();
         Header = new javax.swing.JPanel();
         iconminmaxclose = new javax.swing.JPanel();
@@ -898,13 +1007,13 @@ public class RecuperarContraseña extends javax.swing.JFrame {
         panelRound1.setRoundTopRight(110);
         panelRound1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(19, 99, 223));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("¿Olvidaste tu contraseña?  No te preocupes, es posible recuperarla con tu correo registrado");
-        panelRound1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 580, 30));
-        panelRound1.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 110, -1));
-        panelRound1.add(rSLabelFecha2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 110, 20));
+        label1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label1.setForeground(new java.awt.Color(19, 99, 223));
+        label1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label1.setText("Correo Invalido...");
+        panelRound1.add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, 130, 40));
+        panelRound1.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 110, 30));
+        panelRound1.add(rSLabelFecha2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, 110, 20));
 
         F.setColorForeground(new java.awt.Color(19, 99, 223));
         F.setFuente(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
@@ -936,10 +1045,6 @@ public class RecuperarContraseña extends javax.swing.JFrame {
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ASSIGNMENT_IND);
         panelRound1.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 30, 30));
 
-        rSLabelIcon3.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
-        panelRound1.add(rSLabelIcon3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 30, 20));
-
         rSButtonRound1.setBackground(new java.awt.Color(19, 99, 223));
         rSButtonRound1.setText("Recuperar");
         rSButtonRound1.setColorHover(new java.awt.Color(255, 255, 255));
@@ -955,7 +1060,7 @@ public class RecuperarContraseña extends javax.swing.JFrame {
                 rSButtonRound1ActionPerformed(evt);
             }
         });
-        panelRound1.add(rSButtonRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 250, -1));
+        panelRound1.add(rSButtonRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 160, -1));
 
         rSTextFullRound1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         rSTextFullRound1.setPlaceholder("Escribe tu correo...");
@@ -964,8 +1069,47 @@ public class RecuperarContraseña extends javax.swing.JFrame {
                 rSTextFullRound1ActionPerformed(evt);
             }
         });
+        rSTextFullRound1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                rSTextFullRound1KeyReleased(evt);
+            }
+        });
         panelRound1.add(rSTextFullRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 300, -1));
 
+        rSLabelIcon3.setForeground(new java.awt.Color(19, 99, 223));
+        rSLabelIcon3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_LEFT);
+        rSLabelIcon3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rSLabelIcon3MouseClicked(evt);
+            }
+        });
+        panelRound1.add(rSLabelIcon3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 30, 30));
+
+        rSButtonRound2.setBackground(new java.awt.Color(19, 99, 223));
+        rSButtonRound2.setText("Validar Token");
+        rSButtonRound2.setColorHover(new java.awt.Color(255, 255, 255));
+        rSButtonRound2.setColorTextHover(new java.awt.Color(19, 99, 223));
+        rSButtonRound2.setFocusable(false);
+        rSButtonRound2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                rSButtonRound2MouseEntered(evt);
+            }
+        });
+        rSButtonRound2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonRound2ActionPerformed(evt);
+            }
+        });
+        panelRound1.add(rSButtonRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 280, 160, -1));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(19, 99, 223));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("¿Olvidaste tu contraseña?  No te preocupes, es posible recuperarla con tu correo registrado");
+        panelRound1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 580, 30));
+
+        F1.setBackground(new java.awt.Color(255, 255, 255));
+        F1.setColorForeground(new java.awt.Color(255, 255, 255));
         F1.setFuente(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
         F1.setInheritsPopupMenu(true);
         F1.setName("GBGHY"); // NOI18N
@@ -1111,25 +1255,26 @@ public class RecuperarContraseña extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE)
+            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, 927, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(F1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addGap(33, 128, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(F1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(312, 312, 312))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(121, 121, 121))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
-                .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addComponent(F1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1147,8 +1292,14 @@ public class RecuperarContraseña extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne4ActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
+        try {
+            // TODO add your handling code here:
+            con.close();
+            System.exit(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(RecuperarContraseña.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
 
     private void rSButtonIconOne5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne5ActionPerformed
@@ -1157,12 +1308,27 @@ public class RecuperarContraseña extends javax.swing.JFrame {
 
     private void rSButtonRound1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonRound1ActionPerformed
         // TODO add your handling code here:
-      SendMail();
+       if(validacionesTexto()==true){
+           if(verificar()==true){
+               if(ExistenciaCorreo()==true){
+                   SendMail();
+                   MostrarMensaje();
+                   cerrarc();
+                   deshabilitar();
+                   
+               }else{
+                   MostrarMensaje();
+                   
+               }
+           }
+           
+       }
+      
     }//GEN-LAST:event_rSButtonRound1ActionPerformed
 
     private void rSButtonRound1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSButtonRound1MouseEntered
         // TODO add your handling code here:
-        rSLabelIcon3.setForeground(Color.blue);
+    
     }//GEN-LAST:event_rSButtonRound1MouseEntered
 
     private void fullmax3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fullmax3MouseExited
@@ -1180,6 +1346,38 @@ public class RecuperarContraseña extends javax.swing.JFrame {
     private void rSTextFullRound1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSTextFullRound1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rSTextFullRound1ActionPerformed
+
+    private void rSTextFullRound1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rSTextFullRound1KeyReleased
+        // TODO add your handling code here:
+        
+          if (validarCDominio(rSTextFullRound1.getText()) || validarCVariosD(rSTextFullRound1.getText())){
+//aviso es un label a la ´par del tetxfield
+              label1.setVisible(false);
+              
+        }
+          else{
+                    label1.setVisible(true);
+               
+          }
+    }//GEN-LAST:event_rSTextFullRound1KeyReleased
+
+    private void rSLabelIcon3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSLabelIcon3MouseClicked
+        // TODO add your handling code here:
+        cerrarc();
+        regresar();
+    }//GEN-LAST:event_rSLabelIcon3MouseClicked
+
+    private void rSButtonRound2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSButtonRound2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSButtonRound2MouseEntered
+
+    private void rSButtonRound2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonRound2ActionPerformed
+        // TODO add your handling code here:
+        cerrarc();
+        CambiarContrase cc = new CambiarContrase();
+        cc.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_rSButtonRound2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1228,10 +1426,11 @@ public class RecuperarContraseña extends javax.swing.JFrame {
     private javax.swing.JLabel fullmax3;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel label1;
     private javax.swing.JPanel linesetting3;
     private javax.swing.JPanel linesetting4;
     private javax.swing.JPanel linesetting5;
@@ -1239,6 +1438,7 @@ public class RecuperarContraseña extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private rojerusan.RSButtonRound rSButtonRound1;
+    private rojerusan.RSButtonRound rSButtonRound2;
     private rojeru_san.RSLabelFecha rSLabelFecha2;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;

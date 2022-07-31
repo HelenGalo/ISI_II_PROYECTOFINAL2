@@ -189,6 +189,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
         
        
     }
+    
     public Boolean validar(){
         boolean a=true;
       if(NombreE1.getText().isEmpty()){
