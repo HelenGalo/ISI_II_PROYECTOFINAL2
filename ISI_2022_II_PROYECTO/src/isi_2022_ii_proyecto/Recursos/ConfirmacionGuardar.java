@@ -5,6 +5,7 @@
  */
 package isi_2022_ii_proyecto.Recursos;
 
+import isi_2022_ii_proyecto.AgregarAlmacen;
 import isi_2022_ii_proyecto.AgregarCaja;
 import isi_2022_ii_proyecto.AgregarClientes;
 import isi_2022_ii_proyecto.AgregarCuentaBancaria;
@@ -26,6 +27,12 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
     AgregarProveedor gprov;
     AgregarClientes gcliente;
     AgregarEmpleado gemp;
+    AgregarAlmacen agm;
+    
+    
+    public void setAgm(AgregarAlmacen agm){
+        this.agm= agm;
+    }
 
     public void setGemp(AgregarEmpleado gemp) {
         this.gemp = gemp;
@@ -222,10 +229,16 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
             gemp.validarConfirmacion();
             this.dispose();
         }
+            if(tipo=="GAlmacen"){
+                agm.setEstadoagregar(true);
+                agm.validarConfirmacion();
+                this.dispose();
+            }
         
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     /**
+     * 
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -272,6 +285,8 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
     private RSMaterialComponent.RSLabelIcon rSLabelIcon1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
+
+    
 
   
 }
