@@ -337,7 +337,7 @@ public class RecuperarContraseña extends javax.swing.JFrame {
         "  <tr>\n" +
         "    <td style=\"padding-right: 0px;padding-left: 0px;\" align=\"center\">\n" +
         "      \n" +
-        "      <img align=\"center\" border=\"0\" src=\"images/image-6.png\" alt=\"Image\" title=\"Image\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 10%;max-width: 58px;\" width=\"58\"/>\n" +
+        "      <img align=\"center\" border=\"0\" src=\"https://drive.google.com/uc?id=14ey7g5PMToo44B_3eh6Ht8T5_poryT7v\" alt=\"Image\" title=\"Image\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 10%;max-width: 58px;\" width=\"58\"/>\n" +
         "      \n" +
         "    </td>\n" +
         "  </tr>\n" +
@@ -475,7 +475,7 @@ public class RecuperarContraseña extends javax.swing.JFrame {
         "    <table align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"32\" height=\"32\" style=\"width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 15px\">\n" +
         "      <tbody><tr style=\"vertical-align: top\"><td align=\"left\" valign=\"middle\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
         "        <a href=\" \" title=\"Facebook\" target=\"_blank\">\n" +
-        "          <img src=\"images/image-1.png\" alt=\"Facebook\" title=\"Facebook\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
+        "          <img src=\"https://drive.google.com/uc?id=12D69yqS3tRaWKhaN03NylwhaGrlUZPa9\" alt=\"Facebook\" title=\"Facebook\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
         "        </a>\n" +
         "      </td></tr>\n" +
         "    </tbody></table>\n" +
@@ -485,7 +485,7 @@ public class RecuperarContraseña extends javax.swing.JFrame {
         "    <table align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"32\" height=\"32\" style=\"width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 15px\">\n" +
         "      <tbody><tr style=\"vertical-align: top\"><td align=\"left\" valign=\"middle\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
         "        <a href=\" \" title=\"Twitter\" target=\"_blank\">\n" +
-        "          <img src=\"images/image-3.png\" alt=\"Twitter\" title=\"Twitter\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
+        "          <img src=\"https://drive.google.com/uc?id=1y-BVEGEi8A2BTOXCv8GLLwRdHjavJixa\" alt=\"Twitter\" title=\"Twitter\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
         "        </a>\n" +
         "      </td></tr>\n" +
         "    </tbody></table>\n" +
@@ -495,7 +495,7 @@ public class RecuperarContraseña extends javax.swing.JFrame {
         "    <table align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"32\" height=\"32\" style=\"width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 15px\">\n" +
         "      <tbody><tr style=\"vertical-align: top\"><td align=\"left\" valign=\"middle\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
         "        <a href=\" \" title=\"Instagram\" target=\"_blank\">\n" +
-        "          <img src=\"images/image-2.png\" alt=\"Instagram\" title=\"Instagram\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
+        "          <img src=\"https://drive.google.com/uc?id=15YophUkRe0JDMMnOtuFe7lQZbvjYsqI7\" alt=\"Instagram\" title=\"Instagram\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
         "        </a>\n" +
         "      </td></tr>\n" +
         "    </tbody></table>\n" +
@@ -505,7 +505,7 @@ public class RecuperarContraseña extends javax.swing.JFrame {
         "    <table align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"32\" height=\"32\" style=\"width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 0px\">\n" +
         "      <tbody><tr style=\"vertical-align: top\"><td align=\"left\" valign=\"middle\" style=\"word-break: break-word;border-collapse: collapse !important;vertical-align: top\">\n" +
         "        <a href=\" \" title=\"LinkedIn\" target=\"_blank\">\n" +
-        "          <img src=\"images/image-4.png\" alt=\"LinkedIn\" title=\"LinkedIn\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
+        "          <img src=\"https://drive.google.com/uc?id=1X5NBv-_mZIZ2bzjucZgZ6WZDtPty93Z3\" alt=\"LinkedIn\" title=\"LinkedIn\" width=\"32\" style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important\">\n" +
         "        </a>\n" +
         "      </td></tr>\n" +
         "    </tbody></table>\n" +
