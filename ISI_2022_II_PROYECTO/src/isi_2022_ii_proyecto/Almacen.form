@@ -787,7 +787,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="Empresa Env&#xed;o"/>
+                        <Property name="text" type="java.lang.String" value="Almac&#xe9;n"/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -836,7 +836,7 @@
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f3" green="96" red="21" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Deshabilitar Empresa "/>
+                    <Property name="text" type="java.lang.String" value="Deshabilitar Almac&#xe9;n"/>
                     <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="85" green="37" red="0" type="rgb"/>
                     </Property>
@@ -853,7 +853,7 @@
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f3" green="96" red="21" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Agregar Empresa Env&#xed;o"/>
+                    <Property name="text" type="java.lang.String" value="Agregar Almac&#xe9;n"/>
                     <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="85" green="37" red="0" type="rgb"/>
                     </Property>
@@ -1067,7 +1067,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Agregar Empresa Env&#xed;o"/>
+                        <Property name="text" type="java.lang.String" value="Agregar Almac&#xe9;n"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel9">
@@ -1100,7 +1100,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Modulo Empresa Envios"/>
+                        <Property name="text" type="java.lang.String" value="Modulo Almac&#xe9;n"/>
                       </Properties>
                     </Component>
                     <Component class="rojerusan.RSLabelIcon" name="rSLabelIcon17">
@@ -1144,7 +1144,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Listado de Empresas"/>
+                        <Property name="text" type="java.lang.String" value="Listado de Almac&#xe9;n"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -1161,15 +1161,15 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="rojerusan.RSTableMetro1" name="JTableEnvio">
+                    <Component class="rojerusan.RSTableMetro1" name="JTableAlmacen">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="5" rowCount="0">
-                            <Column editable="true" title="Codigo Empresa de Env&#xed;o" type="java.lang.Object"/>
-                            <Column editable="true" title="Nombre Empresa" type="java.lang.Object"/>
-                            <Column editable="true" title="Tarifa" type="java.lang.Object"/>
+                            <Column editable="true" title="Codigo Almacen" type="java.lang.Object"/>
+                            <Column editable="true" title="Nombre  Almacen" type="java.lang.Object"/>
+                            <Column editable="true" title="Empleado" type="java.lang.Object"/>
+                            <Column editable="true" title="Direccion" type="java.lang.Object"/>
                             <Column editable="true" title="Telefono" type="java.lang.Object"/>
-                            <Column editable="true" title="Correo Electronico" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -1182,6 +1182,40 @@
                         <Property name="colorSecondary" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
+                        <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                          <TableColumnModel selectionModel="0">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                          </TableColumnModel>
+                        </Property>
                         <Property name="effectHover" type="boolean" value="true"/>
                         <Property name="highHead" type="int" value="50"/>
                         <Property name="rowHeight" type="int" value="50"/>
@@ -1191,7 +1225,7 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="JTableEnvioMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="JTableAlmacenMouseClicked"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -1258,7 +1292,7 @@
                       <Color blue="ff" green="0" red="66" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="2"/>
-                    <Property name="text" type="java.lang.String" value="MOD&#xda;LO EMPRESA DE ENV&#xcd;O"/>
+                    <Property name="text" type="java.lang.String" value="MOD&#xda;LO ALMAC&#xc9;N"/>
                   </Properties>
                 </Component>
                 <Component class="rojerusan.RSLabelIcon" name="rSLabelIcon2">
@@ -1282,7 +1316,7 @@
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="f3" green="96" red="21" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Empresas Habilitadas"/>
+                <Property name="text" type="java.lang.String" value="Almac&#xe9;nes Habilitados"/>
                 <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="85" green="37" red="0" type="rgb"/>
                 </Property>
@@ -1299,7 +1333,7 @@
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="99" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Empresas Deshabilitadas"/>
+                <Property name="text" type="java.lang.String" value=" Deshabilitadas"/>
                 <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="85" green="37" red="0" type="rgb"/>
                 </Property>

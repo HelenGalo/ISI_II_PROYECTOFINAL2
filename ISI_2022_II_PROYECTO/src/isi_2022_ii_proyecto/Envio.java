@@ -939,7 +939,7 @@ public class Envio extends javax.swing.JFrame {
         );
 
         habilitado.setBackground(new java.awt.Color(33, 150, 243));
-        habilitado.setText("Cuentas Habilitadas");
+        habilitado.setText("Empresas Habilitadas");
         habilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
         habilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
         habilitado.addActionListener(new java.awt.event.ActionListener() {
@@ -949,7 +949,7 @@ public class Envio extends javax.swing.JFrame {
         });
 
         deshabilitado.setBackground(new java.awt.Color(255, 153, 51));
-        deshabilitado.setText("Cuentas Deshabilitadas");
+        deshabilitado.setText("Empresas Deshabilitadas");
         deshabilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
         deshabilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_OFF);
         deshabilitado.addActionListener(new java.awt.event.ActionListener() {
@@ -986,8 +986,8 @@ public class Envio extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(habilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(deshabilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(205, 205, 205))
+                .addComponent(deshabilitado, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(180, 180, 180))
         );
         dashboardviewLayout.setVerticalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

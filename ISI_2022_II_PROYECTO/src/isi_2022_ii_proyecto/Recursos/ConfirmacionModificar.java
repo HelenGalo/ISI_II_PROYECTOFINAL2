@@ -5,6 +5,7 @@
  */
 package isi_2022_ii_proyecto.Recursos;
 
+import isi_2022_ii_proyecto.ActualizarAlmacen;
 import isi_2022_ii_proyecto.ActualizarCaja;
 import isi_2022_ii_proyecto.ActualizarCliente;
 import isi_2022_ii_proyecto.ActualizarEmpleado;
@@ -29,6 +30,11 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
     AperturarCajas aca;
     ActualizarCliente acliente;
     ActualizarEmpleado aemp;
+    ActualizarAlmacen almacen;
+    
+    public void setAlmacen(ActualizarAlmacen almacen){
+        this.almacen=almacen;
+    }
 
     public void setAcliente(ActualizarCliente acliente) {
         this.acliente = acliente;
@@ -243,6 +249,12 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
  
             this.dispose();
         }
+            if(tipo=="Malmacen"){
+                almacen.setEstadosModificar(true);
+                almacen.validarConfirmacion();
+                this.dispose();
+                
+            }
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     /**
@@ -296,6 +308,8 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
     private RSMaterialComponent.RSLabelIcon rSLabelIcon1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
+
+  
 
    
 
