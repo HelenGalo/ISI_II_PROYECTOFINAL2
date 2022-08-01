@@ -5,6 +5,7 @@
  */
 package isi_2022_ii_proyecto.Recursos;
 
+import isi_2022_ii_proyecto.Almacen;
 import isi_2022_ii_proyecto.Banco;
 import isi_2022_ii_proyecto.Caja;
 import isi_2022_ii_proyecto.Cliente;
@@ -26,6 +27,12 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
     Cliente clafectado;
     Empleados empafectado;
     Proveedores provafectado;
+    Almacen alma;
+
+    public void setAlma(Almacen alma) {
+        this.alma = alma;
+    }
+    
 
   
 
@@ -219,6 +226,10 @@ public class ConfirmacionDeshabilitarCuenta extends javax.swing.JFrame {
             empafectado.limpiartabla();
             this.dispose();
         } 
+           if(tipo=="Dalmacen"){
+               alma.deshabilitar();
+               alma.limpiartabla();
+           }
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     /**
