@@ -11,6 +11,11 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,9 +26,25 @@ import javax.swing.JPanel;
  */
 public class POS extends javax.swing.JFrame {
     boolean a = true;
-    String usuario;
+    
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
+    
+    String usuario;
+    int codigcliente; 
+    int codigvendedor;
+
+    public void setCodigvendedor(int codigvendedor) {
+        this.codigvendedor = codigvendedor;
+    }
+
+    public void setCodigoCliente(int codigcliente) {
+        this.codigcliente = codigcliente;
+    }
+    
+    
+    
+    
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
@@ -41,21 +62,7 @@ public class POS extends javax.swing.JFrame {
     }
     
     
-    public void refrescarInt(){
-        String SQL1 = "UPDATE Usuarios u SET u.Intentos=? WHERE u.Usuario="+"'"+usuario+"'";
-  
-        try {
-            int intentosAct=3 ;
-            PreparedStatement preparedStmt = con.prepareStatement(SQL1);
-            preparedStmt.setInt (1, intentosAct);
-            preparedStmt.execute();
-            
-             JOptionPane.showMessageDialog(null, "Intentos Refresacados");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-    }
+   
     
     public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
@@ -88,6 +95,136 @@ public class POS extends javax.swing.JFrame {
     public void  changecolor(JPanel hover, Color rand){
      hover.setBackground(rand);
     }
+    
+    
+    public void iniciarvendedor(){
+        String nombrevendedor="";
+        String SQL = "SELECT e.PrimerNombre, e.PrimerApellido FROM Empleados e Where e.IdEmpleado="+codigvendedor;
+        
+        
+ 
+        try {
+          Statement  st = (Statement) con.createStatement();
+          ResultSet rs = st.executeQuery(SQL);
+        
+        
+         while (rs.next()) {
+           
+                nombrevendedor = rs.getString("e.PrimerNombre")+" "+rs.getString("e.PrimerApellido");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error "+ ex.getMessage());
+        }
+        
+         
+        jLabel35.setText(nombrevendedor);
+        jLabel36.setText(String.valueOf(codigvendedor));
+         
+    }
+    
+     public void iniciarcajero(){
+         String nombrecajero="";
+        String SQL3 = "SELECT e.PrimerNombre, e.PrimerApellido FROM Empleados e\n"
+                   +"INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n"+
+                 "Where u.Usuario='"+usuario+"';";
+        
+        
+        try {
+           
+            Statement st3 = (Statement) con.createStatement();
+            ResultSet rs3 = st3.executeQuery(SQL3);
+ 
+            
+            while (rs3.next()) {
+           
+                nombrecajero = rs3.getString("e.PrimerNombre")+" "+rs3.getString("e.PrimerApellido");;
+            }
+        
+        }catch(SQLException e){
+            System.out.println("Error "+ e.getMessage());
+        }
+        
+        
+        
+        jLabel44.setText(nombrecajero);
+        jLabel45.setText(usuario);
+         
+    }
+    
+    
+    
+    
+    
+     public void iniciarcliente(){
+        String nombrecliente="";
+        String SQL1 = "SELECT c.Nombres, c.Apellidos FROM Clientes c Where c.IdCliente="+codigcliente;
+        
+        
+     
+        try {
+           Statement st1 = (Statement) con.createStatement();
+           ResultSet rs1 = st1.executeQuery(SQL1);
+        
+         while (rs1.next()) {
+           
+                nombrecliente = rs1.getString("c.Nombres")+" "+rs1.getString("c.Apellidos");
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Error "+ ex.getMessage());
+        }
+        
+        jLabel38.setText(nombrecliente);
+        jLabel39.setText(String.valueOf(codigcliente));
+         
+    }
+     
+     
+    
+     public void iniciarcaja(){
+        int codigocaja=0;
+              
+        String SQL2 = "SELECT c.IdCaja FROM Caja c\n"
+                 +"INNER JOIN Usuarios u ON u.IdUsuario = c.IdUsuario\n"+
+                 "Where u.Usuario='"+usuario+"';";
+        
+        
+     
+        try {
+             
+            Statement st2 = (Statement) con.createStatement();
+            ResultSet rs2 = st2.executeQuery(SQL2);;
+        
+            while (rs2.next()) {
+           
+                codigocaja = rs2.getInt("c.IdCaja");
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Error "+ ex.getMessage());
+        }
+          jLabel42.setText(String.valueOf(codigocaja));
+    }
+    
+    
+    public void iniciardatos(){
+        
+        
+       iniciarcajero();
+       iniciarcaja();
+       iniciarcliente();
+       iniciarvendedor();
+       
+        
+       
+        
+       
+        
+        
+    }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -127,6 +264,10 @@ public class POS extends javax.swing.JFrame {
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
         rSLabelIcon16 = new rojerusan.RSLabelIcon();
+        jLabel43 = new javax.swing.JLabel();
+        rSLabelIcon17 = new rojerusan.RSLabelIcon();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
         rSPanelShadow1 = new necesario.RSPanelShadow();
         rSPanelsSlider2 = new rojerusan.RSPanelsSlider();
         rSPanelsSlider3 = new rojerusan.RSPanelsSlider();
@@ -343,91 +484,192 @@ public class POS extends javax.swing.JFrame {
         rSPanelGradiente3.setColorPrimario(new java.awt.Color(51, 153, 255));
         rSPanelGradiente3.setColorSecundario(new java.awt.Color(20, 101, 187));
         rSPanelGradiente3.setGradiente(rspanelgradiente.RSPanelGradiente.Gradiente.VERTICAL);
-        rSPanelGradiente3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel34.setFont(new java.awt.Font("Franklin Gothic Book", 0, 16)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(255, 255, 255));
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel34.setText("Vendedor");
-        rSPanelGradiente3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 100, 30));
 
         rSLabelIcon13.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon13.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon13.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         rSLabelIcon13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.VIBRATION);
-        rSPanelGradiente3.add(rSLabelIcon13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 60, 60));
 
-        jLabel35.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
+        jLabel35.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(255, 255, 255));
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setText("Vendedor");
-        rSPanelGradiente3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 100, 30));
 
-        jLabel36.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
+        jLabel36.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
         jLabel36.setForeground(new java.awt.Color(255, 255, 255));
         jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel36.setText("Vendedor");
-        rSPanelGradiente3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 100, 20));
 
         jLabel17.setFont(new java.awt.Font("Franklin Gothic Book", 1, 36)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel17.setText("POS");
-        rSPanelGradiente3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 80, 40));
 
         jLabel37.setFont(new java.awt.Font("Franklin Gothic Book", 0, 16)); // NOI18N
         jLabel37.setForeground(new java.awt.Color(255, 255, 255));
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel37.setText("Cliente");
-        rSPanelGradiente3.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, 100, 30));
 
         rSLabelIcon14.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon14.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon14.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         rSLabelIcon14.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ACCOUNT_CIRCLE);
-        rSPanelGradiente3.add(rSLabelIcon14, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 60, 60));
 
-        jLabel38.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
+        jLabel38.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(255, 255, 255));
         jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel38.setText("Cliente");
-        rSPanelGradiente3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, 100, 30));
 
-        jLabel39.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
+        jLabel39.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
         jLabel39.setForeground(new java.awt.Color(255, 255, 255));
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel39.setText("Cliente");
-        rSPanelGradiente3.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 70, 100, 20));
 
         jLabel40.setFont(new java.awt.Font("Franklin Gothic Book", 0, 16)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(255, 255, 255));
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel40.setText("Caja");
-        rSPanelGradiente3.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 10, 100, 30));
 
         rSLabelIcon15.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon15.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon15.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         rSLabelIcon15.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.AIRPLAY);
-        rSPanelGradiente3.add(rSLabelIcon15, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 40, 60, 60));
 
-        jLabel41.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
+        jLabel41.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel41.setForeground(new java.awt.Color(255, 255, 255));
         jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel41.setText("Caja");
-        rSPanelGradiente3.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 40, 100, 30));
+        jLabel41.setText("CodigoCaja");
 
-        jLabel42.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
+        jLabel42.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
         jLabel42.setForeground(new java.awt.Color(255, 255, 255));
         jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel42.setText("Caja");
-        rSPanelGradiente3.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 70, 100, 20));
 
         rSLabelIcon16.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon16.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon16.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         rSLabelIcon16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ACCOUNT_CIRCLE);
-        rSPanelGradiente3.add(rSLabelIcon16, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 60, 60));
+
+        jLabel43.setFont(new java.awt.Font("Franklin Gothic Book", 0, 16)); // NOI18N
+        jLabel43.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel43.setText("Usuario");
+
+        rSLabelIcon17.setBackground(new java.awt.Color(255, 255, 255));
+        rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
+        rSLabelIcon17.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CONTACTS);
+
+        jLabel44.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
+        jLabel44.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel44.setText("Usuario");
+
+        jLabel45.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
+        jLabel45.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel45.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel45.setText("Usuario");
+
+        javax.swing.GroupLayout rSPanelGradiente3Layout = new javax.swing.GroupLayout(rSPanelGradiente3);
+        rSPanelGradiente3.setLayout(rSPanelGradiente3Layout);
+        rSPanelGradiente3Layout.setHorizontalGroup(
+            rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(rSLabelIcon13, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(rSLabelIcon16, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(rSLabelIcon14, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(20, 20, 20)
+                .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(rSLabelIcon15, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(10, 10, 10)
+                .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(rSLabelIcon17, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+        );
+        rSPanelGradiente3Layout.setVerticalGroup(
+            rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(rSLabelIcon13, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(rSLabelIcon16, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rSLabelIcon14, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rSLabelIcon15, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rSLabelIcon17, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                                .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         rSPanelShadow1.setBackground(new java.awt.Color(242, 244, 242));
         rSPanelShadow1.add(rSPanelsSlider2, java.awt.BorderLayout.LINE_START);
@@ -1036,12 +1278,12 @@ public class POS extends javax.swing.JFrame {
         dashboardviewLayout.setVerticalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addComponent(rSPanelGradiente3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rSPanelGradiente3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rSPanelShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSPanelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1079,8 +1321,14 @@ public class POS extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIconOne3ActionPerformed
 
     private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne4ActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
+        try {
+            // TODO add your handling code here:
+            con.close();
+            System.exit(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(POS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
 
     private void rSButtonIconOne5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne5ActionPerformed
@@ -1268,6 +1516,9 @@ public class POS extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1307,6 +1558,7 @@ public class POS extends javax.swing.JFrame {
     private rojerusan.RSLabelIcon rSLabelIcon14;
     private rojerusan.RSLabelIcon rSLabelIcon15;
     private rojerusan.RSLabelIcon rSLabelIcon16;
+    private rojerusan.RSLabelIcon rSLabelIcon17;
     private necesario.RSPanel rSPanel1;
     private necesario.RSPanel rSPanel2;
     private rspanelgradiente.RSPanelGradiente rSPanelGradiente1;

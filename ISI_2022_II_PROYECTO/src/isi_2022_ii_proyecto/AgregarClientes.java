@@ -4,6 +4,7 @@
  */
 package isi_2022_ii_proyecto;
 
+import Atxy2k.CustomTextField.RestrictedTextField;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
 import isi_2022_ii_proyecto.Recursos.ConfirmacionGuardar;
@@ -45,11 +46,15 @@ public class AgregarClientes extends javax.swing.JFrame {
     int id=0;
     String rol;
     boolean estadoagregar=false;
+    RestrictedTextField r;
+    String tipodedocumento="";
+    
 
     public void setEstadoagregar(boolean estadoagregar) {
         this.estadoagregar = estadoagregar;
     }
-  public void setCliente(String cliente) {
+    
+    public void setCliente(String cliente) {
         this.cliente = cliente;
     }
   
@@ -57,15 +62,19 @@ public class AgregarClientes extends javax.swing.JFrame {
     
     public AgregarClientes() {
         initComponents();
-         this.setLocationRelativeTo(null);
+        r = new RestrictedTextField(TelC1);
+        this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
         inicializar();
         buscardatos();
-         inicial();
-         aviso.setVisible(false);
-         aviso2.setVisible(false);
-           nombreav.setVisible(false);
-           apellidoav.setVisible(false);
+        inicial();
+        aviso.setVisible(false);
+        aviso1.setVisible(false);
+        aviso2.setVisible(false);
+        nombreav.setVisible(false);
+        apellidoav.setVisible(false);
+        jLabel32.setVisible(false);
+        TelC1.setVisible(false);
     }
     public void inicializar(){
          JCodigoDisponible1.setText(cliente);
@@ -161,7 +170,59 @@ public class AgregarClientes extends javax.swing.JFrame {
             insertar();
         }
     }
+        
       public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
+      
+      
+      public void activarcampoIdentificacion(String valor){
+            
+            
+          if(valor=="DNI"){
+              TelC1.setText("");
+              tipodedocumento="DNI";
+              r.setAcceptSpace(false);
+              TelC1.setVisible(true);
+              jLabel32.setVisible(true);
+              r.setLimit(13);
+              r.setOnlyNums(true);
+          }else{
+              if(valor=="PASAPORTE"){
+                TelC1.setText("");
+                tipodedocumento="PASAPORTE";
+                r.setAcceptSpace(false);
+                r.setOnlyAlphaNumeric(true);
+                TelC1.setVisible(true);
+                r.setLimit(9);
+                jLabel32.setVisible(true);
+                  
+              }
+          }
+          
+      }
+      
+      
+      public int ObtenerIdTipoDocumento(){
+          String SQL = "SELECT td.IdTipoDocumento FROM TipoDocumento td Where td.Descripcion="+"'"+tipodedocumento+"';";
+          int idtdc=0;
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idtdc = rs.getInt("IdTipoDocumento");
+               
+                
+            }
+            
+      }catch(Exception e){
+            System.out.println("ERROR "+e.getMessage() );
+          
+      }
+        return idtdc;
+      }
+      
+      
       public boolean insertar(){
         String nombres="";
         String apellidos="";
@@ -178,6 +239,10 @@ public class AgregarClientes extends javax.swing.JFrame {
         
         String SQL = "INSERT INTO Clientes (IdCliente,Nombres,Apellidos,DireccionCliente,Telefono,CorreoElectronico,Estado) VALUES"
                 + "(?, ?, ?, ?, ?, ?,?)";
+        
+        String SQL1 ="INSERT INTO DetalleClienteDocumento (IdCliente, IdTipoDocumento, Valor) VALUES (?, ?, ?)";
+        
+  
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, id);
@@ -189,7 +254,13 @@ public class AgregarClientes extends javax.swing.JFrame {
             preparedStmt.setInt(7, estado);
             preparedStmt.execute();
             
-                 VentanaEmergente1 ve = new VentanaEmergente1();
+            PreparedStatement preparedStmt1 = con.prepareStatement(SQL1);
+            preparedStmt1.setInt(1, id);
+            preparedStmt1.setInt(2, ObtenerIdTipoDocumento());
+            preparedStmt1.setString(3, TelC1.getText());
+            preparedStmt1.execute();
+            
+             VentanaEmergente1 ve = new VentanaEmergente1();
              ve.setVisible(true);
         } catch (SQLException  e) {
                 String msj = "ERROR";
@@ -297,6 +368,7 @@ public class AgregarClientes extends javax.swing.JFrame {
     
     /*Verificamos que no sea null*/ 
     if(Nombre != null){
+        
         /* 1ª Condición: que la letra inicial sea mayúscula*/
         boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
 
@@ -400,6 +472,12 @@ public class AgregarClientes extends javax.swing.JFrame {
         aviso2 = new javax.swing.JLabel();
         nombreav = new javax.swing.JLabel();
         apellidoav = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        rSRadioButtonMaterial1 = new RSMaterialComponent.RSRadioButtonMaterial();
+        rSRadioButtonMaterial2 = new RSMaterialComponent.RSRadioButtonMaterial();
+        aviso1 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        TelC1 = new rojeru_san.RSMTextFull();
         guardar = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -967,7 +1045,7 @@ public class AgregarClientes extends javax.swing.JFrame {
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel29.setText("Nombres del Cliente");
-        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 91, 180, 40));
+        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 180, 40));
 
         DireccionC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         DireccionC.setPlaceholder("Ingresar domiciliaria del cliente");
@@ -981,7 +1059,7 @@ public class AgregarClientes extends javax.swing.JFrame {
                 DireccionCKeyTyped(evt);
             }
         });
-        jPanel5.add(DireccionC, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 483, -1));
+        jPanel5.add(DireccionC, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, 290, -1));
 
         rSPanelCircle2.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -1013,19 +1091,19 @@ public class AgregarClientes extends javax.swing.JFrame {
         jLabel31.setForeground(new java.awt.Color(153, 0, 255));
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel31.setText("Telefono");
-        jPanel5.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 180, 40));
+        jPanel5.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 180, 40));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Apellidos del Cliente");
-        jPanel5.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 151, 180, 40));
+        jPanel5.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 180, 40));
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(153, 0, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setText("Direccion Domiciliaria:");
-        jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 159, 40));
+        jLabel32.setText("N. Identificacion:");
+        jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 210, 180, 40));
 
         NombreC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NombreC.setPlaceholder("Ingrese los nombres del cliente");
@@ -1043,7 +1121,7 @@ public class AgregarClientes extends javax.swing.JFrame {
                 NombreCKeyTyped(evt);
             }
         });
-        jPanel5.add(NombreC, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 483, -1));
+        jPanel5.add(NombreC, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 290, -1));
 
         ApellidoC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ApellidoC.setPlaceholder("Ingrese los apellidos del cliente");
@@ -1058,10 +1136,10 @@ public class AgregarClientes extends javax.swing.JFrame {
                 ApellidoCKeyReleased(evt);
             }
         });
-        jPanel5.add(ApellidoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 483, -1));
+        jPanel5.add(ApellidoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 150, 290, -1));
 
         TelC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TelC.setPlaceholder("Ingresa el numero Telefono");
+        TelC.setPlaceholder("Ingresa numero de telefono");
         TelC.setSoloNumeros(true);
         TelC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1076,7 +1154,7 @@ public class AgregarClientes extends javax.swing.JFrame {
                 TelCKeyTyped(evt);
             }
         });
-        jPanel5.add(TelC, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, 483, -1));
+        jPanel5.add(TelC, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, 290, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
@@ -1088,7 +1166,7 @@ public class AgregarClientes extends javax.swing.JFrame {
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel33.setText("Correo Electronico:");
-        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 180, 40));
+        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 180, 40));
 
         CorreoC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         CorreoC.setPlaceholder("Ingresar Correo Electronico");
@@ -1105,7 +1183,7 @@ public class AgregarClientes extends javax.swing.JFrame {
                 CorreoCKeyReleased(evt);
             }
         });
-        jPanel5.add(CorreoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, 483, -1));
+        jPanel5.add(CorreoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, 290, -1));
 
         JComboEstado.setColorArrow(new java.awt.Color(102, 0, 255));
         JComboEstado.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -1125,56 +1203,109 @@ public class AgregarClientes extends javax.swing.JFrame {
                 JComboEstadoActionPerformed(evt);
             }
         });
-        jPanel5.add(JComboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 400, 220, 30));
+        jPanel5.add(JComboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 140, 220, 30));
 
         Estado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Estado.setForeground(new java.awt.Color(153, 0, 255));
         Estado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Estado.setText("Estado");
-        jPanel5.add(Estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 159, 40));
+        Estado.setText("Estado del Cliente:");
+        jPanel5.add(Estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 90, 159, 30));
 
         aviso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         aviso.setForeground(new java.awt.Color(255, 0, 0));
         aviso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        aviso.setText("*Correo invalido*");
-        jPanel5.add(aviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 300, 170, -1));
+        aviso.setText("*Direccion Invalida*");
+        jPanel5.add(aviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 310, 150, -1));
 
         aviso2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         aviso2.setForeground(new java.awt.Color(255, 0, 0));
         aviso2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         aviso2.setText("*Teléfono invalído*");
-        jPanel5.add(aviso2, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 220, 180, 30));
+        jPanel5.add(aviso2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 140, 20));
 
         nombreav.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         nombreav.setForeground(new java.awt.Color(255, 0, 0));
         nombreav.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        nombreav.setText("*Error*");
-        jPanel5.add(nombreav, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 120, 180, -1));
+        nombreav.setText("*Nombre Invalido*");
+        jPanel5.add(nombreav, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 110, 140, -1));
 
         apellidoav.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         apellidoav.setForeground(new java.awt.Color(255, 0, 0));
         apellidoav.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        apellidoav.setText("* Error*");
-        jPanel5.add(apellidoav, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 170, 180, -1));
+        apellidoav.setText("*Apellidos Invalidos*");
+        jPanel5.add(apellidoav, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 160, 150, -1));
+
+        jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel35.setText("Direccion Domiciliaria:");
+        jPanel5.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 180, 40));
+
+        rSRadioButtonMaterial1.setText("PASAPORTE");
+        rSRadioButtonMaterial1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButtonMaterial1ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(rSRadioButtonMaterial1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 360, 130, -1));
+
+        rSRadioButtonMaterial2.setText("DNI");
+        rSRadioButtonMaterial2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSRadioButtonMaterial2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButtonMaterial2ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(rSRadioButtonMaterial2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 120, -1));
+
+        aviso1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso1.setForeground(new java.awt.Color(255, 0, 0));
+        aviso1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso1.setText("*Correo invalido*");
+        jPanel5.add(aviso1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 260, 130, -1));
+
+        jLabel36.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel36.setText("Tipo Identificacion:");
+        jPanel5.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 180, 40));
+
+        TelC1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TelC1.setPlaceholder("Ingresa el numero de identificacion");
+        TelC1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TelC1ActionPerformed(evt);
+            }
+        });
+        TelC1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TelC1KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TelC1KeyTyped(evt);
+            }
+        });
+        jPanel5.add(TelC1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 250, 240, -1));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.DEFAULT_SIZE, 977, Short.MAX_VALUE)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addGap(0, 11, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 999, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        dashboardview.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 151, 977, -1));
+        dashboardview.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 1010, -1));
 
         guardar.setBackground(new java.awt.Color(33, 150, 243));
         guardar.setText("Guardar Cliente");
@@ -1418,6 +1549,31 @@ public class AgregarClientes extends javax.swing.JFrame {
         evt.consume();
        }
     }//GEN-LAST:event_NombreCKeyTyped
+
+    private void TelC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelC1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TelC1ActionPerformed
+
+    private void TelC1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelC1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TelC1KeyReleased
+
+    private void TelC1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelC1KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TelC1KeyTyped
+
+    private void rSRadioButtonMaterial2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial2ActionPerformed
+        // TODO add your handling code here:
+        rSRadioButtonMaterial1.setSelected(false);
+        activarcampoIdentificacion("DNI");
+        
+    }//GEN-LAST:event_rSRadioButtonMaterial2ActionPerformed
+
+    private void rSRadioButtonMaterial1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButtonMaterial1ActionPerformed
+        // TODO add your handling code here:
+        rSRadioButtonMaterial2.setSelected(false);
+        activarcampoIdentificacion("PASAPORTE");
+    }//GEN-LAST:event_rSRadioButtonMaterial1ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1502,8 +1658,10 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel MenuIcon;
     private rojeru_san.RSMTextFull NombreC;
     private rojeru_san.RSMTextFull TelC;
+    private rojeru_san.RSMTextFull TelC1;
     private javax.swing.JLabel apellidoav;
     private javax.swing.JLabel aviso;
+    private javax.swing.JLabel aviso1;
     private javax.swing.JLabel aviso2;
     private javax.swing.JPanel dashboardview;
     private newscomponents.RSButtonIcon_new guardar;
@@ -1522,6 +1680,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1567,5 +1727,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSLabelIcon rSLabelIcon9;
     private rojeru_san.rspanel.RSPanelCircle rSPanelCircle2;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity3;
+    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial1;
+    private RSMaterialComponent.RSRadioButtonMaterial rSRadioButtonMaterial2;
     // End of variables declaration//GEN-END:variables
 }

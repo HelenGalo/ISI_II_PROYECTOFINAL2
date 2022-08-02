@@ -10,6 +10,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -35,6 +38,12 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
+        
+        
+    }
+    
+    
+    public void validarRol(String usuario){
         
         
     }
@@ -86,6 +95,14 @@ public class Menu extends javax.swing.JFrame {
     
     public void  changecolor(JPanel hover, Color rand){
      hover.setBackground(rand);
+    }
+    
+    public void cerrarconexion(){
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -588,6 +605,11 @@ public class Menu extends javax.swing.JFrame {
         rSButtonIcon_new13.setText("POS");
         rSButtonIcon_new13.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.VIBRATION);
+        rSButtonIcon_new13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new13ActionPerformed(evt);
+            }
+        });
 
         rSButtonIcon_new14.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new14.setText("Categorias");
@@ -1165,13 +1187,14 @@ public class Menu extends javax.swing.JFrame {
         BOTONCAJALayout.setHorizontalGroup(
             BOTONCAJALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BOTONCAJALayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(rSLabelIcon19, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(BOTONCAJALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(BOTONCAJALayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(rSLabelIcon19, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(BOTONCAJALayout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(F7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(22, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BOTONCAJALayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(F7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
         );
         BOTONCAJALayout.setVerticalGroup(
             BOTONCAJALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1504,6 +1527,16 @@ public class Menu extends javax.swing.JFrame {
     private void BOTONCAJAMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONCAJAMouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_BOTONCAJAMouseExited
+
+    private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
+        // TODO add your handling code here:
+        cerrarconexion();
+        GenerarVenta gv = new GenerarVenta();
+        gv.setUsuario(usuario);
+        gv.setMenu(this);
+        gv.setVisible(true);
+        
+    }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
 
     /**
      * @param args the command line arguments

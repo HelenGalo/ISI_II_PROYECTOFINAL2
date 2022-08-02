@@ -219,7 +219,7 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
         }
          
         
-          if(tipo=="GCliente"){
+          if(tipo=="Gcliente"){
             gcliente.setEstadoagregar(true);
             gcliente.validarConfirmacion();
             this.dispose();

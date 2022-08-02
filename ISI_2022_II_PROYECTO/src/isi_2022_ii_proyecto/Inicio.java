@@ -351,7 +351,9 @@ public class Inicio extends javax.swing.JFrame {
                     Menu me = new Menu();
                     me.setUsuario(usuario.toString());
                     me.setVisible(true);
-                    me.refrescarInt();
+                    if(intentos<3){
+                      me.refrescarInt();
+                    }
                     this.dispose();
                  } catch (SQLException ex) {
                     System.out.println("Error: "+ ex.getMessage());
