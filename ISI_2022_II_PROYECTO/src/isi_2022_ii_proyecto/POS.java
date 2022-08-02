@@ -1748,6 +1748,7 @@ public class POS extends javax.swing.JFrame {
     private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
         // TODO add your handling code here:
         limpiartabla();
+        codigop=null;
     }//GEN-LAST:event_rSButtonIcon_new16ActionPerformed
 
     private void rSButtonIcon_new17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new17ActionPerformed
