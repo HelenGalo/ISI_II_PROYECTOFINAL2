@@ -1256,7 +1256,10 @@ public class AgregarAlmacen extends javax.swing.JFrame {
     }//GEN-LAST:event_TelC1ActionPerformed
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
-        // TODO add your handling code here:
+      Almacen al = new Almacen();
+      al.setVisible(true);
+      this.dispose();
+    
 
     
    

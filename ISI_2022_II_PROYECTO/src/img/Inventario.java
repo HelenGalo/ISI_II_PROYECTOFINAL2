@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package isi_2022_ii_proyecto;
+package img;
 
+import isi_2022_ii_proyecto.*;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
 import isi_2022_ii_proyecto.Recursos.ConfirmacionDeshabilitarCuenta;
@@ -30,13 +31,13 @@ import javax.swing.table.DefaultTableModel;
 /**
  *
  */
-public class Almacen extends javax.swing.JFrame {
+public class Inventario extends javax.swing.JFrame {
 
     /**
      * Creates new form AgregarCliente
      */
      boolean a = true;
-    String codigoalm;
+    String codiap;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
 
@@ -45,7 +46,7 @@ public class Almacen extends javax.swing.JFrame {
 
   
     
-    public Almacen() {
+    public Inventario() {
         initComponents();
          this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
@@ -53,38 +54,24 @@ public class Almacen extends javax.swing.JFrame {
     
         
     }
-     public void deshabilitar(){
-        String SQL = "UPDATE Almacen SET IdEstado=? Where IdAlmacen="+codigoalm;
-        try {
-            PreparedStatement preparedStmt = con.prepareStatement(SQL);
-          
-            preparedStmt.setInt (1, 0);
-            preparedStmt.execute();
-            
-            VentanaEmergente1 ve = new VentanaEmergente1();
-            ve.setVisible(true);
-
-        } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());   
-        }
-    }
+    
       public void listarAl(){
-        String[] registros = new String[5];
+        String[] registros = new String[6];
         DefaultTableModel modelo =  (DefaultTableModel) JTableAlmacen.getModel();
 
-     String SQL = "SELECT  a.IdAlmacen,a.DireccionAlmacen,a.NombreAlmacen, a.Telefono, eu.Descripcion,e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido  FROM Almacenes a\n" +
-                      "INNER JOIN Empleados e ON e.IdEmpleado = a.IdEmpleado\n" +
-                     "INNER JOIN EstadosUsuario eu ON eu.IdEstado = a.IdEstado WHERE a.IdEstado=1" ;
+     String SQL = "SELECT ap.IdProducto, ap.IdAlmacen,p.Nombre,ap.ExistenciaActual,ap.ExistenciaMaxima,ap.ExistenciaMinima FROM AlmacenProducto ap\n" +
+                      "INNER JOIN Productos p ON p.IdProducto = ap.IdProducto" ;
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                registros[0] = rs.getString("a.IdAlmacen");
-                registros[1] = rs.getString("a.NombreAlmacen");
-                registros[2] = rs.getString("e.PrimerNombre")+" "+rs.getString("e.SegundoNombre")+" "+rs.getString("e.PrimerApellido");
-                registros[3] = rs.getString("a.DireccionAlmacen");
-                registros[4] = rs.getString("a.Telefono");
+                registros[0] = rs.getString("ap.IdAlmacen");
+                registros[1] = rs.getString("ap.IdProducto");
+                registros[2] = rs.getString("p.Nombre");
+                registros[3] = rs.getString("ap.ExistenciaActual");
+                registros[4] = rs.getString("ap.ExistenciaMaxima");
+                registros[5] = rs.getString("ap.ExistenciaMinima");
              
                
                 modelo.addRow(registros);
@@ -98,64 +85,7 @@ public class Almacen extends javax.swing.JFrame {
         }
     }
      
-       public void listarh(){
-        String[] registros = new String[5];
-        DefaultTableModel modelo =  (DefaultTableModel) JTableAlmacen.getModel();
-
-     String SQL = "SELECT  a.IdAlmacen,a.DireccionAlmacen,a.NombreAlmacen, a.Telefono, eu.Descripcion,e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido  FROM Almacenes a\n" +
-                      "INNER JOIN Empleados e ON e.IdEmpleado = a.IdEmpleado\n" +
-                     "INNER JOIN EstadosUsuario eu ON eu.IdEstado = a.IdEstado WHERE a.IdEstado=1" ;
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                registros[0] = rs.getString("a.IdAlmacen");
-                registros[1] = rs.getString("a.NombreAlmacen");
-                registros[2] = rs.getString("e.PrimerNombre")+" "+rs.getString("e.SegundoNombre")+" "+rs.getString("e.PrimerApellido");
-                registros[3] = rs.getString("a.DireccionAlmacen");
-                registros[4] = rs.getString("a.Telefono");
-              
-               
-                modelo.addRow(registros);
-            }
-
-            JTableAlmacen.setModel(modelo);
-            
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-      public void listardesh(){
-        String[] registros = new String[5];
-        DefaultTableModel modelo =  (DefaultTableModel) JTableAlmacen.getModel();
-
-     String SQL = "SELECT  a.IdAlmacen,a.DireccionAlmacen,a.NombreAlmacen, a.Telefono, eu.Descripcion,e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido  FROM Almacenes a\n" +
-                      "INNER JOIN Empleados e ON e.IdEmpleado = a.IdEmpleado\n" +
-                     "INNER JOIN EstadosUsuario eu ON eu.IdEstado = a.IdEstado WHERE a.IdEstado=0" ;
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                registros[0] = rs.getString("a.IdAlmacen");
-                registros[1] = rs.getString("a.NombreAlmacen");
-                registros[2] = rs.getString("e.PrimerNombre")+" "+rs.getString("e.SegundoNombre")+" "+rs.getString("e.PrimerApellido");
-                registros[3] = rs.getString("a.DireccionAlmacen");
-                registros[4] = rs.getString("a.Telefono");
-
-               
-                modelo.addRow(registros);
-            }
-
-            JTableAlmacen.setModel(modelo);
-            
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+ 
      
      public void limpiartabla(){
         DefaultTableModel modelo =  (DefaultTableModel) JTableAlmacen.getModel();
@@ -173,23 +103,22 @@ public class Almacen extends javax.swing.JFrame {
 
     
    private void buscar(){
-        String[] registros = new String[5];
+        String[] registros = new String[6];
         DefaultTableModel modelo =  (DefaultTableModel) JTableAlmacen.getModel();
         
-         String SQL = "SELECT  a.IdAlmacen,a.DireccionAlmacen,a.NombreAlmacen, a.Telefono, e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido FROM Almacenes a\n" +
-                      "INNER JOIN Empleados e ON e.IdEmpleado = a.IdEmpleado\n" +
-                     "INNER JOIN EstadosUsuario eu ON eu.IdEstado = a.IdEstado\n" +
-                    " WHERE a.IdAlmacen LIKE '"+JTextbuscar.getText()+"%'";
+         String SQL = "SELECT ap.IdProducto, ap.IdAlmacen,p.Nombre,ap.ExistenciaActual,ap.ExistenciaMaxima,ap.ExistenciaMinima FROM AlmacenProducto ap\n" +
+                      "INNER JOIN Productos p ON p.IdProducto = ap.IdProducto WHERE p.Nombre LIKE '"+JTextbuscar.getText()+"%'";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
              while (rs.next()) {
-                registros[0] = rs.getString("a.IdAlmacen");
-                registros[1] = rs.getString("a.NombreAlmacen");
-                registros[2] = rs.getString("e.PrimerNombre")+" "+rs.getString("e.SegundoNombre")+" "+rs.getString("e.PrimerApellido");
-                registros[3] = rs.getString("a.DireccionAlmacen");
-                registros[4] = rs.getString("a.Telefono");
+                 registros[0] = rs.getString("ap.IdAlmacen");
+                registros[1] = rs.getString("ap.IdProducto");
+                registros[2] = rs.getString("p.Nombre");
+                registros[3] = rs.getString("ap.ExistenciaActual");
+                registros[4] = rs.getString("ap.ExistenciaMaxima");
+                registros[5] = rs.getString("ap.ExistenciaMinima");
                
                 modelo.addRow(registros);
             }
@@ -255,18 +184,14 @@ public class Almacen extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         rSButtonIcon_new5 = new newscomponents.RSButtonIcon_new();
-        rSButtonIcon_new6 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new7 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new10 = new newscomponents.RSButtonIcon_new();
-        rSButtonIcon_new4 = new newscomponents.RSButtonIcon_new();
         dashboardview = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         rSPanelOpacity1 = new RSMaterialComponent.RSPanelOpacity();
-        rSLabelIcon6 = new rojerusan.RSLabelIcon();
         jLabel7 = new javax.swing.JLabel();
         rSLabelIcon8 = new rojerusan.RSLabelIcon();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -281,14 +206,13 @@ public class Almacen extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
-        habilitado = new newscomponents.RSButtonIcon_new();
-        deshabilitado = new newscomponents.RSButtonIcon_new();
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
@@ -424,6 +348,10 @@ public class Almacen extends javax.swing.JFrame {
             HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+
+        jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1362, -1));
+
+        menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
@@ -602,6 +530,8 @@ public class Almacen extends javax.swing.JFrame {
                 .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        menu.add(MenuIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, 666));
+
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
         menuhide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -616,7 +546,7 @@ public class Almacen extends javax.swing.JFrame {
                 rSButtonIcon_new3ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 210, -1));
+        menuhide.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 210, -1));
 
         linesetting6.setBackground(new java.awt.Color(20, 101, 187));
         linesetting6.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -638,22 +568,23 @@ public class Almacen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addGap(19, 19, 19)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13))
+                .addContainerGap())
         );
         linesetting6Layout.setVerticalGroup(
             linesetting6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(linesetting6Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, linesetting6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(linesetting6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
-        menuhide.add(linesetting6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 210, 56));
+        menuhide.add(linesetting6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 210, 50));
 
         linesetting12.setBackground(new java.awt.Color(0, 55, 133));
         linesetting12.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -662,19 +593,34 @@ public class Almacen extends javax.swing.JFrame {
                 linesetting12MouseClicked(evt);
             }
         });
-        linesetting12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Almacén");
-        linesetting12.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 210, 40));
+        jLabel3.setText("Inventario");
 
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Gestiones");
-        linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
+
+        javax.swing.GroupLayout linesetting12Layout = new javax.swing.GroupLayout(linesetting12);
+        linesetting12.setLayout(linesetting12Layout);
+        linesetting12Layout.setHorizontalGroup(
+            linesetting12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(linesetting12Layout.createSequentialGroup()
+                .addGroup(linesetting12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        linesetting12Layout.setVerticalGroup(
+            linesetting12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(linesetting12Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         menuhide.add(linesetting12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 70));
 
@@ -689,19 +635,8 @@ public class Almacen extends javax.swing.JFrame {
         });
         menuhide.add(rSButtonIcon_new5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 77, 210, -1));
 
-        rSButtonIcon_new6.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new6.setText("Deshabilitar Almacén");
-        rSButtonIcon_new6.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new6.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE_SWEEP);
-        rSButtonIcon_new6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new6ActionPerformed(evt);
-            }
-        });
-        menuhide.add(rSButtonIcon_new6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 117, 210, -1));
-
         rSButtonIcon_new7.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new7.setText("Agregar Almacén");
+        rSButtonIcon_new7.setText("Agregar Inventario");
         rSButtonIcon_new7.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new7.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
         rSButtonIcon_new7.addActionListener(new java.awt.event.ActionListener() {
@@ -709,7 +644,7 @@ public class Almacen extends javax.swing.JFrame {
                 rSButtonIcon_new7ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 157, 210, -1));
+        menuhide.add(rSButtonIcon_new7, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 110, 210, -1));
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new9.setText("Modificar ");
@@ -720,7 +655,7 @@ public class Almacen extends javax.swing.JFrame {
                 rSButtonIcon_new9ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 197, 210, -1));
+        menuhide.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 210, -1));
 
         rSButtonIcon_new10.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new10.setText("Imprimir ");
@@ -731,35 +666,11 @@ public class Almacen extends javax.swing.JFrame {
                 rSButtonIcon_new10ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 237, 210, -1));
+        menuhide.add(rSButtonIcon_new10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 210, -1));
 
-        rSButtonIcon_new4.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new4.setText("Inventario");
-        rSButtonIcon_new4.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        rSButtonIcon_new4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ATTACH_MONEY);
-        rSButtonIcon_new4.setInheritsPopupMenu(true);
-        rSButtonIcon_new4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new4ActionPerformed(evt);
-            }
-        });
-        menuhide.add(rSButtonIcon_new4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 281, 210, -1));
+        menu.add(menuhide, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 210, 670));
 
-        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
-        menu.setLayout(menuLayout);
-        menuLayout.setHorizontalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        menuLayout.setVerticalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
-            .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 24, -1, 690));
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
 
@@ -768,20 +679,12 @@ public class Almacen extends javax.swing.JFrame {
 
         rSPanelOpacity1.setBackground(new java.awt.Color(60, 76, 143));
 
-        rSLabelIcon6.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon6.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
-        rSLabelIcon6.setName(""); // NOI18N
-
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("/");
 
         rSLabelIcon8.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon8.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MENU);
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Agregar Almacén");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -793,10 +696,10 @@ public class Almacen extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Almacén");
+        jLabel11.setText("Modulo Inventario");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_CONVENIENCE_STORE);
+        rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LIST);
         rSLabelIcon17.setName(""); // NOI18N
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -809,12 +712,10 @@ public class Almacen extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Listado de Almacén");
+        jLabel14.setText("Listado de Inventario");
 
-        rSPanelOpacity1.setLayer(rSLabelIcon6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(rSLabelIcon8, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        rSPanelOpacity1.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity1.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -846,18 +747,13 @@ public class Almacen extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSLabelIcon6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
-                .addContainerGap())
+                .addGap(373, 373, 373))
         );
         rSPanelOpacity1Layout.setVerticalGroup(
             rSPanelOpacity1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rSPanelOpacity1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(rSPanelOpacity1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(rSPanelOpacity1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -866,7 +762,6 @@ public class Almacen extends javax.swing.JFrame {
                     .addComponent(rSLabelIcon8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSLabelIcon6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(rSPanelOpacity1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -879,7 +774,7 @@ public class Almacen extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo Almacen", "Nombre  Almacen", "Empleado", "Direccion", "Telefono"
+                "Codigo Almacen", "Codigo Producto", "Producto", "Cantida Actual", "Cantidad Maxima", "Cantidad Minima"
             }
         ));
         JTableAlmacen.setToolTipText("");
@@ -907,7 +802,7 @@ public class Almacen extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODÚLO ALMACÉN");
+        jLabel6.setText("MODÚLO INVENTARIO");
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
 
@@ -941,26 +836,6 @@ public class Almacen extends javax.swing.JFrame {
             .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        habilitado.setBackground(new java.awt.Color(33, 150, 243));
-        habilitado.setText("Almacénes Habilitados");
-        habilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        habilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
-        habilitado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                habilitadoActionPerformed(evt);
-            }
-        });
-
-        deshabilitado.setBackground(new java.awt.Color(255, 153, 51));
-        deshabilitado.setText(" Deshabilitadas");
-        deshabilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        deshabilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_OFF);
-        deshabilitado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deshabilitadoActionPerformed(evt);
-            }
-        });
-
         JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         JTextbuscar.setPlaceholder("Busqueda rapida");
         JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -986,46 +861,20 @@ public class Almacen extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dashboardviewLayout.createSequentialGroup()
                 .addGap(69, 69, 69)
                 .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(habilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(deshabilitado, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(180, 180, 180))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dashboardviewLayout.setVerticalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(habilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deshabilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
                 .addGap(24, 24, 24))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, 1362, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(260, 260, 260)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -1113,7 +962,7 @@ public class Almacen extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-      Menu m = new Menu();
+        Almacen m = new Almacen();
         m.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
@@ -1123,34 +972,17 @@ public class Almacen extends javax.swing.JFrame {
 
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 
-    private void rSButtonIcon_new6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new6ActionPerformed
-        if(codigoalm!=null){
-          
-           ConfirmacionDeshabilitarCuenta al = new ConfirmacionDeshabilitarCuenta();
-           al.setAlma(this);
-           al.setTipo("Dalmacen");
-           al.setVisible(true);
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
-        }
-    }//GEN-LAST:event_rSButtonIcon_new6ActionPerformed
-
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
         // TODO add your handling code here:
-        AgregarAlmacen alm = new AgregarAlmacen();
-        alm.setVisible(true);
-        this.dispose();
+       
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
 
     private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
          try {
-             if(codigoalm.isEmpty()==false){
+             if(codiap.isEmpty()==false){
           
-          ActualizarAlmacen ac = new   ActualizarAlmacen();
-           ac.setId(Integer.parseInt(codigoalm));
-           ac.mostrar();
-           ac.setVisible(true);   
-           this.dispose();
+         
+         
         } else{
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
         }
@@ -1168,8 +1000,8 @@ public class Almacen extends javax.swing.JFrame {
     private void JTableAlmacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableAlmacenMouseClicked
         
         int seleccion = JTableAlmacen.rowAtPoint(evt.getPoint());
-        codigoalm =   String.valueOf(JTableAlmacen.getValueAt(seleccion, 0));
-         System.out.println("THIs" +codigoalm);
+        codiap =   String.valueOf(JTableAlmacen.getValueAt(seleccion, 0));
+         System.out.println("THIs" +codiap);
     }//GEN-LAST:event_JTableAlmacenMouseClicked
 
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
@@ -1188,24 +1020,6 @@ public class Almacen extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_JTextbuscarKeyReleased
-
-    private void habilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitadoActionPerformed
-        // TODO add your handling code here:
-        rSButtonIcon_new6.setEnabled(true);
-        limpiartabla();
-        listarh();
-    }//GEN-LAST:event_habilitadoActionPerformed
-
-    private void deshabilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deshabilitadoActionPerformed
-        // TODO add your handling code here:
-        rSButtonIcon_new6.setEnabled(false);
-        limpiartabla();
-        listardesh();
-    }//GEN-LAST:event_deshabilitadoActionPerformed
-
-    private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1330,7 +1144,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Almacen().setVisible(true);
+                new Inventario().setVisible(true);
             }
         });
     }
@@ -1341,8 +1155,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel MenuIcon;
     private javax.swing.JPanel dashboardview;
-    private newscomponents.RSButtonIcon_new deshabilitado;
-    private newscomponents.RSButtonIcon_new habilitado;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JPanel iconoshe;
     private javax.swing.JLabel jLabel10;
@@ -1355,7 +1167,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1382,9 +1193,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new10;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new4;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new5;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new6;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new7;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new9;
     private rojeru_san.RSLabelHora rSLabelHora1;
@@ -1397,7 +1206,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSLabelIcon rSLabelIcon3;
     private rojerusan.RSLabelIcon rSLabelIcon4;
     private rojerusan.RSLabelIcon rSLabelIcon5;
-    private rojerusan.RSLabelIcon rSLabelIcon6;
     private rojerusan.RSLabelIcon rSLabelIcon7;
     private rojerusan.RSLabelIcon rSLabelIcon8;
     private rojerusan.RSLabelIcon rSLabelIcon9;
