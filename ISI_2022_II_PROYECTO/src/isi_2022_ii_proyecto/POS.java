@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package isi_2022_ii_proyecto;
+import Atxy2k.CustomTextField.RestrictedTextField;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
 import java.awt.Color;
@@ -20,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Edwin Rafael
@@ -29,10 +31,18 @@ public class POS extends javax.swing.JFrame {
     
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    
+    DefaultTableModel modelo1;  
+    DefaultTableModel modelo;
     String usuario;
     int codigcliente; 
     int codigvendedor;
+    int idorden=0;
+    String codigop;
+    String codigop1;
+    RestrictedTextField r;
+    String valorsiete="";
+    int seleccion1;
+
 
     public void setCodigvendedor(int codigvendedor) {
         this.codigvendedor = codigvendedor;
@@ -57,12 +67,78 @@ public class POS extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
+        buscarUltimoId();
+        modelo1=(DefaultTableModel) JTableBancos.getModel();
+        modelo=(DefaultTableModel) JTableBancos1.getModel();
+        r = new RestrictedTextField(JTextbuscar);
+        r.setOnlyNums(true);
         
         
     }
     
     
+    
+    public void buscarUltimoId(){
+          String SQL = "SELECT v.IdOrden FROM Ventas v WHERE v.IdOrden=(SELECT max(IdOrden) FROM Ventas)";
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idorden = rs.getInt("v.IdOrden");
+               
+                
+            }
+
+            
+ 
+            idorden = idorden +1;
+    
+            jLabel33.setText(String.valueOf(idorden));
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
    
+    
+      public void buscarProductoPorId(int idproducto){
+        String[] registros = new String[4];
+        
+          
+          String SQL = "SELECT p.Nombre, p.Precio, ifnull(ExistenciaActual,0) as 'Ex'   FROM Productos p\n"
+                  +"LEFT JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
+                  +"WHERE p.IdProducto="+idproducto;
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = String.valueOf(idproducto);
+                registros[1] = rs.getString("p.Nombre");
+                registros[2] = rs.getString("p.Precio");
+                registros[3] = rs.getString("Ex");
+                modelo.addRow(registros);
+            }
+
+            JTableBancos1.setModel(modelo);
+ 
+         
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    
     
     public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
@@ -96,6 +172,218 @@ public class POS extends javax.swing.JFrame {
      hover.setBackground(rand);
     }
     
+    
+    public void agregarproductosorden(int idproducto){
+        int validarexistenciaorden=0;
+        boolean estadoproducto=false;
+        int posicion=0;
+        int nuevacantidad=0;
+        float nuevosubtotal=0.00f;
+        
+        if(modelo1.getRowCount()==0){
+            String[] registros = new String[6];
+            String SQL = "SELECT p.Nombre, p.Precio   FROM Productos p\n"
+                  +"LEFT JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
+                  +"WHERE p.IdProducto="+idproducto;
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                registros[0] = String.valueOf(idproducto);
+                registros[1] = rs.getString("p.Nombre");
+                registros[2] = rs.getString("p.Precio");
+                registros[3] = "1";
+                registros[4] = "0.00";
+                registros[5] = String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]));
+                modelo1.addRow(registros);
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+            
+        
+        }else{
+           for(int i=0; i<modelo1.getRowCount();i++){
+               validarexistenciaorden=Integer.valueOf(modelo1.getValueAt(i, 0).toString());
+               int valortabla1=Integer.valueOf(modelo.getValueAt(0, 0).toString());
+           if(validarexistenciaorden==valortabla1){
+               
+               estadoproducto=true;
+               posicion=i;
+            }
+            }
+           
+            if(estadoproducto==true){
+            nuevacantidad=Integer.valueOf(modelo1.getValueAt(posicion, 3).toString())+1;
+            
+            modelo1.setValueAt(nuevacantidad, posicion, 3);
+            nuevosubtotal=Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(modelo1.getValueAt(posicion, 2).toString());
+            modelo1.setValueAt(nuevosubtotal, posicion, 5);
+            }else{
+               String[] registros = new String[6];
+               String SQL = "SELECT p.Nombre, p.Precio   FROM Productos p\n"
+                  +"LEFT JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
+                  +"WHERE p.IdProducto="+idproducto;
+          
+          
+                try {
+                        Statement st = (Statement) con.createStatement();
+                        ResultSet rs = st.executeQuery(SQL);
+
+                        while (rs.next()) {
+                            registros[0] = String.valueOf(idproducto);
+                            registros[1] = rs.getString("p.Nombre");
+                            registros[2] = rs.getString("p.Precio");
+                            registros[3] = "1";
+                            registros[4] = "0.00";
+                            registros[5] = String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]));
+                            modelo1.addRow(registros);
+                        }
+
+                        
+                    }catch(SQLException e){
+                        System.out.println("Error "+e.getMessage());
+
+                    }
+                
+            }
+           
+        }
+       
+        
+        
+        
+        
+        
+       
+    }
+    
+    
+    public void total(){
+        if(modelo1.getRowCount()>0){
+            float total=0.00f;
+            total = Float.valueOf(jLabel18.getText()) + Float.valueOf(jLabel23.getText())-Float.valueOf(jLabel28.getText());
+            jLabel22.setText(String.valueOf(total));
+        }else{
+            jLabel22.setText("0.00");
+        }
+       
+                
+    }
+    
+    public void sumarsubtotal(){
+        if(modelo1.getRowCount()>0){
+        float sumador=0.00f;
+        float subtotal=0.00f;
+        for(int i=0;i<modelo1.getRowCount();i++){
+            sumador=sumador+Float.valueOf(modelo1.getValueAt(i, 5).toString());
+        }
+        
+        subtotal= (float) (sumador-(sumador*0.15));
+        
+        jLabel23.setText(String.valueOf(subtotal));
+        }else{
+            jLabel23.setText("");
+        }
+        
+    }
+    
+    public void regresar(){
+        Menu menu = new Menu();
+        menu.setUsuario(usuario);
+        menu.setVisible(true);
+        this.dispose();
+    }
+    
+    
+    public void sumarisv(){
+        float sumador=0.00f;
+        float isv=0.00f;
+        for(int i=0;i<modelo1.getRowCount();i++){
+            sumador=sumador+Float.valueOf(modelo1.getValueAt(i, 5).toString());
+        }
+        
+        isv= (float) (sumador*0.15);
+        
+        jLabel18.setText(String.valueOf(isv));
+    }
+    
+    
+    public void sumarcantidadproductos(){
+        int sumador=0;
+        for(int i=0;i<modelo1.getRowCount();i++){
+            sumador=sumador+Integer.valueOf(modelo1.getValueAt(i, 3).toString());
+        }
+        jLabel8.setText(String.valueOf(sumador));
+    }
+    
+    
+     public void restarcantidadproductos(int codigproducto){
+        int corredor=0;
+        int posicion=0;
+        int nuevacantidad=0;
+        float nuevosubtotal=0.00f;
+        for(int i=0; i<modelo1.getRowCount();i++){
+               corredor=Integer.valueOf(modelo1.getValueAt(i, 0).toString());
+           if(codigproducto==corredor){
+               posicion=i;
+            }
+            }
+          
+            nuevacantidad=Integer.valueOf(modelo1.getValueAt(posicion, 3).toString())-1;
+            
+            modelo1.setValueAt(nuevacantidad, posicion, 3);
+            nuevosubtotal=Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(modelo1.getValueAt(posicion, 2).toString());
+            modelo1.setValueAt(nuevosubtotal, posicion, 5);
+          
+     }
+        
+           
+           
+    
+    
+    public void QuitarproductoId(int codigproducto){
+        int corredor=0;
+        int posicion=0;
+        for(int i=0; i<modelo1.getRowCount();i++){
+               corredor=Integer.valueOf(modelo1.getValueAt(i, 0).toString());
+           if(codigproducto==corredor){
+               posicion=i;
+            }
+            }
+        modelo1.removeRow(posicion);
+     
+    }
+    
+    
+    public void limpiartabla(){
+        DefaultTableModel modelo =  (DefaultTableModel) JTableBancos1.getModel();
+        while (modelo.getRowCount() > 0)
+        {
+        modelo.removeRow(0);
+        }
+     
+    }
+    
+    public void limpiartabla2(){
+        DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
+        while (modelo.getRowCount() > 0)
+        {
+        modelo.removeRow(0);
+        }
+        jLabel23.setText("0.00");
+        jLabel18.setText("0.00");
+        jLabel28.setText("0.00");
+        jLabel22.setText("0.00");
+        jLabel8.setText("0");
+     
+    }
     
     public void iniciarvendedor(){
         String nombrevendedor="";
@@ -311,7 +599,6 @@ public class POS extends javax.swing.JFrame {
         rSButtonGradiente13 = new rsbuttongradiente.RSButtonGradiente();
         rSButtonGradiente14 = new rsbuttongradiente.RSButtonGradiente();
         rSButtonGradiente15 = new rsbuttongradiente.RSButtonGradiente();
-        rSButtonIcon_new11 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new12 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
         rSButtonHover4 = new rojeru_san.complementos.RSButtonHover();
@@ -319,7 +606,6 @@ public class POS extends javax.swing.JFrame {
         rSButtonIcon_new15 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new16 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new17 = new newscomponents.RSButtonIcon_new();
-        rSButtonIcon_new18 = new newscomponents.RSButtonIcon_new();
 
         javax.swing.GroupLayout rSPanelVector1Layout = new javax.swing.GroupLayout(rSPanelVector1);
         rSPanelVector1.setLayout(rSPanelVector1Layout);
@@ -689,7 +975,7 @@ public class POS extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, false, false
+                false, false, false, true, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -719,7 +1005,7 @@ public class POS extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(102, 0, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("1");
+        jLabel8.setText("0");
         rSPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 60, 40));
 
         jLabel32.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
@@ -731,7 +1017,7 @@ public class POS extends javax.swing.JFrame {
         jLabel33.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(102, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("1");
+        jLabel33.setText("0");
         rSPanel1.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 20, 90, 40));
 
         rSPanelGradiente1.setColorPrimario(new java.awt.Color(51, 153, 255));
@@ -914,6 +1200,11 @@ public class POS extends javax.swing.JFrame {
         rSButtonGradiente5.setFocusable(false);
         rSButtonGradiente5.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         rSButtonGradiente5.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
+        rSButtonGradiente5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rSButtonGradiente5MouseClicked(evt);
+            }
+        });
         rSButtonGradiente5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonGradiente5ActionPerformed(evt);
@@ -1064,7 +1355,7 @@ public class POS extends javax.swing.JFrame {
         JTableBancos1.setForeground(new java.awt.Color(204, 204, 204));
         JTableBancos1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
                 "CodigoProducto", "Nombre", "Precio", "Inventario D."
@@ -1165,17 +1456,6 @@ public class POS extends javax.swing.JFrame {
         });
         rSPanel2.add(rSButtonGradiente15, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, 70, 60));
 
-        rSButtonIcon_new11.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIcon_new11.setText("Enviar Orden");
-        rSButtonIcon_new11.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
-        rSButtonIcon_new11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new11ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonIcon_new11, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 410, 100, -1));
-
         rSButtonIcon_new12.setBackground(new java.awt.Color(20, 101, 187));
         rSButtonIcon_new12.setText("Ver Todos");
         rSButtonIcon_new12.setBackgroundHover(new java.awt.Color(0, 55, 133));
@@ -1196,7 +1476,7 @@ public class POS extends javax.swing.JFrame {
                 rSButtonIcon_new13ActionPerformed(evt);
             }
         });
-        rSPanel2.add(rSButtonIcon_new13, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 220, -1));
+        rSPanel2.add(rSButtonIcon_new13, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, 220, -1));
 
         rSButtonHover4.setText("+");
         rSButtonHover4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -1216,9 +1496,9 @@ public class POS extends javax.swing.JFrame {
                 rSButtonIcon_new14ActionPerformed(evt);
             }
         });
-        rSPanel2.add(rSButtonIcon_new14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, 220, -1));
+        rSPanel2.add(rSButtonIcon_new14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 220, -1));
 
-        rSButtonIcon_new15.setBackground(new java.awt.Color(20, 101, 187));
+        rSButtonIcon_new15.setBackground(new java.awt.Color(0, 204, 102));
         rSButtonIcon_new15.setText("Enviar Orden");
         rSButtonIcon_new15.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new15.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
@@ -1227,40 +1507,29 @@ public class POS extends javax.swing.JFrame {
                 rSButtonIcon_new15ActionPerformed(evt);
             }
         });
-        rSPanel2.add(rSButtonIcon_new15, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, 220, -1));
+        rSPanel2.add(rSButtonIcon_new15, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 220, -1));
 
         rSButtonIcon_new16.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIcon_new16.setText("Enviar Orden");
+        rSButtonIcon_new16.setText("Limpiar Buscador");
         rSButtonIcon_new16.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
+        rSButtonIcon_new16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE_SWEEP);
         rSButtonIcon_new16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new16ActionPerformed(evt);
             }
         });
-        rSPanel2.add(rSButtonIcon_new16, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 410, 100, -1));
+        rSPanel2.add(rSButtonIcon_new16, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 420, 220, -1));
 
         rSButtonIcon_new17.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIcon_new17.setText("Enviar Orden");
+        rSButtonIcon_new17.setText("Quitar producto");
         rSButtonIcon_new17.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
+        rSButtonIcon_new17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE_FOREVER);
         rSButtonIcon_new17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new17ActionPerformed(evt);
             }
         });
-        rSPanel2.add(rSButtonIcon_new17, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 100, -1));
-
-        rSButtonIcon_new18.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIcon_new18.setText("Enviar Orden");
-        rSButtonIcon_new18.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new18.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
-        rSButtonIcon_new18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new18ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonIcon_new18, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 100, -1));
+        rSPanel2.add(rSButtonIcon_new17, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 220, -1));
 
         rSPanelShadow2.add(rSPanel2, java.awt.BorderLayout.PAGE_START);
 
@@ -1338,24 +1607,38 @@ public class POS extends javax.swing.JFrame {
 
     private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
         // TODO add your handling code here:
+         try {
+            // TODO add your handling code here:
+            con.close();
+            regresar();
+        } catch (SQLException ex) {
+            Logger.getLogger(POS.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_rSButtonIcon_new14ActionPerformed
 
     private void rSButtonHover4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover4ActionPerformed
         // TODO add your handling code here:
+       
+        if(codigop!=null){
+            agregarproductosorden(Integer.valueOf(codigop));
+            sumarcantidadproductos();
+            sumarsubtotal();
+            sumarisv();
+            total();
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
+        }
+        
     }//GEN-LAST:event_rSButtonHover4ActionPerformed
 
     private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
         // TODO add your handling code here:
+        limpiartabla2();
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
 
     private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
-
-    private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
-        // TODO add your handling code here:
-     
-    }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
 
     private void rSButtonGradiente15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente15ActionPerformed
         // TODO add your handling code here:
@@ -1371,13 +1654,26 @@ public class POS extends javax.swing.JFrame {
 
     private void JTableBancos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancos1MouseClicked
         // TODO add your handling code here:
+        codigop =  JTableBancos1.getValueAt(0, 0).toString();
     }//GEN-LAST:event_JTableBancos1MouseClicked
 
     private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
         // TODO add your handling code here:
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-         
-
+        if(JTextbuscar.getText().length()>0){
+            JTextbuscar.setPlaceholder("");
+        }else{
+            JTextbuscar.setPlaceholder("Buscar por codigo");
+        }
+        
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER && JTextbuscar.getText().isEmpty()==false){
+            limpiartabla();
+            buscarProductoPorId(Integer.valueOf(JTextbuscar.getText()));
+            codigop=null;
+        }else{
+            if(evt.getKeyCode()==KeyEvent.VK_ENTER && JTextbuscar.getText().isEmpty()==true){
+              limpiartabla();
+              codigop=null;
+            }
         }
     }//GEN-LAST:event_JTextbuscarKeyReleased
 
@@ -1415,6 +1711,8 @@ public class POS extends javax.swing.JFrame {
 
     private void rSButtonGradiente5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente5ActionPerformed
         // TODO add your handling code here:
+        
+      
     }//GEN-LAST:event_rSButtonGradiente5ActionPerformed
 
     private void rSButtonGradiente4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente4ActionPerformed
@@ -1423,12 +1721,24 @@ public class POS extends javax.swing.JFrame {
 
     private void JTableBancosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancosMouseClicked
         // TODO add your handling code here:
-        int seleccion = JTableBancos.rowAtPoint(evt.getPoint());
-       /* codigob =   String.valueOf(JTableBancos.getValueAt(seleccion, 0));*/
+         seleccion1 = JTableBancos.rowAtPoint(evt.getPoint());
+       codigop1 =   String.valueOf(JTableBancos.getValueAt(seleccion1, 0));
     }//GEN-LAST:event_JTableBancosMouseClicked
 
     private void rSButtonHover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover1ActionPerformed
         // TODO add your handling code here:
+        if(codigop1!=null){
+            if(Integer.valueOf(modelo1.getValueAt(seleccion1, 3).toString())>0){
+                restarcantidadproductos(Integer.valueOf(codigop1));
+                sumarcantidadproductos();
+                sumarsubtotal();
+                sumarisv();
+                total();
+            }
+          
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
+        }
     }//GEN-LAST:event_rSButtonHover1ActionPerformed
 
     private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new15ActionPerformed
@@ -1437,15 +1747,28 @@ public class POS extends javax.swing.JFrame {
 
     private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
         // TODO add your handling code here:
+        limpiartabla();
     }//GEN-LAST:event_rSButtonIcon_new16ActionPerformed
 
     private void rSButtonIcon_new17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new17ActionPerformed
         // TODO add your handling code here:
+        
+          if(codigop1!=null){
+            QuitarproductoId(Integer.valueOf(codigop1));
+            sumarcantidadproductos();
+            sumarsubtotal();
+            sumarisv();
+            total();
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
+        }
     }//GEN-LAST:event_rSButtonIcon_new17ActionPerformed
 
-    private void rSButtonIcon_new18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new18ActionPerformed
+    private void rSButtonGradiente5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSButtonGradiente5MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_rSButtonIcon_new18ActionPerformed
+        
+     
+    }//GEN-LAST:event_rSButtonGradiente5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1546,14 +1869,12 @@ public class POS extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new11;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new13;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new14;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new15;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new16;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new17;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new18;
     private rojerusan.RSLabelIcon rSLabelIcon13;
     private rojerusan.RSLabelIcon rSLabelIcon14;
     private rojerusan.RSLabelIcon rSLabelIcon15;

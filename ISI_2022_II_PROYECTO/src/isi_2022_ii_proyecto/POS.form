@@ -797,10 +797,10 @@
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                                   <Table columnCount="6" rowCount="0">
                                     <Column editable="false" title="CodigoProducto" type="java.lang.Object"/>
-                                    <Column editable="true" title="Nombre" type="java.lang.Object"/>
+                                    <Column editable="false" title="Nombre" type="java.lang.Object"/>
                                     <Column editable="false" title="Precio" type="java.lang.Object"/>
-                                    <Column editable="false" title="Cantidad" type="java.lang.Object"/>
-                                    <Column editable="false" title="Descuento" type="java.lang.Object"/>
+                                    <Column editable="true" title="Cantidad" type="java.lang.Object"/>
+                                    <Column editable="true" title="Descuento" type="java.lang.Object"/>
                                     <Column editable="false" title="Subtotal" type="java.lang.Object"/>
                                   </Table>
                                 </Property>
@@ -886,7 +886,7 @@
                               <Color blue="ff" green="0" red="66" type="rgb"/>
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="text" type="java.lang.String" value="1"/>
+                            <Property name="text" type="java.lang.String" value="0"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -920,7 +920,7 @@
                               <Color blue="ff" green="0" red="66" type="rgb"/>
                             </Property>
                             <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="text" type="java.lang.String" value="1"/>
+                            <Property name="text" type="java.lang.String" value="0"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1287,6 +1287,7 @@
                         </Property>
                       </Properties>
                       <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rSButtonGradiente5MouseClicked"/>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonGradiente5ActionPerformed"/>
                       </Events>
                       <Constraints>
@@ -1600,7 +1601,7 @@
                               <Color blue="cc" green="cc" red="cc" type="rgb"/>
                             </Property>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="4" rowCount="1">
+                              <Table columnCount="4" rowCount="0">
                                 <Column editable="false" title="CodigoProducto" type="java.lang.Object"/>
                                 <Column editable="false" title="Nombre" type="java.lang.Object"/>
                                 <Column editable="false" title="Precio" type="java.lang.Object"/>
@@ -1805,28 +1806,6 @@
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new11">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="bb" green="65" red="14" type="rgb"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="Enviar Orden"/>
-                        <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="85" green="37" red="0" type="rgb"/>
-                        </Property>
-                        <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                          <Value id="SEND"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new11ActionPerformed"/>
-                      </Events>
-                      <Constraints>
-                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="380" y="410" width="100" height="-1"/>
-                        </Constraint>
-                      </Constraints>
-                    </Component>
                     <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new12">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -1867,7 +1846,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="260" y="260" width="220" height="-1"/>
+                          <AbsoluteConstraints x="260" y="270" width="220" height="-1"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1905,14 +1884,14 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="260" y="210" width="220" height="-1"/>
+                          <AbsoluteConstraints x="260" y="220" width="220" height="-1"/>
                         </Constraint>
                       </Constraints>
                     </Component>
                     <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new15">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="bb" green="65" red="14" type="rgb"/>
+                          <Color blue="66" green="cc" red="0" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Enviar Orden"/>
                         <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -1927,7 +1906,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="260" y="310" width="220" height="-1"/>
+                          <AbsoluteConstraints x="260" y="320" width="220" height="-1"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1936,12 +1915,12 @@
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="bb" green="65" red="14" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Enviar Orden"/>
+                        <Property name="text" type="java.lang.String" value="Limpiar Buscador"/>
                         <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="85" green="37" red="0" type="rgb"/>
                         </Property>
                         <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                          <Value id="SEND"/>
+                          <Value id="DELETE_SWEEP"/>
                         </Property>
                       </Properties>
                       <Events>
@@ -1949,7 +1928,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="260" y="410" width="100" height="-1"/>
+                          <AbsoluteConstraints x="260" y="420" width="220" height="-1"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1958,12 +1937,12 @@
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="bb" green="65" red="14" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Enviar Orden"/>
+                        <Property name="text" type="java.lang.String" value="Quitar producto"/>
                         <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="85" green="37" red="0" type="rgb"/>
                         </Property>
                         <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                          <Value id="SEND"/>
+                          <Value id="DELETE_FOREVER"/>
                         </Property>
                       </Properties>
                       <Events>
@@ -1971,29 +1950,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="260" y="360" width="100" height="-1"/>
-                        </Constraint>
-                      </Constraints>
-                    </Component>
-                    <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new18">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="bb" green="65" red="14" type="rgb"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="Enviar Orden"/>
-                        <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="85" green="37" red="0" type="rgb"/>
-                        </Property>
-                        <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                          <Value id="SEND"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new18ActionPerformed"/>
-                      </Events>
-                      <Constraints>
-                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="380" y="360" width="100" height="-1"/>
+                          <AbsoluteConstraints x="260" y="370" width="220" height="-1"/>
                         </Constraint>
                       </Constraints>
                     </Component>
