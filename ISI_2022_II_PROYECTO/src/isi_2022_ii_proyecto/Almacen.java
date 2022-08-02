@@ -39,7 +39,7 @@ public class Almacen extends javax.swing.JFrame {
     String codigoalm;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    int id=0;
+
 
     
 
@@ -74,8 +74,7 @@ public class Almacen extends javax.swing.JFrame {
 
      String SQL = "SELECT  a.IdAlmacen,a.DireccionAlmacen,a.NombreAlmacen, a.Telefono, eu.Descripcion,e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido  FROM Almacenes a\n" +
                       "INNER JOIN Empleados e ON e.IdEmpleado = a.IdEmpleado\n" +
-                     "INNER JOIN EstadosUsuario eu ON eu.IdEstado = a.IdEstado\n" +
-                      "WHERE a.IdEstado=1" ;
+                     "INNER JOIN EstadosUsuario eu ON eu.IdEstado = a.IdEstado WHERE a.IdEstado=1" ;
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -105,8 +104,7 @@ public class Almacen extends javax.swing.JFrame {
 
      String SQL = "SELECT  a.IdAlmacen,a.DireccionAlmacen,a.NombreAlmacen, a.Telefono, eu.Descripcion,e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido  FROM Almacenes a\n" +
                       "INNER JOIN Empleados e ON e.IdEmpleado = a.IdEmpleado\n" +
-                     "INNER JOIN EstadosUsuario eu ON eu.IdEstado = a.IdEstado\n" +
-                         "WHERE a.IdEstado=1" ;
+                     "INNER JOIN EstadosUsuario eu ON eu.IdEstado = a.IdEstado WHERE a.IdEstado=1" ;
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -135,8 +133,7 @@ public class Almacen extends javax.swing.JFrame {
 
      String SQL = "SELECT  a.IdAlmacen,a.DireccionAlmacen,a.NombreAlmacen, a.Telefono, eu.Descripcion,e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido  FROM Almacenes a\n" +
                       "INNER JOIN Empleados e ON e.IdEmpleado = a.IdEmpleado\n" +
-                     "INNER JOIN EstadosUsuario eu ON eu.IdEstado = a.IdEstado\n" +
-                         "WHERE a.IdEstado=1" ;
+                     "INNER JOIN EstadosUsuario eu ON eu.IdEstado = a.IdEstado WHERE a.IdEstado=0" ;
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -175,20 +172,20 @@ public class Almacen extends javax.swing.JFrame {
     }
 
     
-   private void buscarNombre(){
+   private void buscar(){
         String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableAlmacen.getModel();
         
          String SQL = "SELECT  a.IdAlmacen,a.DireccionAlmacen,a.NombreAlmacen, a.Telefono, e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido FROM Almacenes a\n" +
                       "INNER JOIN Empleados e ON e.IdEmpleado = a.IdEmpleado\n" +
                      "INNER JOIN EstadosUsuario eu ON eu.IdEstado = a.IdEstado\n" +
-                    " WHERE a.NombreAlmacen LIKE '"+JTextbuscar.getText()+"%'";
+                    " WHERE a.IdAlmacen LIKE '"+JTextbuscar.getText()+"%'";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
              while (rs.next()) {
-                    registros[0] = rs.getString("a.IdAlmacen");
+                registros[0] = rs.getString("a.IdAlmacen");
                 registros[1] = rs.getString("a.NombreAlmacen");
                 registros[2] = rs.getString("e.PrimerNombre")+" "+rs.getString("e.SegundoNombre")+" "+rs.getString("e.PrimerApellido");
                 registros[3] = rs.getString("a.DireccionAlmacen");
@@ -1148,13 +1145,12 @@ public class Almacen extends javax.swing.JFrame {
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
         // TODO add your handling code here:
-        AgregarEnvio ag = new AgregarEnvio();
-        ag.setVisible(true);
+        AgregarAlmacen alm = new AgregarAlmacen();
+        alm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
 
     private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
-       // TODO add your handling code here:
          try {
              if(codigoalm.isEmpty()==false){
           
@@ -1185,14 +1181,17 @@ public class Almacen extends javax.swing.JFrame {
     }//GEN-LAST:event_JTableAlmacenMouseClicked
 
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
-
+         
+        limpiartabla();
+         buscar();
+          
     }//GEN-LAST:event_JTextbuscarActionPerformed
 
     private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
         // TODO add your handling code here:
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             limpiartabla();
-            buscarNombre();
+            buscar();
 
         }
 
@@ -1251,7 +1250,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
+        /*try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -1266,7 +1265,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
             java.util.logging.Logger.getLogger(Almacen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Almacen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        }*/
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

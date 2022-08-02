@@ -42,7 +42,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
      * Creates new form AgregarCliente
      */
      boolean a = true;
-    String envio;
+    String almacen;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     int id=0;
@@ -52,8 +52,8 @@ public class AgregarAlmacen extends javax.swing.JFrame {
     public void setEstadoagregar(boolean estadoagregar) {
         this.estadoagregar = estadoagregar;
     }
-  public void setEnvio(String env) {
-        this.envio =env;
+  public void setAlmacen(String env) {
+        this.almacen=env;
     }
   
     
@@ -67,7 +67,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
        listarEmpleados();
        
 
-          avisoT.setVisible(false);
+          avisoT1.setVisible(false);
          aviso2.setVisible(false);
        
        
@@ -101,7 +101,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
       
    
     public void inicializar(){
-       JCodigoDisponible.setText(envio);
+       JCodigoDisponible.setText(almacen);
     }
     
     public void buscardatos(){
@@ -131,7 +131,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
         }
     }
          public void listarEmpleados(){
-       JComboEmpleados.addItem("Seleccionar Estado");
+       JComboEmpleados.addItem("Seleccionar Empleado");
         JComboEmpleados.setSelectedIndex(0);
           String nombres="";
           String apellidos="";
@@ -187,18 +187,20 @@ public class AgregarAlmacen extends javax.swing.JFrame {
     }
      public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
       public boolean insertar(){
+        String nombre="";
         String telefono=""; 
         String direccion="";
         int estado = 0;
         int empleado = 0;
         
        empleado = empleados.get(JComboEmpleados.getSelectedItem().toString());
+       nombre= Nombre.getText();
        direccion= Direccion.getText();
         telefono=TelC1.getText();
         estado = Obtenerestado();
         
-        String SQL = "INSERT INTO Almacenes(IdAlmacen,IdEmpleado,DireccionAlmacen,Telefono,IdEstado) VALUES"
-                + "(?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO Almacenes(IdAlmacen,IdEmpleado,DireccionAlmacen,Telefono,IdEstado,NombreAlmacen) VALUES"
+                + "(?, ?, ?, ?, ?,?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, id);
@@ -206,7 +208,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
             preparedStmt.setString   (3,direccion );
             preparedStmt.setString(4, telefono);
             preparedStmt.setInt(5, estado);
-      
+            preparedStmt.setString(6, nombre);  
             preparedStmt.execute();
             
            VentanaEmergente1 ve = new VentanaEmergente1();
@@ -237,7 +239,13 @@ public class AgregarAlmacen extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese una Direccion");
           a= false;
       }
-      
+        if(Nombre.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre");
+          a= false;
+      }
+      if(validarNombre(Nombre.getText())==false){
+          a=false;
+      }
        
         if(TelC1.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un telefono valido");
@@ -281,6 +289,27 @@ public class AgregarAlmacen extends javax.swing.JFrame {
         return comparar.find();
      
     }
+     public  boolean validarNombre(String Nombre){
+    boolean check=false;
+    
+    /*Verificamos que no sea null*/ 
+    if(Nombre != null){
+        /* 1ª Condición: que la letra inicial sea mayúscula*/
+        boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
+
+        /* 2ª Condición: que el tamaño sea >= 3 y <= 15*/
+        int stringSize=Nombre.length();
+        boolean isValidSize=(stringSize >= 3 && stringSize <= 25);
+
+        /* 3ª Condición: que contenga al menos un espacio*/
+        boolean isSpaced=Nombre.contains(" ");
+
+        /* Verificamos que las tres condiciones son verdaderas*/
+        check= ( (isFirstUpper==true)  && (isFirstUpper && isValidSize &&  isSpaced) );
+    }
+    /*Devolvemos el estado de la validación*/
+    return check;
+}
 
     
   
@@ -355,10 +384,12 @@ public class AgregarAlmacen extends javax.swing.JFrame {
         TelC1 = new rojeru_san.RSMTextFull();
         jLabel33 = new javax.swing.JLabel();
         aviso2 = new javax.swing.JLabel();
-        avisoT = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         JComboEmpleados = new rojerusan.RSComboMetro();
+        jLabel30 = new javax.swing.JLabel();
+        Nombre = new rojeru_san.RSMTextFull();
+        avisoT1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -936,7 +967,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
         jLabel21.setForeground(new java.awt.Color(153, 0, 255));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("Estado:");
-        jPanel5.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 60, 30));
+        jPanel5.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, 60, 30));
 
         JEstado.setColorArrow(new java.awt.Color(102, 0, 255));
         JEstado.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -956,7 +987,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
                 JEstadoActionPerformed(evt);
             }
         });
-        jPanel5.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 350, 310, 30));
+        jPanel5.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 140, 270, 30));
 
         Direccion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Direccion.setPlaceholder("");
@@ -973,7 +1004,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
                 DireccionKeyTyped(evt);
             }
         });
-        jPanel5.add(Direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 440, -1));
+        jPanel5.add(Direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 440, -1));
 
         TelC1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TelC1.setPlaceholder("                               ");
@@ -991,31 +1022,25 @@ public class AgregarAlmacen extends javax.swing.JFrame {
                 TelC1KeyTyped(evt);
             }
         });
-        jPanel5.add(TelC1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, 440, -1));
+        jPanel5.add(TelC1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 350, 440, -1));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel33.setText("Teléfono:");
-        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 180, 40));
+        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 370, 180, 40));
 
         aviso2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         aviso2.setForeground(new java.awt.Color(255, 0, 0));
         aviso2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         aviso2.setText("*Teléfono invalído*");
-        jPanel5.add(aviso2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 290, 180, -1));
-
-        avisoT.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        avisoT.setForeground(new java.awt.Color(255, 0, 0));
-        avisoT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        avisoT.setText("*Formato invalído*");
-        jPanel5.add(avisoT, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 200, 180, -1));
+        jPanel5.add(aviso2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 380, 180, -1));
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel29.setText("Dirección de Almacen");
-        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 170, 40));
+        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 170, 40));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(153, 0, 255));
@@ -1037,6 +1062,35 @@ public class AgregarAlmacen extends javax.swing.JFrame {
             }
         });
         jPanel5.add(JComboEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 70, 260, 30));
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel30.setText("Nombre de Almacen");
+        jPanel5.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 170, 40));
+
+        Nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Nombre.setPlaceholder("");
+        Nombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NombreActionPerformed(evt);
+            }
+        });
+        Nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                NombreKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NombreKeyTyped(evt);
+            }
+        });
+        jPanel5.add(Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 440, -1));
+
+        avisoT1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        avisoT1.setForeground(new java.awt.Color(255, 0, 0));
+        avisoT1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        avisoT1.setText("*Formato invalído*");
+        jPanel5.add(avisoT1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 240, 180, -1));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -1317,6 +1371,25 @@ public class AgregarAlmacen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }*/
     }//GEN-LAST:event_JComboEmpleadosMouseExited
+
+    private void NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NombreActionPerformed
+
+    private void NombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreKeyReleased
+       if (validarNombre(Nombre.getText())){
+             avisoT1.setVisible(false);
+             
+        }
+          else{
+                    avisoT1.setVisible(true);
+              
+          }
+    }//GEN-LAST:event_NombreKeyReleased
+
+    private void NombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NombreKeyTyped
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1421,9 +1494,10 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojerusan.RSComboMetro JComboEmpleados;
     private rojerusan.RSComboMetro JEstado;
     private javax.swing.JPanel MenuIcon;
+    private rojeru_san.RSMTextFull Nombre;
     private rojeru_san.RSMTextFull TelC1;
     private javax.swing.JLabel aviso2;
-    private javax.swing.JLabel avisoT;
+    private javax.swing.JLabel avisoT1;
     private javax.swing.JPanel dashboardview;
     private newscomponents.RSButtonIcon_new guardar;
     private javax.swing.JPanel iconminmaxclose;
@@ -1438,6 +1512,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
