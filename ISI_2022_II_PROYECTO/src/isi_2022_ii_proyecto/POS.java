@@ -173,12 +173,35 @@ public class POS extends javax.swing.JFrame {
     }
     
     
+    public String obtenerdescuento(int idproducto){
+         String descuento="0.00";
+         String SQL = "SELECT ifnull(d.Descuento,0.00) as 'Des' FROM DetalleDescuentoProducto d Where d.IdProducto="+idproducto;
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                  descuento= rs.getString("Des");
+            }
+        }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+        
+        return descuento;
+        
+    }
+    
+    
     public void agregarproductosorden(int idproducto){
         int validarexistenciaorden=0;
         boolean estadoproducto=false;
         int posicion=0;
         int nuevacantidad=0;
         float nuevosubtotal=0.00f;
+        float nuevodescuento=0.00f;
         
         if(modelo1.getRowCount()==0){
             String[] registros = new String[6];
@@ -196,7 +219,7 @@ public class POS extends javax.swing.JFrame {
                 registros[1] = rs.getString("p.Nombre");
                 registros[2] = rs.getString("p.Precio");
                 registros[3] = "1";
-                registros[4] = "0.00";
+                registros[4] = obtenerdescuento(idproducto);
                 registros[5] = String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]));
                 modelo1.addRow(registros);
             }
@@ -223,7 +246,9 @@ public class POS extends javax.swing.JFrame {
             nuevacantidad=Integer.valueOf(modelo1.getValueAt(posicion, 3).toString())+1;
             
             modelo1.setValueAt(nuevacantidad, posicion, 3);
-            nuevosubtotal=Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(modelo1.getValueAt(posicion, 2).toString());
+            nuevodescuento=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(obtenerdescuento(idproducto)));
+            modelo1.setValueAt(nuevodescuento, posicion, 4);
+            nuevosubtotal=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(modelo1.getValueAt(posicion, 2).toString()))-Float.valueOf(modelo1.getValueAt(posicion, 4).toString());
             modelo1.setValueAt(nuevosubtotal, posicion, 5);
             }else{
                String[] registros = new String[6];
@@ -277,12 +302,29 @@ public class POS extends javax.swing.JFrame {
                 
     }
     
+    
+    
+    public void actualizarEnter(){
+     
+        float nuevosubtotal=0.00f;
+        float nuevodescuento=0.00f;
+        
+        nuevodescuento=Float.valueOf(modelo1.getValueAt(seleccion1, 3).toString())*Float.valueOf(String.valueOf(obtenerdescuento(Integer.valueOf(codigop1))));
+        modelo1.setValueAt(nuevodescuento, seleccion1, 4);
+        nuevosubtotal=(Float.valueOf(modelo1.getValueAt(seleccion1, 3).toString())*Float.valueOf(modelo1.getValueAt(seleccion1, 2).toString()))-Float.valueOf(modelo1.getValueAt(seleccion1, 4).toString());
+        modelo1.setValueAt(nuevosubtotal, seleccion1, 5);
+        
+        
+    
+    }
+    
+    
     public void sumarsubtotal(){
         if(modelo1.getRowCount()>0){
         float sumador=0.00f;
         float subtotal=0.00f;
         for(int i=0;i<modelo1.getRowCount();i++){
-            sumador=sumador+Float.valueOf(modelo1.getValueAt(i, 5).toString());
+            sumador=sumador+(Float.valueOf(modelo1.getValueAt(i, 2).toString())*Float.valueOf(modelo1.getValueAt(i, 3).toString()));
         }
         
         subtotal= (float) (sumador-(sumador*0.15));
@@ -306,13 +348,27 @@ public class POS extends javax.swing.JFrame {
         float sumador=0.00f;
         float isv=0.00f;
         for(int i=0;i<modelo1.getRowCount();i++){
-            sumador=sumador+Float.valueOf(modelo1.getValueAt(i, 5).toString());
+            sumador=sumador+(Float.valueOf(modelo1.getValueAt(i, 2).toString())*Float.valueOf(modelo1.getValueAt(i, 3).toString()));
         }
         
         isv= (float) (sumador*0.15);
         
         jLabel18.setText(String.valueOf(isv));
     }
+    
+    
+    public void sumardescuento(){
+        float sumador=0.00f;
+        float descuento=0.00f;
+        for(int i=0;i<modelo1.getRowCount();i++){
+            sumador=sumador+Float.valueOf(modelo1.getValueAt(i, 4).toString());
+        }
+        
+        descuento= sumador;
+        
+        jLabel28.setText(String.valueOf(descuento));
+    }
+    
     
     
     public void sumarcantidadproductos(){
@@ -329,6 +385,7 @@ public class POS extends javax.swing.JFrame {
         int posicion=0;
         int nuevacantidad=0;
         float nuevosubtotal=0.00f;
+        float nuevodescuento=0.00f;
         for(int i=0; i<modelo1.getRowCount();i++){
                corredor=Integer.valueOf(modelo1.getValueAt(i, 0).toString());
            if(codigproducto==corredor){
@@ -339,7 +396,9 @@ public class POS extends javax.swing.JFrame {
             nuevacantidad=Integer.valueOf(modelo1.getValueAt(posicion, 3).toString())-1;
             
             modelo1.setValueAt(nuevacantidad, posicion, 3);
-            nuevosubtotal=Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(modelo1.getValueAt(posicion, 2).toString());
+            nuevodescuento=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(obtenerdescuento(codigproducto)));
+            modelo1.setValueAt(nuevodescuento, posicion, 4);
+            nuevosubtotal=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(modelo1.getValueAt(posicion, 2).toString()))-Float.valueOf(modelo1.getValueAt(posicion, 4).toString());
             modelo1.setValueAt(nuevosubtotal, posicion, 5);
           
      }
@@ -578,8 +637,10 @@ public class POS extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         rSPanelsSlider1 = new rojerusan.RSPanelsSlider();
+        jLabel30 = new javax.swing.JLabel();
         rSPanelShadow2 = new RSMaterialComponent.RSPanelShadow();
         rSPanel2 = new necesario.RSPanel();
         rSButtonGradiente4 = new rsbuttongradiente.RSButtonGradiente();
@@ -606,6 +667,8 @@ public class POS extends javax.swing.JFrame {
         rSButtonIcon_new15 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new16 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new17 = new newscomponents.RSButtonIcon_new();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout rSPanelVector1Layout = new javax.swing.GroupLayout(rSPanelVector1);
         rSPanelVector1.setLayout(rSPanelVector1Layout);
@@ -998,27 +1061,32 @@ public class POS extends javax.swing.JFrame {
                 JTableBancosMouseClicked(evt);
             }
         });
+        JTableBancos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTableBancosKeyReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(JTableBancos);
 
         rSPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 790, 290));
 
-        jLabel8.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(102, 0, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("0");
-        rSPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 60, 40));
+        rSPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 180, 20));
 
-        jLabel32.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
+        jLabel32.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(102, 0, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel32.setText("N. ORDEN:");
-        rSPanel1.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, 120, 40));
+        rSPanel1.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, 120, 20));
 
-        jLabel33.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
+        jLabel33.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(102, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel33.setText("0");
-        rSPanel1.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 20, 90, 40));
+        rSPanel1.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 50, 180, 20));
 
         rSPanelGradiente1.setColorPrimario(new java.awt.Color(51, 153, 255));
         rSPanelGradiente1.setColorSecundario(new java.awt.Color(20, 101, 187));
@@ -1083,6 +1151,11 @@ public class POS extends javax.swing.JFrame {
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel25.setText("L.");
 
+        jLabel13.setFont(new java.awt.Font("Franklin Gothic Book", 2, 16)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel13.setText("Productos con ISV incluido");
+
         javax.swing.GroupLayout rSPanelGradiente1Layout = new javax.swing.GroupLayout(rSPanelGradiente1);
         rSPanelGradiente1.setLayout(rSPanelGradiente1Layout);
         rSPanelGradiente1Layout.setHorizontalGroup(
@@ -1094,29 +1167,31 @@ public class POS extends javax.swing.JFrame {
                         .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
                         .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
+                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(305, 305, 305)
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel25)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         rSPanelGradiente1Layout.setVerticalGroup(
             rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1125,6 +1200,7 @@ public class POS extends javax.swing.JFrame {
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1134,9 +1210,11 @@ public class POS extends javax.swing.JFrame {
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelGradiente1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1146,12 +1224,18 @@ public class POS extends javax.swing.JFrame {
 
         rSPanel1.add(rSPanelGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 830, 130));
 
-        jLabel29.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
+        jLabel29.setFont(new java.awt.Font("Franklin Gothic Book", 3, 24)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(102, 0, 255));
-        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel29.setText("Total Productos:");
-        rSPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 200, 40));
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel29.setText("DETALLE DE ORDEN");
+        rSPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 300, 20));
         rSPanel1.add(rSPanelsSlider1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 70, -1, -1));
+
+        jLabel30.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel30.setText("Total Productos:");
+        rSPanel1.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 200, 20));
 
         javax.swing.GroupLayout rSPanelsSlider3Layout = new javax.swing.GroupLayout(rSPanelsSlider3);
         rSPanelsSlider3.setLayout(rSPanelsSlider3Layout);
@@ -1346,11 +1430,11 @@ public class POS extends javax.swing.JFrame {
         });
         rSPanel2.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 190, -1));
 
-        jLabel12.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Franklin Gothic Book", 2, 16)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(102, 0, 255));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Productos");
-        rSPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 40));
+        rSPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 110, 40));
 
         JTableBancos1.setForeground(new java.awt.Color(204, 204, 204));
         JTableBancos1.setModel(new javax.swing.table.DefaultTableModel(
@@ -1531,6 +1615,18 @@ public class POS extends javax.swing.JFrame {
         });
         rSPanel2.add(rSButtonIcon_new17, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 220, -1));
 
+        jLabel14.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel14.setText("Buscador");
+        rSPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 40));
+
+        jLabel15.setFont(new java.awt.Font("Franklin Gothic Book", 2, 16)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("Acciones");
+        rSPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 110, 40));
+
         rSPanelShadow2.add(rSPanel2, java.awt.BorderLayout.PAGE_START);
 
         javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
@@ -1623,6 +1719,7 @@ public class POS extends javax.swing.JFrame {
             agregarproductosorden(Integer.valueOf(codigop));
             sumarcantidadproductos();
             sumarsubtotal();
+            sumardescuento();
             sumarisv();
             total();
         }else{
@@ -1732,6 +1829,7 @@ public class POS extends javax.swing.JFrame {
                 restarcantidadproductos(Integer.valueOf(codigop1));
                 sumarcantidadproductos();
                 sumarsubtotal();
+                sumardescuento();
                 sumarisv();
                 total();
             }
@@ -1770,6 +1868,19 @@ public class POS extends javax.swing.JFrame {
         
      
     }//GEN-LAST:event_rSButtonGradiente5MouseClicked
+
+    private void JTableBancosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTableBancosKeyReleased
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER && codigop1!=null){
+            actualizarEnter();
+            sumarcantidadproductos();
+            sumarsubtotal();
+            sumardescuento();
+            sumarisv();
+            total();
+            codigop1=null;
+        }
+    }//GEN-LAST:event_JTableBancosKeyReleased
 
     /**
      * @param args the command line arguments
@@ -1815,6 +1926,9 @@ public class POS extends javax.swing.JFrame {
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -1828,6 +1942,7 @@ public class POS extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
