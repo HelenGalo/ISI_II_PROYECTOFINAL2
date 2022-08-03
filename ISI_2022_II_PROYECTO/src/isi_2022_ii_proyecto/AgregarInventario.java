@@ -57,7 +57,8 @@ public class AgregarInventario extends javax.swing.JFrame {
         RSUtilities.setOpaqueWindow(this, false);
         RSUtilities.setOpacityComponent(this.jPanel1, 150);
        
-        
+               Em.setVisible(false);
+             
     }
       public void validarConfirmacion(){
         if(estadoagregar=true){
@@ -222,8 +223,24 @@ public class AgregarInventario extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese la cantidad maxima");
           a= false;
           
+         
+    
+        
           
-      }
+        }
+               if (validarmax()==false){
+              
+             a= false;
+        
+      
+             
+        
+        }
+          
+        
+        
+          
+      
           if (Cant2.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese la cantidad minima");
           a= false;
@@ -232,6 +249,12 @@ public class AgregarInventario extends javax.swing.JFrame {
              
         
         }
+             
+       
+      
+             
+        
+        
         if(Jalmacen.getSelectedItem().toString().isEmpty()){
             JOptionPane.showMessageDialog(this, "Por favor seleccione un almacen");
           a= false;
@@ -246,6 +269,20 @@ public class AgregarInventario extends javax.swing.JFrame {
        
       
     }
+      public boolean validarmax(){
+           boolean x;
+           int a = Integer.parseInt(Cant2.getText());
+         int b =Integer.parseInt(Cant1.getText());
+         if(a>=b){
+           x = false;
+      }else {
+              x = true;
+         }
+         return x;
+      }
+   
+      
+       
   
 
     /**
@@ -262,10 +299,10 @@ public class AgregarInventario extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
-        rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        rSButtonIconOne4 = new RSMaterialComponent.RSButtonIconOne();
         jLabel5 = new javax.swing.JLabel();
         linesetting4 = new javax.swing.JPanel();
         linesetting5 = new javax.swing.JPanel();
@@ -284,7 +321,7 @@ public class AgregarInventario extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
+        Em = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
@@ -299,6 +336,7 @@ public class AgregarInventario extends javax.swing.JFrame {
         ID = new rojeru_san.RSMTextFull();
         rSButtonIcon_new12 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new3 = new newscomponents.RSButtonIcon_new();
+        jLabel36 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -313,7 +351,7 @@ public class AgregarInventario extends javax.swing.JFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MENU);
-        jPanel4.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        jPanel4.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
@@ -321,9 +359,6 @@ public class AgregarInventario extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODULO INVENTARIO");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 60));
-
-        rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
-        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 0, 60, 40));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 108, -1));
@@ -336,6 +371,14 @@ public class AgregarInventario extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("SYSTEM");
 
+        rSButtonIconOne4.setBackground(new java.awt.Color(20, 101, 187));
+        rSButtonIconOne4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        rSButtonIconOne4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIconOne4ActionPerformed(evt);
+            }
+        });
+
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("GEVEC");
@@ -347,7 +390,7 @@ public class AgregarInventario extends javax.swing.JFrame {
         linesetting4.setLayout(linesetting4Layout);
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
         linesetting4Layout.setVerticalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,22 +413,27 @@ public class AgregarInventario extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(253, 253, 253)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                .addGap(362, 362, 362))
+                .addComponent(linesetting5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(286, 286, 286)
+                .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(linesetting5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(linesetting4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(3, 3, 3))
         );
 
-        rSPanelOpacity1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        rSPanelOpacity1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 870, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -511,11 +559,11 @@ public class AgregarInventario extends javax.swing.JFrame {
         jLabel31.setText("Nombre Almacen:");
         jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, 130, 40));
 
-        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel32.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setText("Existencia Minima");
-        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 170, 40));
+        Em.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Em.setForeground(new java.awt.Color(255, 0, 0));
+        Em.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Em.setText("*La Existencia maxima debe ser mayor que la Maxima*");
+        jPanel3.add(Em, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, 400, -1));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
@@ -533,7 +581,7 @@ public class AgregarInventario extends javax.swing.JFrame {
         jLabel35.setForeground(new java.awt.Color(153, 0, 255));
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setText("Cantidad:");
-        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 143, 40));
+        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 120, 40));
 
         producto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         producto.setForeground(new java.awt.Color(153, 0, 255));
@@ -608,7 +656,7 @@ public class AgregarInventario extends javax.swing.JFrame {
                 Cant2KeyTyped(evt);
             }
         });
-        jPanel3.add(Cant2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 170, 40));
+        jPanel3.add(Cant2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 170, 40));
 
         Desc.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Desc.setPlaceholder("                               ");
@@ -686,7 +734,7 @@ public class AgregarInventario extends javax.swing.JFrame {
                 rSButtonIcon_new12ActionPerformed(evt);
             }
         });
-        jPanel3.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 80, 160, 30));
+        jPanel3.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, 160, 30));
 
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new3.setText("Regresar");
@@ -700,6 +748,12 @@ public class AgregarInventario extends javax.swing.JFrame {
             }
         });
         jPanel3.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 320, 120, 50));
+
+        jLabel36.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel36.setText("Existencia Minima");
+        jPanel3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 170, 40));
 
         rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 810, 370));
 
@@ -786,7 +840,16 @@ public class AgregarInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_Cant1ActionPerformed
 
     private void Cant1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cant1KeyReleased
-        // TODO add your handling code here:
+        
+        if(validarmax()){
+           Em.setVisible(false);
+          
+        }else{
+            
+               Em.setVisible(true);
+         
+    
+        }      
     }//GEN-LAST:event_Cant1KeyReleased
 
     private void Cant1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cant1KeyTyped
@@ -799,6 +862,8 @@ public class AgregarInventario extends javax.swing.JFrame {
 
     private void Cant2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cant2KeyReleased
         // TODO add your handling code here:
+       
+    
     }//GEN-LAST:event_Cant2KeyReleased
 
     private void Cant2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cant2KeyTyped
@@ -840,8 +905,10 @@ public class AgregarInventario extends javax.swing.JFrame {
             inv.setAinv(this);
             inv.setTipo("GInventario");
             inv.setVisible(true);
-
-        }else{
+         
+        }
+          
+        else{
 
             JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
         }
@@ -865,6 +932,16 @@ public class AgregarInventario extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
+
+    private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne4ActionPerformed
+        try {
+            // TODO add your handling code here:
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.exit(0);
+    }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -909,6 +986,7 @@ public class AgregarInventario extends javax.swing.JFrame {
     private rojeru_san.RSMTextFull Cant1;
     private rojeru_san.RSMTextFull Cant2;
     private rojeru_san.RSMTextFull Desc;
+    private javax.swing.JLabel Em;
     private rojeru_san.RSMTextFull ID;
     private rojeru_san.rsfield.RSTextFull JTextbuscar;
     private rojerusan.RSComboMetro Jalmacen;
@@ -919,10 +997,10 @@ public class AgregarInventario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -936,13 +1014,13 @@ public class AgregarInventario extends javax.swing.JFrame {
     private javax.swing.JPanel linesetting4;
     private javax.swing.JPanel linesetting5;
     private javax.swing.JLabel producto;
+    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon12;
     private rojerusan.RSLabelIcon rSLabelIcon17;
-    private rojerusan.RSLabelIcon rSLabelIcon2;
     private rojerusan.RSLabelIcon rSLabelIcon6;
     private rojerusan.RSLabelIcon rSLabelIcon8;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;

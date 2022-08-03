@@ -934,7 +934,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Código EmpresaEnvío:");
+        jLabel17.setText("Código Almacén:");
         jPanel5.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 174, 50));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
@@ -1066,7 +1066,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
         jLabel30.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(153, 0, 255));
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel30.setText("Nombre de Almacen");
+        jLabel30.setText("Nombre de Almacén");
         jPanel5.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 170, 40));
 
         Nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
