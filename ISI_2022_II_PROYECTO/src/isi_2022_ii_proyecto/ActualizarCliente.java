@@ -211,7 +211,25 @@ public class ActualizarCliente extends javax.swing.JFrame {
        
       
     }
+    
+      public boolean verificar(){
+        if (validarcorreo(CorreoC.getText())==false && validarC(CorreoC.getText())==false){
+            System.out.println("FALLO");
+             return false;
+        }else{
+            return true;
+         }
+       
+    }
+     public boolean validarcorreo(String correo){
+            
+          Pattern patron = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})$");
+        Matcher comparar = patron.matcher(correo);
+        return comparar.find();
      
+    }
     
      public boolean validarC(String correo){
             
@@ -948,7 +966,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
         jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(153, 0, 255));
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel31.setText("Telefono");
+        jLabel31.setText("Teléfono");
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
@@ -1356,7 +1374,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_JComboEstadoActionPerformed
 
     private void CorreoCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorreoCKeyReleased
-     if (validarC(CorreoC.getText())){
+   if (validarC(CorreoC.getText())||validarcorreo(CorreoC.getText()) ){
               aviso.setVisible(false);
              //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
         }
@@ -1369,6 +1387,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
 
     private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
         if(validar()==true){
+              if(verificar()==true){
             ConfirmacionModificar cl = new ConfirmacionModificar();
             cl.setAcliente(this);
             cl.setTipo("Mclientes");
@@ -1377,6 +1396,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACION");
         }
+         }     
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
     private void TelCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelCKeyReleased

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package img;
+package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.*;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;

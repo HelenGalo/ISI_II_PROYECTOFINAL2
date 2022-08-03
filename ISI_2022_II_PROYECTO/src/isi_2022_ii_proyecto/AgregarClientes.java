@@ -344,7 +344,30 @@ public class AgregarClientes extends javax.swing.JFrame {
              return a;
       }
   
+public boolean validarcorreo(String correo){
+            
+          Pattern patron = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})$");
+        Matcher comparar = patron.matcher(correo);
+        return comparar.find();
+     
+    }
 
+      public boolean verificar(){
+        if (validarcorreo(CorreoC.getText())==false && validarC(CorreoC.getText())==false){
+            System.out.println("FALLO");
+             return false;
+        }else{
+            return true;
+         }
+        
+        
+        
+        
+        
+       
+    }
         
   public boolean validarC(String correo){
             
@@ -1135,6 +1158,9 @@ public class AgregarClientes extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 ApellidoCKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ApellidoCKeyTyped(evt);
+            }
         });
         jPanel5.add(ApellidoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 150, 290, -1));
 
@@ -1468,7 +1494,7 @@ public class AgregarClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_JComboEstadoActionPerformed
 
     private void CorreoCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorreoCKeyReleased
-            if (validarC(CorreoC.getText())){
+          if (validarC(CorreoC.getText())||validarcorreo(CorreoC.getText()) ){
               aviso.setVisible(false);
              //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
         }
@@ -1487,6 +1513,7 @@ public class AgregarClientes extends javax.swing.JFrame {
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         // TODO add your handling code here:
         if(validar()==true){
+            if(verificar()==true){
             ConfirmacionGuardar gc = new  ConfirmacionGuardar();
             gc.setGcliente(this);
             gc.setTipo("Gcliente");
@@ -1496,6 +1523,7 @@ public class AgregarClientes extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
         }
+        }    
     }//GEN-LAST:event_guardarActionPerformed
 
     private void TelCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelCKeyReleased
@@ -1574,6 +1602,12 @@ public class AgregarClientes extends javax.swing.JFrame {
         rSRadioButtonMaterial2.setSelected(false);
         activarcampoIdentificacion("PASAPORTE");
     }//GEN-LAST:event_rSRadioButtonMaterial1ActionPerformed
+
+    private void ApellidoCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ApellidoCKeyTyped
+       if (ApellidoC.getText().trim().length() == 15) {
+        evt.consume();
+       }
+    }//GEN-LAST:event_ApellidoCKeyTyped
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));

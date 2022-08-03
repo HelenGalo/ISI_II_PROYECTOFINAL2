@@ -22,6 +22,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import rojeru_san.complementos.RSUtilities;
 
@@ -52,7 +54,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         listarEstado();
         
      
-       
+         avisoT.setVisible(false);
       
     }
     
@@ -68,7 +70,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
      public int ObtenerBancos(){
         int idbanco=0;
          
-        String SQL = "SELECT b.IdBanco From Bancos b Where b.Nombre='"+JComboEmpleados1.getSelectedItem().toString()+"';";
+        String SQL = "SELECT b.IdBanco From Bancos b Where b.Nombre='"+JNombreF.getSelectedItem().toString()+"';";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -89,7 +91,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         
         int tipocuenta=0;
          
-        String SQL = "SELECT b.IdTipoCuenta From TipoCuenta b Where b.Descripcion='"+JComboEmpleados.getSelectedItem().toString()+"';";
+        String SQL = "SELECT b.IdTipoCuenta From TipoCuenta b Where b.Descripcion='"+JTcuenta.getSelectedItem().toString()+"';";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -195,7 +197,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
     }
     
     public void listarBancos(){
-        JComboEmpleados1.addItem("Seleccionar Institucion");
+        JNombreF.addItem("Seleccionar Institucion");
         String nombre="";
          
         String SQL = "SELECT b.Nombre From Bancos b Where IdEstado=1";
@@ -206,7 +208,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
             while (rs.next()) {
                 nombre =rs.getString("b.Nombre");
     
-                JComboEmpleados1.addItem(nombre);
+                JNombreF.addItem(nombre);
             }
             
         } catch (SQLException e) {
@@ -215,7 +217,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
     }
     
     public void listarTipoCuenta(){
-        JComboEmpleados.addItem("Seleccionar Tipo");
+        JTcuenta.addItem("Seleccionar Tipo");
         String descripcion="";
          
         String SQL = "SELECT b.Descripcion From TipoCuenta b Where IdEstado=1";
@@ -226,7 +228,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
             while (rs.next()) {
                 descripcion =rs.getString("b.Descripcion");
     
-                JComboEmpleados.addItem(descripcion);
+                JTcuenta.addItem(descripcion);
             }
             
         } catch (SQLException e) {
@@ -254,8 +256,55 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
+     public boolean Validartarifa(String tarifa){
+        Pattern patron = Pattern
+                .compile("^[0-9]{1,3}+(\\,[0-9]+)*(\\.[0-9]{2})$");        
+        Matcher comparar = patron.matcher(tarifa);
+        return comparar.find();
+    }
+      public Boolean validar(){
+        boolean a=true;
+      if(JNCuenta.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un numero de cuenta valido");
+          a= false;
+      }
+      
+ 
+     
+        if(JNDeposito.getText().contentEquals(paramString())){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
+          a= false;
+      }
+        
+         if(Validartarifa(JNDeposito.getText())==false)  {
+                   a= false;     
+                }
     
-
+       
+       if(JTcuenta.getSelectedItem().toString().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione un tipo de cuenta valido");
+          a= false;
+      
+    }
+       
+        if(JEstados.getSelectedItem().toString().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione un estado valido");
+          a= false;
+      
+ 
+       
+      
+    }
+        if(JNombreF.getSelectedItem().toString().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione una Institucion valido");
+          a= false;
+      
+ 
+       
+      
+    }
+             return a;
+      }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -321,7 +370,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         rSLabelIcon12 = new rojerusan.RSLabelIcon();
         jLabel14 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        JComboEmpleados = new rojerusan.RSComboMetro();
+        JTcuenta = new rojerusan.RSComboMetro();
         jLabel18 = new javax.swing.JLabel();
         rSPanelCircle1 = new rojeru_san.rspanel.RSPanelCircle();
         JCodigoDisponible = new javax.swing.JLabel();
@@ -333,10 +382,11 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         rSLabelHora2 = new rojeru_san.RSLabelHora();
         jLabel25 = new javax.swing.JLabel();
-        JComboEmpleados1 = new rojerusan.RSComboMetro();
+        JNombreF = new rojerusan.RSComboMetro();
         rSLabelFecha1 = new rojeru_san.RSLabelFecha();
         JNCuenta = new rojeru_san.RSMTextFull();
         JNDeposito = new rojeru_san.RSMTextFull();
+        avisoT = new javax.swing.JLabel();
         rSButtonIcon_new11 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -379,7 +429,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         linesetting4.setLayout(linesetting4Layout);
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 603, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
         linesetting4Layout.setVerticalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -452,7 +502,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
                 .addGap(253, 253, 253)
                 .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 2, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
                 .addGap(278, 278, 278)
                 .addComponent(linesetting13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -931,20 +981,20 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         jLabel17.setText("CodigoCuenta Disponible:");
         jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, 190, 40));
 
-        JComboEmpleados.setColorArrow(new java.awt.Color(102, 0, 255));
-        JComboEmpleados.setColorFondo(new java.awt.Color(60, 76, 143));
-        JComboEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+        JTcuenta.setColorArrow(new java.awt.Color(102, 0, 255));
+        JTcuenta.setColorFondo(new java.awt.Color(60, 76, 143));
+        JTcuenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JComboEmpleadosMouseClicked(evt);
+                JTcuentaMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                JComboEmpleadosMouseEntered(evt);
+                JTcuentaMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                JComboEmpleadosMouseExited(evt);
+                JTcuentaMouseExited(evt);
             }
         });
-        jPanel3.add(JComboEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, 260, 30));
+        jPanel3.add(JTcuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, 260, 30));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(153, 0, 255));
@@ -1025,48 +1075,67 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         jLabel25.setText("Hora de Registro de la Cuenta:");
         jPanel3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 230, 230, 40));
 
-        JComboEmpleados1.setColorArrow(new java.awt.Color(102, 0, 255));
-        JComboEmpleados1.setColorFondo(new java.awt.Color(60, 76, 143));
-        JComboEmpleados1.addMouseListener(new java.awt.event.MouseAdapter() {
+        JNombreF.setColorArrow(new java.awt.Color(102, 0, 255));
+        JNombreF.setColorFondo(new java.awt.Color(60, 76, 143));
+        JNombreF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JComboEmpleados1MouseClicked(evt);
+                JNombreFMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                JComboEmpleados1MouseEntered(evt);
+                JNombreFMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                JComboEmpleados1MouseExited(evt);
+                JNombreFMouseExited(evt);
             }
         });
-        JComboEmpleados1.addActionListener(new java.awt.event.ActionListener() {
+        JNombreF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JComboEmpleados1ActionPerformed(evt);
+                JNombreFActionPerformed(evt);
             }
         });
-        jPanel3.add(JComboEmpleados1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 260, 30));
+        jPanel3.add(JNombreF, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 260, 30));
 
         rSLabelFecha1.setFormato("yyyy/MM/dd");
         jPanel3.add(rSLabelFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 180, 160, -1));
 
         JNCuenta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        JNCuenta.setPlaceholder("Ingresa el numero Telefono");
+        JNCuenta.setPlaceholder("");
         JNCuenta.setSoloNumeros(true);
         JNCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JNCuentaActionPerformed(evt);
             }
         });
+        JNCuenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JNCuentaKeyTyped(evt);
+            }
+        });
         jPanel3.add(JNCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, 270, 40));
 
         JNDeposito.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        JNDeposito.setPlaceholder("Ingresa el numero Telefono");
+        JNDeposito.setPlaceholder("");
         JNDeposito.setSoloNumeros(true);
         JNDeposito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JNDepositoActionPerformed(evt);
             }
         });
+        JNDeposito.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JNDepositoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JNDepositoKeyTyped(evt);
+            }
+        });
         jPanel3.add(JNDeposito, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 270, 40));
+
+        avisoT.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        avisoT.setForeground(new java.awt.Color(255, 0, 0));
+        avisoT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        avisoT.setText("*Formato invalído*");
+        jPanel3.add(avisoT, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 180, -1));
 
         rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new11.setText("Guardar Cuenta Bancaria");
@@ -1203,44 +1272,47 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
     private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
         // TODO add your handling code here:
        
-      
+      if(validar()==true){
         ConfirmacionGuardar cg = new ConfirmacionGuardar();
         cg.setGcuenta(this);
         cg.setTipo("GBancos");
         cg.setVisible(true);
-        
+        }else{
+
+            JOptionPane.showMessageDialog(this, "POR FAVOR VALIDE LA INFORMACÍON");
+        }
       
     }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
 
-    private void JComboEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleadosMouseClicked
+    private void JTcuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTcuentaMouseClicked
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_JComboEmpleadosMouseClicked
+    }//GEN-LAST:event_JTcuentaMouseClicked
 
-    private void JComboEmpleadosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleadosMouseEntered
+    private void JTcuentaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTcuentaMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboEmpleadosMouseEntered
+    }//GEN-LAST:event_JTcuentaMouseEntered
 
-    private void JComboEmpleadosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleadosMouseExited
+    private void JTcuentaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTcuentaMouseExited
         // TODO add your handling code here:
        
-    }//GEN-LAST:event_JComboEmpleadosMouseExited
+    }//GEN-LAST:event_JTcuentaMouseExited
 
     private void JEstadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JEstadosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JEstadosActionPerformed
 
-    private void JComboEmpleados1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleados1MouseClicked
+    private void JNombreFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JNombreFMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboEmpleados1MouseClicked
+    }//GEN-LAST:event_JNombreFMouseClicked
 
-    private void JComboEmpleados1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleados1MouseEntered
+    private void JNombreFMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JNombreFMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboEmpleados1MouseEntered
+    }//GEN-LAST:event_JNombreFMouseEntered
 
-    private void JComboEmpleados1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleados1MouseExited
+    private void JNombreFMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JNombreFMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboEmpleados1MouseExited
+    }//GEN-LAST:event_JNombreFMouseExited
 
     private void JNCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNCuentaActionPerformed
         // TODO add your handling code here:
@@ -1250,9 +1322,32 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JNDepositoActionPerformed
 
-    private void JComboEmpleados1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboEmpleados1ActionPerformed
+    private void JNombreFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNombreFActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JComboEmpleados1ActionPerformed
+    }//GEN-LAST:event_JNombreFActionPerformed
+
+    private void JNDepositoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JNDepositoKeyReleased
+        if (Validartarifa(JNDeposito.getText())){
+             avisoT.setVisible(false);
+             
+        }
+          else{
+                    avisoT.setVisible(true);
+              
+          }
+    }//GEN-LAST:event_JNDepositoKeyReleased
+
+    private void JNDepositoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JNDepositoKeyTyped
+      if (JNDeposito.getText().trim().length() == 20) {
+        evt.consume();
+       }
+    }//GEN-LAST:event_JNDepositoKeyTyped
+
+    private void JNCuentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JNCuentaKeyTyped
+       if (JNDeposito.getText().trim().length() == 20) {
+        evt.consume();
+       }
+    }//GEN-LAST:event_JNCuentaKeyTyped
 
     /**
      * @param args the command line arguments
@@ -1292,12 +1387,13 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Header;
     private javax.swing.JLabel JCodigoDisponible;
-    private rojerusan.RSComboMetro JComboEmpleados;
-    private rojerusan.RSComboMetro JComboEmpleados1;
     private rojerusan.RSComboMetro JEstados;
     private rojeru_san.RSMTextFull JNCuenta;
     private rojeru_san.RSMTextFull JNDeposito;
+    private rojerusan.RSComboMetro JNombreF;
+    private rojerusan.RSComboMetro JTcuenta;
     private javax.swing.JPanel MenuIcon;
+    private javax.swing.JLabel avisoT;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;

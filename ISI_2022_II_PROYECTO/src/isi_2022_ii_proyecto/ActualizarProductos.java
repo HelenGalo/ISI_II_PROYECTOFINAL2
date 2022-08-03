@@ -274,8 +274,8 @@ public class ActualizarProductos extends javax.swing.JFrame {
         return idg;
         
     }
-        
-      public void ActualizarP(){
+      public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062; 
+      public boolean ActualizarP(){
              String nombre="";
            String descrip="";
             int precio = 0;
@@ -302,14 +302,21 @@ public class ActualizarProductos extends javax.swing.JFrame {
           VentanaEmergente1 ve = new VentanaEmergente1();
              ve.setVisible(true);
 
-        } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());
+         } catch (SQLException  e) {
+                String msj = "ERROR";
+                if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
+                  
+                    msj = "EL REGISTRO EXISTE EN LA BASE DE DATOS";
+                }
+                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
+                return false;
+        
+        }catch (Exception e) {
+               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
-        
-        
-        
-       
-    }
+        return true;
+         }
 
       
        
@@ -925,7 +932,7 @@ public boolean Validartarifa(String tarifa){
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setText("Menu Principal");
+        jLabel26.setText("Menú Principal");
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
@@ -1075,6 +1082,11 @@ public boolean Validartarifa(String tarifa){
                 NombrePActionPerformed(evt);
             }
         });
+        NombreP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NombrePKeyTyped(evt);
+            }
+        });
         jPanel5.add(NombreP, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 135, 359, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1086,7 +1098,7 @@ public boolean Validartarifa(String tarifa){
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("Categoria:");
+        jLabel33.setText("Categoría:");
         jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 130, 180, 40));
 
         JCategoria.setColorArrow(new java.awt.Color(102, 0, 255));
@@ -1138,7 +1150,7 @@ public boolean Validartarifa(String tarifa){
         jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(153, 0, 255));
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel35.setText("Descripcion:");
+        jLabel35.setText("Descripción:");
         jPanel5.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 215, 159, 40));
 
         Descrip1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1146,6 +1158,11 @@ public boolean Validartarifa(String tarifa){
         Descrip1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Descrip1ActionPerformed(evt);
+            }
+        });
+        Descrip1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                Descrip1KeyTyped(evt);
             }
         });
         jPanel5.add(Descrip1, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 218, 380, 40));
@@ -1165,13 +1182,13 @@ public boolean Validartarifa(String tarifa){
         categoria.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         categoria.setForeground(new java.awt.Color(153, 0, 255));
         categoria.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        categoria.setText("Actual Categoria:");
+        categoria.setText("Actual Categoría:");
         jPanel5.add(categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 50, 130, 40));
 
         actualCat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         actualCat.setForeground(new java.awt.Color(153, 0, 255));
         actualCat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        actualCat.setText("Categoria");
+        actualCat.setText("Categoría");
         jPanel5.add(actualCat, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 50, 120, 40));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1389,7 +1406,7 @@ public boolean Validartarifa(String tarifa){
       cmp.setVisible(true);
          }else{
 
-            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
+            JOptionPane.showMessageDialog(this, "POR FAVOR VALIDE LA INFORMACION");
         }
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
@@ -1463,6 +1480,19 @@ public boolean Validartarifa(String tarifa){
               //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
           }
     }//GEN-LAST:event_preKeyReleased
+
+    private void NombrePKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombrePKeyTyped
+         if (NombreP.getText().trim().length() == 30) {
+        evt.consume();
+       }
+    }//GEN-LAST:event_NombrePKeyTyped
+
+    private void Descrip1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Descrip1KeyTyped
+
+ if (Descrip1.getText().trim().length() == 30) {
+        evt.consume();
+       }        // TODO add your handling code here:
+    }//GEN-LAST:event_Descrip1KeyTyped
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));

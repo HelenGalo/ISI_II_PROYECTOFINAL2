@@ -23,6 +23,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import rojeru_san.complementos.RSUtilities;
@@ -38,7 +40,7 @@ public class AperturarCajas extends javax.swing.JFrame {
     String codigoc="";
     boolean estadopostaperturar=false;
     boolean estadopostaperturarbanco=false;
-  
+             
 
     public void setCodigoc(String codigoc) {
         this.codigoc = codigoc;
@@ -287,8 +289,38 @@ public class AperturarCajas extends javax.swing.JFrame {
     }
     
     
+ public boolean Validartarifa(String tarifa){
+        Pattern patron = Pattern
+                .compile("^[0-9]{1,3}+(\\,[0-9]+)*(\\.[0-9]{2})$");        
+        Matcher comparar = patron.matcher(tarifa);
+        return comparar.find();
+    }
+     public Boolean validar(){
+        boolean a=true;
+      
+      
  
+     
+        if(JTextbuscar.getText().contentEquals(paramString())){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
+          a= false;
+      }
+        
+         if(Validartarifa(JTextbuscar.getText())==false)  {
+                   a= false;     
+                }
     
+       
+       if(rSComboMetro3.getSelectedItem().toString().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione una cuenta valido");
+          a= false;
+      
+    }
+       
+        
+       
+             return a;
+      }
     
     
     
@@ -307,7 +339,7 @@ public class AperturarCajas extends javax.swing.JFrame {
         RSUtilities.setOpacityComponent(this.jPanel1, 150);
         listarCuentasB();
         JTextbuscar.setEditable(false);
-       
+       avisoT.setVisible(false);
         
     }
     
@@ -373,6 +405,7 @@ public class AperturarCajas extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         rSButtonIconTwo1 = new RSMaterialComponent.RSButtonIconTwo();
         jLabel42 = new javax.swing.JLabel();
+        avisoT = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -713,6 +746,12 @@ public class AperturarCajas extends javax.swing.JFrame {
         jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel3.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 220, 120, 40));
 
+        avisoT.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        avisoT.setForeground(new java.awt.Color(255, 0, 0));
+        avisoT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        avisoT.setText("*Formato invalído*");
+        jPanel3.add(avisoT, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, 180, -1));
+
         rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 830, 370));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -749,7 +788,8 @@ public class AperturarCajas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
-        if(Float.valueOf(JTextbuscar.getText())<=Float.valueOf(jLabel42.getText())){
+        if(validar()==true){
+            if(Float.valueOf(JTextbuscar.getText())<=Float.valueOf(jLabel42.getText())){
             ConfirmacionModificar cm = new ConfirmacionModificar();
             cm.setAca(this);
             cm.setTipo("ACaja");
@@ -758,7 +798,8 @@ public class AperturarCajas extends javax.swing.JFrame {
             VentanaFondosIns vfi = new VentanaFondosIns();
             vfi.setVisible(true);
         }
-       
+           JOptionPane.showMessageDialog(this, "POR FAVOR VALIDE LA INFORMACÍON");
+        }
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
 
     private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
@@ -767,7 +808,14 @@ public class AperturarCajas extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new14ActionPerformed
 
     private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
-        // TODO add your handling code here:
+       if (Validartarifa(JTextbuscar.getText())){
+             avisoT.setVisible(false);
+             
+        }
+          else{
+                    avisoT.setVisible(true);
+              
+          }
     
     }//GEN-LAST:event_JTextbuscarKeyReleased
 
@@ -851,6 +899,7 @@ public class AperturarCajas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JCodigoDisponible;
     private rojeru_san.rsfield.RSTextFull JTextbuscar;
+    private javax.swing.JLabel avisoT;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

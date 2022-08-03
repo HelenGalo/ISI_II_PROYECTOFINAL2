@@ -4,7 +4,6 @@
  */
 package isi_2022_ii_proyecto;
 
-import img.Inventario;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
 import isi_2022_ii_proyecto.Recursos.ConfirmacionDeshabilitarCuenta;

@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -248,8 +248,8 @@ public class AgregarProducto extends javax.swing.JFrame {
         
     }
         
-       
-      public void insertarP(){
+       public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062; 
+      public boolean insertarP(){
         String nombre="";
         String descrip="";
         int precio = 0;
@@ -283,14 +283,23 @@ public class AgregarProducto extends javax.swing.JFrame {
             VentanaEmergente1 ve = new VentanaEmergente1();
              ve.setVisible(true);
 
-        } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());
+     } catch (SQLException  e) {
+                String msj = "ERROR";
+                if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
+                  
+                    msj = "EL REGISTRO EXISTE EN LA BASE DE DATOS";
+                }
+                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
+                return false;
+        
+        }catch (Exception e) {
+               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
-        
-        
-        
-       
+        return true;
     }
+     
+    
 
       
        
@@ -828,7 +837,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
             .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -902,7 +911,7 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setText("Menu Principal");
+        jLabel26.setText("Menú Principal");
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
@@ -1052,6 +1061,11 @@ public class AgregarProducto extends javax.swing.JFrame {
                 NombrePActionPerformed(evt);
             }
         });
+        NombreP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NombrePKeyTyped(evt);
+            }
+        });
         jPanel5.add(NombreP, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 370, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1135,6 +1149,11 @@ public class AgregarProducto extends javax.swing.JFrame {
         Descrip1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Descrip1ActionPerformed(evt);
+            }
+        });
+        Descrip1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                Descrip1KeyTyped(evt);
             }
         });
         jPanel5.add(Descrip1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 380, 40));
@@ -1328,7 +1347,7 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         }else{
 
-            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
+            JOptionPane.showMessageDialog(this, "POR FAVOR VALIDE LA INFORMACION");
         }
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
@@ -1402,6 +1421,18 @@ public class AgregarProducto extends javax.swing.JFrame {
               //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
           }
     }//GEN-LAST:event_preKeyReleased
+
+    private void NombrePKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombrePKeyTyped
+   if (NombreP.getText().trim().length() == 30) {
+        evt.consume();
+       }
+    }//GEN-LAST:event_NombrePKeyTyped
+
+    private void Descrip1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Descrip1KeyTyped
+         if (Descrip1.getText().trim().length() == 30) {
+        evt.consume();
+       }
+    }//GEN-LAST:event_Descrip1KeyTyped
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));

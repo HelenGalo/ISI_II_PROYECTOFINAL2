@@ -17,6 +17,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import rojeru_san.complementos.RSUtilities;
 
@@ -90,7 +92,7 @@ public class ModificarCuentaB extends javax.swing.JFrame {
     public int ObtenerBancos(){
         int idbanco=0;
          
-        String SQL = "SELECT b.IdBanco From Bancos b Where b.Nombre='"+rSComboMetro2.getSelectedItem().toString()+"';";
+        String SQL = "SELECT b.IdBanco From Bancos b Where b.Nombre='"+JIB.getSelectedItem().toString()+"';";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -111,7 +113,7 @@ public class ModificarCuentaB extends javax.swing.JFrame {
         
         int tipocuenta=0;
          
-        String SQL = "SELECT b.IdTipoCuenta From TipoCuenta b Where b.Descripcion='"+rSComboMetro1.getSelectedItem().toString()+"';";
+        String SQL = "SELECT b.IdTipoCuenta From TipoCuenta b Where b.Descripcion='"+JCN.getSelectedItem().toString()+"';";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -131,7 +133,7 @@ public class ModificarCuentaB extends javax.swing.JFrame {
     public int ObtenerEstado(){
         int estado=0;
          
-        String SQL = "SELECT b.IdEstado From EstadosUsuario b Where b.Descripcion='"+rSComboMetro3.getSelectedItem().toString()+"';";
+        String SQL = "SELECT b.IdEstado From EstadosUsuario b Where b.Descripcion='"+JEstado.getSelectedItem().toString()+"';";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -193,7 +195,7 @@ public class ModificarCuentaB extends javax.swing.JFrame {
     
     
     public void listarBancos(){
-        rSComboMetro2.addItem("Seleccionar Institucion");
+        JIB.addItem("Seleccionar Institucion");
         String nombre="";
          
         String SQL = "SELECT b.Nombre From Bancos b Where IdEstado=1";
@@ -204,7 +206,7 @@ public class ModificarCuentaB extends javax.swing.JFrame {
             while (rs.next()) {
                 nombre =rs.getString("b.Nombre");
     
-                rSComboMetro2.addItem(nombre);
+                JIB.addItem(nombre);
             }
             
         } catch (SQLException e) {
@@ -213,7 +215,7 @@ public class ModificarCuentaB extends javax.swing.JFrame {
     }
     
     public void listarTipoCuenta(){
-        rSComboMetro1.addItem("Seleccionar Tipo");
+        JCN.addItem("Seleccionar Tipo");
         String descripcion="";
          
         String SQL = "SELECT b.Descripcion From TipoCuenta b Where IdEstado=1";
@@ -224,7 +226,7 @@ public class ModificarCuentaB extends javax.swing.JFrame {
             while (rs.next()) {
                 descripcion =rs.getString("b.Descripcion");
     
-                rSComboMetro1.addItem(descripcion);
+                JCN.addItem(descripcion);
             }
             
         } catch (SQLException e) {
@@ -233,7 +235,7 @@ public class ModificarCuentaB extends javax.swing.JFrame {
     }
     
     public void listarEstado(){
-        rSComboMetro3.addItem("Seleccionar Estado");
+        JEstado.addItem("Seleccionar Estado");
         String descripcion="";
          
         String SQL = "SELECT b.Descripcion From EstadosUsuario b";
@@ -244,14 +246,52 @@ public class ModificarCuentaB extends javax.swing.JFrame {
             while (rs.next()) {
                 descripcion =rs.getString("b.Descripcion");
     
-                rSComboMetro3.addItem(descripcion);
+                JEstado.addItem(descripcion);
             }
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
+     
+      public Boolean validar(){
+        boolean a=true;
+ 
+      
+ 
+     
+        if(JNDeposito.getText().contentEquals(paramString())){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
+          a= false;
+      }
+        
+         
     
+       
+       if(JCN.getSelectedItem().toString().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione un tipo de cuenta valido");
+          a= false;
+      
+    }
+       
+        if(JEstado.getSelectedItem().toString().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione un estado valido");
+          a= false;
+      
+ 
+       
+      
+    }
+        if(JIB.getSelectedItem().toString().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione una Institucion valido");
+          a= false;
+      
+ 
+       
+      
+    }
+             return a;
+      }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -297,12 +337,12 @@ public class ModificarCuentaB extends javax.swing.JFrame {
         jLabel38 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        rSComboMetro1 = new rojerusan.RSComboMetro();
-        rSComboMetro2 = new rojerusan.RSComboMetro();
+        JCN = new rojerusan.RSComboMetro();
+        JIB = new rojerusan.RSComboMetro();
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
-        rSComboMetro3 = new rojerusan.RSComboMetro();
+        JEstado = new rojerusan.RSComboMetro();
         jLabel43 = new javax.swing.JLabel();
         JNDeposito = new rojeru_san.RSMTextFull();
         rSButtonIcon_new14 = new newscomponents.RSButtonIcon_new();
@@ -583,8 +623,8 @@ public class ModificarCuentaB extends javax.swing.JFrame {
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel39.setText("Estado de la Cuenta Nueva:");
         jPanel3.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 200, 40));
-        jPanel3.add(rSComboMetro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 250, 140, -1));
-        jPanel3.add(rSComboMetro2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 140, -1));
+        jPanel3.add(JCN, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 250, 140, -1));
+        jPanel3.add(JIB, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 140, -1));
 
         jLabel40.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(153, 0, 255));
@@ -603,7 +643,7 @@ public class ModificarCuentaB extends javax.swing.JFrame {
         jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel42.setText("Tipo de Cuenta Actual:");
         jPanel3.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, 200, 40));
-        jPanel3.add(rSComboMetro3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 140, 140, -1));
+        jPanel3.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 140, 140, -1));
 
         jLabel43.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel43.setForeground(new java.awt.Color(153, 0, 255));
@@ -748,7 +788,10 @@ public class ModificarCuentaB extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private rojerusan.RSComboMetro JCN;
     private javax.swing.JLabel JCodigoDisponible;
+    private rojerusan.RSComboMetro JEstado;
+    private rojerusan.RSComboMetro JIB;
     private rojeru_san.RSMTextFull JNDeposito;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -779,9 +822,6 @@ public class ModificarCuentaB extends javax.swing.JFrame {
     private javax.swing.JPanel linesetting5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new13;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new14;
-    private rojerusan.RSComboMetro rSComboMetro1;
-    private rojerusan.RSComboMetro rSComboMetro2;
-    private rojerusan.RSComboMetro rSComboMetro3;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon12;
