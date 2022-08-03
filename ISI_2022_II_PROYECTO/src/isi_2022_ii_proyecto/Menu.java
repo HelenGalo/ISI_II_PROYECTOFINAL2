@@ -195,6 +195,12 @@ public class Menu extends javax.swing.JFrame {
         BOTONCAJA = new rojeru_san.rspanel.RSPanelRound();
         rSLabelIcon19 = new rojerusan.RSLabelIcon();
         F7 = new rojeru_san.rslabel.RSLabelLineWrap();
+        BOTONV = new rojeru_san.rspanel.RSPanelRound();
+        rSLabelIcon20 = new rojerusan.RSLabelIcon();
+        F8 = new rojeru_san.rslabel.RSLabelLineWrap();
+        BOTONAL = new rojeru_san.rspanel.RSPanelRound();
+        rSLabelIcon21 = new rojerusan.RSLabelIcon();
+        F9 = new rojeru_san.rslabel.RSLabelLineWrap();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -275,7 +281,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,9 +333,9 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(13, 13, 13)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -514,6 +520,11 @@ public class Menu extends javax.swing.JFrame {
         rSButtonIcon_new2.setText("Almacenes");
         rSButtonIcon_new2.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STORE);
+        rSButtonIcon_new2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new2ActionPerformed(evt);
+            }
+        });
 
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new3.setText("Empleados");
@@ -600,6 +611,11 @@ public class Menu extends javax.swing.JFrame {
         rSButtonIcon_new12.setText("Ventas");
         rSButtonIcon_new12.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.TRENDING_UP);
+        rSButtonIcon_new12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new12ActionPerformed(evt);
+            }
+        });
 
         rSButtonIcon_new13.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new13.setText("POS");
@@ -646,7 +662,7 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -720,8 +736,8 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(rSButtonIcon_new15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
@@ -735,7 +751,7 @@ public class Menu extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
             .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -1208,6 +1224,107 @@ public class Menu extends javax.swing.JFrame {
 
         jPanel3.add(BOTONCAJA, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, 172, -1));
 
+        BOTONV.setBackground(new java.awt.Color(0, 55, 133));
+        BOTONV.setColorBackground(new java.awt.Color(0, 55, 133));
+        BOTONV.setColorBorde(new java.awt.Color(255, 255, 255));
+        BOTONV.setPreferredSize(new java.awt.Dimension(170, 152));
+        BOTONV.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BOTONVMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BOTONVMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BOTONVMouseExited(evt);
+            }
+        });
+
+        rSLabelIcon20.setForeground(new java.awt.Color(255, 255, 255));
+        rSLabelIcon20.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_OFFER);
+
+        F8.setColorForeground(new java.awt.Color(255, 255, 255));
+        F8.setFuente(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
+        F8.setInheritsPopupMenu(true);
+        F8.setName("GBGHY"); // NOI18N
+        F8.setText("Ventas");
+
+        javax.swing.GroupLayout BOTONVLayout = new javax.swing.GroupLayout(BOTONV);
+        BOTONV.setLayout(BOTONVLayout);
+        BOTONVLayout.setHorizontalGroup(
+            BOTONVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BOTONVLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(rSLabelIcon20, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BOTONVLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(F8, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
+        );
+        BOTONVLayout.setVerticalGroup(
+            BOTONVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BOTONVLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(rSLabelIcon20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(F8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+
+        jPanel3.add(BOTONV, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 320, 172, -1));
+
+        BOTONAL.setBackground(new java.awt.Color(0, 55, 133));
+        BOTONAL.setColorBackground(new java.awt.Color(0, 55, 133));
+        BOTONAL.setColorBorde(new java.awt.Color(255, 255, 255));
+        BOTONAL.setPreferredSize(new java.awt.Dimension(170, 152));
+        BOTONAL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BOTONALMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BOTONALMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BOTONALMouseExited(evt);
+            }
+        });
+
+        rSLabelIcon21.setForeground(new java.awt.Color(255, 255, 255));
+        rSLabelIcon21.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STORE_MALL_DIRECTORY);
+        rSLabelIcon21.setInheritsPopupMenu(true);
+
+        F9.setColorForeground(new java.awt.Color(255, 255, 255));
+        F9.setFuente(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
+        F9.setInheritsPopupMenu(true);
+        F9.setName("GBGHY"); // NOI18N
+        F9.setText("Almacén");
+
+        javax.swing.GroupLayout BOTONALLayout = new javax.swing.GroupLayout(BOTONAL);
+        BOTONAL.setLayout(BOTONALLayout);
+        BOTONALLayout.setHorizontalGroup(
+            BOTONALLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BOTONALLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(rSLabelIcon21, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BOTONALLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(F9, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
+        );
+        BOTONALLayout.setVerticalGroup(
+            BOTONALLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BOTONALLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(rSLabelIcon21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(F9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+
+        jPanel3.add(BOTONAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 320, 172, -1));
+
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MENU);
@@ -1538,6 +1655,46 @@ public class Menu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
 
+    private void BOTONVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONVMouseClicked
+          Ventas v = new Ventas();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BOTONVMouseClicked
+
+    private void BOTONVMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONVMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BOTONVMouseEntered
+
+    private void BOTONVMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONVMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BOTONVMouseExited
+
+    private void BOTONALMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONALMouseClicked
+           Almacen al = new Almacen();
+        al.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BOTONALMouseClicked
+
+    private void BOTONALMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONALMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BOTONALMouseEntered
+
+    private void BOTONALMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONALMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BOTONALMouseExited
+
+    private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
+        Ventas v = new Ventas();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
+
+    private void rSButtonIcon_new2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new2ActionPerformed
+        Almacen al = new Almacen();
+        al.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1574,6 +1731,7 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private rojeru_san.rspanel.RSPanelRound BOTONAL;
     private rojeru_san.rspanel.RSPanelRound BOTONBANCO;
     private rojeru_san.rspanel.RSPanelRound BOTONCAJA;
     private rojeru_san.rspanel.RSPanelRound BOTONCLIENTE;
@@ -1582,6 +1740,7 @@ public class Menu extends javax.swing.JFrame {
     private rojeru_san.rspanel.RSPanelRound BOTONPRO;
     private rojeru_san.rspanel.RSPanelRound BOTONPROVEEDORES;
     private rojeru_san.rspanel.RSPanelRound BOTONUSUARIO;
+    private rojeru_san.rspanel.RSPanelRound BOTONV;
     private rojeru_san.rslabel.RSLabelLineWrap F;
     private rojeru_san.rslabel.RSLabelLineWrap F1;
     private rojeru_san.rslabel.RSLabelLineWrap F2;
@@ -1590,6 +1749,8 @@ public class Menu extends javax.swing.JFrame {
     private rojeru_san.rslabel.RSLabelLineWrap F5;
     private rojeru_san.rslabel.RSLabelLineWrap F6;
     private rojeru_san.rslabel.RSLabelLineWrap F7;
+    private rojeru_san.rslabel.RSLabelLineWrap F8;
+    private rojeru_san.rslabel.RSLabelLineWrap F9;
     private javax.swing.JPanel Header;
     private javax.swing.JPanel MenuIcon;
     private javax.swing.JPanel dashboardview;
@@ -1653,6 +1814,8 @@ public class Menu extends javax.swing.JFrame {
     private rojerusan.RSLabelIcon rSLabelIcon18;
     private rojerusan.RSLabelIcon rSLabelIcon19;
     private rojerusan.RSLabelIcon rSLabelIcon2;
+    private rojerusan.RSLabelIcon rSLabelIcon20;
+    private rojerusan.RSLabelIcon rSLabelIcon21;
     private rojerusan.RSLabelIcon rSLabelIcon3;
     private rojerusan.RSLabelIcon rSLabelIcon4;
     private rojerusan.RSLabelIcon rSLabelIcon5;
