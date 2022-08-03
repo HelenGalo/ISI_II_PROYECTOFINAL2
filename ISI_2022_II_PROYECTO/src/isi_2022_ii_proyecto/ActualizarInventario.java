@@ -153,7 +153,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
        
         String SQL = "SELECT p.Nombre, p. IdProducto, ap.IdAlmacen,ap.ExistenciaActual,ap.ExistenciaMaxima,ap.ExistenciaMinima, a.NombreAlmacen FROM AlmacenProducto ap\n"+
                  "INNER JOIN Almacenes a ON a.IdAlmacen = ap.IdAlmacen \n"+
-             "INNER JOIN Productos p ON p.IdProducto = ap.IdProducto WHERE ap.IdProducto="+id;
+                "INNER JOIN Productos p ON p.IdProducto = ap.IdProducto WHERE ap.IdProducto="+id;
        try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);

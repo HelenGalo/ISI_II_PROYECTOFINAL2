@@ -57,7 +57,7 @@ public class Inventario extends javax.swing.JFrame {
     
       public void listarAl(){
         String[] registros = new String[6];
-        DefaultTableModel modelo =  (DefaultTableModel) JTableAlmacen.getModel();
+        DefaultTableModel modelo =  (DefaultTableModel) JTableInv.getModel();
 
      String SQL = "SELECT ap.IdProducto, ap.IdAlmacen,p.Nombre,ap.ExistenciaActual,ap.ExistenciaMaxima,ap.ExistenciaMinima FROM AlmacenProducto ap\n" +
                       "INNER JOIN Productos p ON p.IdProducto = ap.IdProducto" ;
@@ -66,8 +66,8 @@ public class Inventario extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                registros[0] = rs.getString("ap.IdAlmacen");
-                registros[1] = rs.getString("ap.IdProducto");
+                registros[0] = rs.getString("ap.IdProducto");
+                registros[1] = rs.getString("ap.IdAlmacen");
                 registros[2] = rs.getString("p.Nombre");
                 registros[3] = rs.getString("ap.ExistenciaActual");
                 registros[4] = rs.getString("ap.ExistenciaMaxima");
@@ -77,7 +77,7 @@ public class Inventario extends javax.swing.JFrame {
                 modelo.addRow(registros);
             }
 
-            JTableAlmacen.setModel(modelo);
+            JTableInv.setModel(modelo);
             
 
         } catch (SQLException e) {
@@ -88,7 +88,7 @@ public class Inventario extends javax.swing.JFrame {
  
      
      public void limpiartabla(){
-        DefaultTableModel modelo =  (DefaultTableModel) JTableAlmacen.getModel();
+        DefaultTableModel modelo =  (DefaultTableModel) JTableInv.getModel();
         while (modelo.getRowCount() > 0)
         {
         modelo.removeRow(0);
@@ -104,7 +104,7 @@ public class Inventario extends javax.swing.JFrame {
     
    private void buscar(){
         String[] registros = new String[6];
-        DefaultTableModel modelo =  (DefaultTableModel) JTableAlmacen.getModel();
+        DefaultTableModel modelo =  (DefaultTableModel) JTableInv.getModel();
         
          String SQL = "SELECT ap.IdProducto, ap.IdAlmacen,p.Nombre,ap.ExistenciaActual,ap.ExistenciaMaxima,ap.ExistenciaMinima FROM AlmacenProducto ap\n" +
                       "INNER JOIN Productos p ON p.IdProducto = ap.IdProducto WHERE p.Nombre LIKE '"+JTextbuscar.getText()+"%'";
@@ -113,8 +113,8 @@ public class Inventario extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
              while (rs.next()) {
-                 registros[0] = rs.getString("ap.IdAlmacen");
-                registros[1] = rs.getString("ap.IdProducto");
+                registros[0] = rs.getString("ap.IdProducto");
+                registros[1] = rs.getString("ap.IdAlmacen");
                 registros[2] = rs.getString("p.Nombre");
                 registros[3] = rs.getString("ap.ExistenciaActual");
                 registros[4] = rs.getString("ap.ExistenciaMaxima");
@@ -123,7 +123,7 @@ public class Inventario extends javax.swing.JFrame {
                 modelo.addRow(registros);
             }
 
-            JTableAlmacen.setModel(modelo);
+            JTableInv.setModel(modelo);
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -200,7 +200,7 @@ public class Inventario extends javax.swing.JFrame {
         rSLabelIcon12 = new rojerusan.RSLabelIcon();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        JTableAlmacen = new rojerusan.RSTableMetro1();
+        JTableInv = new rojerusan.RSTableMetro1();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -769,28 +769,28 @@ public class Inventario extends javax.swing.JFrame {
 
         jPanel3.add(rSPanelOpacity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 976, 50));
 
-        JTableAlmacen.setModel(new javax.swing.table.DefaultTableModel(
+        JTableInv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Codigo Almacen", "Codigo Producto", "Producto", "Cantida Actual", "Cantidad Maxima", "Cantidad Minima"
+                "Codigo Producto", "Codigo Almacen", "Producto", "Cantida Actual", "Cantidad Maxima", "Cantidad Minima"
             }
         ));
-        JTableAlmacen.setToolTipText("");
-        JTableAlmacen.setBackgoundHead(new java.awt.Color(60, 76, 143));
-        JTableAlmacen.setBackgoundHover(new java.awt.Color(60, 76, 143));
-        JTableAlmacen.setColorSecondary(new java.awt.Color(255, 255, 255));
-        JTableAlmacen.setEffectHover(true);
-        JTableAlmacen.setHighHead(50);
-        JTableAlmacen.setRowHeight(50);
-        JTableAlmacen.setShowHorizontalLines(true);
-        JTableAlmacen.addMouseListener(new java.awt.event.MouseAdapter() {
+        JTableInv.setToolTipText("");
+        JTableInv.setBackgoundHead(new java.awt.Color(60, 76, 143));
+        JTableInv.setBackgoundHover(new java.awt.Color(60, 76, 143));
+        JTableInv.setColorSecondary(new java.awt.Color(255, 255, 255));
+        JTableInv.setEffectHover(true);
+        JTableInv.setHighHead(50);
+        JTableInv.setRowHeight(50);
+        JTableInv.setShowHorizontalLines(true);
+        JTableInv.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JTableAlmacenMouseClicked(evt);
+                JTableInvMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(JTableAlmacen);
+        jScrollPane2.setViewportView(JTableInv);
 
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 112, 906, 390));
 
@@ -1003,12 +1003,12 @@ public class Inventario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rSButtonIcon_new10ActionPerformed
 
-    private void JTableAlmacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableAlmacenMouseClicked
+    private void JTableInvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableInvMouseClicked
         
-        int seleccion = JTableAlmacen.rowAtPoint(evt.getPoint());
-        codiap =   String.valueOf(JTableAlmacen.getValueAt(seleccion, 0));
+        int seleccion = JTableInv.rowAtPoint(evt.getPoint());
+        codiap =   String.valueOf(JTableInv.getValueAt(seleccion, 0));
          System.out.println("THIs" +codiap);
-    }//GEN-LAST:event_JTableAlmacenMouseClicked
+    }//GEN-LAST:event_JTableInvMouseClicked
 
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
          
@@ -1157,7 +1157,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Header;
-    private rojerusan.RSTableMetro1 JTableAlmacen;
+    private rojerusan.RSTableMetro1 JTableInv;
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel MenuIcon;
     private javax.swing.JPanel dashboardview;
