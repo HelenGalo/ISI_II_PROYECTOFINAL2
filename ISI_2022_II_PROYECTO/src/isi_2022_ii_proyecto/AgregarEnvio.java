@@ -257,6 +257,16 @@ public class AgregarEnvio extends javax.swing.JFrame {
        
       
     }
+    public boolean verificar(){
+        if (validarcorreo(CorreoC.getText())==false && validarC(CorreoC.getText())==false){
+            System.out.println("FALLO");
+             return false;
+        }else{
+            return true;
+         }
+       
+    }
+
   
  public boolean validarC(String correo){
             
@@ -267,6 +277,16 @@ public class AgregarEnvio extends javax.swing.JFrame {
         return comparar.find();
      
     }
+   public boolean validarcorreo(String correo){
+            
+          Pattern patron = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})$");
+        Matcher comparar = patron.matcher(correo);
+        return comparar.find();
+     
+    }
+ 
     public boolean validarT(String cel){
             
         Pattern patron = Pattern
@@ -1289,7 +1309,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
     }//GEN-LAST:event_JEstadoActionPerformed
 
     private void CorreoCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorreoCKeyReleased
-    if (validarC(CorreoC.getText())){
+    if (validarC(CorreoC.getText())||validarcorreo(CorreoC.getText()) ){
               aviso.setVisible(false);
              //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
         }
@@ -1309,13 +1329,9 @@ public class AgregarEnvio extends javax.swing.JFrame {
     }//GEN-LAST:event_TelC1KeyTyped
 
     private void NombreCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyTyped
-     int key = evt.getKeyChar();
-
-    boolean mayusculas = key >= 65 && key <= 90;
-    boolean minusculas = key >= 97 && key <= 122;
-    boolean espacio = key == 32;
+ 
             
-     if (!(minusculas || mayusculas || espacio))
+     if (NombreC.getText().trim().length() == 25)
     {
         evt.consume();
     }
@@ -1362,6 +1378,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         // TODO add your handling code here:
        if(validar()==true){
+            if(verificar()==true){
         ConfirmacionGuardar ge = new  ConfirmacionGuardar();
         ge.setGenvio(this);
         ge.setTipo("GEnvios");
@@ -1371,17 +1388,23 @@ public class AgregarEnvio extends javax.swing.JFrame {
         }else{
 
             JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
-        }
+     
+       }
+            }  
 
     }//GEN-LAST:event_guardarActionPerformed
 
     private void NombreCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyReleased
           if(validarNombre(NombreC.getText())){
             aviso4.setVisible(false);
-        } else{
+           } else{
                     aviso4.setVisible(true);
               //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
           }
+           
+          
+         
+          
     }//GEN-LAST:event_NombreCKeyReleased
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){

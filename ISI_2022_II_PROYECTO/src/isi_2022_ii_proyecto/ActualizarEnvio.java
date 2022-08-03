@@ -283,13 +283,30 @@ public class ActualizarEnvio extends javax.swing.JFrame {
        
       
     }
-        
+          public boolean verificar(){
+        if (validarcorreo(CorreoC.getText())==false && validarC(CorreoC.getText())==false){
+            System.out.println("FALLO");
+             return false;
+        }else{
+            return true;
+         }
+       
+    } 
     
      public boolean validarC(String correo){
             
         Pattern patron = Pattern
                 .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})+(\\.[A-Za-z]{2,3})$");
+        Matcher comparar = patron.matcher(correo);
+        return comparar.find();
+     
+    }
+     public boolean validarcorreo(String correo){
+            
+          Pattern patron = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})$");
         Matcher comparar = patron.matcher(correo);
         return comparar.find();
      
@@ -1394,15 +1411,14 @@ public class ActualizarEnvio extends javax.swing.JFrame {
     }//GEN-LAST:event_JEstadoActionPerformed
 
     private void CorreoCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorreoCKeyReleased
-        // if (evt.getKeyChar()=='\n'){
-          if (validarC(CorreoC.getText())){
+       if (validarC(CorreoC.getText())||validarcorreo(CorreoC.getText()) ){
               aviso.setVisible(false);
              //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
         }
           else{
                     aviso.setVisible(true);
               //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
-          } 
+          }
               
          // }
     }//GEN-LAST:event_CorreoCKeyReleased
@@ -1422,7 +1438,10 @@ public class ActualizarEnvio extends javax.swing.JFrame {
     }//GEN-LAST:event_TarifaKeyTyped
 
     private void NombreCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyTyped
-  
+   if (NombreC.getText().trim().length() == 25) {
+            evt.consume();
+
+        }
     }//GEN-LAST:event_NombreCKeyTyped
 
     private void TelC1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelC1KeyReleased

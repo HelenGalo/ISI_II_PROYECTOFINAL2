@@ -619,6 +619,14 @@ public class ModificarCuentaB extends javax.swing.JFrame {
                 JNDepositoActionPerformed(evt);
             }
         });
+        JNDeposito.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JNDepositoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JNDepositoKeyTyped(evt);
+            }
+        });
         jPanel3.add(JNDeposito, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, 180, 40));
 
         rSButtonIcon_new14.setBackground(new java.awt.Color(102, 51, 255));
@@ -684,6 +692,25 @@ public class ModificarCuentaB extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new14ActionPerformed
+
+    private void JNDepositoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JNDepositoKeyReleased
+       
+    }//GEN-LAST:event_JNDepositoKeyReleased
+
+    private void JNDepositoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JNDepositoKeyTyped
+          int key = evt.getKeyChar();
+
+    boolean numeros = key >= 48 && key <= 57;
+        
+    if (!numeros)
+    {
+        evt.consume();
+    }
+
+    if (JNDeposito.getText().trim().length() == 20) {
+        evt.consume();
+}
+    }//GEN-LAST:event_JNDepositoKeyTyped
 
     /**
      * @param args the command line arguments

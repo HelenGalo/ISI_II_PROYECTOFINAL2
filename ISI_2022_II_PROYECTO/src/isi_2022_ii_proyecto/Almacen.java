@@ -4,6 +4,7 @@
  */
 package isi_2022_ii_proyecto;
 
+import img.Inventario;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
 import isi_2022_ii_proyecto.Recursos.ConfirmacionDeshabilitarCuenta;
@@ -603,7 +604,6 @@ public class Almacen extends javax.swing.JFrame {
         );
 
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
-        menuhide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new3.setText("Regresar");
@@ -616,7 +616,6 @@ public class Almacen extends javax.swing.JFrame {
                 rSButtonIcon_new3ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 210, -1));
 
         linesetting6.setBackground(new java.awt.Color(20, 101, 187));
         linesetting6.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -637,23 +636,21 @@ public class Almacen extends javax.swing.JFrame {
             .addGroup(linesetting6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         linesetting6Layout.setVerticalGroup(
             linesetting6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(linesetting6Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(1, 1, 1)
                 .addGroup(linesetting6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
-
-        menuhide.add(linesetting6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 210, 56));
 
         linesetting12.setBackground(new java.awt.Color(0, 55, 133));
         linesetting12.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -676,8 +673,6 @@ public class Almacen extends javax.swing.JFrame {
         jLabel12.setText("Gestiones");
         linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
 
-        menuhide.add(linesetting12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 70));
-
         rSButtonIcon_new5.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new5.setText("Buscar ");
         rSButtonIcon_new5.setBackgroundHover(new java.awt.Color(0, 55, 133));
@@ -687,7 +682,6 @@ public class Almacen extends javax.swing.JFrame {
                 rSButtonIcon_new5ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 77, 210, -1));
 
         rSButtonIcon_new6.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new6.setText("Deshabilitar Almacén");
@@ -698,7 +692,6 @@ public class Almacen extends javax.swing.JFrame {
                 rSButtonIcon_new6ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 117, 210, -1));
 
         rSButtonIcon_new7.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new7.setText("Agregar Almacén");
@@ -709,7 +702,6 @@ public class Almacen extends javax.swing.JFrame {
                 rSButtonIcon_new7ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 157, 210, -1));
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new9.setText("Modificar ");
@@ -720,7 +712,6 @@ public class Almacen extends javax.swing.JFrame {
                 rSButtonIcon_new9ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 197, 210, -1));
 
         rSButtonIcon_new10.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new10.setText("Imprimir ");
@@ -731,7 +722,6 @@ public class Almacen extends javax.swing.JFrame {
                 rSButtonIcon_new10ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 237, 210, -1));
 
         rSButtonIcon_new4.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new4.setText("Inventario");
@@ -744,7 +734,42 @@ public class Almacen extends javax.swing.JFrame {
                 rSButtonIcon_new4ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 281, 210, -1));
+
+        javax.swing.GroupLayout menuhideLayout = new javax.swing.GroupLayout(menuhide);
+        menuhide.setLayout(menuhideLayout);
+        menuhideLayout.setHorizontalGroup(
+            menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(rSButtonIcon_new5, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(rSButtonIcon_new6, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(rSButtonIcon_new7, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(rSButtonIcon_new10, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(rSButtonIcon_new4, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        menuhideLayout.setVerticalGroup(
+            menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuhideLayout.createSequentialGroup()
+                .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(rSButtonIcon_new5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(rSButtonIcon_new6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(rSButtonIcon_new7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(rSButtonIcon_new10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(rSButtonIcon_new4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
+                .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
         menu.setLayout(menuLayout);
@@ -1204,7 +1229,9 @@ public class Almacen extends javax.swing.JFrame {
     }//GEN-LAST:event_deshabilitadoActionPerformed
 
     private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
-        // TODO add your handling code here:
+      Inventario inv = new Inventario();
+      inv.setVisible(true);
+      this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){

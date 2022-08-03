@@ -1054,7 +1054,7 @@ boolean estadosModificar=false;
                 DireccionKeyTyped(evt);
             }
         });
-        jPanel5.add(Direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 410, -1));
+        jPanel5.add(Direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 400, -1));
 
         TelC1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TelC1.setPlaceholder("                               ");
@@ -1072,7 +1072,7 @@ boolean estadosModificar=false;
                 TelC1KeyTyped(evt);
             }
         });
-        jPanel5.add(TelC1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 360, 440, 50));
+        jPanel5.add(TelC1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 360, 400, 50));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
@@ -1164,7 +1164,7 @@ boolean estadosModificar=false;
                 NombreKeyTyped(evt);
             }
         });
-        jPanel5.add(Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 230, 380, -1));
+        jPanel5.add(Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, 400, -1));
 
         avisoT1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         avisoT1.setForeground(new java.awt.Color(255, 0, 0));
@@ -1371,16 +1371,10 @@ boolean estadosModificar=false;
     }//GEN-LAST:event_TelC1KeyTyped
 
     private void DireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DireccionKeyTyped
-    /*String [] v = {"0","1","2","3","4","5","6","7","8","9","."};
-     char c =evt.getKeyChar();
-     String s = "%" + c ;
-      s=s.replace("%", "");
-     if (s.equals(v[0])||s.equals(v[1])||s.equals(v[2])||s.equals(v[3])||s.equals(v[4])||s.equals(v[5])){}
-     else  if (s.equals(v[6])||s.equals(v[7])||s.equals(v[8])||s.equals(v[9])||s.equals(v[10])){}
-     else{
-         int k = Tarifa.getText().length()-1;
-         String n = Tarifa.getText().substring(0,k);
-         Tarifa.setText (n);}*/
+     if (Direccion.getText().trim().length() == 25) {
+            evt.consume();
+
+        }
     }//GEN-LAST:event_DireccionKeyTyped
 
     private void TelC1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelC1KeyReleased
@@ -1468,7 +1462,10 @@ boolean estadosModificar=false;
     }//GEN-LAST:event_NombreKeyReleased
 
     private void NombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreKeyTyped
-        // TODO add your handling code here:
+         if (Nombre.getText().trim().length() == 25) {
+            evt.consume();
+
+        }
     }//GEN-LAST:event_NombreKeyTyped
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){

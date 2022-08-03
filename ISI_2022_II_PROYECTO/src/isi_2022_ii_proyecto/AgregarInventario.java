@@ -829,7 +829,7 @@ public class AgregarInventario extends javax.swing.JFrame {
 
     private void CantKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CantKeyTyped
 
-        if (Cant.getText().trim().length() == 10) {
+        if (Cant.getText().trim().length() == 5) {
             evt.consume();
 
         }
@@ -853,7 +853,11 @@ public class AgregarInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_Cant1KeyReleased
 
     private void Cant1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cant1KeyTyped
-        // TODO add your handling code here:
+      
+        if (Cant1.getText().trim().length() == 5) {
+            evt.consume();
+
+        }
     }//GEN-LAST:event_Cant1KeyTyped
 
     private void Cant2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cant2ActionPerformed
@@ -867,7 +871,11 @@ public class AgregarInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_Cant2KeyReleased
 
     private void Cant2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cant2KeyTyped
-        // TODO add your handling code here:
+
+        if (Cant2.getText().trim().length() == 5) {
+            evt.consume();
+
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_Cant2KeyTyped
 
     private void DescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescActionPerformed
@@ -879,7 +887,10 @@ public class AgregarInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_DescKeyReleased
 
     private void DescKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DescKeyTyped
-        // TODO add your handling code here:
+              if (Desc.getText().trim().length() == 15) {
+        evt.consume();
+
+    }
     }//GEN-LAST:event_DescKeyTyped
 
     private void JalmacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JalmacenMouseClicked

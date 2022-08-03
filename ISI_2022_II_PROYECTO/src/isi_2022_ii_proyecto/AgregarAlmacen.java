@@ -1290,16 +1290,10 @@ public class AgregarAlmacen extends javax.swing.JFrame {
     }//GEN-LAST:event_TelC1KeyTyped
 
     private void DireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DireccionKeyTyped
-    /*String [] v = {"0","1","2","3","4","5","6","7","8","9","."};
-     char c =evt.getKeyChar();
-     String s = "%" + c ;
-      s=s.replace("%", "");
-     if (s.equals(v[0])||s.equals(v[1])||s.equals(v[2])||s.equals(v[3])||s.equals(v[4])||s.equals(v[5])){}
-     else  if (s.equals(v[6])||s.equals(v[7])||s.equals(v[8])||s.equals(v[9])||s.equals(v[10])){}
-     else{
-         int k = Tarifa.getText().length()-1;
-         String n = Tarifa.getText().substring(0,k);
-         Tarifa.setText (n);}*/
+     if (Direccion.getText().trim().length() == 25) {
+            evt.consume();
+
+        }
     }//GEN-LAST:event_DireccionKeyTyped
 
     private void TelC1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelC1KeyReleased
@@ -1376,7 +1370,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
     }//GEN-LAST:event_JComboEmpleadosMouseExited
 
     private void NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreActionPerformed
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_NombreActionPerformed
 
     private void NombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreKeyReleased
@@ -1391,7 +1385,10 @@ public class AgregarAlmacen extends javax.swing.JFrame {
     }//GEN-LAST:event_NombreKeyReleased
 
     private void NombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreKeyTyped
-        // TODO add your handling code here:
+    if (Nombre.getText().trim().length() == 25) {
+            evt.consume();
+
+        }
     }//GEN-LAST:event_NombreKeyTyped
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
