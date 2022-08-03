@@ -7,6 +7,7 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ConfirmacionGuardar;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionModificar;
 import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -38,9 +39,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
      public void setId(int id) {
         this.id = id;
     }
-     public void setProducto(String producto) {
-        this.prod = producto;
-    }
+   
     
    boolean estadosModificar=false;
 
@@ -65,7 +64,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
     }
        public void validarConfirmacion(){
         if(estadosModificar=true){
-            actualizar();
+            Actualizar();
         }
     }
        public void inicializar(){
@@ -98,7 +97,32 @@ public class ActualizarInventario extends javax.swing.JFrame {
         return idg;
         
     }
+ public void buscardatos(){
+          String SQL = "SELECT * FROM AlmacenProducto WHERE IdProducto=(SELECT max(IdProducto) FROM AlmacenProducto)";
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
 
+            while (rs.next()) {
+                id = rs.getInt("IdProducto");
+               
+                
+            }
+
+            
+            System.out.println("SIN SUMAR"+String.valueOf(id));
+            id = id +1;
+            System.out.println(String.valueOf(id));
+            ID.setText(String.valueOf(id));
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
         public void listarAlmacen(){
         Jalmacen.addItem("Seleccionar Almacen");
         Jalmacen.setSelectedIndex(0);
@@ -121,32 +145,29 @@ public class ActualizarInventario extends javax.swing.JFrame {
     }
      public void mostrarP(){
            String nombre="";
-           String descripcion="";
            String actual=""; 
            String maxima="";
           String minima="";
           String almacen="";
           
        
-        String SQL = "SELECT p.Nombre, p. IdProducto, ap.IdAlmacen,ap.Descripcion,ap.ExistenciaActual,ap.ExistenciaMaxima,ap.ExistenciaMinima, a.NombreAlmacen,  FROM Productos p"
-                + "INNER JOIN AlmacenProducto ap ON ap.IdProducto = ap.IdProducto"
-                + "INNER JOIN Almacenes a ON a.IdAlmacen = ap.IdAlmacen WHERE p.IdProducto="+id;
+        String SQL = "SELECT p.Nombre, p. IdProducto, ap.IdAlmacen,ap.ExistenciaActual,ap.ExistenciaMaxima,ap.ExistenciaMinima, a.NombreAlmacen FROM AlmacenProducto ap\n"+
+                 "INNER JOIN Almacenes a ON a.IdAlmacen = ap.IdAlmacen \n"+
+             "INNER JOIN Productos p ON p.IdProducto = ap.IdProducto WHERE ap.IdProducto="+id;
        try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
                 nombre = rs.getString("p.Nombre");
-                descripcion=rs.getString("ap.Descripcion");
                 actual=rs.getString("ap.ExistenciaActual");
                 maxima=rs.getString("ap.ExistenciaMaxima");
                 minima=rs.getString("ap.ExistenciaMinima");
                 almacen=rs.getString("a.NombreAlmacen");
             }
              producto.setText(nombre);
-             Desc.setText(descripcion);
              Cant.setText(actual);
-             Cant.setText(maxima);
+             Cant1.setText(maxima);
              Exmin.setText(minima);
              alm1.setText(almacen);
              ID.setText(String.valueOf(id));
@@ -158,7 +179,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
  
     public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
       public boolean Actualizar(){
-        String descripcion="";
+ 
         String actual=""; 
         String maxima="";
        String minima="";
@@ -166,20 +187,18 @@ public class ActualizarInventario extends javax.swing.JFrame {
    
         
      
-       descripcion= Desc.getText();
        actual= Cant.getText();
         maxima=Cant1.getText();
         almacen = ObtenerAlmacen();
         id=Integer.parseInt(ID.getText());
         
-        String SQL = "UPDATE  AlmacenProducto SET IdAlmacen=?,Descripcion=?,ExistenciaActual=?,ExistenciaMaxima=?,ExistenciaMinima=? WHERE IdProducto="+"'"+id+"'";
+        String SQL = "UPDATE  AlmacenProducto SET IdAlmacen=?,ExistenciaActual=?,ExistenciaMaxima=? WHERE IdProducto="+"'"+id+"'";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt (1, almacen);
-            preparedStmt.setString   (2,descripcion );
-            preparedStmt.setString(3, actual);
-            preparedStmt.setString(4, maxima);  
-            preparedStmt.setString(5, minima); 
+            preparedStmt.setString(2, actual);
+            preparedStmt.setString(3, maxima);  
+            
             preparedStmt.execute();
             
            VentanaEmergente1 ve = new VentanaEmergente1();
@@ -204,10 +223,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
         boolean a=true;
    
       
-       if(Desc.getText().isEmpty()){
-          JOptionPane.showMessageDialog(this, "Por favor ingrese una Descripcion");
-          a= false;
-      }
+    
         if(Cant.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese la cantidad actual");
           a= false;
@@ -233,23 +249,6 @@ public class ActualizarInventario extends javax.swing.JFrame {
         }
           
         
-        
-          
-      
-          if (Cant2.getText().isEmpty()){
-          JOptionPane.showMessageDialog(this, "Por favor ingrese la cantidad minima");
-          a= false;
-        
-      
-             
-        
-        }
-             
-       
-      
-             
-        
-        
         if(Jalmacen.getSelectedItem().toString().isEmpty()){
             JOptionPane.showMessageDialog(this, "Por favor seleccione un almacen");
           a= false;
@@ -266,7 +265,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
     }
       public boolean validarmax(){
            boolean x;
-           int a = Integer.parseInt(Cant2.getText());
+           int a = Integer.parseInt(Exmin.getText());
          int b =Integer.parseInt(Cant1.getText());
          if(a>=b){
            x = false;
@@ -317,21 +316,19 @@ public class ActualizarInventario extends javax.swing.JFrame {
         jLabel29 = new javax.swing.JLabel();
         alm1 = new javax.swing.JLabel();
         Em = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         producto = new javax.swing.JLabel();
         Cant = new rojeru_san.RSMTextFull();
         Cant1 = new rojeru_san.RSMTextFull();
-        Desc = new rojeru_san.RSMTextFull();
         Jalmacen = new rojerusan.RSComboMetro();
-        guardar = new newscomponents.RSButtonIcon_new();
         ID = new rojeru_san.RSMTextFull();
         rSButtonIcon_new3 = new newscomponents.RSButtonIcon_new();
         Exmin = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
+        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -558,31 +555,25 @@ public class ActualizarInventario extends javax.swing.JFrame {
         Em.setForeground(new java.awt.Color(255, 0, 0));
         Em.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Em.setText("*La Existencia maxima debe ser mayor que la Maxima*");
-        jPanel3.add(Em, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, 400, -1));
-
-        jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("Descripcion:");
-        jPanel3.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 143, 40));
+        jPanel3.add(Em, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 400, -1));
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(153, 0, 255));
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel34.setText("Existencia Maxima");
-        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, 170, 40));
+        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 170, 40));
 
         jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(153, 0, 255));
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setText("Cantidad:");
-        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 120, 40));
+        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 120, 40));
 
         producto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         producto.setForeground(new java.awt.Color(153, 0, 255));
         producto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         producto.setText("Nombre Producto");
-        jPanel3.add(producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 360, 50));
+        jPanel3.add(producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 360, 50));
 
         Cant.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Cant.setPlaceholder("                               ");
@@ -600,7 +591,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
                 CantKeyTyped(evt);
             }
         });
-        jPanel3.add(Cant, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 220, 40));
+        jPanel3.add(Cant, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 220, 40));
 
         Cant1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Cant1.setPlaceholder("                               ");
@@ -618,24 +609,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
                 Cant1KeyTyped(evt);
             }
         });
-        jPanel3.add(Cant1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 250, 180, 40));
-
-        Desc.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Desc.setPlaceholder("                               ");
-        Desc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DescActionPerformed(evt);
-            }
-        });
-        Desc.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                DescKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                DescKeyTyped(evt);
-            }
-        });
-        jPanel3.add(Desc, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 220, 40));
+        jPanel3.add(Cant1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 210, 40));
 
         Jalmacen.setColorArrow(new java.awt.Color(102, 0, 255));
         Jalmacen.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -656,17 +630,6 @@ public class ActualizarInventario extends javax.swing.JFrame {
             }
         });
         jPanel3.add(Jalmacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 140, 190, 30));
-
-        guardar.setBackground(new java.awt.Color(0, 55, 133));
-        guardar.setText("Guardar Inventario");
-        guardar.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        guardar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
-        guardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                guardarActionPerformed(evt);
-            }
-        });
-        jPanel3.add(guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 180, 50));
 
         ID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ID.setPlaceholder("                               ");
@@ -703,7 +666,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
         Exmin.setForeground(new java.awt.Color(153, 0, 255));
         Exmin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Exmin.setText("Existencia Minima");
-        jPanel3.add(Exmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 210, 170, 40));
+        jPanel3.add(Exmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 170, 40));
 
         jLabel37.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel37.setForeground(new java.awt.Color(153, 0, 255));
@@ -715,13 +678,25 @@ public class ActualizarInventario extends javax.swing.JFrame {
         jLabel32.setForeground(new java.awt.Color(153, 0, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel32.setText("Nombre Almacen:");
-        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, 130, 40));
+        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 130, 130, 40));
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel36.setForeground(new java.awt.Color(153, 0, 255));
         jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel36.setText("Actual Almacén:");
         jPanel3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 130, 40));
+
+        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new9.setText("Modificar Cambios");
+        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
+        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new9ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, -1, 40));
 
         rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 810, 370));
 
@@ -801,21 +776,6 @@ public class ActualizarInventario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Cant1KeyTyped
 
-    private void DescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DescActionPerformed
-
-    private void DescKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DescKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DescKeyReleased
-
-    private void DescKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DescKeyTyped
-              if (Desc.getText().trim().length() == 15) {
-        evt.consume();
-
-    }
-    }//GEN-LAST:event_DescKeyTyped
-
     private void JalmacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JalmacenMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_JalmacenMouseClicked
@@ -831,22 +791,6 @@ public class ActualizarInventario extends javax.swing.JFrame {
     private void JalmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JalmacenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JalmacenActionPerformed
-
-    private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-        // TODO add your handling code here:
-        if(validar()==true){
-           ConfirmacionGuardar inv= new  ConfirmacionGuardar();
-            inv.setAinv(this);
-            inv.setTipo("GInventario");
-            inv.setVisible(true);
-         
-        }
-          
-        else{
-
-            JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
-        }
-    }//GEN-LAST:event_guardarActionPerformed
 
     private void IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDActionPerformed
         // TODO add your handling code here:
@@ -876,6 +820,18 @@ public class ActualizarInventario extends javax.swing.JFrame {
         }
         System.exit(0);
     }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
+
+    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
+        if(validar()==true){
+            ConfirmacionModificar inv = new ConfirmacionModificar();
+            inv.setAinv(this);
+            inv.setTipo("Minventario");
+            inv.setVisible(true);
+        }else{
+
+            JOptionPane.showMessageDialog(this, "POR FAVOR VALIDE LA INFORMACION");
+        }
+    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -922,20 +878,17 @@ public class ActualizarInventario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojeru_san.RSMTextFull Cant;
     private rojeru_san.RSMTextFull Cant1;
-    private rojeru_san.RSMTextFull Desc;
     private javax.swing.JLabel Em;
     private javax.swing.JLabel Exmin;
     private rojeru_san.RSMTextFull ID;
     private rojerusan.RSComboMetro Jalmacen;
     private javax.swing.JLabel alm1;
-    private newscomponents.RSButtonIcon_new guardar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
@@ -955,6 +908,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
     private javax.swing.JLabel producto;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new9;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon12;

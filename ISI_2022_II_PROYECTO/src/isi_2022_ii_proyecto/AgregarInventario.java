@@ -159,31 +159,26 @@ public class AgregarInventario extends javax.swing.JFrame {
     }
     public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
       public boolean insertar(){
-        String descripcion="";
         String actual=""; 
         String maxima="";
        String minima="";
         int almacen = 0;
    
-        
-     
-       descripcion= Desc.getText();
        actual= Cant.getText();
         maxima=Cant1.getText();
         minima= Cant2.getText();
         almacen = ObtenerAlmacen();
         id=Integer.parseInt(ID.getText());
         
-        String SQL = "INSERT INTO AlmacenProducto(IdProducto,IdAlmacen,Descripcion,ExistenciaActual,ExistenciaMaxima,ExistenciaMinima) VALUES"
-                + "(?, ?, ?, ?, ?,?)";
+        String SQL = "INSERT INTO AlmacenProducto(IdProducto,IdAlmacen,ExistenciaActual,ExistenciaMaxima,ExistenciaMinima) VALUES"
+                + "(?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, id);
             preparedStmt.setInt (2, almacen);
-            preparedStmt.setString   (3,descripcion );
-            preparedStmt.setString(4, actual);
-            preparedStmt.setString(5, maxima);  
-            preparedStmt.setString(6, minima); 
+            preparedStmt.setString(3, actual);
+            preparedStmt.setString(4, maxima);  
+            preparedStmt.setString(5, minima); 
             preparedStmt.execute();
             
            VentanaEmergente1 ve = new VentanaEmergente1();
@@ -208,10 +203,7 @@ public class AgregarInventario extends javax.swing.JFrame {
         boolean a=true;
    
       
-       if(Desc.getText().isEmpty()){
-          JOptionPane.showMessageDialog(this, "Por favor ingrese una Descripcion");
-          a= false;
-      }
+      
         if(Cant.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese la cantidad actual");
           a= false;
@@ -321,7 +313,6 @@ public class AgregarInventario extends javax.swing.JFrame {
         jLabel29 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         Em = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         producto = new javax.swing.JLabel();
@@ -329,7 +320,6 @@ public class AgregarInventario extends javax.swing.JFrame {
         Cant = new rojeru_san.RSMTextFull();
         Cant1 = new rojeru_san.RSMTextFull();
         Cant2 = new rojeru_san.RSMTextFull();
-        Desc = new rojeru_san.RSMTextFull();
         Jalmacen = new rojerusan.RSComboMetro();
         guardar = new newscomponents.RSButtonIcon_new();
         ID = new rojeru_san.RSMTextFull();
@@ -562,25 +552,19 @@ public class AgregarInventario extends javax.swing.JFrame {
         Em.setForeground(new java.awt.Color(255, 0, 0));
         Em.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Em.setText("*La Existencia maxima debe ser mayor que la Maxima*");
-        jPanel3.add(Em, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, 400, -1));
-
-        jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("Descripcion:");
-        jPanel3.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 143, 40));
+        jPanel3.add(Em, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 400, -1));
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(153, 0, 255));
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel34.setText("Existencia Maxima");
-        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, 170, 40));
+        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 170, 40));
 
         jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(153, 0, 255));
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setText("Cantidad:");
-        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 120, 40));
+        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 120, 40));
 
         producto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         producto.setForeground(new java.awt.Color(153, 0, 255));
@@ -619,7 +603,7 @@ public class AgregarInventario extends javax.swing.JFrame {
                 CantKeyTyped(evt);
             }
         });
-        jPanel3.add(Cant, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 220, 40));
+        jPanel3.add(Cant, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 220, 40));
 
         Cant1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Cant1.setPlaceholder("                               ");
@@ -637,7 +621,7 @@ public class AgregarInventario extends javax.swing.JFrame {
                 Cant1KeyTyped(evt);
             }
         });
-        jPanel3.add(Cant1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 250, 180, 40));
+        jPanel3.add(Cant1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 210, 40));
 
         Cant2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Cant2.setPlaceholder("                               ");
@@ -655,24 +639,7 @@ public class AgregarInventario extends javax.swing.JFrame {
                 Cant2KeyTyped(evt);
             }
         });
-        jPanel3.add(Cant2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 170, 40));
-
-        Desc.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Desc.setPlaceholder("                               ");
-        Desc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DescActionPerformed(evt);
-            }
-        });
-        Desc.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                DescKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                DescKeyTyped(evt);
-            }
-        });
-        jPanel3.add(Desc, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 220, 40));
+        jPanel3.add(Cant2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 200, 170, 40));
 
         Jalmacen.setColorArrow(new java.awt.Color(102, 0, 255));
         Jalmacen.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -752,7 +719,7 @@ public class AgregarInventario extends javax.swing.JFrame {
         jLabel36.setForeground(new java.awt.Color(153, 0, 255));
         jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel36.setText("Existencia Minima");
-        jPanel3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 170, 40));
+        jPanel3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 210, 170, 40));
 
         rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 810, 370));
 
@@ -877,21 +844,6 @@ public class AgregarInventario extends javax.swing.JFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_Cant2KeyTyped
 
-    private void DescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DescActionPerformed
-
-    private void DescKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DescKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DescKeyReleased
-
-    private void DescKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DescKeyTyped
-              if (Desc.getText().trim().length() == 15) {
-        evt.consume();
-
-    }
-    }//GEN-LAST:event_DescKeyTyped
-
     private void JalmacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JalmacenMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_JalmacenMouseClicked
@@ -995,7 +947,6 @@ public class AgregarInventario extends javax.swing.JFrame {
     private rojeru_san.RSMTextFull Cant;
     private rojeru_san.RSMTextFull Cant1;
     private rojeru_san.RSMTextFull Cant2;
-    private rojeru_san.RSMTextFull Desc;
     private javax.swing.JLabel Em;
     private rojeru_san.RSMTextFull ID;
     private rojeru_san.rsfield.RSTextFull JTextbuscar;
@@ -1007,7 +958,6 @@ public class AgregarInventario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;

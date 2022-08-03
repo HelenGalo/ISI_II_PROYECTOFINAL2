@@ -983,7 +983,11 @@ public class Inventario extends javax.swing.JFrame {
          try {
              if(codiap.isEmpty()==false){
           
-         
+             ActualizarInventario inv = new   ActualizarInventario();
+           inv.setId(Integer.parseInt(codiap));
+           inv.mostrarP();
+           inv.setVisible(true);   
+           this.dispose();
          
         } else{
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");

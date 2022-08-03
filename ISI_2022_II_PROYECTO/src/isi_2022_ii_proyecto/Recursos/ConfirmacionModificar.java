@@ -10,6 +10,7 @@ import isi_2022_ii_proyecto.ActualizarCaja;
 import isi_2022_ii_proyecto.ActualizarCliente;
 import isi_2022_ii_proyecto.ActualizarEmpleado;
 import isi_2022_ii_proyecto.ActualizarEnvio;
+import isi_2022_ii_proyecto.ActualizarInventario;
 import isi_2022_ii_proyecto.ActualizarProductos;
 import isi_2022_ii_proyecto.ActualizarProveedor;
 import isi_2022_ii_proyecto.AgregarCuentaBancaria;
@@ -31,6 +32,11 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
     ActualizarCliente acliente;
     ActualizarEmpleado aemp;
     ActualizarAlmacen almacen;
+    ActualizarInventario ainv;
+
+    public void setAinv(ActualizarInventario ainv) {
+        this.ainv = ainv;
+    }
     
     public void setAlmacen(ActualizarAlmacen almacen){
         this.almacen=almacen;
@@ -252,6 +258,12 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
             if(tipo=="Malmacen"){
                 almacen.setEstadosModificar(true);
                 almacen.validarConfirmacion();
+                this.dispose();
+                
+            }
+              if(tipo=="Minventario"){
+                ainv.setEstadosModificar(true);
+                ainv.validarConfirmacion();
                 this.dispose();
                 
             }
