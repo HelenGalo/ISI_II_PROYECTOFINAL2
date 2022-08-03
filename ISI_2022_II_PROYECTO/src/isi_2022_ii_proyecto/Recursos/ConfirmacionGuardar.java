@@ -11,6 +11,7 @@ import isi_2022_ii_proyecto.AgregarClientes;
 import isi_2022_ii_proyecto.AgregarCuentaBancaria;
 import isi_2022_ii_proyecto.AgregarEmpleado;
 import isi_2022_ii_proyecto.AgregarEnvio;
+import isi_2022_ii_proyecto.AgregarInventario;
 import isi_2022_ii_proyecto.AgregarProveedor;
 import isi_2022_ii_proyecto.AperturarCajas;
 import isi_2022_ii_proyecto.Banco;
@@ -28,6 +29,11 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
     AgregarClientes gcliente;
     AgregarEmpleado gemp;
     AgregarAlmacen agm;
+    AgregarInventario ainv;
+
+    public void setAinv(AgregarInventario ainv) {
+        this.ainv = ainv;
+    }
     
     
     public void setAgm(AgregarAlmacen agm){
@@ -234,7 +240,12 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
                 agm.validarConfirmacion();
                 this.dispose();
             }
-        
+            
+         if(tipo=="GInventario"){
+                ainv.setEstadoagregar(true);
+                ainv.validarConfirmacion();
+                this.dispose();
+            }
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     /**

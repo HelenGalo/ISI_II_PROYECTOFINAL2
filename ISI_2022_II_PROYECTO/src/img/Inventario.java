@@ -973,7 +973,9 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
-        // TODO add your handling code here:
+     AgregarInventario inv = new AgregarInventario();
+     inv.setVisible(true);
+     this.dispose();
        
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
 
