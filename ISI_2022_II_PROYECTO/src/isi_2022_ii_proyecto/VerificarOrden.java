@@ -6,8 +6,17 @@
 package isi_2022_ii_proyecto;
 
 
+
+
+
+
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
+
+import java.awt.Font;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +26,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 import rojerusan.RSTableMetro1;
 
 /**
@@ -343,6 +354,218 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel53.setText(String.valueOf(cambio));
     }
     
+    
+     public void enviarActualizacionExistencia(){
+        int idproducto=0;
+        int cantidad=0;
+       
+        
+        for(int i=0; i<JTableBancos.getRowCount();i++){
+             idproducto=Integer.valueOf(modelo.getValueAt(i, 0).toString());
+             cantidad=Integer.valueOf(modelo.getValueAt(i, 3).toString());
+             actualizarinventario(idproducto, cantidad);
+            }
+        
+ 
+        
+        
+    }
+    
+    public void actualizarinventario(int idproducto, int cantidad){
+        int existenciaactual=0;
+        
+        String SQL1 = "Select ap.ExistenciaActual from AlmacenProducto ap\n" +
+                    "Where ap.IdProducto="+idproducto+" AND ap.IdAlmacen=(Select s.IdAlmacen From Sucursales s\n" +
+                    "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
+                    "INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n" +
+                    "WHERE u.Usuario='"+usuario+"';";
+        
+        String SQL = "UPDATE AlmacenProducto ap SET ap.ExistenciaActual=?\n" +
+                    "WHERE IdAlmacen=(Select s.IdAlmacen From Sucursales s\n" +
+                    "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
+                    "INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n" +
+                    "WHERE u.Usuario=+'"+usuario+"' AND ap.IdProducto="+idproducto;
+        
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL1);
+
+            while (rs.next()) {
+                existenciaactual =rs.getInt("ap.ExistenciaActual");
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+      
+        
+        int nuevoinventario=existenciaactual-cantidad;
+  
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, nuevoinventario);
+            preparedStmt.execute();
+            
+            JOptionPane.showMessageDialog(null, "Historia de  Caja actualizado Exitosamente");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    
+    
+    public void factura(){
+        try {
+   
+      
+   
+        
+        
+        } catch (Exception e) {
+        }
+       
+        
+    }
+    
+    
+   /* public void generarfactura(){
+  
+        Document documento = new Document(PageSize.A4);
+        
+        
+        try {
+            
+            String ruta = System.getProperty("user.home");
+            String rabrir=ruta+"/Desktop/"+String.valueOf(idorden).trim()+".pdf";
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta+"/Desktop/"+String.valueOf(idorden).trim()+".pdf"));
+            
+            com.lowagie.text.Image header =com.lowagie.text.Image.getInstance("src\\isi_2022_ii_proyecto\\Imagenes\\LOGO FACTURAS.png");
+           
+            
+            
+        
+            
+            Paragraph parrafo = new Paragraph();
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("FACTURA");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14,Font.BOLD, Color.BLACK));
+            
+            documento.open();
+            documento.add(parrafo);
+                
+            Table table = new Table(2);
+            table.setSpacing(20f);
+            table.setBackgroundColor(Color.BLUE);
+            
+            Paragraph parrafo3 = new Paragraph();
+                parrafo3.setAlignment(Paragraph.ALIGN_CENTER);
+                parrafo3.add("FACTURA");
+                parrafo3.setFont(FontFactory.getFont("Tahoma", 14,Font.BOLD, Color.WHITE));
+            
+            Cell celda1=new Cell();
+            celda1.setBorderColor(Color.BLUE);
+            celda1.add(parrafo3);
+            
+            Cell celda2=new Cell();
+            celda2.setBorderColor(Color.BLUE);
+            celda2.add(header);
+            
+            
+            table.addCell(celda1);
+            table.addCell(celda2);
+            
+            documento.add(table);
+            
+            Table tablafactura = new Table(5);
+            
+   
+            tablafactura.setBackgroundColor(Color.CYAN);
+            tablafactura.setSpacing(30f);
+             Paragraph parrafo4 = new Paragraph();
+             parrafo4.setAlignment(Paragraph.ALIGN_CENTER);
+             parrafo4.add("DESCRIPCION");
+             
+             
+             Paragraph parrafo5 = new Paragraph();
+             parrafo5.setAlignment(Paragraph.ALIGN_CENTER);
+             parrafo5.add("CANTIDAD");
+             
+             
+             Paragraph parrafo6 = new Paragraph();
+             parrafo6.setAlignment(Paragraph.ALIGN_CENTER);
+             parrafo6.add("PRECIO UNITARIO");
+             
+               
+             Paragraph parrafo7 = new Paragraph();
+             parrafo7.setAlignment(Paragraph.ALIGN_CENTER);
+             parrafo7.add("DESCUENTO Y REBAJAS OTORGADAS");
+             
+             Paragraph parrafo8 = new Paragraph();
+             parrafo8.setAlignment(Paragraph.ALIGN_CENTER);
+             parrafo8.add("TOTAL");
+             
+            tablafactura.addCell(parrafo4);
+            tablafactura.addCell(parrafo5);
+            tablafactura.addCell(parrafo6);
+            tablafactura.addCell(parrafo7);
+            tablafactura.addCell(parrafo8);
+            
+            try {
+                String SQL ="SELECT dv.idOrden, p.Nombre, dv.Cantidad, p.Precio, dv.Descuento, dv.Subtotal FROM DetalledeVenta dv\n" +
+                            "INNER JOIN Ventas v ON v.IdOrden = dv.idOrden\n" +
+                            "INNER JOIN Productos p ON p.IdProducto = dv.IdProducto\n" +
+                            "WHERE dv.idOrden="+1;
+                PreparedStatement pst = con.prepareStatement(SQL);
+                ResultSet rs = pst.executeQuery();
+                
+                if(rs.next()){
+                    do {                        
+                        tablafactura.addCell(rs.getString("p.Nombre"));
+                        tablafactura.addCell(rs.getString("dv.Cantidad"));
+                        tablafactura.addCell(rs.getString("p.Precio"));
+                        tablafactura.addCell(rs.getString("dv.Descuento"));
+                        tablafactura.addCell(rs.getString("dv.Subtotal"));
+                    } while (rs.next());
+                    documento.add(tablafactura);
+                }
+                
+                Paragraph parrafo1 = new Paragraph();
+                parrafo1.setAlignment(Paragraph.ALIGN_CENTER);
+                parrafo1.add("\n\n LA FACTURA ES BENEFICIO DE TODOS, EXÍJALA");
+                parrafo1.setFont(FontFactory.getFont("Tahoma", 14,Font.BOLD, Color.BLUE));
+                
+               
+                
+                
+            } catch (SQLException e) {
+                System.err.println("Error al obtener datos del cliente. " + e);
+            }
+            
+            
+            documento.close();
+            JOptionPane.showMessageDialog(null, "Factura Generada");
+            
+            try {
+                ProcessBuilder p = new ProcessBuilder();
+                p.command("cmd.exe","/C", rabrir);
+                p.start();
+            } catch (IOException e) {
+                System.err.println("Error al abrir:"+ e);
+            }
+            
+            
+            
+        } catch (DocumentException | IOException e) {
+            System.err.println("ERROR en PDF o ruta de imagen"+e);
+            JOptionPane.showMessageDialog(null, "Error contacte al administrador");
+            
+        }
+    }
+    */
     
 
     /**
@@ -1333,6 +1556,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     private void rSButtonIcon_new17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new17ActionPerformed
         // TODO add your handling code here:
         mostrarelementos();
+       
     }//GEN-LAST:event_rSButtonIcon_new17ActionPerformed
 
     private void rSButtonIcon_new18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new18ActionPerformed
@@ -1342,9 +1566,15 @@ public class VerificarOrden extends javax.swing.JFrame {
             insertarOrden();
             enviarDetallesOrden();
             if(estadodetalleorden==true && estadoorden==true){
+                enviarActualizacionExistencia();
                 actualizartotalcaja();
+                if(estadototalcaja==true){
+                       actualizarHistoriaCaja();
+                    }
+                
                 calcularcambio();
                 rSPanelForma6.setVisible(true);
+                rSPanelForma5.setVisible(false);
             }
            
             
@@ -1356,11 +1586,13 @@ public class VerificarOrden extends javax.swing.JFrame {
                 insertarOrden();
                 enviarDetallesOrden();
                 if(estadodetalleorden==true && estadoorden==true){
+                enviarActualizacionExistencia();
                 actualizartotalcaja();
                     if(estadototalcaja==true){
                         actualizarHistoriaCaja();
                     }
                 rSPanelForma6.setVisible(true);
+                rSPanelForma5.setVisible(false);
             }
             }
         }
