@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.chrono.IsoEra;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -1840,7 +1841,18 @@ public class POS extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonHover1ActionPerformed
 
     private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new15ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            VerificarOrden vo = new VerificarOrden();
+            vo.setTablaorden(JTableBancos);
+            vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(),jLabel23.getText(),jLabel22.getText(),jLabel8.getText(),jLabel28.getText(),jLabel18.getText());
+            vo.cargartabla();
+            vo.setVisible(true);
+            con.close();
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(POS.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_rSButtonIcon_new15ActionPerformed
 
     private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed

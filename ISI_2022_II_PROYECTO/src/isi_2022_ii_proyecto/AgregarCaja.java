@@ -155,6 +155,8 @@ public class AgregarCaja extends javax.swing.JFrame {
        
     }
     
+    
+    
     public void bloquearbotong(){
         rSButtonIcon_new11.setEnabled(false);
         rSButtonIcon_new12.setVisible(true);

@@ -144,6 +144,38 @@ public class AperturarCajas extends javax.swing.JFrame {
         }
     }
     
+    public void insertarHistoriaCaja(){
+        int idcaja=0;
+        idcaja=Integer.valueOf(JCodigoDisponible.getText());
+        float montoinicial = 0.00f;
+        montoinicial=Float.valueOf(JTextbuscar.getText());
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String horaapertura = dtf.format(LocalDateTime.now());
+        SimpleDateFormat dtf1 = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar calendar = Calendar.getInstance();
+
+        Date dateObj = calendar.getTime();
+        String fechaapertura = dtf1.format(dateObj);
+        
+        
+       String SQL = "INSERT INTO Caja (IdCaja, FechaApertura, HoraApertura, MontoInicial, IdEstadoHistoria) VALUES(?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, idcaja);
+            preparedStmt.setString(2, fechaapertura);
+            preparedStmt.setString(3, horaapertura);
+            preparedStmt.setFloat(4,montoinicial);
+            preparedStmt.setInt(5, 1);
+          
+            preparedStmt.execute();
+          
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+    }
+    
     public void aperturar(){
         float monto = 0.00f;
         monto =Float.valueOf(JTextbuscar.getText());

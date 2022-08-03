@@ -5,11 +5,63 @@
  */
 package isi_2022_ii_proyecto;
 
+
+import isi_2022_ii_proyecto.Conexion.ConexionBD;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import rojerusan.RSTableMetro1;
+
 /**
  *
  * @author Edwin Rafael
  */
 public class VerificarOrden extends javax.swing.JFrame {
+    
+    
+    ConexionBD conexion = new ConexionBD();
+    Connection con = conexion.conexion();
+    
+    
+    RSTableMetro1 tablaorden;
+    DefaultTableModel modelo;
+    String usuario;
+    int codigcliente; 
+    int codigvendedor;
+    int idorden=0;
+    int codigocaja=0;
+    String nombrecliente;
+    String vendedor;
+    String cajero;
+    String subtotal;
+    String total;
+    String descuento;
+    String isv;
+    String totalp;
+    boolean estadoorden;
+    boolean estadodetalleorden;
+
+
+    
+    
+    
+
+    public void setTablaorden(RSTableMetro1 tablaorden) {
+        this.tablaorden = tablaorden;
+    }
+    
+    
+    
+    
 
     /**
      * Creates new form VerificarOrden
@@ -21,6 +73,254 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSPanelForma3.setVisible(false);
         rSPanelForma6.setVisible(false);
         rSPanel4.setVisible(false);
+        estadodetalleorden=false;
+        estadodetalleorden=false;
+    }
+    
+    public void cargartabla(){
+       modelo=(DefaultTableModel) tablaorden.getModel();
+       JTableBancos.setModel(modelo);
+    }
+    
+    public int obteneridusuario(){
+        int idusuario=0;
+        String SQL = "SELECT u.IdUsuario FROM Usuarios u WHERE u.Usuario='"+usuario+"';";
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idusuario = rs.getInt("u.IdUsuario");
+               
+                
+            }
+        }catch(SQLException e){
+              JOptionPane.showMessageDialog(this, e.getMessage());
+        } 
+        
+        return idusuario;
+        
+    }
+    
+    
+    public int obtenertipopago(){
+        int tipopago=0;
+        if(rSRadioButton2.isSelected()){
+            tipopago= 1;
+        }else{
+            if(rSRadioButton1.isSelected()){
+                tipopago= 2;
+            }
+        }
+        return tipopago;
+    }
+    
+    public float obtenertotalcajaA(){
+        float totalcajaa=0.00f;
+        String SQL = "Select c.TotalCaja from Caja c Where c.IdUsuario="+obteneridusuario();
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                totalcajaa = Float.valueOf(rs.getString("c.TotalCaja"));
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+         return totalcajaa;
+    }
+    
+    
+    public void actualizartotalcaja(){
+        float totalcajaa=0.00f;
+        totalcajaa=obtenertotalcajaA();
+        String SQL = "UPDATE Caja SET TotalCaja=? WHERE IdUsuario="+obteneridusuario();
+        float totalcajan=Float.valueOf(jLabel22.getText())+totalcajaa;
+        
+  
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setFloat(1, Float.valueOf(totalcajan));
+            preparedStmt.execute();
+            
+            JOptionPane.showMessageDialog(null, "Registro actualizado Exitosamente");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    public float obtenerMontoOperacion(){
+        
+        String SQL = "SELECT h.MontoOperacion FROM HistoriasCaja h Where h.IdCaja="+codigocaja+" AND h.IdEstadoHistoria="+1;
+        float montooperacion=0.00f;
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+           
+                montooperacion =Float.valueOf(rs.getString("h.MontoOperacion"));
+
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+        
+        return montooperacion;
+        
+    }
+    
+    
+    public void actualizarHistoriaCaja(){
+        float montooperaciona=0.00f;
+        montooperaciona=obtenerMontoOperacion();
+        String SQL = "UPDATE HistoriaCajas SET MontoOperacion=? WHERE IdCaja="+codigocaja+" AND IdEstadoHistoria="+1;
+        float montooperacionn=Float.valueOf(jLabel22.getText())+montooperaciona;
+        
+  
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setFloat(1, Float.valueOf(montooperacionn));
+            preparedStmt.execute();
+            
+            JOptionPane.showMessageDialog(null, "Historia de  Caja actualizado Exitosamente");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    
+    public void insertarOrden(){
+        int idorden = Integer.valueOf(jLabel46.getText());
+        String fechaventa=rSLabelFecha1.getFecha();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String horaapertura = dtf.format(LocalDateTime.now());
+        int idcliente = this.codigcliente;
+        int idempleado = this.codigvendedor;
+        int idusuario=obteneridusuario();
+        int idcaja = this.codigocaja;
+        int idtipopago=obtenertipopago();
+
+      
+     
+         
+       String SQL = "INSERT INTO Ventas (IdOrden, FechaVenta, HoraVenta, IdCliente, IdEmpleado, IdUsuario, EstadoVenta, IdCaja, IdTipoPago) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, idorden);
+            preparedStmt.setString(2, fechaventa);
+            preparedStmt.setString(3, horaapertura);
+            preparedStmt.setInt(4, idcliente);
+            preparedStmt.setInt(5, idempleado);
+            preparedStmt.setInt(6, idusuario);
+            preparedStmt.setInt(7, 1);
+            preparedStmt.setInt(8, idcaja);
+             preparedStmt.setInt(9, idtipopago);
+            preparedStmt.execute();
+            estadoorden = true;
+            
+            JOptionPane.showMessageDialog(rootPane, "Orden guardada");
+           
+       
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+        
+        
+       
+    }
+    
+    
+    public void insertarDetallesOrden(int idorden, int idproducto, int cantidad, float descuento, float subtotal){
+               String SQL = "INSERT INTO DetalledeVenta (IdOrden, IdProducto, Cantidad, Descuento, Subtotal) VALUES(?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, idorden);
+            preparedStmt.setInt(2, idproducto);
+            preparedStmt.setInt(3, cantidad);
+            preparedStmt.setFloat(4, descuento);
+            preparedStmt.setFloat(5, subtotal);
+            preparedStmt.execute();
+            
+            estadodetalleorden=true;
+            JOptionPane.showMessageDialog(rootPane, "Detalles guardados");
+           
+       
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    public void enviarDetallesOrden(){
+        int idproducto=0;
+        int cantidad=0;
+        float descuento =0.00f;
+        float subtotal = 0.00f;
+        
+        for(int i=0; i<JTableBancos.getRowCount();i++){
+             idproducto=Integer.valueOf(modelo.getValueAt(i, 0).toString());
+             cantidad=Integer.valueOf(modelo.getValueAt(i, 3).toString());
+             descuento=Float.valueOf(modelo.getValueAt(i, 4).toString());
+             subtotal=Float.valueOf(modelo.getValueAt(i, 5).toString());
+             insertarDetallesOrden(idorden,idproducto,cantidad,descuento,subtotal);
+            }
+        
+ 
+        
+        
+    }
+    
+    
+    public void cargardatos(){
+        jLabel35.setText(vendedor);
+        jLabel36.setText(String.valueOf(codigvendedor));
+        jLabel38.setText(nombrecliente);
+        jLabel39.setText(String.valueOf(codigcliente));
+        jLabel42.setText(String.valueOf(codigocaja));
+        jLabel44.setText(cajero);
+        jLabel45.setText(usuario);
+        jLabel23.setText(subtotal);
+        jLabel28.setText(descuento);
+        jLabel18.setText(isv);
+        jLabel8.setText(totalp);
+        jLabel22.setText(total);
+        jLabel46.setText(String.valueOf(idorden));
+    }
+    
+    public void seteardatosorden(int idorden,String usuario,int codigcliente, int codigvendedor, int codigocaja, String ncliente, String nvendedor, String ncajero, String subt, String tot, String cantp, String des, String isv){
+        this.usuario=usuario;
+        this.codigcliente=codigcliente;
+        this.codigvendedor = codigvendedor;
+        this.codigocaja = codigocaja;
+        this.nombrecliente = ncliente;
+        this.vendedor= nvendedor;
+        this.cajero=ncajero;
+        this.subtotal=subt;
+        this.total=tot;
+        this.descuento=des;
+        this.isv=isv;
+        this.totalp=cantp;
+        this.idorden=idorden;
+        
+        cargardatos();
+        
+        
     }
     
     
@@ -28,8 +328,18 @@ public class VerificarOrden extends javax.swing.JFrame {
        rSPanel2.setSize(780, 460);
        rSPanel4.setVisible(true);
        rSPanelForma3.setVisible(true);
-       rSPanelForma6.setVisible(true);
+       jLabel51.setVisible(false);
+       JTextbuscar.setVisible(false);
+       rSButtonIcon_new18.setVisible(false);
+      
        
+       
+    }
+    
+    public void calcularcambio(){
+        float cambio=0.00f;
+        cambio=Float.valueOf(JTextbuscar.getText())-Float.valueOf(jLabel22.getText());
+        jLabel53.setText(String.valueOf(cambio));
     }
     
     
@@ -81,7 +391,6 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSPanelForma4 = new rojeru_san.rspanel.RSPanelForma();
         rSPanelForma5 = new rojeru_san.rspanel.RSPanelForma();
         rSLabelHora1 = new rojeru_san.rsdate.RSLabelHora();
-        rSButtonRoundEffect1 = new rojeru_san.rsbutton.RSButtonRoundEffect();
         jLabel47 = new javax.swing.JLabel();
         rSLabelFecha1 = new rojeru_san.RSLabelFecha();
         jLabel48 = new javax.swing.JLabel();
@@ -101,6 +410,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         rSLabelIcon18 = new rojerusan.RSLabelIcon();
+        rSButtonIcon_new17 = new newscomponents.RSButtonIcon_new();
         rSPanelFunky1 = new rojeru_san.rspanel.RSPanelFunky();
         jLabel46 = new javax.swing.JLabel();
         jLabel49 = new javax.swing.JLabel();
@@ -118,13 +428,16 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSRadioButton2 = new rojerusan.RSRadioButton();
         jLabel51 = new javax.swing.JLabel();
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
+        rSButtonIcon_new18 = new newscomponents.RSButtonIcon_new();
         rSPanelForma6 = new rojeru_san.rspanel.RSPanelForma();
         jLabel52 = new javax.swing.JLabel();
         jLabel53 = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
-        rSButtonIcon_new15 = new newscomponents.RSButtonIcon_new();
+        rSButtonIcon_new16 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(20, 101, 187));
         jPanel1.setForeground(new java.awt.Color(20, 101, 187));
@@ -143,7 +456,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         );
         iconminmaxcloseLayout.setVerticalGroup(
             iconminmaxcloseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jPanel2.setBackground(new java.awt.Color(20, 101, 187));
@@ -492,19 +805,13 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSPanelForma5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         rSPanelForma5.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, 90, 40));
 
-        rSButtonRoundEffect1.setText("Confirmar");
-        rSButtonRoundEffect1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonRoundEffect1ActionPerformed(evt);
-            }
-        });
-        rSPanelForma5.add(rSButtonRoundEffect1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 273, -1));
-
         jLabel47.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel47.setForeground(new java.awt.Color(102, 0, 255));
         jLabel47.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel47.setText("Fecha de Emisión:");
         rSPanelForma5.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 130, 20));
+
+        rSLabelFecha1.setFormato("yyyy/MM/dd");
         rSPanelForma5.add(rSLabelFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 80, 20));
 
         jLabel48.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
@@ -610,6 +917,19 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSLabelIcon18.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_MALL);
         rSPanelForma5.add(rSLabelIcon18, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 110, 80));
 
+        rSButtonIcon_new17.setBackground(new java.awt.Color(0, 153, 102));
+        rSButtonIcon_new17.setText("Confimar Orden");
+        rSButtonIcon_new17.setAlignmentX(0.5F);
+        rSButtonIcon_new17.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSButtonIcon_new17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
+        rSButtonIcon_new17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new17ActionPerformed(evt);
+            }
+        });
+        rSPanelForma5.add(rSButtonIcon_new17, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 310, 310, 40));
+
         javax.swing.GroupLayout rSPanelForma4Layout = new javax.swing.GroupLayout(rSPanelForma4);
         rSPanelForma4.setLayout(rSPanelForma4Layout);
         rSPanelForma4Layout.setHorizontalGroup(
@@ -700,7 +1020,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSPanel2.setLayout(null);
 
         rSPanel3.setBackground(new java.awt.Color(153, 153, 255));
-        rSPanel3.setColorBackground(new java.awt.Color(102, 0, 153));
+        rSPanel3.setColorBackground(new java.awt.Color(0, 55, 133));
 
         jLabel56.setFont(new java.awt.Font("Franklin Gothic Book", 3, 24)); // NOI18N
         jLabel56.setForeground(new java.awt.Color(255, 255, 255));
@@ -767,7 +1087,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         jScrollPane2.setBounds(0, 50, 780, 160);
 
         rSPanel4.setBackground(new java.awt.Color(153, 153, 255));
-        rSPanel4.setColorBackground(new java.awt.Color(102, 0, 153));
+        rSPanel4.setColorBackground(new java.awt.Color(0, 55, 133));
         rSPanel4.setLayout(null);
 
         jLabel55.setFont(new java.awt.Font("Franklin Gothic Book", 3, 24)); // NOI18N
@@ -781,15 +1101,25 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSPanel4.setBounds(0, 210, 790, 60);
 
         rSPanelForma3.setBackground(new java.awt.Color(255, 255, 255));
+        rSPanelForma3.setLayout(null);
 
         jLabel50.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel50.setForeground(new java.awt.Color(102, 0, 255));
         jLabel50.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel50.setText("Tipo de Pago:");
+        rSPanelForma3.add(jLabel50);
+        jLabel50.setBounds(135, 11, 130, 20);
 
         rSRadioButton1.setText("TARJETA");
         rSRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         rSRadioButton1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButton1ActionPerformed(evt);
+            }
+        });
+        rSPanelForma3.add(rSRadioButton1);
+        rSRadioButton1.setBounds(192, 38, 180, 40);
 
         rSRadioButton2.setText("EFECTIVO");
         rSRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -799,11 +1129,15 @@ public class VerificarOrden extends javax.swing.JFrame {
                 rSRadioButton2ActionPerformed(evt);
             }
         });
+        rSPanelForma3.add(rSRadioButton2);
+        rSRadioButton2.setBounds(10, 38, 180, 40);
 
         jLabel51.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel51.setForeground(new java.awt.Color(102, 0, 255));
         jLabel51.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel51.setText("Ingrese la cantidad de efectivo recibido:");
+        rSPanelForma3.add(jLabel51);
+        jLabel51.setBounds(10, 85, 362, 20);
 
         JTextbuscar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
@@ -818,45 +1152,25 @@ public class VerificarOrden extends javax.swing.JFrame {
                 JTextbuscarKeyReleased(evt);
             }
         });
+        rSPanelForma3.add(JTextbuscar);
+        JTextbuscar.setBounds(40, 130, 188, 42);
 
-        javax.swing.GroupLayout rSPanelForma3Layout = new javax.swing.GroupLayout(rSPanelForma3);
-        rSPanelForma3.setLayout(rSPanelForma3Layout);
-        rSPanelForma3Layout.setHorizontalGroup(
-            rSPanelForma3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelForma3Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addGroup(rSPanelForma3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelForma3Layout.createSequentialGroup()
-                        .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(123, 123, 123))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelForma3Layout.createSequentialGroup()
-                        .addGroup(rSPanelForma3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel51, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(rSPanelForma3Layout.createSequentialGroup()
-                                .addComponent(rSRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(rSRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(JTextbuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(16, 16, 16))))
-        );
-        rSPanelForma3Layout.setVerticalGroup(
-            rSPanelForma3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelForma3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(rSPanelForma3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rSRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        rSButtonIcon_new18.setBackground(new java.awt.Color(0, 102, 204));
+        rSButtonIcon_new18.setText("Pagar");
+        rSButtonIcon_new18.setAlignmentX(0.5F);
+        rSButtonIcon_new18.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSButtonIcon_new18.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
+        rSButtonIcon_new18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new18ActionPerformed(evt);
+            }
+        });
+        rSPanelForma3.add(rSButtonIcon_new18);
+        rSButtonIcon_new18.setBounds(250, 130, 108, 40);
 
         rSPanel2.add(rSPanelForma3);
-        rSPanelForma3.setBounds(0, 270, 400, 190);
+        rSPanelForma3.setBounds(0, 270, 400, 200);
 
         rSPanelForma6.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -875,15 +1189,15 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel54.setText("L.");
 
-        rSButtonIcon_new15.setBackground(new java.awt.Color(0, 204, 102));
-        rSButtonIcon_new15.setText("Vender");
-        rSButtonIcon_new15.setAlignmentX(0.5F);
-        rSButtonIcon_new15.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSButtonIcon_new15.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
-        rSButtonIcon_new15.addActionListener(new java.awt.event.ActionListener() {
+        rSButtonIcon_new16.setBackground(new java.awt.Color(0, 153, 102));
+        rSButtonIcon_new16.setText("Generar Factura");
+        rSButtonIcon_new16.setAlignmentX(0.5F);
+        rSButtonIcon_new16.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSButtonIcon_new16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DONE);
+        rSButtonIcon_new16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new15ActionPerformed(evt);
+                rSButtonIcon_new16ActionPerformed(evt);
             }
         });
 
@@ -905,28 +1219,28 @@ public class VerificarOrden extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelForma6Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(rSButtonIcon_new15, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72))
+                .addComponent(rSButtonIcon_new16, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75))
         );
         rSPanelForma6Layout.setVerticalGroup(
             rSPanelForma6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rSPanelForma6Layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(42, Short.MAX_VALUE)
                 .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(rSPanelForma6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(rSButtonIcon_new15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addGap(18, 18, 18)
+                .addComponent(rSButtonIcon_new16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
         );
 
         rSPanel2.add(rSPanelForma6);
-        rSPanelForma6.setBounds(400, 270, 380, 190);
+        rSPanelForma6.setBounds(400, 270, 380, 200);
 
         dashboardview.add(rSPanel2);
-        rSPanel2.setBounds(544, 119, 780, 460);
+        rSPanel2.setBounds(544, 119, 780, 470);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -972,14 +1286,15 @@ public class VerificarOrden extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIconOne3ActionPerformed
 
     private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne4ActionPerformed
+        try {
+            con.close();
+            System.exit(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(VerificarOrden.class.getName()).log(Level.SEVERE, null, ex);
+        }
      
 
     }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
-
-    private void rSButtonRoundEffect1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonRoundEffect1ActionPerformed
-        // TODO add your handling code here:
-        mostrarelementos();
-    }//GEN-LAST:event_rSButtonRoundEffect1ActionPerformed
 
     private void JTableBancosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancosMouseClicked
         // TODO add your handling code here:
@@ -994,6 +1309,11 @@ public class VerificarOrden extends javax.swing.JFrame {
 
     private void rSRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton2ActionPerformed
         // TODO add your handling code here:
+        rSRadioButton1.setSelected(false);
+        jLabel51.setVisible(true);
+        JTextbuscar.setVisible(true);
+        rSButtonIcon_new18.setLocation(250,130);
+        rSButtonIcon_new18.setVisible(true);
     }//GEN-LAST:event_rSRadioButton2ActionPerformed
 
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
@@ -1005,9 +1325,56 @@ public class VerificarOrden extends javax.swing.JFrame {
   
     }//GEN-LAST:event_JTextbuscarKeyReleased
 
-    private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new15ActionPerformed
+    private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rSButtonIcon_new15ActionPerformed
+    }//GEN-LAST:event_rSButtonIcon_new16ActionPerformed
+
+    private void rSButtonIcon_new17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new17ActionPerformed
+        // TODO add your handling code here:
+        mostrarelementos();
+    }//GEN-LAST:event_rSButtonIcon_new17ActionPerformed
+
+    private void rSButtonIcon_new18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new18ActionPerformed
+        // TODO add your handling code here:
+        if(rSRadioButton2.isSelected()){
+           if(JTextbuscar.getText().length()>0){
+            insertarOrden();
+            enviarDetallesOrden();
+            if(estadodetalleorden==true && estadoorden==true){
+                actualizartotalcaja();
+                calcularcambio();
+                rSPanelForma6.setVisible(true);
+            }
+           
+            
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Ingrese un valor de efectivo");
+        } 
+        }else{
+            if(rSRadioButton1.isSelected()){
+                insertarOrden();
+                enviarDetallesOrden();
+                if(estadodetalleorden==true && estadoorden==true){
+                actualizartotalcaja();
+                calcularcambio();
+                rSPanelForma6.setVisible(true);
+            }
+            }
+        }
+        
+        
+    }//GEN-LAST:event_rSButtonIcon_new18ActionPerformed
+
+    private void rSRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton1ActionPerformed
+        // TODO add your handling code here:
+        rSRadioButton2.setSelected(false);
+        jLabel51.setVisible(false);
+        JTextbuscar.setVisible(false);
+        rSButtonIcon_new18.setLocation(149,111);
+        rSButtonIcon_new18.setVisible(true);
+        
+        
+    }//GEN-LAST:event_rSRadioButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1101,8 +1468,9 @@ public class VerificarOrden extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new15;
-    private rojeru_san.rsbutton.RSButtonRoundEffect rSButtonRoundEffect1;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new16;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new17;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new18;
     private rojeru_san.RSLabelFecha rSLabelFecha1;
     private rojeru_san.rsdate.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon13;
