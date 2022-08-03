@@ -49,6 +49,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     String totalp;
     boolean estadoorden;
     boolean estadodetalleorden;
+    boolean estadototalcaja=false;
 
 
     
@@ -149,7 +150,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setFloat(1, Float.valueOf(totalcajan));
             preparedStmt.execute();
-            
+            estadototalcaja=true;
             JOptionPane.showMessageDialog(null, "Registro actualizado Exitosamente");
 
         } catch (Exception e) {
@@ -159,7 +160,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     
     public float obtenerMontoOperacion(){
         
-        String SQL = "SELECT h.MontoOperacion FROM HistoriasCaja h Where h.IdCaja="+codigocaja+" AND h.IdEstadoHistoria="+1;
+        String SQL = "SELECT h.MontoOperacion FROM HistoriaCajas h Where h.IdCaja="+codigocaja+" AND h.IdEstadoHistoria="+1;
         float montooperacion=0.00f;
           
         try {
@@ -1356,7 +1357,9 @@ public class VerificarOrden extends javax.swing.JFrame {
                 enviarDetallesOrden();
                 if(estadodetalleorden==true && estadoorden==true){
                 actualizartotalcaja();
-                calcularcambio();
+                    if(estadototalcaja==true){
+                        actualizarHistoriaCaja();
+                    }
                 rSPanelForma6.setVisible(true);
             }
             }

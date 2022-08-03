@@ -36,6 +36,8 @@ public class AperturarCajas extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     String codigoc="";
+    boolean estadopostaperturar=false;
+    boolean estadopostaperturarbanco=false;
   
 
     public void setCodigoc(String codigoc) {
@@ -52,6 +54,11 @@ public class AperturarCajas extends javax.swing.JFrame {
     public void validarConfirmacion(){
         if(estadosModificar=true){
             aperturar();
+            if(estadopostaperturar==true){
+                insertarHistoriaCaja();
+                actualizarCuentaBancaria(Float.valueOf(JTextbuscar.getText()));
+            }
+            
         }
     }
     
@@ -158,7 +165,7 @@ public class AperturarCajas extends javax.swing.JFrame {
         String fechaapertura = dtf1.format(dateObj);
         
         
-       String SQL = "INSERT INTO Caja (IdCaja, FechaApertura, HoraApertura, MontoInicial, IdEstadoHistoria) VALUES(?, ?, ?, ?, ?)";
+       String SQL = "INSERT INTO HistoriaCajas (IdCaja, FechaApertura, HoraApertura, MontoInicial, IdEstadoHistoria) VALUES(?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, idcaja);
@@ -186,7 +193,8 @@ public class AperturarCajas extends javax.swing.JFrame {
             preparedStmt.setInt(1, 2);   
             preparedStmt.setFloat(2, monto);         
             preparedStmt.execute();
-            actualizarCuentaBancaria(monto);
+            estadopostaperturar=true;
+            
             
            
 
