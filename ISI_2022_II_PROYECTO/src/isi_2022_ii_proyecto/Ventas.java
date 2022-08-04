@@ -1141,7 +1141,9 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_deshabilitadoActionPerformed
 
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
-        // TODO add your handling code here:
+       VentasEmpleado v = new VentasEmpleado();
+         v.setVisible(true);
+         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
