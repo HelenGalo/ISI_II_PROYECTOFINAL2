@@ -111,9 +111,9 @@ public class POS extends javax.swing.JFrame {
         String[] registros = new String[4];
         
           
-          String SQL = "SELECT p.Nombre, p.Precio, ifnull(ap.ExistenciaActual,0) as 'Ex' FROM Productos p\n"
+          String SQL = "SELECT p.Nombre, p.Precio, ifnull(ExistenciaActual,0) as 'Ex'   FROM Productos p\n"
                   +"LEFT JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
-                  +"WHERE p.IdProducto="+idproducto+" AND ap.IdAlmacen="+obteneralmacendesucursal();
+                  +"WHERE p.IdProducto="+idproducto;
           
           
         try {
@@ -301,31 +301,6 @@ public class POS extends javax.swing.JFrame {
         }
        
                 
-    }
-    
-    
-    public int obteneralmacendesucursal(){
-        int idalmacen=0;
-       String SQL1= "Select s.IdAlmacen From Sucursales s\n" +
-                    "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
-                    "INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n" +
-                    "WHERE u.Usuario='"+jLabel45.getText()+"';";                    
-                    
-            try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL1);
-
-            while (rs.next()) {
-                idalmacen =rs.getInt("s.IdAlmacen");
-             
-            }
-        
-     
-            }catch(SQLException e){
-                 System.out.println("Error en obtener almacen"+e.getMessage());
-        
-            }
-            return idalmacen;
     }
     
     
@@ -783,7 +758,7 @@ public class POS extends javax.swing.JFrame {
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -835,9 +810,9 @@ public class POS extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(13, 13, 13)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -1094,7 +1069,7 @@ public class POS extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(JTableBancos);
 
-        rSPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 790, 290));
+        rSPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 790, 290));
 
         jLabel8.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(102, 0, 255));
