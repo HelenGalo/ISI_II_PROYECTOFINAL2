@@ -384,7 +384,7 @@ public class VerificarOrden extends javax.swing.JFrame {
                     "WHERE IdAlmacen=(Select s.IdAlmacen From Sucursales s\n" +
                     "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
                     "INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n" +
-                    "WHERE u.Usuario=+'"+usuario+"' AND ap.IdProducto="+idproducto;
+                    "WHERE u.Usuario=+'"+usuario+"' AND ap.IdProducto="+idproducto+");";
         
          try {
             Statement st = (Statement) con.createStatement();
@@ -418,18 +418,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     
     
     
-    public void factura(){
-        try {
-   
-      
-   
-        
-        
-        } catch (Exception e) {
-        }
-       
-        
-    }
+ 
     
     
    /* public void generarfactura(){
@@ -1566,6 +1555,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             insertarOrden();
             enviarDetallesOrden();
             if(estadodetalleorden==true && estadoorden==true){
+                rSPanelForma3.setVisible(false);
                 enviarActualizacionExistencia();
                 actualizartotalcaja();
                 if(estadototalcaja==true){
@@ -1574,7 +1564,6 @@ public class VerificarOrden extends javax.swing.JFrame {
                 
                 calcularcambio();
                 rSPanelForma6.setVisible(true);
-                rSPanelForma5.setVisible(false);
             }
            
             

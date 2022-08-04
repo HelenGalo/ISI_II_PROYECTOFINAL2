@@ -105,15 +105,44 @@ public class POS extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    
+    
+    public int obteneridalmacendesucursal(){
+        int idalmacen=0;
+        String sql = "Select s.IdAlmacen From Sucursales s\n" +
+                    "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
+                    "INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n" +
+                    "WHERE u.Usuario='"+jLabel45.getText()+"';";
+        
+        
+           try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                idalmacen = rs.getInt("s.IdAlmacen");
+               
+                
+            }
+           }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+           
+           return idalmacen;
+            
+    }
+    
    
     
       public void buscarProductoPorId(int idproducto){
         String[] registros = new String[4];
-        
+          System.out.println("ID EN ALMACEN "+obteneridalmacendesucursal());
           
-          String SQL = "SELECT p.Nombre, p.Precio, ifnull(ExistenciaActual,0) as 'Ex'   FROM Productos p\n"
+          String SQL = "SELECT p.Nombre, p.Precio, ifnull(ExistenciaActual,0) as 'Ex' FROM Productos p\n"
                   +"LEFT JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
-                  +"WHERE p.IdProducto="+idproducto;
+                  +"WHERE p.IdProducto="+idproducto+" AND ap.IdAlmacen="+obteneridalmacendesucursal();
           
           
         try {
