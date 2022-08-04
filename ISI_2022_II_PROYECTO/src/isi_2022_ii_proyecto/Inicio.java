@@ -32,7 +32,7 @@ import javax.swing.JPanel;
  */
 public class Inicio extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
-    Connection con = conexion.conexion();
+    
     String usuario;
     String acceso;
     String vacceso="";
@@ -149,7 +149,8 @@ public class Inicio extends javax.swing.JFrame {
     }
     
     public void obtenerInt(){
-          String Sql = "Select u.Intentos from Usuarios u Where u.Usuario="+"'"+usuario+"'";
+        Connection con = conexion.conexion();
+        String Sql = "Select u.Intentos from Usuarios u Where u.Usuario="+"'"+usuario+"'";
          try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(Sql);
@@ -161,11 +162,17 @@ public class Inicio extends javax.swing.JFrame {
         
         
          }catch(Exception e){
-             System.out.println("Error "+e.getMessage());
+             System.out.println("Error al buscar intentos"+e.getMessage());
              
              
           
-                    }
+          }
+         
+         try {
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar sesion"+e.getMessage());
+        }
         
     }
     
@@ -245,7 +252,7 @@ public class Inicio extends javax.swing.JFrame {
     
     
     private void refrescarIntentos(){
-        
+        Connection con = conexion.conexion();
         
        String Sql = "Select u.Intentos from Usuarios u Where u.Usuario="+"'"+usuario+"'";
          try {
@@ -259,13 +266,16 @@ public class Inicio extends javax.swing.JFrame {
         
         
          }catch(Exception e){
-             System.out.println("Error "+e.getMessage());
-             
-             
-          
-                    }
+             System.out.println("Error al obtener intentos"+e.getMessage());
+          }
+         
+         try {
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar sesion"+e.getMessage());
+        }
         
-        
+        con = conexion.conexion();
         
         String SQL1 = "UPDATE Usuarios u SET u.Intentos=? WHERE u.Usuario="+"'"+usuario+"'";
   
@@ -281,10 +291,18 @@ public class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
         
+         try {
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar sesion"+e.getMessage());
+        }
+        
+        
+        
     }
     
     private void obteneracceso(){
-      
+        Connection con = conexion.conexion();
         char [] arrayC=Jpassword.getPassword();
         
         
@@ -303,10 +321,16 @@ public class Inicio extends javax.swing.JFrame {
         
         
         
-         }catch(Exception e){
-             System.out.println("Error "+e.getMessage());
+         }catch(SQLException e){
+             System.out.println("Error al obtener contrase;a "+e.getMessage());
           
                     }
+         
+        try {
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar sesion"+e.getMessage());
+        }
          
          
          System.out.println("contra ingre "+acceso);
@@ -346,18 +370,16 @@ public class Inicio extends javax.swing.JFrame {
             
              if(intentos>0){
                  
-                try {
-                    con.close();
-                    Menu me = new Menu();
-                    me.setUsuario(usuario.toString());
-                    me.setVisible(true);
-                    if(intentos<3){
+            
+                 Menu me = new Menu();
+                 me.setUsuario(usuario.toString());
+                 me.setVisible(true);
+                 if(intentos<3){
                       me.refrescarInt();
-                    }
+                 }
                     this.dispose();
-                 } catch (SQLException ex) {
-                    System.out.println("Error: "+ ex.getMessage());
-             }
+        
+             
              }else{
                  JOptionPane.showMessageDialog(null, "Acceso denegado, usuario bloqueado, contacte al administrador");
              }
@@ -822,12 +844,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_fullmax3MouseClicked
 
     private void rSLabelBorderRound1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSLabelBorderRound1MouseClicked
-        try {
-            // TODO add your handling code here:
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
         RecuperarContraseña rc = new RecuperarContraseña();
         rc.setVisible(true);
         this.dispose();

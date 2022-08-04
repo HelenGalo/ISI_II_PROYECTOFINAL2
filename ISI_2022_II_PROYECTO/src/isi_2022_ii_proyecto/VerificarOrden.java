@@ -370,23 +370,16 @@ public class VerificarOrden extends javax.swing.JFrame {
         
         
     }
-    
-    public void actualizarinventario(int idproducto, int cantidad){
-        int existenciaactual=0;
-        
-        String SQL1 = "Select ap.ExistenciaActual from AlmacenProducto ap\n" +
+     
+     
+     public int obtenerExistenciaActual(int idproducto){
+            int existenciaactual=0;
+            String SQL1 = "Select ap.ExistenciaActual from AlmacenProducto ap\n" +
                     "Where ap.IdProducto="+idproducto+" AND ap.IdAlmacen=(Select s.IdAlmacen From Sucursales s\n" +
                     "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
                     "INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n" +
-                    "WHERE u.Usuario='"+usuario+"';";
-        
-        String SQL = "UPDATE AlmacenProducto ap SET ap.ExistenciaActual=?\n" +
-                    "WHERE IdAlmacen=(Select s.IdAlmacen From Sucursales s\n" +
-                    "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
-                    "INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n" +
-                    "WHERE u.Usuario=+'"+usuario+"' AND ap.IdProducto="+idproducto;
-        
-         try {
+                    "WHERE u.Usuario='"+usuario+"');";
+            try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL1);
 
@@ -397,21 +390,37 @@ public class VerificarOrden extends javax.swing.JFrame {
         
      
             }catch(SQLException e){
-                 System.out.println("Error "+e.getMessage());
+                 System.out.println("Error en obtener existencia"+e.getMessage());
         
             }
-      
-        
+            return existenciaactual;
+     }
+    
+    public void actualizarinventario(int idproducto, int cantidad){
+       
+        int existenciaactual=0;
+        existenciaactual=obtenerExistenciaActual(idproducto);
         int nuevoinventario=existenciaactual-cantidad;
+        System.out.println("EL NUEVO I ES"+ nuevoinventario);
+        
+        String SQL = "UPDATE AlmacenProducto ap SET ap.ExistenciaActual=?\n" +
+                    "WHERE IdAlmacen=(Select s.IdAlmacen From Sucursales s\n" +
+                    "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
+                    "INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n" +
+                    "WHERE u.Usuario='"+jLabel45.getText()+"' AND ap.IdProducto="+idproducto+");";
+        
+        
+        
   
         try {
-            PreparedStatement preparedStmt = con.prepareStatement(SQL);
-            preparedStmt.setInt(1, nuevoinventario);
-            preparedStmt.execute();
+            PreparedStatement preparedStmt1 = con.prepareStatement(SQL);
+            preparedStmt1.setInt(1, nuevoinventario);
+            preparedStmt1.execute();
             
-            JOptionPane.showMessageDialog(null, "Historia de  Caja actualizado Exitosamente");
+            JOptionPane.showMessageDialog(this,"ATENCION","Inventario actualizado Exitosamente", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (Exception e) {
+            System.out.println("Error en actualizar inventario"+e.getMessage());
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
