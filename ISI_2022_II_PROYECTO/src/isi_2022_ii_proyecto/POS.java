@@ -43,6 +43,8 @@ public class POS extends javax.swing.JFrame {
     RestrictedTextField r;
     String valorsiete="";
     int seleccion1;
+     int seleccion2;
+
 
 
     public void setCodigvendedor(int codigvendedor) {
@@ -787,7 +789,7 @@ public class POS extends javax.swing.JFrame {
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -839,9 +841,9 @@ public class POS extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(13, 13, 13)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -1067,9 +1069,16 @@ public class POS extends javax.swing.JFrame {
                 "CódigoProducto", "Nombre", "Precio", "Cantidad", "Descuento", "Subtotal"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, true, true, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -1746,12 +1755,36 @@ public class POS extends javax.swing.JFrame {
         // TODO add your handling code here:
        
         if(codigop!=null){
-            agregarproductosorden(Integer.valueOf(codigop));
-            sumarcantidadproductos();
-            sumarsubtotal();
-            sumardescuento();
-            sumarisv();
-            total();
+            if(Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())>0){
+                if(JTableBancos.getRowCount()==0){
+                    agregarproductosorden(Integer.valueOf(codigop));
+                    sumarcantidadproductos();
+                    sumarsubtotal();
+                    sumardescuento();
+                    sumarisv();
+                    total();
+                
+                    
+                }else{
+                    if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())<Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())){
+                    agregarproductosorden(Integer.valueOf(codigop));
+                    sumarcantidadproductos();
+                    sumarsubtotal();
+                    sumardescuento();
+                    sumarisv();
+                    total();
+                }else{
+                   JOptionPane.showMessageDialog(rootPane, "Maxima cantidad de productos disponibles");
+ 
+                }
+                }
+                
+                
+               
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "No hay productos en existencia para el producto seleccionado");
+            }
+            
         }else{
             JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
         }
@@ -1781,7 +1814,9 @@ public class POS extends javax.swing.JFrame {
 
     private void JTableBancos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancos1MouseClicked
         // TODO add your handling code here:
-        codigop =  JTableBancos1.getValueAt(0, 0).toString();
+        seleccion2 = JTableBancos1.rowAtPoint(evt.getPoint());
+        codigop =  JTableBancos1.getValueAt(seleccion2,0 ).toString();
+ 
     }//GEN-LAST:event_JTableBancos1MouseClicked
 
     private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
@@ -1912,15 +1947,45 @@ public class POS extends javax.swing.JFrame {
 
     private void JTableBancosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTableBancosKeyReleased
         // TODO add your handling code here:
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER && codigop1!=null){
-            actualizarEnter();
-            sumarcantidadproductos();
-            sumarsubtotal();
-            sumardescuento();
-            sumarisv();
-            total();
-            codigop1=null;
-        }
+        if(codigop1!=null){
+            if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            
+            if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())>0){
+              
+               
+                if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())<=Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())){
+                actualizarEnter();
+                sumarcantidadproductos();
+                sumarsubtotal();
+                sumardescuento();
+                sumarisv();
+                total();
+                codigop=null;
+                
+                }else{
+                   JOptionPane.showMessageDialog(rootPane, "Ha ingresado una cantidad que sobrepasa la cantidad disponbible, el maximo de productos es de: "+Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString()));
+                   JTableBancos.setValueAt(Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString()), seleccion1, 3);
+ 
+                }
+                
+                
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Debe agregar el minimo de producto");
+                JTableBancos.setValueAt(1, seleccion1, 3);
+
+            }
+            
+            }
+                
+                
+               
+        
+            
+    }else{
+                JOptionPane.showMessageDialog(rootPane, "No hay productos en existencia para el producto seleccionado");
+
+            }
+        
     }//GEN-LAST:event_JTableBancosKeyReleased
 
     /**

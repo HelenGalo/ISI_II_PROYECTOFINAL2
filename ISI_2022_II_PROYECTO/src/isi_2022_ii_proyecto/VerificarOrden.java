@@ -371,27 +371,21 @@ public class VerificarOrden extends javax.swing.JFrame {
         
     }
     
-    public void actualizarinventario(int idproducto, int cantidad){
-        int existenciaactual=0;
-        
+     public int existenciaactual(int idproducto){
+        int existenciactual=0;
         String SQL1 = "Select ap.ExistenciaActual from AlmacenProducto ap\n" +
                     "Where ap.IdProducto="+idproducto+" AND ap.IdAlmacen=(Select s.IdAlmacen From Sucursales s\n" +
                     "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
                     "INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n" +
-                    "WHERE u.Usuario='"+usuario+"';";
+                    "WHERE u.Usuario='"+usuario+"');";
         
-        String SQL = "UPDATE AlmacenProducto ap SET ap.ExistenciaActual=?\n" +
-                    "WHERE IdAlmacen=(Select s.IdAlmacen From Sucursales s\n" +
-                    "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
-                    "INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n" +
-                    "WHERE u.Usuario=+'"+usuario+"' AND ap.IdProducto="+idproducto+");";
         
          try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL1);
 
             while (rs.next()) {
-                existenciaactual =rs.getInt("ap.ExistenciaActual");
+                existenciactual =rs.getInt("ap.ExistenciaActual");
              
             }
         
@@ -400,9 +394,27 @@ public class VerificarOrden extends javax.swing.JFrame {
                  System.out.println("Error "+e.getMessage());
         
             }
-      
+         return existenciactual;
+     }
+     
+     
+    public void actualizarinventario(int idproducto, int cantidad){
+        int existenciaactual=0;
+        existenciaactual = existenciaactual(idproducto);
         
         int nuevoinventario=existenciaactual-cantidad;
+     
+        
+        String SQL = "UPDATE AlmacenProducto ap SET ap.ExistenciaActual=?\n" +
+                    "WHERE IdAlmacen=(Select s.IdAlmacen From Sucursales s\n" +
+                    "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
+                    "INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n" +
+                    "WHERE u.Usuario=+'"+usuario+"' AND ap.IdProducto="+idproducto+");";
+        
+        
+      
+        
+        
   
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
@@ -1555,7 +1567,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             insertarOrden();
             enviarDetallesOrden();
             if(estadodetalleorden==true && estadoorden==true){
-                rSPanelForma3.setVisible(false);
+                
                 enviarActualizacionExistencia();
                 actualizartotalcaja();
                 if(estadototalcaja==true){
@@ -1563,6 +1575,7 @@ public class VerificarOrden extends javax.swing.JFrame {
                     }
                 
                 calcularcambio();
+                rSPanelForma3.setVisible(false);
                 rSPanelForma6.setVisible(true);
             }
            
@@ -1581,7 +1594,7 @@ public class VerificarOrden extends javax.swing.JFrame {
                         actualizarHistoriaCaja();
                     }
                 rSPanelForma6.setVisible(true);
-                rSPanelForma5.setVisible(false);
+                rSPanelForma3.setVisible(false);
             }
             }
         }
