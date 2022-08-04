@@ -31,11 +31,7 @@ public class VentasEmpleado extends javax.swing.JFrame {
 
       String prod;
     
-    boolean estadoagregar=false;
-
-    public void setEstadoagregar(boolean estadoagregar) {
-        this.estadoagregar = estadoagregar;
-    }
+ 
 
    
     /**
@@ -68,13 +64,13 @@ public class VentasEmpleado extends javax.swing.JFrame {
     }
 
     
-   private void buscarNombre(){
+   private void mostrar(){
          String nombre="";
          String Total ="";
             String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableVentasE.getModel();
 
-     String SQL = "SELECT v.IdOrden,v.FechaVenta,v.HoraVenta,c.Nombres,c.Apellidos,e.PrimerNombre, e.PrimerApellido,e.SegundoApellido,tp.Descripcion, COUNT(v.IdOrden) as Total From Empleados e\n" +
+     String SQL = "SELECT v.IdOrden,v.FechaVenta,v.HoraVenta,c.Nombres,c.Apellidos,e.PrimerNombre, e.PrimerApellido,e.SegundoApellido,tp.Descripcion From Empleados e\n" +
                     "INNER JOIN Ventas v ON v.IdEmpleado = e.IdEmpleado\n" +
                     "INNER JOIN Clientes c ON c.IdCliente = v.IdCliente\n" +
                      "INNER JOIN TipoPago tp ON tp.IdTipoPago = v.IdTipoPago WHERE e.IdEmpleado LIKE '"+JTextbuscar.getText()+"%'";
@@ -90,6 +86,40 @@ public class VentasEmpleado extends javax.swing.JFrame {
                 registros[4] = rs.getString("tp.Descripcion");
                 modelo.addRow(registros);
                 nombre= rs.getString("e.PrimerNombre")+" "+rs.getString("e.PrimerApellido");
+             
+            }
+            nombreP.setText(nombre);
+       
+
+            JTableVentasE.setModel(modelo);
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    } 
+   private void buscarNombre(){
+         String nombre="";
+         String Total ="";
+          //  String[] registros = new String[5];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableVentasE.getModel();
+
+     String SQL = "SELECT v.IdOrden,v.FechaVenta,v.HoraVenta,c.Nombres,c.Apellidos,e.PrimerNombre, e.PrimerApellido,e.SegundoApellido,tp.Descripcion, COUNT(v.IdOrden) as Total From Empleados e\n" +
+                    "INNER JOIN Ventas v ON v.IdEmpleado = e.IdEmpleado\n" +
+                    "INNER JOIN Clientes c ON c.IdCliente = v.IdCliente\n" +
+                     "INNER JOIN TipoPago tp ON tp.IdTipoPago = v.IdTipoPago WHERE e.IdEmpleado LIKE '"+JTextbuscar.getText()+"%'";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+               // registros[0] = rs.getString("v.IdOrden");
+               // registros[1] = rs.getString("v.FechaVenta");
+               // registros[2] = rs.getString("v.HoraVenta");
+               // registros[3] = rs.getString("c.Nombres")+" "+rs.getString("c.Apellidos");
+               // registros[4] = rs.getString("tp.Descripcion");
+               // modelo.addRow(registros);
+                nombre= rs.getString("e.PrimerNombre")+" "+rs.getString("e.PrimerApellido");
                 Total=rs.getString("Total");
             }
             nombreP.setText(nombre);
@@ -102,7 +132,6 @@ public class VentasEmpleado extends javax.swing.JFrame {
         }
         
     } 
-  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -498,6 +527,7 @@ public class VentasEmpleado extends javax.swing.JFrame {
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
         limpiartabla();
         buscarNombre();
+            mostrar();
     }//GEN-LAST:event_JTextbuscarActionPerformed
 
     private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
@@ -505,7 +535,7 @@ public class VentasEmpleado extends javax.swing.JFrame {
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             limpiartabla();
             buscarNombre();
-
+            mostrar();
         }
     }//GEN-LAST:event_JTextbuscarKeyReleased
 
