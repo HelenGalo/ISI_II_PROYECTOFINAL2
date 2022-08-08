@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import rojeru_san.complementos.RSUtilities;
@@ -50,7 +51,7 @@ public class GenerarVenta extends javax.swing.JFrame {
     public GenerarVenta() {
         RSUtilities.setFullScreenJFrame(this);
         initComponents();
-       
+       setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         RSUtilities.setOpaqueWindow(this, false);
         RSUtilities.setOpacityComponent(this.jPanel1, 150);
         r = new RestrictedTextField(JTextbuscar1);

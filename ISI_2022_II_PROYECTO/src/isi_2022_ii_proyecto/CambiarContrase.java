@@ -38,6 +38,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -95,7 +96,7 @@ public class CambiarContrase extends javax.swing.JFrame {
         r4.setLimit(1);
         r5.setLimit(1);
         
-        
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
    
         
         

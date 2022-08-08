@@ -52,7 +52,7 @@ public class Envio extends javax.swing.JFrame {
          this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
         listarE();
-    
+    setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         
     }
      public void deshabilitar(){

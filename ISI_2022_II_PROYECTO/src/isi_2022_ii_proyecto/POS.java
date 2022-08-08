@@ -75,7 +75,7 @@ public class POS extends javax.swing.JFrame {
         modelo=(DefaultTableModel) JTableBancos1.getModel();
         r = new RestrictedTextField(JTextbuscar);
         r.setOnlyNums(true);
-        
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         
     }
     

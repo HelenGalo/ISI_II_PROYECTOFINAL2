@@ -22,6 +22,7 @@ import java.util.Hashtable;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -53,11 +54,12 @@ public class Inicio extends javax.swing.JFrame {
         initComponents(); 
         this.setLocationRelativeTo(null);
         inicializarValoresC();
+      setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         
         
         
     }
-    
+   
     
     public void inicializarValoresC(){
         cifrador.put("A", "E3:$%^");

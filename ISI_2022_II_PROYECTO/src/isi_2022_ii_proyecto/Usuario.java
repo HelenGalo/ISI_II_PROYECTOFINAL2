@@ -38,6 +38,7 @@ public class Usuario extends javax.swing.JFrame {
     public Usuario() {
         initComponents();
         listar();
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
     
     

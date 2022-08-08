@@ -49,6 +49,7 @@ public class Banco extends javax.swing.JFrame {
     public Banco() {
         RSUtilities.setFullScreenJFrame(this);
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         listar();
       
 

@@ -54,6 +54,7 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
     public ActualizarUsuarios() {
         initComponents();
         inicializarValoresC();
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
        
     

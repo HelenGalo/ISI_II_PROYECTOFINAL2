@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import rojeru_san.complementos.RSUtilities;
@@ -340,7 +341,7 @@ public class AperturarCajas extends javax.swing.JFrame {
         listarCuentasB();
         JTextbuscar.setEditable(false);
        avisoT.setVisible(false);
-        
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
     
     

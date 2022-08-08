@@ -73,7 +73,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
         this.setExtendedState(this.MAXIMIZED_BOTH);
         aviso.setVisible(false);
         aviso2.setVisible(false);
-        
+       setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage()); 
     }
     
     

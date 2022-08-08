@@ -71,7 +71,7 @@ public class ActualizarProductos extends javax.swing.JFrame {
        ListarProveedor();
        listarCategoria();
        avisoT.setVisible(false);
-        
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
         public void validarConfirmacion(){
         if(estadosModificar=true){

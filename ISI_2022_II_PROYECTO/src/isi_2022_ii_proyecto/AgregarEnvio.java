@@ -68,7 +68,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
           avisoT.setVisible(false);
          aviso2.setVisible(false);
           aviso4.setVisible(false);
-       
+       setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
       public void validarConfirmacion(){
         if(estadoagregar=true){

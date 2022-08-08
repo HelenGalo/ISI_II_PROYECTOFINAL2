@@ -75,6 +75,7 @@ public class AgregarClientes extends javax.swing.JFrame {
         apellidoav.setVisible(false);
         jLabel32.setVisible(false);
         TelC1.setVisible(false);
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
     public void inicializar(){
          JCodigoDisponible1.setText(cliente);

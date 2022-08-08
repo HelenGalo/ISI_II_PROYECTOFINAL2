@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import rojeru_san.complementos.RSUtilities;
 
@@ -51,7 +52,7 @@ public class AgregarCaja extends javax.swing.JFrame {
         listarEstado();
         rSButtonIcon_new12.setVisible(false);
      
-       
+       setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
       
     }
     

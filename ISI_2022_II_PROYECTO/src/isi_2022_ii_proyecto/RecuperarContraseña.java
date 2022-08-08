@@ -34,6 +34,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -70,7 +71,7 @@ public class RecuperarContraseña extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         label1.setVisible(false);
         inicializarValoresC();
-        
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
        
         
         

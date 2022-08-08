@@ -70,6 +70,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
          inicializar();
         buscardatos();
         aviso.setVisible(false);
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
     
     public void Mostrar(){

@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -87,6 +88,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSPanel4.setVisible(false);
         estadodetalleorden=false;
         estadodetalleorden=false;
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
     
     public void cargartabla(){

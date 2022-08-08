@@ -24,6 +24,7 @@ import java.util.Hashtable;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -62,7 +63,7 @@ public class ActualizarNuevaContrase extends javax.swing.JFrame {
         RSUtilities.setOpacityComponent(this.jPanel1, 150);
         inicializarValoresC();
         
-        
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         
     }
     

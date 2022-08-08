@@ -6,6 +6,7 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import java.sql.Connection;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -20,6 +21,7 @@ public class ISI_2022_II_PROYECTO {
         // TODO code application logic here
          Inicio inicio = new Inicio();
          inicio.setVisible(true);
+      
     }
     
 }

@@ -129,7 +129,7 @@
                           <EmptySpace min="-2" pref="253" max="-2" attributes="0"/>
                           <Component id="linesetting5" pref="2" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="linesetting4" pref="603" max="32767" attributes="0"/>
+                          <Component id="linesetting4" pref="601" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="278" max="-2" attributes="0"/>
                           <Component id="linesetting13" min="-2" pref="120" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -683,7 +683,7 @@
                       <Color blue="85" green="37" red="0" type="rgb"/>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor Por defecto"/>
+                      <Color id="Default Cursor"/>
                     </Property>
                     <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                       <Value id="REPEAT"/>
@@ -1595,7 +1595,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel20" pref="19" max="32767" attributes="0"/>
+                          <Component id="jLabel20" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       </Group>
                   </Group>
