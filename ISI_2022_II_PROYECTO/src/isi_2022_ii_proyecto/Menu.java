@@ -6,11 +6,14 @@
 package isi_2022_ii_proyecto;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.VentanaInformativaPOSMENU;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -75,6 +78,66 @@ public class Menu extends javax.swing.JFrame {
             h2.setBackground(new Color(25,29,74));
         }
     }
+    
+    public boolean validarRol(){
+        boolean estado=false;
+        int idrol=0;
+         String SQL = "SELECT u.IdRol FROM Usuarios u WHERE u.Usuario='"+usuario+"';";
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idrol = rs.getInt("u.IdRol");
+               
+                
+            }
+        }catch(SQLException e){
+              JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+        if(idrol==2){
+            estado = true;
+        } 
+        
+        return estado;
+        
+        
+    }
+    
+    public boolean validarcaja(){
+        boolean estado=false;
+        int idestadocaja=0;
+         String SQL = "Select c.IdEstadoCaja from Caja c\n" +
+                    "INNER JOIN Usuarios u ON u.IdUsuario = c.IdUsuario\n" +
+                    "WHERE u.Usuario ='"+usuario+"' and c.IdEstado=1;";
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idestadocaja = rs.getInt("c.IdEstadoCaja");
+               
+                
+            }
+        }catch(SQLException e){
+              JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+        if(idestadocaja==2){
+            estado = true;
+        } 
+        
+        return estado;
+        
+        
+    }
+    
+    
     
     public void changeimage(JLabel button, String resourcheimg){
         ImageIcon aimg = new ImageIcon(getClass().getResource(resourcheimg));
@@ -1647,11 +1710,27 @@ public class Menu extends javax.swing.JFrame {
 
     private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
         // TODO add your handling code here:
-        cerrarconexion();
-        GenerarVenta gv = new GenerarVenta();
-        gv.setUsuario(usuario);
-        gv.setMenu(this);
-        gv.setVisible(true);
+        
+        
+        if(validarRol()==true){
+            if(validarcaja()==true){
+                GenerarVenta gv = new GenerarVenta();
+                gv.setUsuario(usuario);
+                gv.setMenu(this);
+                gv.setVisible(true);
+            }else{
+                VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+                vi.setEstado("CC");
+                vi.setVisible(true);
+            }
+            
+            
+        }else{
+            VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+            vi.setEstado("N");
+            vi.setVisible(true);
+        }
+       
         
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
 
