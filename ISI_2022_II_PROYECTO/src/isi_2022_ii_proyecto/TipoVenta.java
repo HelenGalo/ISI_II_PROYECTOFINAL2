@@ -36,6 +36,12 @@ ConexionBD conexion = new ConexionBD();
     String isv;
     String totalp;
     
+    
+     public void setTablaorden(RSTableMetro1 tablaorden) {
+        this.tablaorden = tablaorden;
+    }
+    
+    
     /**
      * Creates new form TipoVenta
      */
@@ -900,7 +906,7 @@ ConexionBD conexion = new ConexionBD();
     private void rSButtonIcon_new19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new19ActionPerformed
         // TODO add your handling code here:
          VerificarOrden vo = new VerificarOrden();
-         vo.setTablaorden(JTableBancos);
+         vo.setTablaorden(tablaorden);
          vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(), subtotal,  total,  totalp,  descuento,  isv);
          vo.cargartabla();
          vo.setVisible(true);
