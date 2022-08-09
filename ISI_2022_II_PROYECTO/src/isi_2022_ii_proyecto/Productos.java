@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,7 +72,7 @@ public class Productos extends javax.swing.JFrame {
         }
     }
        public void listardehabilitados(){
-        String[] registros = new String[6];
+        String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
 
         String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.NombreCategoria,pr.NombreEmpresa  FROM Productos p\n" +
@@ -82,12 +83,12 @@ public class Productos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
+                DecimalFormat formato = new DecimalFormat("###,###.##");
                 registros[0] = rs.getString("IdProducto");
                 registros[1] = rs.getString("Nombre");
-                registros[2] = rs.getString("Descripcion");
-                registros[3] = rs.getString("Precio");
-                registros[4] = rs.getString("NombreCategoria");
-                registros[5] = rs.getString("NombreEmpresa");
+                registros[2] = formato.format(rs.getFloat("Precio"));
+                registros[3] = rs.getString("NombreCategoria");
+                registros[4] = rs.getString("NombreEmpresa");
                 modelo.addRow(registros);
             }
 
@@ -99,7 +100,7 @@ public class Productos extends javax.swing.JFrame {
         }
     }
        public void listarHabilitados(){
-        String[] registros = new String[6];
+        String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
 
         String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.NombreCategoria,pr.NombreEmpresa  FROM Productos p\n" +
@@ -110,12 +111,12 @@ public class Productos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
+               DecimalFormat formato = new DecimalFormat("###,###.##");
                 registros[0] = rs.getString("IdProducto");
                 registros[1] = rs.getString("Nombre");
-                registros[2] = rs.getString("Descripcion");
-                registros[3] = rs.getString("Precio");
-                registros[4] = rs.getString("NombreCategoria");
-                registros[5] = rs.getString("NombreEmpresa");
+                registros[2] = formato.format(rs.getFloat("Precio"));
+                registros[3] = rs.getString("NombreCategoria");
+                registros[4] = rs.getString("NombreEmpresa");
                 modelo.addRow(registros);
             }
 
@@ -127,9 +128,9 @@ public class Productos extends javax.swing.JFrame {
         }
     }
      public void listarP(){
-        String[] registros = new String[6];
+        String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
-
+        
         String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.NombreCategoria,pr.NombreEmpresa  FROM Productos p\n" +
                       "INNER JOIN Proveedores pr ON pr.IdProveedor = p.IdProveedor\n" +
                       "INNER JOIN Categorias c ON c.IdCategoria = p.IdCategoria WHERE p.IdEstado=1";
@@ -138,16 +139,20 @@ public class Productos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
+                DecimalFormat formato = new DecimalFormat("###,###.##");
                 registros[0] = rs.getString("IdProducto");
                 registros[1] = rs.getString("Nombre");
-                registros[2] = rs.getString("Descripcion");
-                registros[3] = rs.getString("Precio");
-                registros[4] = rs.getString("NombreCategoria");
-                registros[5] = rs.getString("NombreEmpresa");
+                registros[2] = formato.format(rs.getFloat("Precio"));
+                registros[3] = rs.getString("NombreCategoria");
+                registros[4] = rs.getString("NombreEmpresa");
                 modelo.addRow(registros);
             }
 
-            JTableProductos.setModel(modelo);
+         JTableProductos.setModel(modelo);
+             int[] anchos = {10, 100, 50, 10, 10, 50};
+             for(int i = 0; i < JTableProductos.getColumnCount(); i++) {
+             JTableProductos.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+ }
             
 
         } catch (SQLException e) {
@@ -882,7 +887,7 @@ public class Productos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo Producto", "Nombre  Producto", "Descripcion", "Precio", "Categoria", "Proveedor"
+                "Codigo Producto", "Nombre  Producto", "Precio", "Categoria", "Proveedor"
             }
         ));
         JTableProductos.setToolTipText("");
