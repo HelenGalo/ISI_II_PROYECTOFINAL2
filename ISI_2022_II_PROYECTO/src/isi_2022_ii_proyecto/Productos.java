@@ -86,7 +86,7 @@ public class Productos extends javax.swing.JFrame {
                 DecimalFormat formato = new DecimalFormat("###,###.##");
                 registros[0] = rs.getString("IdProducto");
                 registros[1] = rs.getString("Nombre");
-                registros[2] = formato.format(rs.getFloat("Precio"));
+                registros[2] = formato.format(rs.getString("Precio"));
                 registros[3] = rs.getString("NombreCategoria");
                 registros[4] = rs.getString("NombreEmpresa");
                 modelo.addRow(registros);
@@ -111,7 +111,7 @@ public class Productos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-               DecimalFormat formato = new DecimalFormat("###,###.##");
+               DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("IdProducto");
                 registros[1] = rs.getString("Nombre");
                 registros[2] = formato.format(rs.getFloat("Precio"));
@@ -139,7 +139,8 @@ public class Productos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                DecimalFormat formato = new DecimalFormat("###,###.##");
+                DecimalFormat formato = new DecimalFormat("##,###.00");
+                
                 registros[0] = rs.getString("IdProducto");
                 registros[1] = rs.getString("Nombre");
                 registros[2] = formato.format(rs.getFloat("Precio"));
@@ -149,10 +150,8 @@ public class Productos extends javax.swing.JFrame {
             }
 
          JTableProductos.setModel(modelo);
-             int[] anchos = {10, 100, 50, 10, 10, 50};
-             for(int i = 0; i < JTableProductos.getColumnCount(); i++) {
-             JTableProductos.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
- }
+      
+ 
             
 
         } catch (SQLException e) {
@@ -188,10 +187,11 @@ public class Productos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
              while (rs.next()) {
+                 DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("IdProducto");
                 registros[1] = rs.getString("Nombre");
                 registros[2] = rs.getString("Descripcion");
-                registros[3] = rs.getString("Precio");
+                registros[3] = formato.format(rs.getFloat("Precio"));
                 registros[4] = rs.getString("NombreCategoria");
                 registros[5] = rs.getString("NombreEmpresa");
                 modelo.addRow(registros);

@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -108,10 +109,12 @@ public class TablaProductos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
              while (rs.next()) {
+                 DecimalFormat formato = new DecimalFormat("##,###.00");
+
                 registros[0] = rs.getString("IdProducto");
                 registros[1] = rs.getString("Nombre");
                 registros[2] = rs.getString("Descripcion");
-                registros[3] = rs.getString("Precio");
+                registros[3] = formato.format(rs.getFloat("Precio"));
                 registros[4] = rs.getString("NombreCategoria");
                 registros[5] = rs.getString("NombreEmpresa");
                 modelo.addRow(registros);
