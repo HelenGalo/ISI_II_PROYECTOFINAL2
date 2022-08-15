@@ -73,8 +73,6 @@ public class POS extends javax.swing.JFrame {
         buscarUltimoId();
         modelo1=(DefaultTableModel) JTableBancos.getModel();
         modelo=(DefaultTableModel) JTableBancos1.getModel();
-        r = new RestrictedTextField(JTextbuscar);
-        r.setOnlyNums(true);
         setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         
     }
@@ -143,7 +141,7 @@ public class POS extends javax.swing.JFrame {
           System.out.println("ID EN ALMACEN "+obteneridalmacendesucursal());
           
           String SQL = "SELECT p.Nombre, p.Precio, ifnull(ExistenciaActual,0) as 'Ex' FROM Productos p\n"
-                  +"LEFT JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
+                  +"INNER JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
                   +"WHERE p.IdProducto="+idproducto+" AND ap.IdAlmacen="+obteneridalmacendesucursal();
           
           
@@ -237,7 +235,7 @@ public class POS extends javax.swing.JFrame {
         
         if(modelo1.getRowCount()==0){
             String[] registros = new String[6];
-            String SQL = "SELECT p.Nombre, p.Precio   FROM Productos p\n"
+            String SQL = "SELECT p.Nombre, p.Precio FROM Productos p\n"
                   +"LEFT JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
                   +"WHERE p.IdProducto="+idproducto+" AND ap.IdAlmacen="+obteneridalmacendesucursal();;
           
@@ -884,7 +882,6 @@ public class POS extends javax.swing.JFrame {
         jLabel36.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
         jLabel36.setForeground(new java.awt.Color(255, 255, 255));
         jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel36.setText("Vendedor");
 
         jLabel17.setFont(new java.awt.Font("Franklin Gothic Book", 1, 36)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
@@ -1805,10 +1802,14 @@ public class POS extends javax.swing.JFrame {
 
     private void rSButtonGradiente14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente14ActionPerformed
         // TODO add your handling code here:
+    
+        String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"0");
     }//GEN-LAST:event_rSButtonGradiente14ActionPerformed
 
     private void rSButtonGradiente13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente13ActionPerformed
         // TODO add your handling code here:
+        JTextbuscar.setText("");
     }//GEN-LAST:event_rSButtonGradiente13ActionPerformed
 
     private void JTableBancos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancos1MouseClicked
@@ -1818,66 +1819,59 @@ public class POS extends javax.swing.JFrame {
  
     }//GEN-LAST:event_JTableBancos1MouseClicked
 
-    private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
-        // TODO add your handling code here:
-        if(JTextbuscar.getText().length()>0){
-            JTextbuscar.setPlaceholder("");
-        }else{
-            JTextbuscar.setPlaceholder("Buscar por codigo");
-        }
-        
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER && JTextbuscar.getText().isEmpty()==false){
-            limpiartabla();
-            buscarProductoPorId(Integer.valueOf(JTextbuscar.getText()));
-            codigop=null;
-        }else{
-            if(evt.getKeyCode()==KeyEvent.VK_ENTER && JTextbuscar.getText().isEmpty()==true){
-              limpiartabla();
-              codigop=null;
-            }
-        }
-    }//GEN-LAST:event_JTextbuscarKeyReleased
-
-    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
-
-    }//GEN-LAST:event_JTextbuscarActionPerformed
-
     private void rSButtonGradiente12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente12ActionPerformed
         // TODO add your handling code here:
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"3");
     }//GEN-LAST:event_rSButtonGradiente12ActionPerformed
 
     private void rSButtonGradiente11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente11ActionPerformed
         // TODO add your handling code here:
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"2");
     }//GEN-LAST:event_rSButtonGradiente11ActionPerformed
 
     private void rSButtonGradiente10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente10ActionPerformed
         // TODO add your handling code here:
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"1");
     }//GEN-LAST:event_rSButtonGradiente10ActionPerformed
 
     private void rSButtonGradiente9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente9ActionPerformed
         // TODO add your handling code here:
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"6");
     }//GEN-LAST:event_rSButtonGradiente9ActionPerformed
 
     private void rSButtonGradiente8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente8ActionPerformed
         // TODO add your handling code here:
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"5");
     }//GEN-LAST:event_rSButtonGradiente8ActionPerformed
 
     private void rSButtonGradiente7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente7ActionPerformed
         // TODO add your handling code here:
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"4");
     }//GEN-LAST:event_rSButtonGradiente7ActionPerformed
 
     private void rSButtonGradiente6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente6ActionPerformed
         // TODO add your handling code here:
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"8");
     }//GEN-LAST:event_rSButtonGradiente6ActionPerformed
 
     private void rSButtonGradiente5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente5ActionPerformed
         // TODO add your handling code here:
-        
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"7");
       
     }//GEN-LAST:event_rSButtonGradiente5ActionPerformed
 
     private void rSButtonGradiente4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente4ActionPerformed
         // TODO add your handling code here:
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"9");
     }//GEN-LAST:event_rSButtonGradiente4ActionPerformed
 
     private void JTableBancosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancosMouseClicked
@@ -1920,6 +1914,7 @@ public class POS extends javax.swing.JFrame {
     private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
         // TODO add your handling code here:
         limpiartabla();
+        JTextbuscar.setText("");
         codigop=null;
     }//GEN-LAST:event_rSButtonIcon_new16ActionPerformed
 
@@ -1985,6 +1980,31 @@ public class POS extends javax.swing.JFrame {
             }
         
     }//GEN-LAST:event_JTableBancosKeyReleased
+
+    private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
+        // TODO add your handling code here:
+        if(JTextbuscar.getText().length()>0){
+            JTextbuscar.setPlaceholder("");
+        }else{
+            JTextbuscar.setPlaceholder("Buscar por codigo");
+        }
+        
+     
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER && JTextbuscar.getText().isEmpty()==false){
+            limpiartabla();
+            buscarProductoPorId(Integer.valueOf(JTextbuscar.getText()));
+            codigop=null;
+        }else{
+            if(evt.getKeyCode()==KeyEvent.VK_ENTER && JTextbuscar.getText().isEmpty()==true){
+                limpiartabla();
+                codigop=null;
+            }
+        }
+    }//GEN-LAST:event_JTextbuscarKeyReleased
+
+    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
+
+    }//GEN-LAST:event_JTextbuscarActionPerformed
 
     /**
      * @param args the command line arguments

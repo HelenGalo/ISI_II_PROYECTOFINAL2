@@ -59,6 +59,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     String descuento;
     String isv;
     String totalp;
+    String envio;
     boolean estadoorden;
     boolean estadodetalleorden;
     boolean estadototalcaja=false;
@@ -164,7 +165,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             preparedStmt.setFloat(1, Float.valueOf(totalcajan));
             preparedStmt.execute();
             estadototalcaja=true;
-            JOptionPane.showMessageDialog(null, "Registro actualizado Exitosamente");
+          
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -209,7 +210,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             preparedStmt.setFloat(1, Float.valueOf(montooperacionn));
             preparedStmt.execute();
             
-            JOptionPane.showMessageDialog(null, "Historia de  Caja actualizado Exitosamente");
+    
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -246,7 +247,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             preparedStmt.execute();
             estadoorden = true;
             
-            JOptionPane.showMessageDialog(rootPane, "Orden guardada");
+     
            
        
 
@@ -272,7 +273,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             preparedStmt.execute();
             
             estadodetalleorden=true;
-            JOptionPane.showMessageDialog(rootPane, "Detalles guardados");
+          
            
        
 
@@ -315,9 +316,10 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel8.setText(totalp);
         jLabel22.setText(total);
         jLabel46.setText(String.valueOf(idorden));
+        jLabel21.setText(envio);
     }
     
-    public void seteardatosorden(int idorden,String usuario,int codigcliente, int codigvendedor, int codigocaja, String ncliente, String nvendedor, String ncajero, String subt, String tot, String cantp, String des, String isv){
+    public void seteardatosorden(int idorden,String usuario,int codigcliente, int codigvendedor, int codigocaja, String ncliente, String nvendedor, String ncajero, String subt, String tot, String cantp, String des, String isv, String envio){
         this.usuario=usuario;
         this.codigcliente=codigcliente;
         this.codigvendedor = codigvendedor;
@@ -331,6 +333,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         this.isv=isv;
         this.totalp=cantp;
         this.idorden=idorden;
+        this.envio=envio;
         
         cargardatos();
         
@@ -423,7 +426,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             preparedStmt.setInt(1, nuevoinventario);
             preparedStmt.execute();
             
-            JOptionPane.showMessageDialog(null, "Historia de  Caja actualizado Exitosamente");
+           
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -638,6 +641,9 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         rSLabelIcon18 = new rojerusan.RSLabelIcon();
         rSButtonIcon_new17 = new newscomponents.RSButtonIcon_new();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
         rSPanelFunky1 = new rojeru_san.rspanel.RSPanelFunky();
         jLabel46 = new javax.swing.JLabel();
         jLabel49 = new javax.swing.JLabel();
@@ -660,6 +666,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel52 = new javax.swing.JLabel();
         jLabel53 = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
+        rSButtonIcon_new19 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new16 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1086,8 +1093,8 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Franklin Gothic Book", 1, 17)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 153));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel9.setText("ISV:");
-        rSPanelForma5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 100, 30));
+        jLabel9.setText("Envio:");
+        rSPanelForma5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 100, 40));
 
         jLabel18.setFont(new java.awt.Font("Franklin Gothic Book", 1, 17)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 0, 153));
@@ -1105,38 +1112,38 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(51, 0, 153));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel21.setText("L.");
-        rSPanelForma5.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 20, 40));
+        jLabel21.setText("0.00");
+        rSPanelForma5.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 230, 40));
 
         jLabel20.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(51, 0, 153));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel20.setText("Total:");
-        rSPanelForma5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 70, 40));
+        rSPanelForma5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 70, 40));
 
         jLabel25.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(51, 0, 153));
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel25.setText("L.");
-        rSPanelForma5.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, -1, 40));
+        rSPanelForma5.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, -1, 40));
 
         jLabel22.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(51, 0, 153));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel22.setText("0.00");
-        rSPanelForma5.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, 250, 40));
+        rSPanelForma5.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, 250, 40));
 
         jLabel30.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(102, 0, 255));
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel30.setText("Total Productos:");
-        rSPanelForma5.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 120, 20));
+        rSPanelForma5.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 120, 20));
 
         jLabel8.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(102, 0, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("0");
-        rSPanelForma5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 40, 20));
+        rSPanelForma5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 40, 20));
 
         rSLabelIcon18.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon18.setForeground(new java.awt.Color(0, 51, 255));
@@ -1155,7 +1162,27 @@ public class VerificarOrden extends javax.swing.JFrame {
                 rSButtonIcon_new17ActionPerformed(evt);
             }
         });
-        rSPanelForma5.add(rSButtonIcon_new17, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 310, 310, 40));
+        rSPanelForma5.add(rSButtonIcon_new17, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 170, 40));
+
+        jLabel10.setFont(new java.awt.Font("Franklin Gothic Book", 1, 17)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 0, 153));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel10.setText("ISV:");
+        rSPanelForma5.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 100, 40));
+
+        jLabel29.setBackground(new java.awt.Color(102, 0, 102));
+        jLabel29.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(51, 0, 153));
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel29.setText("L.");
+        rSPanelForma5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 20, 40));
+
+        jLabel33.setBackground(new java.awt.Color(102, 0, 102));
+        jLabel33.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(51, 0, 153));
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel33.setText("L.");
+        rSPanelForma5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 20, 40));
 
         javax.swing.GroupLayout rSPanelForma4Layout = new javax.swing.GroupLayout(rSPanelForma4);
         rSPanelForma4.setLayout(rSPanelForma4Layout);
@@ -1168,12 +1195,10 @@ public class VerificarOrden extends javax.swing.JFrame {
         );
         rSPanelForma4Layout.setVerticalGroup(
             rSPanelForma4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelForma4Layout.createSequentialGroup()
-                .addComponent(rSPanelForma5, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE))
+            .addComponent(rSPanelForma5, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
         );
 
-        rSPanelForma1.add(rSPanelForma4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 490, 370));
+        rSPanelForma1.add(rSPanelForma4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 490, 380));
 
         rSPanelFunky1.setBackground(new java.awt.Color(20, 101, 187));
 
@@ -1239,7 +1264,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSPanelShadow2.add(rSPanelForma1, java.awt.BorderLayout.CENTER);
 
         dashboardview.add(rSPanelShadow2);
-        rSPanelShadow2.setBounds(26, 119, 500, 490);
+        rSPanelShadow2.setBounds(26, 119, 500, 510);
 
         rSPanel2.setBackground(new java.awt.Color(255, 255, 255));
         rSPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, java.awt.Color.lightGray));
@@ -1346,7 +1371,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             }
         });
         rSPanelForma3.add(rSRadioButton1);
-        rSRadioButton1.setBounds(192, 38, 180, 40);
+        rSRadioButton1.setBounds(120, 40, 110, 40);
 
         rSRadioButton2.setText("EFECTIVO");
         rSRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -1357,7 +1382,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             }
         });
         rSPanelForma3.add(rSRadioButton2);
-        rSRadioButton2.setBounds(10, 38, 180, 40);
+        rSRadioButton2.setBounds(10, 38, 110, 40);
 
         jLabel51.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel51.setForeground(new java.awt.Color(102, 0, 255));
@@ -1416,12 +1441,24 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel54.setText("L.");
 
-        rSButtonIcon_new16.setBackground(new java.awt.Color(0, 153, 102));
-        rSButtonIcon_new16.setText("Generar Factura");
+        rSButtonIcon_new19.setBackground(new java.awt.Color(0, 153, 102));
+        rSButtonIcon_new19.setText("Generar Factura");
+        rSButtonIcon_new19.setAlignmentX(0.5F);
+        rSButtonIcon_new19.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSButtonIcon_new19.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DONE);
+        rSButtonIcon_new19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new19ActionPerformed(evt);
+            }
+        });
+
+        rSButtonIcon_new16.setBackground(new java.awt.Color(102, 102, 255));
+        rSButtonIcon_new16.setText("Menu Principal");
         rSButtonIcon_new16.setAlignmentX(0.5F);
         rSButtonIcon_new16.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSButtonIcon_new16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DONE);
+        rSButtonIcon_new16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DONE_ALL);
         rSButtonIcon_new16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new16ActionPerformed(evt);
@@ -1446,21 +1483,25 @@ public class VerificarOrden extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelForma6Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(rSButtonIcon_new16, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(rSPanelForma6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(rSButtonIcon_new16, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonIcon_new19, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(75, 75, 75))
         );
         rSPanelForma6Layout.setVerticalGroup(
             rSPanelForma6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rSPanelForma6Layout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(rSPanelForma6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
+                .addComponent(rSButtonIcon_new19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rSButtonIcon_new16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+                .addContainerGap())
         );
 
         rSPanel2.add(rSPanelForma6);
@@ -1554,6 +1595,10 @@ public class VerificarOrden extends javax.swing.JFrame {
 
     private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
         // TODO add your handling code here:
+        Menu menu = new Menu();
+        menu.setUsuario(usuario);
+        menu.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new16ActionPerformed
 
     private void rSButtonIcon_new17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new17ActionPerformed
@@ -1574,6 +1619,8 @@ public class VerificarOrden extends javax.swing.JFrame {
                 actualizartotalcaja();
                 if(estadototalcaja==true){
                        actualizarHistoriaCaja();
+                       VentanaEmergente1 ve = new VentanaEmergente1();
+                       ve.setVisible(true);
                     }
                 
                 calcularcambio();
@@ -1594,6 +1641,8 @@ public class VerificarOrden extends javax.swing.JFrame {
                 actualizartotalcaja();
                     if(estadototalcaja==true){
                         actualizarHistoriaCaja();
+                        VentanaEmergente1 ve = new VentanaEmergente1();
+                        ve.setVisible(true);
                     }
                 rSPanelForma6.setVisible(true);
                 rSPanelForma3.setVisible(false);
@@ -1614,6 +1663,10 @@ public class VerificarOrden extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_rSRadioButton1ActionPerformed
+
+    private void rSButtonIcon_new19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new19ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSButtonIcon_new19ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1656,6 +1709,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -1668,9 +1722,11 @@ public class VerificarOrden extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
@@ -1710,6 +1766,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     private newscomponents.RSButtonIcon_new rSButtonIcon_new16;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new17;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new18;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new19;
     private rojeru_san.RSLabelFecha rSLabelFecha1;
     private rojeru_san.rsdate.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon13;

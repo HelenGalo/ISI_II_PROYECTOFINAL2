@@ -48,6 +48,11 @@ public class AgregarClientes extends javax.swing.JFrame {
     boolean estadoagregar=false;
     RestrictedTextField r;
     String tipodedocumento="";
+    String usuario;
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
     
 
     public void setEstadoagregar(boolean estadoagregar) {

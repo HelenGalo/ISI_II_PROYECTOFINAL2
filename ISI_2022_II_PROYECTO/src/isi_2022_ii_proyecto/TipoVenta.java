@@ -6,10 +6,14 @@
 package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
+import java.awt.JobAttributes;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import rojerusan.RSTableMetro1;
 
@@ -35,6 +39,8 @@ ConexionBD conexion = new ConexionBD();
     String descuento;
     String isv;
     String totalp;
+    int seleccion;
+    String codigodireccion;
     
     
      public void setTablaorden(RSTableMetro1 tablaorden) {
@@ -47,17 +53,20 @@ ConexionBD conexion = new ConexionBD();
      */
     public TipoVenta() {
         initComponents();
+        modelo = (DefaultTableModel) JTableBancos.getModel();
         rSPanel1.setVisible(false);
         rSPanel4.setVisible(false);
         rSPanelForma3.setVisible(false);
         rSPanel2.setSize(780,210);
         rSPanel2.setLocation(540,220);
         rSButtonIcon_new19.setVisible(false);
+        
+      
     }
     
     
     
-        public void seteardatosorden(int idorden,String usuario,int codigcliente, int codigvendedor, int codigocaja, String ncliente, String nvendedor, String ncajero, String subt, String tot, String cantp, String des, String isv){
+    public void seteardatosorden(int idorden,String usuario,int codigcliente, int codigvendedor, int codigocaja, String ncliente, String nvendedor, String ncajero, String subt, String tot, String cantp, String des, String isv){
         this.usuario=usuario;
         this.codigcliente=codigcliente;
         this.codigvendedor = codigvendedor;
@@ -73,8 +82,33 @@ ConexionBD conexion = new ConexionBD();
         this.idorden=idorden;
         
         cargardatos();
+        cargardirecciones();
         
         
+    }
+    
+    
+    public void cargardirecciones(){
+        String [] registros = new String[2];
+        
+        String SQL = "SELECT IdDireccionCliente,DireccionEnvioCompleta FROM DireccionesCliente WHERE IdCliente="+codigcliente;
+        
+                try {
+                        Statement st = (Statement) con.createStatement();
+                        ResultSet rs = st.executeQuery(SQL);
+
+                        while (rs.next()) {
+                            registros[0] = String.valueOf("IdDireccionCliente");
+                            registros[1] = rs.getString("DireccionEnvioCompleta");
+                            modelo.addRow(registros);
+                        }
+
+                        
+                    }catch(SQLException e){
+                        System.out.println("Error al obtener las direcciones"+e.getMessage());
+
+                    }
+                JTableBancos.setModel(modelo);
     }
         
         
@@ -156,8 +190,11 @@ ConexionBD conexion = new ConexionBD();
         JTableBancos = new rojerusan.RSTableMetro1();
         rSButtonIcon_new18 = new newscomponents.RSButtonIcon_new();
         jLabel57 = new javax.swing.JLabel();
+        rSButtonIcon_new20 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(20, 101, 187));
         jPanel1.setForeground(new java.awt.Color(20, 101, 187));
@@ -738,21 +775,35 @@ ConexionBD conexion = new ConexionBD();
         jLabel57.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel57.setText("Seleccione una dirección:");
 
+        rSButtonIcon_new20.setBackground(new java.awt.Color(0, 102, 204));
+        rSButtonIcon_new20.setText("Agregar");
+        rSButtonIcon_new20.setAlignmentX(0.5F);
+        rSButtonIcon_new20.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSButtonIcon_new20.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
+        rSButtonIcon_new20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new20ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout rSPanel1Layout = new javax.swing.GroupLayout(rSPanel1);
         rSPanel1.setLayout(rSPanel1Layout);
         rSPanel1Layout.setHorizontalGroup(
             rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(rSPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(rSPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel57, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanel1Layout.createSequentialGroup()
-                .addContainerGap(114, Short.MAX_VALUE)
+            .addGroup(rSPanel1Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
                 .addComponent(rSButtonIcon_new18, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(112, 112, 112))
+                .addGap(29, 29, 29)
+                .addComponent(rSButtonIcon_new20, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         rSPanel1Layout.setVerticalGroup(
             rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -765,8 +816,10 @@ ConexionBD conexion = new ConexionBD();
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rSButtonIcon_new18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 16, Short.MAX_VALUE))
+                .addGroup(rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rSButtonIcon_new18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonIcon_new20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         dashboardview.add(rSPanel1);
@@ -842,6 +895,7 @@ ConexionBD conexion = new ConexionBD();
     private void rSRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton2ActionPerformed
         // TODO add your handling code here:
         if(rSRadioButton2.isSelected()==false){
+            
             rSPanel1.setVisible(false);
             rSPanel4.setVisible(false);
             rSPanelForma3.setVisible(false);
@@ -859,16 +913,24 @@ ConexionBD conexion = new ConexionBD();
 
     private void rSButtonIcon_new18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new18ActionPerformed
         // TODO add your handling code here:
-        rSPanel2.setSize(780,480);
-        rSPanel2.setLocation(540,130);
-        rSPanel4.setVisible(true);
-        rSPanelForma3.setVisible(true);
+        if(codigodireccion!=null){
+            jLabel58.setText(JTableBancos.getValueAt(seleccion, 1).toString());
+            rSPanel2.setSize(780,480);
+            rSPanel2.setLocation(540,130);
+            rSPanel4.setVisible(true);
+            rSPanelForma3.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "ATENCION", "Seleccione un valor", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
         
 
     }//GEN-LAST:event_rSButtonIcon_new18ActionPerformed
 
     private void JTableBancosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancosMouseClicked
         // TODO add your handling code here:
+        seleccion = JTableBancos.rowAtPoint(evt.getPoint());
+        codigodireccion =  JTableBancos.getValueAt(seleccion,0 ).toString();
 
     }//GEN-LAST:event_JTableBancosMouseClicked
 
@@ -905,11 +967,23 @@ ConexionBD conexion = new ConexionBD();
 
     private void rSButtonIcon_new19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new19ActionPerformed
         // TODO add your handling code here:
-         VerificarOrden vo = new VerificarOrden();
-         vo.setTablaorden(tablaorden);
-         vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(), subtotal,  total,  totalp,  descuento,  isv);
-         vo.cargartabla();
-         vo.setVisible(true);
+        if(rSRadioButton3.isSelected()){
+            VerificarOrden vo = new VerificarOrden();
+            vo.setTablaorden(tablaorden);
+            vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(), subtotal,  total,  totalp,  descuento,  isv,"0.00");
+            vo.cargartabla();
+            vo.setVisible(true);
+        }else{
+            if(rSRadioButton2.isSelected()){
+            float ntotal = Float.parseFloat(total)+60.00f;
+            VerificarOrden vo = new VerificarOrden();
+            vo.setTablaorden(tablaorden);
+            vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(), subtotal,  String.valueOf(ntotal),  totalp,  descuento,  isv, "60.00");
+            vo.cargartabla();
+            vo.setVisible(true);
+            }
+        }
+         
     try {
         con.close();
     } catch (SQLException ex) {
@@ -928,6 +1002,11 @@ ConexionBD conexion = new ConexionBD();
         }
         
     }//GEN-LAST:event_rSRadioButton5ActionPerformed
+
+    private void rSButtonIcon_new20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new20ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_rSButtonIcon_new20ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1004,6 +1083,7 @@ ConexionBD conexion = new ConexionBD();
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new18;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new19;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new20;
     private rojerusan.RSLabelIcon rSLabelIcon13;
     private rojerusan.RSLabelIcon rSLabelIcon14;
     private rojerusan.RSLabelIcon rSLabelIcon15;
