@@ -37,7 +37,7 @@ import rojerusan.RSTableMetro1;
  *
  * @author Edwin Rafael
  */
-public class VerificarOrden extends javax.swing.JFrame {
+public class VerificarOrdenADomicilio extends javax.swing.JFrame {
     
     
     ConexionBD conexion = new ConexionBD();
@@ -61,7 +61,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     String totalp;
     String envio;
     /*VARIABLES PARA TABLA DE ENVIOS*/
-    int tipodeVenta=1;
+    int tipodeVenta;
     int idDireccionCliente;
     String fechaentrega;
     String horaentrega;
@@ -89,7 +89,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     /**
      * Creates new form VerificarOrden
      */
-    public VerificarOrden() {
+    public VerificarOrdenADomicilio() {
         initComponents();
         rSPanel2.setSize(780, 210);
         rSPanel4.setVisible(false);
@@ -138,7 +138,11 @@ public class VerificarOrden extends javax.swing.JFrame {
             tipopago= 1;
         }else{
             if(rSRadioButton1.isSelected()){
-                tipopago= 2;
+                tipopago= 3;
+            }else{
+              if(rSRadioButton3.isSelected()){
+                tipopago= 4;
+            }  
             }
         }
         return tipopago;
@@ -244,7 +248,7 @@ public class VerificarOrden extends javax.swing.JFrame {
       
      
          
-       String SQL = "INSERT INTO Ventas (IdOrden, FechaVenta, HoraVenta, IdCliente, IdEmpleado, IdUsuario, EstadoVenta, IdCaja, IdTipoPago, IdTipoVenta) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+       String SQL = "INSERT INTO Ventas (IdOrden, FechaVenta, HoraVenta, IdCliente, IdEmpleado, IdUsuario, IdCaja, IdTipoPago) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, idorden);
@@ -255,7 +259,6 @@ public class VerificarOrden extends javax.swing.JFrame {
             preparedStmt.setInt(6, idusuario);
             preparedStmt.setInt(7, idcaja);
             preparedStmt.setInt(8, idtipopago);
-            preparedStmt.setInt(9, tipodeVenta);
             preparedStmt.execute();
             estadoorden = true;
             
@@ -328,10 +331,10 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel8.setText(totalp);
         jLabel22.setText(total);
         jLabel46.setText(String.valueOf(idorden));
-       
+        jLabel21.setText(envio);
     }
     
-    public void seteardatosorden(int idorden,String usuario,int codigcliente, int codigvendedor, int codigocaja, String ncliente, String nvendedor, String ncajero, String subt, String tot, String cantp, String des, String isv){
+    public void seteardatosorden(int idorden,String usuario,int codigcliente, int codigvendedor, int codigocaja, String ncliente, String nvendedor, String ncajero, String subt, String tot, String cantp, String des, String isv, String envio, int tipov){
         this.usuario=usuario;
         this.codigcliente=codigcliente;
         this.codigvendedor = codigvendedor;
@@ -345,12 +348,21 @@ public class VerificarOrden extends javax.swing.JFrame {
         this.isv=isv;
         this.totalp=cantp;
         this.idorden=idorden;
+        this.envio=envio;
+        this.tipodeVenta=tipov;
+        
         cargardatos();
         
         
     }
     
-   
+    public void setdatosEnvio(int idDireccionCliente, String fechaentrega, String horaEntrega, int idEmpresaEnvio){
+        this.idDireccionCliente=idDireccionCliente;
+        this.fechaentrega=fechaentrega;
+        this.horaentrega=horaEntrega;
+        this.idEmpresaEnvio=idEmpresaEnvio;
+        
+    }
     
     
     public void mostrarelementos(){
@@ -469,7 +481,40 @@ public class VerificarOrden extends javax.swing.JFrame {
     }
     
     
+    public void insertarTotalOrden(){
+        String SQL = "INSERT INTO EntradasCaja (IdOrden, Total) VALUES(?, ?)";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, idorden);
+            preparedStmt.setFloat(2, Float.valueOf(jLabel22.getText()));
+            preparedStmt.execute();
+      
+     
+           
+       
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
     
+    public void insertarTotalEnvio(){
+        String SQL = "INSERT INTO DetalleEnvio (IdOrden, Total) VALUES(?, ?)";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, idorden);
+            preparedStmt.setFloat(2, Float.valueOf(jLabel21.getText()));
+            preparedStmt.execute();
+      
+     
+           
+       
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+ 
  
     
     
@@ -532,8 +577,10 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -543,6 +590,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSButtonIcon_new17 = new newscomponents.RSButtonIcon_new();
         jLabel10 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
         rSPanelFunky1 = new rojeru_san.rspanel.RSPanelFunky();
         jLabel46 = new javax.swing.JLabel();
         jLabel49 = new javax.swing.JLabel();
@@ -990,6 +1038,12 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel28.setText("0.00");
         rSPanelForma5.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 260, 40));
 
+        jLabel9.setFont(new java.awt.Font("Franklin Gothic Book", 1, 17)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 153));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel9.setText("Envio:");
+        rSPanelForma5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 100, 40));
+
         jLabel18.setFont(new java.awt.Font("Franklin Gothic Book", 1, 17)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 0, 153));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -1001,6 +1055,13 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel32.setText("RESUMEN GENERAL DE LA ORDEN");
         rSPanelForma5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 410, 30));
+
+        jLabel21.setBackground(new java.awt.Color(102, 0, 102));
+        jLabel21.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(51, 0, 153));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel21.setText("0.00");
+        rSPanelForma5.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 230, 40));
 
         jLabel20.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(51, 0, 153));
@@ -1024,13 +1085,13 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel30.setForeground(new java.awt.Color(102, 0, 255));
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel30.setText("Total Productos:");
-        rSPanelForma5.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 120, 20));
+        rSPanelForma5.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 120, 20));
 
         jLabel8.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(102, 0, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("0");
-        rSPanelForma5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 40, 20));
+        rSPanelForma5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 40, 20));
 
         rSLabelIcon18.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon18.setForeground(new java.awt.Color(0, 51, 255));
@@ -1063,6 +1124,13 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel29.setText("L.");
         rSPanelForma5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 20, 40));
+
+        jLabel33.setBackground(new java.awt.Color(102, 0, 102));
+        jLabel33.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(51, 0, 153));
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel33.setText("L.");
+        rSPanelForma5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 20, 40));
 
         javax.swing.GroupLayout rSPanelForma4Layout = new javax.swing.GroupLayout(rSPanelForma4);
         rSPanelForma4.setLayout(rSPanelForma4Layout);
@@ -1242,7 +1310,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSPanelForma3.add(jLabel50);
         jLabel50.setBounds(135, 11, 130, 20);
 
-        rSRadioButton1.setText("TARJETA");
+        rSRadioButton1.setText("BOTON");
         rSRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         rSRadioButton1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rSRadioButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -1301,7 +1369,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSPanelForma3.add(rSButtonIcon_new18);
         rSButtonIcon_new18.setBounds(250, 130, 108, 40);
 
-        rSRadioButton3.setText("MIXTO");
+        rSRadioButton3.setText("TRANSFERENCIA");
         rSRadioButton3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         rSRadioButton3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rSRadioButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -1310,7 +1378,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             }
         });
         rSPanelForma3.add(rSRadioButton3);
-        rSRadioButton3.setBounds(260, 40, 110, 40);
+        rSRadioButton3.setBounds(260, 40, 140, 40);
 
         rSPanel2.add(rSPanelForma3);
         rSPanelForma3.setBounds(0, 270, 400, 200);
@@ -1449,7 +1517,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             con.close();
             System.exit(0);
         } catch (SQLException ex) {
-            Logger.getLogger(VerificarOrden.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VerificarOrdenADomicilio.class.getName()).log(Level.SEVERE, null, ex);
         }
      
 
@@ -1468,6 +1536,7 @@ public class VerificarOrden extends javax.swing.JFrame {
 
     private void rSRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton2ActionPerformed
         // TODO add your handling code here:
+        idTipoPagoEnvio=1;
         rSRadioButton1.setSelected(false);
         rSRadioButton3.setSelected(false);
         jLabel51.setVisible(true);
@@ -1503,8 +1572,10 @@ public class VerificarOrden extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(rSRadioButton2.isSelected()){
            if(JTextbuscar.getText().length()>0){
-               if(tipodeVenta==1){
                    insertarOrden();
+                   insertarEnvio();
+                   insertarTotalEnvio();
+                   insertarTotalOrden();
                    enviarDetallesOrden();
                     if(estadodetalleorden==true && estadoorden==true){
 
@@ -1519,28 +1590,9 @@ public class VerificarOrden extends javax.swing.JFrame {
                     calcularcambio();
                     rSPanelForma3.setVisible(false);
                     rSPanelForma6.setVisible(true);
-                }
+                    }
                    
-               }else{
-                        if(tipodeVenta==2){
-                           insertarOrden();
-                           enviarDetallesOrden();
-                           insertarEnvio();
-                           if(estadodetalleorden==true && estadoorden==true){
-                             enviarActualizacionExistencia();
-                             actualizartotalcaja();
-                             if(estadototalcaja==true){
-                                actualizarHistoriaCaja();
-                                VentanaEmergente1 ve = new VentanaEmergente1();
-                                ve.setVisible(true);
-                             }
-
-                             calcularcambio();
-                             rSPanelForma3.setVisible(false);
-                             rSPanelForma6.setVisible(true);
-                             }    
-                        }
-               }
+               
             
            
             
@@ -1548,11 +1600,13 @@ public class VerificarOrden extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Ingrese un valor de efectivo");
             } 
         }else{
-            if(tipodeVenta==1){
-                   insertarOrden();
-                   enviarDetallesOrden();
+                if(rSRadioButton1.isSelected()){
+                    insertarOrden();
+                    insertarEnvio();
+                    insertarTotalEnvio();
+                    insertarTotalOrden();
+                    enviarDetallesOrden();
                     if(estadodetalleorden==true && estadoorden==true){
-
                         enviarActualizacionExistencia();
                         actualizartotalcaja();
                         if(estadototalcaja==true){
@@ -1564,28 +1618,31 @@ public class VerificarOrden extends javax.swing.JFrame {
                     calcularcambio();
                     rSPanelForma3.setVisible(false);
                     rSPanelForma6.setVisible(true);
+                    }   
+                }else{
+                        if(rSRadioButton3.isSelected()){
+                              insertarOrden();
+                              insertarEnvio();
+                              insertarTotalEnvio();
+                              insertarTotalOrden();
+                              enviarDetallesOrden();
+                              if(estadodetalleorden==true && estadoorden==true){
+                                enviarActualizacionExistencia();
+                                actualizartotalcaja();
+                                if(estadototalcaja==true){
+                                   actualizarHistoriaCaja();
+                                   VentanaEmergente1 ve = new VentanaEmergente1();
+                                   ve.setVisible(true);
+                                }
+                                calcularcambio();
+                                rSPanelForma3.setVisible(false);
+                                rSPanelForma6.setVisible(true);
+                               }   
+                        }
                 }
                    
-               }else{
-                        if(tipodeVenta==2){
-                           insertarOrden();
-                           enviarDetallesOrden();
-                           insertarEnvio();
-                           if(estadodetalleorden==true && estadoorden==true){
-                             enviarActualizacionExistencia();
-                             actualizartotalcaja();
-                             if(estadototalcaja==true){
-                                actualizarHistoriaCaja();
-                                VentanaEmergente1 ve = new VentanaEmergente1();
-                                ve.setVisible(true);
-                             }
-
-                             calcularcambio();
-                             rSPanelForma3.setVisible(false);
-                             rSPanelForma6.setVisible(true);
-                             }    
-                        }
-               }
+                   
+              
         }
         
         
@@ -1593,6 +1650,7 @@ public class VerificarOrden extends javax.swing.JFrame {
 
     private void rSRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton1ActionPerformed
         // TODO add your handling code here:
+        idTipoPagoEnvio=4;
         rSRadioButton2.setSelected(false);
         rSRadioButton3.setSelected(false);
         jLabel51.setVisible(false);
@@ -1609,6 +1667,7 @@ public class VerificarOrden extends javax.swing.JFrame {
 
     private void rSRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton3ActionPerformed
         // TODO add your handling code here:
+        idTipoPagoEnvio=3;
         rSRadioButton1.setSelected(false);
         rSRadioButton2.setSelected(false);
         jLabel51.setVisible(false);
@@ -1634,20 +1693,21 @@ public class VerificarOrden extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VerificarOrden.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerificarOrdenADomicilio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VerificarOrden.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerificarOrdenADomicilio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VerificarOrden.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerificarOrdenADomicilio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VerificarOrden.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerificarOrdenADomicilio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VerificarOrden().setVisible(true);
+                new VerificarOrdenADomicilio().setVisible(true);
             }
         });
     }
@@ -1663,6 +1723,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -1674,6 +1735,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
@@ -1700,6 +1762,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;

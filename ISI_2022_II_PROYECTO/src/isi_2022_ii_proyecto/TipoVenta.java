@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -60,11 +62,6 @@ ConexionBD conexion = new ConexionBD();
         rSPanel2.setSize(780,210);
         rSPanel2.setLocation(540,220);
         rSButtonIcon_new19.setVisible(false);
-        jLabel52.setVisible(false);
-        rSComboBox1.setVisible(false);
-        jLabel60.setVisible(false);
-        jLabel59.setVisible(false);
-        jLabel61.setVisible(false);
         iniciarEmpresasEnvio();
         
       
@@ -116,6 +113,27 @@ ConexionBD conexion = new ConexionBD();
         cargardirecciones();
         
         
+    }
+    
+    public int ObtenerIdEmpresaEnvio(){
+        int idempresaenvio=0;
+        String SQL = "SELECT ev.IdEmpresaEnvio FROM EmpresasEnvio ev WHERE ev.NombreEmpresa='"+rSComboBox1.getSelectedItem().toString()+"';";
+        
+                try {
+                        Statement st = (Statement) con.createStatement();
+                        ResultSet rs = st.executeQuery(SQL);
+
+                        while (rs.next()) {
+                           idempresaenvio=rs.getInt("ev.IdEmpresaEnvio");
+                           
+                        }
+
+                        
+                    }catch(SQLException e){
+                        System.out.println("Error al obtener el id de la direcciones"+e.getMessage());
+
+                    }
+                return idempresaenvio;
     }
     
     
@@ -233,9 +251,11 @@ ConexionBD conexion = new ConexionBD();
         rSPanelForma3 = new rojeru_san.rspanel.RSPanelForma();
         jLabel51 = new javax.swing.JLabel();
         jLabel58 = new javax.swing.JLabel();
-        rSRadioButton1 = new rojerusan.RSRadioButton();
-        rSRadioButton5 = new rojerusan.RSRadioButton();
-        jLabel54 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
+        jLabel62 = new javax.swing.JLabel();
+        jLabel63 = new javax.swing.JLabel();
+        rSDateChooser2 = new rojeru_san.componentes.RSDateChooser();
+        rSComboBox2 = new RSMaterialComponent.RSComboBox();
         jLabel50 = new javax.swing.JLabel();
         rSRadioButton2 = new rojerusan.RSRadioButton();
         rSLabelIcon18 = new rojerusan.RSLabelIcon();
@@ -663,45 +683,46 @@ ConexionBD conexion = new ConexionBD();
         jLabel51.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel51.setForeground(new java.awt.Color(102, 0, 255));
         jLabel51.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel51.setText("Dirección:");
+        jLabel51.setText("Hora de Entrega:");
         rSPanelForma3.add(jLabel51);
-        jLabel51.setBounds(30, 10, 420, 20);
+        jLabel51.setBounds(280, 130, 210, 20);
 
         jLabel58.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel58.setForeground(new java.awt.Color(102, 0, 255));
         jLabel58.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel58.setText("direccion");
         rSPanelForma3.add(jLabel58);
-        jLabel58.setBounds(30, 50, 420, 50);
+        jLabel58.setBounds(30, 30, 420, 40);
 
-        rSRadioButton1.setText("BOTÓN DE PAGO");
-        rSRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        rSRadioButton1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButton1ActionPerformed(evt);
-            }
-        });
-        rSPanelForma3.add(rSRadioButton1);
-        rSRadioButton1.setBounds(30, 160, 190, 40);
+        jLabel53.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel53.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel53.setText("Dirección:");
+        rSPanelForma3.add(jLabel53);
+        jLabel53.setBounds(30, 0, 420, 20);
 
-        rSRadioButton5.setText("AL MOMENTO DE LA ENTREGA");
-        rSRadioButton5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        rSRadioButton5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSRadioButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButton5ActionPerformed(evt);
-            }
-        });
-        rSPanelForma3.add(rSRadioButton5);
-        rSRadioButton5.setBounds(230, 160, 220, 40);
+        jLabel62.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel62.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel62.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel62.setText("Programar Envio");
+        rSPanelForma3.add(jLabel62);
+        jLabel62.setBounds(30, 80, 420, 20);
 
-        jLabel54.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
-        jLabel54.setForeground(new java.awt.Color(102, 0, 255));
-        jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel54.setText("Pago de Tarifa:");
-        rSPanelForma3.add(jLabel54);
-        jLabel54.setBounds(60, 120, 380, 20);
+        jLabel63.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel63.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel63.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel63.setText("Fecha de Entrega:");
+        rSPanelForma3.add(jLabel63);
+        jLabel63.setBounds(20, 130, 230, 20);
+
+        rSDateChooser2.setColorBackground(new java.awt.Color(102, 102, 255));
+        rSDateChooser2.setPlaceholder("Fecha de Entrega");
+        rSPanelForma3.add(rSDateChooser2);
+        rSDateChooser2.setBounds(10, 170, 230, 40);
+
+        rSComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar Hora de Entrega", "00:00:00", "01:00:00", "02:00:00", "03:00:00", "04:00:00", "05:00:00", "06:00:00", "07:00:00", "08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00", "18:00:00", "19:00:00", "20:00:00", "21:00:00", "22:00:00", "23:00:00", "24:00:00" }));
+        rSPanelForma3.add(rSComboBox2);
+        rSComboBox2.setBounds(270, 170, 230, 40);
 
         rSPanel2.add(rSPanelForma3);
         rSPanelForma3.setBounds(10, 250, 510, 220);
@@ -755,7 +776,7 @@ ConexionBD conexion = new ConexionBD();
             }
         });
         rSPanel2.add(rSButtonIcon_new19);
-        rSButtonIcon_new19.setBounds(590, 90, 130, 40);
+        rSButtonIcon_new19.setBounds(580, 100, 130, 40);
 
         jLabel52.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel52.setForeground(new java.awt.Color(102, 0, 255));
@@ -991,32 +1012,6 @@ ConexionBD conexion = new ConexionBD();
 
     }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
 
-    private void rSRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton1ActionPerformed
-        // TODO add your handling code here:
-        if(rSRadioButton1.isSelected()==false){
-            rSButtonIcon_new19.setVisible(false);
-            jLabel52.setVisible(false);
-            rSComboBox1.setVisible(false);
-            jLabel60.setVisible(false);
-            jLabel59.setVisible(false);
-            jLabel61.setVisible(false);
-            
-        }else{
-            tipodepagoenvio="BOTONP";
-            rSButtonIcon_new19.setVisible(true);
-            rSRadioButton5.setSelected(false);
-            jLabel52.setVisible(true);
-            rSComboBox1.setVisible(true);
-            jLabel60.setVisible(true);
-            jLabel59.setVisible(true);
-            jLabel61.setVisible(true);
-
-        }
- 
-     
-        
-    }//GEN-LAST:event_rSRadioButton1ActionPerformed
-
     private void rSRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton2ActionPerformed
         // TODO add your handling code here:
         if(rSRadioButton2.isSelected()==false){
@@ -1044,6 +1039,9 @@ ConexionBD conexion = new ConexionBD();
             rSPanel2.setLocation(540,130);
             rSPanel4.setVisible(true);
             rSPanelForma3.setVisible(true);
+            rSButtonIcon_new19.setLocation(590, 420);
+            rSButtonIcon_new19.setVisible(true);
+            
         }else{
             JOptionPane.showMessageDialog(this, "ATENCION", "Seleccione un valor", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -1096,18 +1094,29 @@ ConexionBD conexion = new ConexionBD();
         if(rSRadioButton3.isSelected()){
             VerificarOrden vo = new VerificarOrden();
             vo.setTablaorden(tablaorden);
-            vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(), subtotal,  total,  totalp,  descuento,  isv,"0.00");
+            vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(), subtotal,  total,  totalp,  descuento,  isv);
             vo.cargartabla();
             vo.setVisible(true);
         }else{
             if(rSRadioButton2.isSelected()){
-            float ntotal = Float.parseFloat(total)+60.00f;
-            VerificarOrden vo = new VerificarOrden();
-            vo.setTablaorden(tablaorden);
-            vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(), subtotal,  String.valueOf(ntotal),  totalp,  descuento,  isv, "60.00");
-            vo.setTipodepagoenvio(tipodepagoenvio);
-            vo.cargartabla();
-            vo.setVisible(true);
+                if(rSDateChooser2.getDatoFecha().toString().length()>0 && rSComboBox2.getSelectedItem().toString()!="Seleccionar Hora de Entrega"){
+                    float ntotal = Float.parseFloat(total)+Float.parseFloat(jLabel61.getText());
+                    VerificarOrdenADomicilio vo = new VerificarOrdenADomicilio();
+                    vo.setTablaorden(tablaorden);
+                    vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(), subtotal,  String.valueOf(ntotal),  totalp,  descuento,  isv, jLabel61.getText(),2);
+                    String formato="yyyy/MM/dd";
+                    String Fe="";
+                    Date FechaE;
+                    FechaE=rSDateChooser2.getDatoFecha();
+                    SimpleDateFormat formateador = new SimpleDateFormat(formato);
+                    Fe = formateador.format(FechaE);
+                    vo.setdatosEnvio(Integer.parseInt(codigodireccion), Fe, rSComboBox2.getSelectedItem().toString(), ObtenerIdEmpresaEnvio());
+                    vo.cargartabla();
+                    vo.setVisible(true);
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Por favor Programe el pedido");
+                }
+            
             }
         }
          
@@ -1118,28 +1127,6 @@ ConexionBD conexion = new ConexionBD();
     }
          this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new19ActionPerformed
-
-    private void rSRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton5ActionPerformed
-        // TODO add your handling code here:
-        if(rSRadioButton5.isSelected()==false){
-            rSButtonIcon_new19.setVisible(false);
-            jLabel52.setVisible(false);
-            rSComboBox1.setVisible(false);
-            jLabel60.setVisible(false);
-            jLabel59.setVisible(false);
-            jLabel61.setVisible(false);
-        }else{
-            rSButtonIcon_new19.setVisible(true);
-            rSRadioButton1.setSelected(false);
-            jLabel52.setVisible(true);
-            rSComboBox1.setVisible(true);
-            jLabel60.setVisible(true);
-            jLabel59.setVisible(true);
-            jLabel61.setVisible(true);
-            tipodepagoenvio="MENTREGA";
-        }
-        
-    }//GEN-LAST:event_rSRadioButton5ActionPerformed
 
     private void rSButtonIcon_new20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new20ActionPerformed
         // TODO add your handling code here:
@@ -1225,7 +1212,7 @@ ConexionBD conexion = new ConexionBD();
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
-    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
@@ -1233,6 +1220,8 @@ ConexionBD conexion = new ConexionBD();
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel62;
+    private javax.swing.JLabel jLabel63;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1246,6 +1235,8 @@ ConexionBD conexion = new ConexionBD();
     private newscomponents.RSButtonIcon_new rSButtonIcon_new19;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new20;
     private rojerusan.RSComboMetro rSComboBox1;
+    private RSMaterialComponent.RSComboBox rSComboBox2;
+    private rojeru_san.componentes.RSDateChooser rSDateChooser2;
     private rojerusan.RSLabelIcon rSLabelIcon13;
     private rojerusan.RSLabelIcon rSLabelIcon14;
     private rojerusan.RSLabelIcon rSLabelIcon15;
@@ -1259,9 +1250,7 @@ ConexionBD conexion = new ConexionBD();
     private necesario.RSPanel rSPanel5;
     private rojeru_san.rspanel.RSPanelForma rSPanelForma3;
     private rspanelgradiente.RSPanelGradiente rSPanelGradiente3;
-    private rojerusan.RSRadioButton rSRadioButton1;
     private rojerusan.RSRadioButton rSRadioButton2;
     private rojerusan.RSRadioButton rSRadioButton3;
-    private rojerusan.RSRadioButton rSRadioButton5;
     // End of variables declaration//GEN-END:variables
 }
