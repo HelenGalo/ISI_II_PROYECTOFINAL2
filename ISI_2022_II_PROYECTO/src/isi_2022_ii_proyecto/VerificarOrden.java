@@ -60,6 +60,11 @@ public class VerificarOrden extends javax.swing.JFrame {
     String isv;
     String totalp;
     String envio;
+    String tipodepagoenvio;
+
+    public void setTipodepagoenvio(String tipodepagoenvio) {
+        this.tipodepagoenvio = tipodepagoenvio;
+    }
     boolean estadoorden;
     boolean estadodetalleorden;
     boolean estadototalcaja=false;
@@ -662,6 +667,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel51 = new javax.swing.JLabel();
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
         rSButtonIcon_new18 = new newscomponents.RSButtonIcon_new();
+        rSRadioButton3 = new rojerusan.RSRadioButton();
         rSPanelForma6 = new rojeru_san.rspanel.RSPanelForma();
         jLabel52 = new javax.swing.JLabel();
         jLabel53 = new javax.swing.JLabel();
@@ -1371,7 +1377,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             }
         });
         rSPanelForma3.add(rSRadioButton1);
-        rSRadioButton1.setBounds(120, 40, 110, 40);
+        rSRadioButton1.setBounds(140, 40, 110, 40);
 
         rSRadioButton2.setText("EFECTIVO");
         rSRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -1389,7 +1395,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel51.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel51.setText("Ingrese la cantidad de efectivo recibido:");
         rSPanelForma3.add(jLabel51);
-        jLabel51.setBounds(10, 85, 362, 20);
+        jLabel51.setBounds(20, 90, 370, 20);
 
         JTextbuscar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
@@ -1420,6 +1426,17 @@ public class VerificarOrden extends javax.swing.JFrame {
         });
         rSPanelForma3.add(rSButtonIcon_new18);
         rSButtonIcon_new18.setBounds(250, 130, 108, 40);
+
+        rSRadioButton3.setText("MIXTO");
+        rSRadioButton3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        rSRadioButton3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButton3ActionPerformed(evt);
+            }
+        });
+        rSPanelForma3.add(rSRadioButton3);
+        rSRadioButton3.setBounds(260, 40, 110, 40);
 
         rSPanel2.add(rSPanelForma3);
         rSPanelForma3.setBounds(0, 270, 400, 200);
@@ -1668,6 +1685,10 @@ public class VerificarOrden extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rSButtonIcon_new19ActionPerformed
 
+    private void rSRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSRadioButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1789,5 +1810,6 @@ public class VerificarOrden extends javax.swing.JFrame {
     private RSMaterialComponent.RSPanelShadow rSPanelShadow2;
     private rojerusan.RSRadioButton rSRadioButton1;
     private rojerusan.RSRadioButton rSRadioButton2;
+    private rojerusan.RSRadioButton rSRadioButton3;
     // End of variables declaration//GEN-END:variables
 }

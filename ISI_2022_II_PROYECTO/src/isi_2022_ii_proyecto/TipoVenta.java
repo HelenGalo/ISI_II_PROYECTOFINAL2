@@ -41,7 +41,7 @@ ConexionBD conexion = new ConexionBD();
     String totalp;
     int seleccion;
     String codigodireccion;
-    
+    String tipodepagoenvio;
     
      public void setTablaorden(RSTableMetro1 tablaorden) {
         this.tablaorden = tablaorden;
@@ -60,8 +60,39 @@ ConexionBD conexion = new ConexionBD();
         rSPanel2.setSize(780,210);
         rSPanel2.setLocation(540,220);
         rSButtonIcon_new19.setVisible(false);
+        jLabel52.setVisible(false);
+        rSComboBox1.setVisible(false);
+        jLabel60.setVisible(false);
+        jLabel59.setVisible(false);
+        jLabel61.setVisible(false);
+        iniciarEmpresasEnvio();
         
       
+    }
+    
+    
+    public void iniciarEmpresasEnvio(){
+        rSComboBox1.addItem("Seleccionar Empresa");
+        String nombre="";
+         String SQL = "select ev.NombreEmpresa from EmpresasEnvio ev WHERE ev.Estado=1;";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+           
+                nombre = rs.getString("NombreEmpresa");
+                rSComboBox1.addItem(nombre);
+              
+            }
+
+         
+            
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     
@@ -98,7 +129,7 @@ ConexionBD conexion = new ConexionBD();
                         ResultSet rs = st.executeQuery(SQL);
 
                         while (rs.next()) {
-                            registros[0] = String.valueOf("IdDireccionCliente");
+                            registros[0] = rs.getString("IdDireccionCliente");
                             registros[1] = rs.getString("DireccionEnvioCompleta");
                             modelo.addRow(registros);
                         }
@@ -121,6 +152,33 @@ ConexionBD conexion = new ConexionBD();
         jLabel44.setText(cajero);
         jLabel45.setText(usuario);
      
+    }
+    
+    public void buscartarifa(){
+        String empresa = "";
+        empresa=rSComboBox1.getSelectedItem().toString();
+        String tarifa="";
+        String SQL = "select ev.Tarifa from EmpresasEnvio ev WHERE ev.Estado=1 AND ev.NombreEmpresa='"+empresa+"';";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+           
+                tarifa = rs.getString("ev.Tarifa"); 
+              
+            }
+
+         
+            
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        jLabel61.setText(tarifa);
+        
     }
     
     
@@ -174,15 +232,20 @@ ConexionBD conexion = new ConexionBD();
         jLabel55 = new javax.swing.JLabel();
         rSPanelForma3 = new rojeru_san.rspanel.RSPanelForma();
         jLabel51 = new javax.swing.JLabel();
-        jLabel52 = new javax.swing.JLabel();
         jLabel58 = new javax.swing.JLabel();
         rSRadioButton1 = new rojerusan.RSRadioButton();
         rSRadioButton5 = new rojerusan.RSRadioButton();
+        jLabel54 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
         rSRadioButton2 = new rojerusan.RSRadioButton();
         rSLabelIcon18 = new rojerusan.RSLabelIcon();
         rSRadioButton3 = new rojerusan.RSRadioButton();
         rSButtonIcon_new19 = new newscomponents.RSButtonIcon_new();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel59 = new javax.swing.JLabel();
+        jLabel60 = new javax.swing.JLabel();
+        jLabel61 = new javax.swing.JLabel();
+        rSComboBox1 = new rojerusan.RSComboMetro();
         rSPanel1 = new necesario.RSPanel();
         rSPanel5 = new necesario.RSPanel();
         jLabel32 = new javax.swing.JLabel();
@@ -592,31 +655,24 @@ ConexionBD conexion = new ConexionBD();
         jLabel55.setBounds(30, 8, 730, 40);
 
         rSPanel2.add(rSPanel4);
-        rSPanel4.setBounds(0, 210, 790, 60);
+        rSPanel4.setBounds(0, 180, 790, 60);
 
         rSPanelForma3.setBackground(new java.awt.Color(255, 255, 255));
         rSPanelForma3.setLayout(null);
 
-        jLabel51.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
+        jLabel51.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel51.setForeground(new java.awt.Color(102, 0, 255));
         jLabel51.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel51.setText("Dirección:");
         rSPanelForma3.add(jLabel51);
-        jLabel51.setBounds(30, 20, 470, 20);
-
-        jLabel52.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
-        jLabel52.setForeground(new java.awt.Color(102, 0, 255));
-        jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel52.setText("Pago de Tarifa:");
-        rSPanelForma3.add(jLabel52);
-        jLabel52.setBounds(30, 90, 470, 20);
+        jLabel51.setBounds(30, 10, 420, 20);
 
         jLabel58.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel58.setForeground(new java.awt.Color(102, 0, 255));
         jLabel58.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel58.setText("direccion");
         rSPanelForma3.add(jLabel58);
-        jLabel58.setBounds(30, 50, 470, 20);
+        jLabel58.setBounds(30, 50, 420, 50);
 
         rSRadioButton1.setText("BOTÓN DE PAGO");
         rSRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -627,7 +683,7 @@ ConexionBD conexion = new ConexionBD();
             }
         });
         rSPanelForma3.add(rSRadioButton1);
-        rSRadioButton1.setBounds(60, 130, 190, 40);
+        rSRadioButton1.setBounds(30, 160, 190, 40);
 
         rSRadioButton5.setText("AL MOMENTO DE LA ENTREGA");
         rSRadioButton5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -638,10 +694,17 @@ ConexionBD conexion = new ConexionBD();
             }
         });
         rSPanelForma3.add(rSRadioButton5);
-        rSRadioButton5.setBounds(260, 130, 220, 40);
+        rSRadioButton5.setBounds(230, 160, 220, 40);
+
+        jLabel54.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel54.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel54.setText("Pago de Tarifa:");
+        rSPanelForma3.add(jLabel54);
+        jLabel54.setBounds(60, 120, 380, 20);
 
         rSPanel2.add(rSPanelForma3);
-        rSPanelForma3.setBounds(10, 270, 510, 200);
+        rSPanelForma3.setBounds(10, 250, 510, 220);
 
         jLabel50.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel50.setForeground(new java.awt.Color(102, 0, 255));
@@ -692,7 +755,56 @@ ConexionBD conexion = new ConexionBD();
             }
         });
         rSPanel2.add(rSButtonIcon_new19);
-        rSButtonIcon_new19.setBounds(590, 100, 130, 40);
+        rSButtonIcon_new19.setBounds(590, 90, 130, 40);
+
+        jLabel52.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel52.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel52.setText("Empresa de envio:");
+        rSPanel2.add(jLabel52);
+        jLabel52.setBounds(550, 250, 170, 21);
+
+        jLabel59.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel59.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel59.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel59.setText("L.");
+        rSPanel2.add(jLabel59);
+        jLabel59.setBounds(540, 360, 20, 21);
+
+        jLabel60.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel60.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel60.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel60.setText("Pago de Tarifa:");
+        rSPanel2.add(jLabel60);
+        jLabel60.setBounds(540, 330, 200, 21);
+
+        jLabel61.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel61.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel61.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel61.setText("0.00");
+        rSPanel2.add(jLabel61);
+        jLabel61.setBounds(560, 360, 180, 21);
+
+        rSComboBox1.setColorArrow(new java.awt.Color(102, 0, 255));
+        rSComboBox1.setColorFondo(new java.awt.Color(60, 76, 143));
+        rSComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rSComboBox1ItemStateChanged(evt);
+            }
+        });
+        rSComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rSComboBox1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                rSComboBox1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                rSComboBox1MouseExited(evt);
+            }
+        });
+        rSPanel2.add(rSComboBox1);
+        rSComboBox1.setBounds(540, 280, 190, 30);
 
         dashboardview.add(rSPanel2);
         rSPanel2.setBounds(540, 130, 780, 480);
@@ -759,7 +871,7 @@ ConexionBD conexion = new ConexionBD();
         }
 
         rSButtonIcon_new18.setBackground(new java.awt.Color(0, 102, 204));
-        rSButtonIcon_new18.setText("Aceptar");
+        rSButtonIcon_new18.setText("Seleccionar");
         rSButtonIcon_new18.setAlignmentX(0.5F);
         rSButtonIcon_new18.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -780,7 +892,8 @@ ConexionBD conexion = new ConexionBD();
         rSButtonIcon_new20.setAlignmentX(0.5F);
         rSButtonIcon_new20.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSButtonIcon_new20.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
+        rSButtonIcon_new20.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        rSButtonIcon_new20.setName(""); // NOI18N
         rSButtonIcon_new20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new20ActionPerformed(evt);
@@ -882,9 +995,21 @@ ConexionBD conexion = new ConexionBD();
         // TODO add your handling code here:
         if(rSRadioButton1.isSelected()==false){
             rSButtonIcon_new19.setVisible(false);
+            jLabel52.setVisible(false);
+            rSComboBox1.setVisible(false);
+            jLabel60.setVisible(false);
+            jLabel59.setVisible(false);
+            jLabel61.setVisible(false);
+            
         }else{
+            tipodepagoenvio="BOTONP";
             rSButtonIcon_new19.setVisible(true);
             rSRadioButton5.setSelected(false);
+            jLabel52.setVisible(true);
+            rSComboBox1.setVisible(true);
+            jLabel60.setVisible(true);
+            jLabel59.setVisible(true);
+            jLabel61.setVisible(true);
 
         }
  
@@ -905,7 +1030,7 @@ ConexionBD conexion = new ConexionBD();
              rSButtonIcon_new19.setVisible(false);
              rSRadioButton3.setSelected(false);
             rSPanel1.setVisible(true);
-            rSButtonIcon_new19.setLocation(600,340);
+            rSButtonIcon_new19.setLocation(580,410);
         }
        
      
@@ -949,6 +1074,7 @@ ConexionBD conexion = new ConexionBD();
             rSPanel4.setVisible(false);
             rSPanelForma3.setVisible(false);
             
+            
         }else{
            rSButtonIcon_new19.setLocation(590,100);
            rSButtonIcon_new19.setVisible(true);
@@ -979,6 +1105,7 @@ ConexionBD conexion = new ConexionBD();
             VerificarOrden vo = new VerificarOrden();
             vo.setTablaorden(tablaorden);
             vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(), subtotal,  String.valueOf(ntotal),  totalp,  descuento,  isv, "60.00");
+            vo.setTipodepagoenvio(tipodepagoenvio);
             vo.cargartabla();
             vo.setVisible(true);
             }
@@ -996,9 +1123,20 @@ ConexionBD conexion = new ConexionBD();
         // TODO add your handling code here:
         if(rSRadioButton5.isSelected()==false){
             rSButtonIcon_new19.setVisible(false);
+            jLabel52.setVisible(false);
+            rSComboBox1.setVisible(false);
+            jLabel60.setVisible(false);
+            jLabel59.setVisible(false);
+            jLabel61.setVisible(false);
         }else{
             rSButtonIcon_new19.setVisible(true);
             rSRadioButton1.setSelected(false);
+            jLabel52.setVisible(true);
+            rSComboBox1.setVisible(true);
+            jLabel60.setVisible(true);
+            jLabel59.setVisible(true);
+            jLabel61.setVisible(true);
+            tipodepagoenvio="MENTREGA";
         }
         
     }//GEN-LAST:event_rSRadioButton5ActionPerformed
@@ -1007,6 +1145,25 @@ ConexionBD conexion = new ConexionBD();
         // TODO add your handling code here:
         
     }//GEN-LAST:event_rSButtonIcon_new20ActionPerformed
+
+    private void rSComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSComboBox1MouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_rSComboBox1MouseClicked
+
+    private void rSComboBox1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSComboBox1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSComboBox1MouseEntered
+
+    private void rSComboBox1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSComboBox1MouseExited
+        // TODO add your handling code here:
+      
+    }//GEN-LAST:event_rSComboBox1MouseExited
+
+    private void rSComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rSComboBox1ItemStateChanged
+        // TODO add your handling code here:
+        buscartarifa();
+    }//GEN-LAST:event_rSComboBox1ItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -1068,10 +1225,14 @@ ConexionBD conexion = new ConexionBD();
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
+    private javax.swing.JLabel jLabel60;
+    private javax.swing.JLabel jLabel61;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1084,6 +1245,7 @@ ConexionBD conexion = new ConexionBD();
     private newscomponents.RSButtonIcon_new rSButtonIcon_new18;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new19;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new20;
+    private rojerusan.RSComboMetro rSComboBox1;
     private rojerusan.RSLabelIcon rSLabelIcon13;
     private rojerusan.RSLabelIcon rSLabelIcon14;
     private rojerusan.RSLabelIcon rSLabelIcon15;
