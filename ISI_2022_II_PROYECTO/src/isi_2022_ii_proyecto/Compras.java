@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Edwin Rafael
  */
-public class POS extends javax.swing.JFrame {
+public class Compras extends javax.swing.JFrame {
     boolean a = true;
     
     ConexionBD conexion = new ConexionBD();
@@ -67,7 +67,7 @@ public class POS extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
-    public POS() {
+    public Compras() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
@@ -623,10 +623,10 @@ public class POS extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         linesetting3 = new javax.swing.JPanel();
-        rSButtonIconOne5 = new RSMaterialComponent.RSButtonIconOne();
         rSButtonIconOne3 = new RSMaterialComponent.RSButtonIconOne();
         rSButtonIconOne4 = new RSMaterialComponent.RSButtonIconOne();
         linesetting4 = new javax.swing.JPanel();
+        rSButtonIconOne5 = new RSMaterialComponent.RSButtonIconOne();
         linesetting5 = new javax.swing.JPanel();
         dashboardview = new javax.swing.JPanel();
         rSPanelGradiente3 = new rspanelgradiente.RSPanelGradiente();
@@ -664,44 +664,44 @@ public class POS extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         rSPanelsSlider1 = new rojerusan.RSPanelsSlider();
         jLabel30 = new javax.swing.JLabel();
         rSPanelShadow2 = new RSMaterialComponent.RSPanelShadow();
         rSPanel2 = new necesario.RSPanel();
-        rSButtonGradiente4 = new rsbuttongradiente.RSButtonGradiente();
-        rSButtonGradiente5 = new rsbuttongradiente.RSButtonGradiente();
-        rSButtonGradiente6 = new rsbuttongradiente.RSButtonGradiente();
-        rSButtonGradiente7 = new rsbuttongradiente.RSButtonGradiente();
-        rSButtonGradiente8 = new rsbuttongradiente.RSButtonGradiente();
-        rSButtonGradiente9 = new rsbuttongradiente.RSButtonGradiente();
-        rSButtonGradiente10 = new rsbuttongradiente.RSButtonGradiente();
-        rSButtonGradiente11 = new rsbuttongradiente.RSButtonGradiente();
-        rSButtonGradiente12 = new rsbuttongradiente.RSButtonGradiente();
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         JTableBancos1 = new rojerusan.RSTableMetro1();
         rSButtonHover1 = new rojeru_san.complementos.RSButtonHover();
-        rSButtonGradiente13 = new rsbuttongradiente.RSButtonGradiente();
-        rSButtonGradiente14 = new rsbuttongradiente.RSButtonGradiente();
-        rSButtonGradiente15 = new rsbuttongradiente.RSButtonGradiente();
         rSButtonIcon_new12 = new newscomponents.RSButtonIcon_new();
-        rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
         rSButtonHover4 = new rojeru_san.complementos.RSButtonHover();
-        rSButtonIcon_new14 = new newscomponents.RSButtonIcon_new();
-        rSButtonIcon_new15 = new newscomponents.RSButtonIcon_new();
-        rSButtonIcon_new16 = new newscomponents.RSButtonIcon_new();
-        rSButtonIcon_new17 = new newscomponents.RSButtonIcon_new();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        rSPanelForma3 = new rojeru_san.rspanel.RSPanelForma();
+        jLabel50 = new javax.swing.JLabel();
+        rSRadioButton1 = new rojerusan.RSRadioButton();
+        rSRadioButton2 = new rojerusan.RSRadioButton();
+        jLabel51 = new javax.swing.JLabel();
+        JTextbuscar1 = new RSMaterialComponent.RSTextFieldIconUno();
+        rSButtonIcon_new18 = new newscomponents.RSButtonIcon_new();
+        rSRadioButton3 = new rojerusan.RSRadioButton();
+        rSLabelFecha1 = new rojeru_san.RSLabelFecha();
+        rSLabelHora1 = new rojeru_san.rsdate.RSLabelHora();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        JEstado = new rojerusan.RSComboMetro();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel31 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout rSPanelVector1Layout = new javax.swing.GroupLayout(rSPanelVector1);
         rSPanelVector1.setLayout(rSPanelVector1Layout);
@@ -725,7 +725,6 @@ public class POS extends javax.swing.JFrame {
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
         Header.setPreferredSize(new java.awt.Dimension(800, 50));
-        Header.setLayout(new java.awt.BorderLayout());
 
         iconminmaxclose.setBackground(new java.awt.Color(5, 10, 46));
 
@@ -740,8 +739,6 @@ public class POS extends javax.swing.JFrame {
             .addGap(0, 50, Short.MAX_VALUE)
         );
 
-        Header.add(iconminmaxclose, java.awt.BorderLayout.LINE_END);
-
         jPanel2.setBackground(new java.awt.Color(20, 101, 187));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -754,14 +751,6 @@ public class POS extends javax.swing.JFrame {
 
         linesetting3.setBackground(new java.awt.Color(20, 101, 187));
         linesetting3.setPreferredSize(new java.awt.Dimension(50, 10));
-
-        rSButtonIconOne5.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIconOne5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REMOVE);
-        rSButtonIconOne5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIconOne5ActionPerformed(evt);
-            }
-        });
 
         rSButtonIconOne3.setBackground(new java.awt.Color(20, 101, 187));
         rSButtonIconOne3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FULLSCREEN);
@@ -785,19 +774,16 @@ public class POS extends javax.swing.JFrame {
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(linesetting3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(linesetting3Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
@@ -805,15 +791,29 @@ public class POS extends javax.swing.JFrame {
         linesetting4.setBackground(new java.awt.Color(20, 101, 187));
         linesetting4.setPreferredSize(new java.awt.Dimension(50, 10));
 
+        rSButtonIconOne5.setBackground(new java.awt.Color(20, 101, 187));
+        rSButtonIconOne5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REMOVE);
+        rSButtonIconOne5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIconOne5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout linesetting4Layout = new javax.swing.GroupLayout(linesetting4);
         linesetting4.setLayout(linesetting4Layout);
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 740, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, linesetting4Layout.createSequentialGroup()
+                .addContainerGap(680, Short.MAX_VALUE)
+                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         linesetting4Layout.setVerticalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addGroup(linesetting4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         linesetting5.setBackground(new java.awt.Color(20, 101, 187));
@@ -823,7 +823,7 @@ public class POS extends javax.swing.JFrame {
         linesetting5.setLayout(linesetting5Layout);
         linesetting5Layout.setHorizontalGroup(
             linesetting5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 336, Short.MAX_VALUE)
+            .addGap(0, 330, Short.MAX_VALUE)
         );
         linesetting5Layout.setVerticalGroup(
             linesetting5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -842,9 +842,9 @@ public class POS extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(13, 13, 13)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -859,9 +859,19 @@ public class POS extends javax.swing.JFrame {
             .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        Header.add(jPanel2, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout HeaderLayout = new javax.swing.GroupLayout(Header);
+        Header.setLayout(HeaderLayout);
+        HeaderLayout.setHorizontalGroup(
+            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        HeaderLayout.setVerticalGroup(
+            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         dashboardview.setBackground(new java.awt.Color(255, 255, 255));
+        dashboardview.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSPanelGradiente3.setColorPrimario(new java.awt.Color(51, 153, 255));
         rSPanelGradiente3.setColorSecundario(new java.awt.Color(20, 101, 187));
@@ -870,12 +880,12 @@ public class POS extends javax.swing.JFrame {
         jLabel34.setFont(new java.awt.Font("Franklin Gothic Book", 0, 16)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(255, 255, 255));
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel34.setText("Vendedor");
+        jLabel34.setText("Gerente Comercial");
 
         rSLabelIcon13.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon13.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon13.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        rSLabelIcon13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.VIBRATION);
+        rSLabelIcon13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
 
         jLabel35.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(255, 255, 255));
@@ -889,12 +899,12 @@ public class POS extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Franklin Gothic Book", 1, 36)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel17.setText("POS");
+        jLabel17.setText("Compras");
 
         jLabel37.setFont(new java.awt.Font("Franklin Gothic Book", 0, 16)); // NOI18N
         jLabel37.setForeground(new java.awt.Color(255, 255, 255));
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel37.setText("Cliente");
+        jLabel37.setText("Proveedor");
 
         rSLabelIcon14.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon14.setForeground(new java.awt.Color(255, 255, 255));
@@ -904,12 +914,12 @@ public class POS extends javax.swing.JFrame {
         jLabel38.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(255, 255, 255));
         jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel38.setText("Cliente");
+        jLabel38.setText("Proveedor");
 
         jLabel39.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
         jLabel39.setForeground(new java.awt.Color(255, 255, 255));
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel39.setText("Cliente");
+        jLabel39.setText("Provvedor");
 
         jLabel40.setFont(new java.awt.Font("Franklin Gothic Book", 0, 16)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(255, 255, 255));
@@ -964,13 +974,15 @@ public class POS extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(rSLabelIcon13, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
                 .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(rSLabelIcon16, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(rSLabelIcon16, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                        .addGap(137, 137, 137)
+                        .addComponent(jLabel34)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1000,7 +1012,8 @@ public class POS extends javax.swing.JFrame {
                         .addComponent(rSLabelIcon17, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         rSPanelGradiente3Layout.setVerticalGroup(
             rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1009,14 +1022,6 @@ public class POS extends javax.swing.JFrame {
                     .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(rSLabelIcon13, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(rSLabelIcon16, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1048,25 +1053,35 @@ public class POS extends javax.swing.JFrame {
                             .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
                                 .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rSLabelIcon16, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        dashboardview.add(rSPanelGradiente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 108));
 
         rSPanelShadow1.setBackground(new java.awt.Color(242, 244, 242));
         rSPanelShadow1.add(rSPanelsSlider2, java.awt.BorderLayout.LINE_START);
 
         rSPanelsSlider3.setBackground(new java.awt.Color(255, 255, 255));
+        rSPanelsSlider3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        rSPanelShadow1.add(rSPanelsSlider3, java.awt.BorderLayout.CENTER);
 
         rSPanel1.setBackground(new java.awt.Color(242, 244, 242));
         rSPanel1.setColorBackground(new java.awt.Color(242, 244, 242));
-        rSPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         JTableBancos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "CódigoProducto", "Nombre", "Precio", "Cantidad", "Descuento", "Subtotal"
+                "CódigoProducto", "Nombre", "Precio", "Cantidad", "Proveedor", "Subtotal"
             }
         ) {
             Class[] types = new Class [] {
@@ -1107,25 +1122,20 @@ public class POS extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(JTableBancos);
 
-        rSPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 790, 290));
-
         jLabel8.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(102, 0, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("0");
-        rSPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 180, 20));
 
         jLabel32.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(102, 0, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel32.setText("N. ORDEN:");
-        rSPanel1.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, 120, 20));
+        jLabel32.setText("N. COMPRA:");
 
         jLabel33.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(102, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel33.setText("0");
-        rSPanel1.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 50, 180, 20));
 
         rSPanelGradiente1.setColorPrimario(new java.awt.Color(51, 153, 255));
         rSPanelGradiente1.setColorSecundario(new java.awt.Color(20, 101, 187));
@@ -1160,15 +1170,15 @@ public class POS extends javax.swing.JFrame {
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel23.setText("0.00");
 
-        jLabel18.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel18.setText("0.00");
-
         jLabel19.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel19.setText("Descuento:");
+
+        jLabel18.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel18.setText("0.00");
 
         jLabel26.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
@@ -1180,11 +1190,6 @@ public class POS extends javax.swing.JFrame {
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel20.setText("Total:");
 
-        jLabel22.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("0.00");
-
         jLabel25.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -1195,42 +1200,47 @@ public class POS extends javax.swing.JFrame {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel13.setText("Productos con ISV incluido");
 
+        jLabel22.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel22.setText("0.00");
+
         javax.swing.GroupLayout rSPanelGradiente1Layout = new javax.swing.GroupLayout(rSPanelGradiente1);
         rSPanelGradiente1.setLayout(rSPanelGradiente1Layout);
         rSPanelGradiente1Layout.setHorizontalGroup(
             rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
                 .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
                         .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7)
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel13))
                     .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
                         .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7)
+                        .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(291, 291, 291)
+                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel25)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
-                .addContainerGap(23, Short.MAX_VALUE))
+                                .addGap(281, 281, 281)
+                                .addComponent(jLabel25))
+                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
+                                .addGap(301, 301, 301)
+                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         rSPanelGradiente1Layout.setVerticalGroup(
             rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1238,221 +1248,97 @@ public class POS extends javax.swing.JFrame {
                 .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelGradiente1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
+                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(7, 7, 7)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
+                                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(7, 7, 7)
+                                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
-
-        rSPanel1.add(rSPanelGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 830, 130));
 
         jLabel29.setFont(new java.awt.Font("Franklin Gothic Book", 3, 24)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(102, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("DETALLE DE ORDEN");
-        rSPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 300, 20));
-        rSPanel1.add(rSPanelsSlider1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 70, -1, -1));
+        jLabel29.setText("DETALLE DE COMPRA");
 
         jLabel30.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(102, 0, 255));
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel30.setText("Total Productos:");
-        rSPanel1.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 200, 20));
 
-        javax.swing.GroupLayout rSPanelsSlider3Layout = new javax.swing.GroupLayout(rSPanelsSlider3);
-        rSPanelsSlider3.setLayout(rSPanelsSlider3Layout);
-        rSPanelsSlider3Layout.setHorizontalGroup(
-            rSPanelsSlider3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout rSPanel1Layout = new javax.swing.GroupLayout(rSPanel1);
+        rSPanel1.setLayout(rSPanel1Layout);
+        rSPanel1Layout.setHorizontalGroup(
+            rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanel1Layout.createSequentialGroup()
+                .addGroup(rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(rSPanel1Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addGroup(rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(rSPanel1Layout.createSequentialGroup()
+                                .addGap(130, 130, 130)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(rSPanel1Layout.createSequentialGroup()
+                                .addGap(80, 80, 80)
+                                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(rSPanelsSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(rSPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(rSPanel1Layout.createSequentialGroup()
+                        .addGap(168, 168, 168)
+                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(rSPanelGradiente1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        rSPanelsSlider3Layout.setVerticalGroup(
-            rSPanelsSlider3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelsSlider3Layout.createSequentialGroup()
-                .addComponent(rSPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+        rSPanel1Layout.setVerticalGroup(
+            rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(rSPanelsSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rSPanelGradiente1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        rSPanelShadow1.add(rSPanelsSlider3, java.awt.BorderLayout.CENTER);
+        rSPanelShadow1.add(rSPanel1, java.awt.BorderLayout.PAGE_START);
+
+        dashboardview.add(rSPanelShadow1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 120, 640, -1));
 
         rSPanel2.setBackground(new java.awt.Color(242, 244, 242));
         rSPanel2.setForeground(new java.awt.Color(0, 102, 102));
         rSPanel2.setColorBackground(new java.awt.Color(242, 244, 242));
         rSPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        rSButtonGradiente4.setForeground(new java.awt.Color(0, 102, 102));
-        rSButtonGradiente4.setText("9");
-        rSButtonGradiente4.setColorPrimario(new java.awt.Color(255, 255, 255));
-        rSButtonGradiente4.setColorPrimarioHover(new java.awt.Color(242, 244, 242));
-        rSButtonGradiente4.setColorSecundario(new java.awt.Color(204, 240, 255));
-        rSButtonGradiente4.setColorSecundarioHover(new java.awt.Color(204, 204, 204));
-        rSButtonGradiente4.setFocusPainted(false);
-        rSButtonGradiente4.setFocusable(false);
-        rSButtonGradiente4.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        rSButtonGradiente4.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
-        rSButtonGradiente4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonGradiente4ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonGradiente4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 70, 60));
-
-        rSButtonGradiente5.setForeground(new java.awt.Color(0, 102, 102));
-        rSButtonGradiente5.setText("7");
-        rSButtonGradiente5.setColorPrimario(new java.awt.Color(255, 255, 255));
-        rSButtonGradiente5.setColorPrimarioHover(new java.awt.Color(242, 244, 242));
-        rSButtonGradiente5.setColorSecundario(new java.awt.Color(204, 240, 255));
-        rSButtonGradiente5.setColorSecundarioHover(new java.awt.Color(204, 204, 204));
-        rSButtonGradiente5.setFocusPainted(false);
-        rSButtonGradiente5.setFocusable(false);
-        rSButtonGradiente5.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        rSButtonGradiente5.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
-        rSButtonGradiente5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rSButtonGradiente5MouseClicked(evt);
-            }
-        });
-        rSButtonGradiente5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonGradiente5ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonGradiente5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 70, 60));
-
-        rSButtonGradiente6.setForeground(new java.awt.Color(0, 102, 102));
-        rSButtonGradiente6.setText("8");
-        rSButtonGradiente6.setColorPrimario(new java.awt.Color(255, 255, 255));
-        rSButtonGradiente6.setColorPrimarioHover(new java.awt.Color(242, 244, 242));
-        rSButtonGradiente6.setColorSecundario(new java.awt.Color(204, 240, 255));
-        rSButtonGradiente6.setColorSecundarioHover(new java.awt.Color(204, 204, 204));
-        rSButtonGradiente6.setFocusPainted(false);
-        rSButtonGradiente6.setFocusable(false);
-        rSButtonGradiente6.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        rSButtonGradiente6.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
-        rSButtonGradiente6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonGradiente6ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonGradiente6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, 70, 60));
-
-        rSButtonGradiente7.setForeground(new java.awt.Color(0, 102, 102));
-        rSButtonGradiente7.setText("4");
-        rSButtonGradiente7.setColorPrimario(new java.awt.Color(255, 255, 255));
-        rSButtonGradiente7.setColorPrimarioHover(new java.awt.Color(242, 244, 242));
-        rSButtonGradiente7.setColorSecundario(new java.awt.Color(204, 240, 255));
-        rSButtonGradiente7.setColorSecundarioHover(new java.awt.Color(204, 204, 204));
-        rSButtonGradiente7.setFocusPainted(false);
-        rSButtonGradiente7.setFocusable(false);
-        rSButtonGradiente7.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        rSButtonGradiente7.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
-        rSButtonGradiente7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonGradiente7ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonGradiente7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 70, 60));
-
-        rSButtonGradiente8.setForeground(new java.awt.Color(0, 102, 102));
-        rSButtonGradiente8.setText("5");
-        rSButtonGradiente8.setColorPrimario(new java.awt.Color(255, 255, 255));
-        rSButtonGradiente8.setColorPrimarioHover(new java.awt.Color(242, 244, 242));
-        rSButtonGradiente8.setColorSecundario(new java.awt.Color(204, 240, 255));
-        rSButtonGradiente8.setColorSecundarioHover(new java.awt.Color(204, 204, 204));
-        rSButtonGradiente8.setFocusPainted(false);
-        rSButtonGradiente8.setFocusable(false);
-        rSButtonGradiente8.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        rSButtonGradiente8.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
-        rSButtonGradiente8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonGradiente8ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonGradiente8, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 70, 60));
-
-        rSButtonGradiente9.setForeground(new java.awt.Color(0, 102, 102));
-        rSButtonGradiente9.setText("6");
-        rSButtonGradiente9.setColorPrimario(new java.awt.Color(255, 255, 255));
-        rSButtonGradiente9.setColorPrimarioHover(new java.awt.Color(242, 244, 242));
-        rSButtonGradiente9.setColorSecundario(new java.awt.Color(204, 240, 255));
-        rSButtonGradiente9.setColorSecundarioHover(new java.awt.Color(204, 204, 204));
-        rSButtonGradiente9.setFocusPainted(false);
-        rSButtonGradiente9.setFocusable(false);
-        rSButtonGradiente9.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        rSButtonGradiente9.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
-        rSButtonGradiente9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonGradiente9ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonGradiente9, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 70, 60));
-
-        rSButtonGradiente10.setForeground(new java.awt.Color(0, 102, 102));
-        rSButtonGradiente10.setText("1");
-        rSButtonGradiente10.setColorPrimario(new java.awt.Color(255, 255, 255));
-        rSButtonGradiente10.setColorPrimarioHover(new java.awt.Color(242, 244, 242));
-        rSButtonGradiente10.setColorSecundario(new java.awt.Color(204, 240, 255));
-        rSButtonGradiente10.setColorSecundarioHover(new java.awt.Color(204, 204, 204));
-        rSButtonGradiente10.setFocusPainted(false);
-        rSButtonGradiente10.setFocusable(false);
-        rSButtonGradiente10.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        rSButtonGradiente10.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
-        rSButtonGradiente10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonGradiente10ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonGradiente10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 70, 60));
-
-        rSButtonGradiente11.setForeground(new java.awt.Color(0, 102, 102));
-        rSButtonGradiente11.setText("2");
-        rSButtonGradiente11.setColorPrimario(new java.awt.Color(255, 255, 255));
-        rSButtonGradiente11.setColorPrimarioHover(new java.awt.Color(242, 244, 242));
-        rSButtonGradiente11.setColorSecundario(new java.awt.Color(204, 240, 255));
-        rSButtonGradiente11.setColorSecundarioHover(new java.awt.Color(204, 204, 204));
-        rSButtonGradiente11.setFocusPainted(false);
-        rSButtonGradiente11.setFocusable(false);
-        rSButtonGradiente11.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        rSButtonGradiente11.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
-        rSButtonGradiente11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonGradiente11ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonGradiente11, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 70, 60));
-
-        rSButtonGradiente12.setForeground(new java.awt.Color(0, 102, 102));
-        rSButtonGradiente12.setText("3");
-        rSButtonGradiente12.setColorPrimario(new java.awt.Color(255, 255, 255));
-        rSButtonGradiente12.setColorPrimarioHover(new java.awt.Color(242, 244, 242));
-        rSButtonGradiente12.setColorSecundario(new java.awt.Color(204, 240, 255));
-        rSButtonGradiente12.setColorSecundarioHover(new java.awt.Color(204, 204, 204));
-        rSButtonGradiente12.setFocusPainted(false);
-        rSButtonGradiente12.setFocusable(false);
-        rSButtonGradiente12.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        rSButtonGradiente12.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
-        rSButtonGradiente12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonGradiente12ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonGradiente12, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 350, 70, 60));
 
         JTextbuscar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
@@ -1467,13 +1353,13 @@ public class POS extends javax.swing.JFrame {
                 JTextbuscarKeyReleased(evt);
             }
         });
-        rSPanel2.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 190, -1));
+        rSPanel2.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 190, -1));
 
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Book", 2, 16)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(102, 0, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Productos");
-        rSPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 110, 40));
+        rSPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 110, 40));
 
         JTableBancos1.setForeground(new java.awt.Color(204, 204, 204));
         JTableBancos1.setModel(new javax.swing.table.DefaultTableModel(
@@ -1516,7 +1402,7 @@ public class POS extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(JTableBancos1);
 
-        rSPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 470, 110));
+        rSPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 540, 110));
 
         rSButtonHover1.setBackground(new java.awt.Color(255, 0, 102));
         rSButtonHover1.setText("-");
@@ -1526,58 +1412,7 @@ public class POS extends javax.swing.JFrame {
                 rSButtonHover1ActionPerformed(evt);
             }
         });
-        rSPanel2.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 50, -1));
-
-        rSButtonGradiente13.setForeground(new java.awt.Color(0, 102, 102));
-        rSButtonGradiente13.setText("C");
-        rSButtonGradiente13.setColorPrimario(new java.awt.Color(255, 255, 255));
-        rSButtonGradiente13.setColorPrimarioHover(new java.awt.Color(242, 244, 242));
-        rSButtonGradiente13.setColorSecundario(new java.awt.Color(204, 240, 255));
-        rSButtonGradiente13.setColorSecundarioHover(new java.awt.Color(204, 204, 204));
-        rSButtonGradiente13.setFocusPainted(false);
-        rSButtonGradiente13.setFocusable(false);
-        rSButtonGradiente13.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        rSButtonGradiente13.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
-        rSButtonGradiente13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonGradiente13ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonGradiente13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 70, 60));
-
-        rSButtonGradiente14.setForeground(new java.awt.Color(0, 102, 102));
-        rSButtonGradiente14.setText("0");
-        rSButtonGradiente14.setColorPrimario(new java.awt.Color(255, 255, 255));
-        rSButtonGradiente14.setColorPrimarioHover(new java.awt.Color(242, 244, 242));
-        rSButtonGradiente14.setColorSecundario(new java.awt.Color(204, 240, 255));
-        rSButtonGradiente14.setColorSecundarioHover(new java.awt.Color(204, 204, 204));
-        rSButtonGradiente14.setFocusPainted(false);
-        rSButtonGradiente14.setFocusable(false);
-        rSButtonGradiente14.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        rSButtonGradiente14.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
-        rSButtonGradiente14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonGradiente14ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonGradiente14, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 420, 70, 60));
-
-        rSButtonGradiente15.setForeground(new java.awt.Color(0, 102, 102));
-        rSButtonGradiente15.setText(".");
-        rSButtonGradiente15.setColorPrimario(new java.awt.Color(255, 255, 255));
-        rSButtonGradiente15.setColorPrimarioHover(new java.awt.Color(242, 244, 242));
-        rSButtonGradiente15.setColorSecundario(new java.awt.Color(204, 240, 255));
-        rSButtonGradiente15.setColorSecundarioHover(new java.awt.Color(204, 204, 204));
-        rSButtonGradiente15.setFocusPainted(false);
-        rSButtonGradiente15.setFocusable(false);
-        rSButtonGradiente15.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        rSButtonGradiente15.setGradiente(rsbuttongradiente.RSButtonGradiente.Gradiente.HORIZONTAL);
-        rSButtonGradiente15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonGradiente15ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonGradiente15, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, 70, 60));
+        rSPanel2.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 50, -1));
 
         rSButtonIcon_new12.setBackground(new java.awt.Color(20, 101, 187));
         rSButtonIcon_new12.setText("Ver Todos");
@@ -1588,18 +1423,7 @@ public class POS extends javax.swing.JFrame {
                 rSButtonIcon_new12ActionPerformed(evt);
             }
         });
-        rSPanel2.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 150, -1));
-
-        rSButtonIcon_new13.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIcon_new13.setText("Limpiar Orden");
-        rSButtonIcon_new13.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLEAR_ALL);
-        rSButtonIcon_new13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new13ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonIcon_new13, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, 220, -1));
+        rSPanel2.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 150, -1));
 
         rSButtonHover4.setText("+");
         rSButtonHover4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -1608,113 +1432,159 @@ public class POS extends javax.swing.JFrame {
                 rSButtonHover4ActionPerformed(evt);
             }
         });
-        rSPanel2.add(rSButtonHover4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 50, -1));
-
-        rSButtonIcon_new14.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIcon_new14.setText("Cancelar Orden");
-        rSButtonIcon_new14.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new14.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
-        rSButtonIcon_new14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new14ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonIcon_new14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 220, -1));
-
-        rSButtonIcon_new15.setBackground(new java.awt.Color(0, 204, 102));
-        rSButtonIcon_new15.setText("Enviar Orden");
-        rSButtonIcon_new15.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new15.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
-        rSButtonIcon_new15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new15ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonIcon_new15, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 220, -1));
-
-        rSButtonIcon_new16.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIcon_new16.setText("Limpiar Buscador");
-        rSButtonIcon_new16.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE_SWEEP);
-        rSButtonIcon_new16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new16ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonIcon_new16, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 420, 220, -1));
-
-        rSButtonIcon_new17.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIcon_new17.setText("Quitar producto");
-        rSButtonIcon_new17.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE_FOREVER);
-        rSButtonIcon_new17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new17ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonIcon_new17, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 220, -1));
+        rSPanel2.add(rSButtonHover4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 50, -1));
 
         jLabel14.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(102, 0, 255));
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel14.setText("Buscador");
-        rSPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 40));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("Observaciones");
+        rSPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 190, 30));
 
         jLabel15.setFont(new java.awt.Font("Franklin Gothic Book", 2, 16)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(102, 0, 255));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Acciones");
-        rSPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 110, 40));
+        rSPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 110, 40));
 
-        rSPanelShadow2.add(rSPanel2, java.awt.BorderLayout.PAGE_START);
+        rSPanelForma3.setBackground(new java.awt.Color(255, 255, 255));
+        rSPanelForma3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
-        dashboardview.setLayout(dashboardviewLayout);
-        dashboardviewLayout.setHorizontalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelGradiente3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rSPanelShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(rSPanelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        dashboardviewLayout.setVerticalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addComponent(rSPanelGradiente3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rSPanelShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSPanelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
+        jLabel50.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel50.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel50.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel50.setText("Forma de Pago");
+        rSPanelForma3.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 11, 130, 20));
+
+        rSRadioButton1.setText("TARJETA");
+        rSRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        rSRadioButton1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButton1ActionPerformed(evt);
+            }
+        });
+        rSPanelForma3.add(rSRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 110, -1));
+
+        rSRadioButton2.setText("EFECTIVO");
+        rSRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        rSRadioButton2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButton2ActionPerformed(evt);
+            }
+        });
+        rSPanelForma3.add(rSRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 38, 110, -1));
+
+        jLabel51.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
+        jLabel51.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel51.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel51.setText("Ingrese la cantidad de efectivo recibido:");
+        rSPanelForma3.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 370, 20));
+
+        JTextbuscar1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        JTextbuscar1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
+        JTextbuscar1.setPlaceholder("Efectivo recibido");
+        JTextbuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTextbuscar1ActionPerformed(evt);
+            }
+        });
+        JTextbuscar1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTextbuscar1KeyReleased(evt);
+            }
+        });
+        rSPanelForma3.add(JTextbuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 188, -1));
+
+        rSButtonIcon_new18.setBackground(new java.awt.Color(0, 102, 204));
+        rSButtonIcon_new18.setText("Pagar");
+        rSButtonIcon_new18.setAlignmentX(0.5F);
+        rSButtonIcon_new18.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSButtonIcon_new18.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEND);
+        rSButtonIcon_new18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new18ActionPerformed(evt);
+            }
+        });
+        rSPanelForma3.add(rSButtonIcon_new18, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 108, -1));
+
+        rSRadioButton3.setText("MIXTO");
+        rSRadioButton3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        rSRadioButton3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSRadioButton3ActionPerformed(evt);
+            }
+        });
+        rSPanelForma3.add(rSRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 100, -1));
+
+        rSPanel2.add(rSPanelForma3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, 350, 200));
+
+        rSLabelFecha1.setFormato("yyyy/MM/dd");
+        rSPanel2.add(rSLabelFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 80, 20));
+        rSPanel2.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 0, 90, 40));
+
+        jLabel47.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
+        jLabel47.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel47.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel47.setText("Fecha de Compra:");
+        rSPanel2.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, 20));
+
+        jLabel48.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
+        jLabel48.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel48.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel48.setText("Hora:");
+        rSPanel2.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 40, 20));
+
+        jLabel16.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel16.setText("Buscador");
+        rSPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 100, 40));
+
+        JEstado.setBorder(null);
+        JEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JEstadoActionPerformed(evt);
+            }
+        });
+        rSPanel2.add(JEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 180, 30));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        rSPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 290, 60));
+
+        jLabel31.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("Forma de Envio");
+        rSPanel2.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 120, 30));
+
+        rSPanelShadow2.add(rSPanel2, java.awt.BorderLayout.CENTER);
+
+        dashboardview.add(rSPanelShadow2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 110, 730, 493));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dashboardview, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(Header, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1348, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1336, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(7, 7, 7)
+                .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1730,7 +1600,7 @@ public class POS extends javax.swing.JFrame {
             con.close();
             System.exit(0);
         } catch (SQLException ex) {
-            Logger.getLogger(POS.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Compras.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
@@ -1739,17 +1609,6 @@ public class POS extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setExtendedState(ICONIFIED);
     }//GEN-LAST:event_rSButtonIconOne5ActionPerformed
-
-    private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
-        // TODO add your handling code here:
-         try {
-            // TODO add your handling code here:
-            con.close();
-            regresar();
-        } catch (SQLException ex) {
-            Logger.getLogger(POS.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_rSButtonIcon_new14ActionPerformed
 
     private void rSButtonHover4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover4ActionPerformed
         // TODO add your handling code here:
@@ -1790,30 +1649,9 @@ public class POS extends javax.swing.JFrame {
         
     }//GEN-LAST:event_rSButtonHover4ActionPerformed
 
-    private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
-        // TODO add your handling code here:
-        limpiartabla2();
-    }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
-
     private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
-
-    private void rSButtonGradiente15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente15ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rSButtonGradiente15ActionPerformed
-
-    private void rSButtonGradiente14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente14ActionPerformed
-        // TODO add your handling code here:
-    
-        String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"0");
-    }//GEN-LAST:event_rSButtonGradiente14ActionPerformed
-
-    private void rSButtonGradiente13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente13ActionPerformed
-        // TODO add your handling code here:
-        JTextbuscar.setText("");
-    }//GEN-LAST:event_rSButtonGradiente13ActionPerformed
 
     private void JTableBancos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancos1MouseClicked
         // TODO add your handling code here:
@@ -1821,61 +1659,6 @@ public class POS extends javax.swing.JFrame {
         codigop =  JTableBancos1.getValueAt(seleccion2,0 ).toString();
  
     }//GEN-LAST:event_JTableBancos1MouseClicked
-
-    private void rSButtonGradiente12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente12ActionPerformed
-        // TODO add your handling code here:
-          String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"3");
-    }//GEN-LAST:event_rSButtonGradiente12ActionPerformed
-
-    private void rSButtonGradiente11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente11ActionPerformed
-        // TODO add your handling code here:
-          String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"2");
-    }//GEN-LAST:event_rSButtonGradiente11ActionPerformed
-
-    private void rSButtonGradiente10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente10ActionPerformed
-        // TODO add your handling code here:
-          String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"1");
-    }//GEN-LAST:event_rSButtonGradiente10ActionPerformed
-
-    private void rSButtonGradiente9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente9ActionPerformed
-        // TODO add your handling code here:
-          String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"6");
-    }//GEN-LAST:event_rSButtonGradiente9ActionPerformed
-
-    private void rSButtonGradiente8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente8ActionPerformed
-        // TODO add your handling code here:
-          String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"5");
-    }//GEN-LAST:event_rSButtonGradiente8ActionPerformed
-
-    private void rSButtonGradiente7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente7ActionPerformed
-        // TODO add your handling code here:
-          String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"4");
-    }//GEN-LAST:event_rSButtonGradiente7ActionPerformed
-
-    private void rSButtonGradiente6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente6ActionPerformed
-        // TODO add your handling code here:
-          String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"8");
-    }//GEN-LAST:event_rSButtonGradiente6ActionPerformed
-
-    private void rSButtonGradiente5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente5ActionPerformed
-        // TODO add your handling code here:
-          String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"7");
-      
-    }//GEN-LAST:event_rSButtonGradiente5ActionPerformed
-
-    private void rSButtonGradiente4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente4ActionPerformed
-        // TODO add your handling code here:
-          String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"9");
-    }//GEN-LAST:event_rSButtonGradiente4ActionPerformed
 
     private void JTableBancosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancosMouseClicked
         // TODO add your handling code here:
@@ -1899,47 +1682,6 @@ public class POS extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
         }
     }//GEN-LAST:event_rSButtonHover1ActionPerformed
-
-    private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new15ActionPerformed
-        try {
-            // TODO add your handling code here:
-            TipoVenta vo = new TipoVenta();
-            vo.setTablaorden(JTableBancos);
-            vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(),jLabel23.getText(),jLabel22.getText(),jLabel8.getText(),jLabel28.getText(),jLabel18.getText());
-            vo.setVisible(true);
-            con.close();
-            this.dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(POS.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_rSButtonIcon_new15ActionPerformed
-
-    private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
-        // TODO add your handling code here:
-        limpiartabla();
-        JTextbuscar.setText("");
-        codigop=null;
-    }//GEN-LAST:event_rSButtonIcon_new16ActionPerformed
-
-    private void rSButtonIcon_new17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new17ActionPerformed
-        // TODO add your handling code here:
-        
-          if(codigop1!=null){
-            QuitarproductoId(Integer.valueOf(codigop1));
-            sumarcantidadproductos();
-            sumarsubtotal();
-            sumarisv();
-            total();
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
-        }
-    }//GEN-LAST:event_rSButtonIcon_new17ActionPerformed
-
-    private void rSButtonGradiente5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSButtonGradiente5MouseClicked
-        // TODO add your handling code here:
-        
-     
-    }//GEN-LAST:event_rSButtonGradiente5MouseClicked
 
     private void JTableBancosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTableBancosKeyReleased
         // TODO add your handling code here:
@@ -2009,6 +1751,139 @@ public class POS extends javax.swing.JFrame {
 
     }//GEN-LAST:event_JTextbuscarActionPerformed
 
+    private void rSRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton1ActionPerformed
+        // TODO add your handling code here:
+        rSRadioButton2.setSelected(false);
+        rSRadioButton3.setSelected(false);
+        jLabel51.setVisible(false);
+        JTextbuscar.setVisible(false);
+        rSButtonIcon_new18.setLocation(149,111);
+        rSButtonIcon_new18.setVisible(true);
+
+    }//GEN-LAST:event_rSRadioButton1ActionPerformed
+
+    private void rSRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton2ActionPerformed
+        // TODO add your handling code here:
+        rSRadioButton1.setSelected(false);
+        rSRadioButton3.setSelected(false);
+        jLabel51.setVisible(true);
+        JTextbuscar.setVisible(true);
+        rSButtonIcon_new18.setLocation(250,130);
+        rSButtonIcon_new18.setVisible(true);
+    }//GEN-LAST:event_rSRadioButton2ActionPerformed
+
+    private void JTextbuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscar1ActionPerformed
+
+    }//GEN-LAST:event_JTextbuscar1ActionPerformed
+
+    private void JTextbuscar1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscar1KeyReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_JTextbuscar1KeyReleased
+
+    private void rSButtonIcon_new18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new18ActionPerformed
+        // TODO add your handling code here:
+       /* if(rSRadioButton2.isSelected()){
+            if(JTextbuscar.getText().length()>0){
+                if(tipodeVenta==1){
+                    insertarOrden();
+                    enviarDetallesOrden();
+                    if(estadodetalleorden==true && estadoorden==true){
+
+                        enviarActualizacionExistencia();
+                        actualizartotalcaja();
+                        if(estadototalcaja==true){
+                            actualizarHistoriaCaja();
+                            VentanaEmergente1 ve = new VentanaEmergente1();
+                            ve.setVisible(true);
+                        }
+
+                        calcularcambio();
+                        rSPanelForma3.setVisible(false);
+                        rSPanelForma6.setVisible(true);
+                    }
+
+                }else{
+                    if(tipodeVenta==2){
+                        insertarOrden();
+                        enviarDetallesOrden();
+                        insertarEnvio();
+                        if(estadodetalleorden==true && estadoorden==true){
+                            enviarActualizacionExistencia();
+                            actualizartotalcaja();
+                            if(estadototalcaja==true){
+                                actualizarHistoriaCaja();
+                                VentanaEmergente1 ve = new VentanaEmergente1();
+                                ve.setVisible(true);
+                            }
+
+                            calcularcambio();
+                            rSPanelForma3.setVisible(false);
+                            rSPanelForma6.setVisible(true);
+                        }
+                    }
+                }
+
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Ingrese un valor de efectivo");
+            }
+        }else{
+            if(tipodeVenta==1){
+                insertarOrden();
+                enviarDetallesOrden();
+                if(estadodetalleorden==true && estadoorden==true){
+
+                    enviarActualizacionExistencia();
+                    actualizartotalcaja();
+                    if(estadototalcaja==true){
+                        actualizarHistoriaCaja();
+                        VentanaEmergente1 ve = new VentanaEmergente1();
+                        ve.setVisible(true);
+                    }
+
+                    calcularcambio();
+                    rSPanelForma3.setVisible(false);
+                    rSPanelForma6.setVisible(true);
+                }
+
+            }else{
+                if(tipodeVenta==2){
+                    insertarOrden();
+                    enviarDetallesOrden();
+                    insertarEnvio();
+                    if(estadodetalleorden==true && estadoorden==true){
+                        enviarActualizacionExistencia();
+                        actualizartotalcaja();
+                        if(estadototalcaja==true){
+                            actualizarHistoriaCaja();
+                            VentanaEmergente1 ve = new VentanaEmergente1();
+                            ve.setVisible(true);
+                        }
+
+                        calcularcambio();
+                        rSPanelForma3.setVisible(false);
+                        rSPanelForma6.setVisible(true);
+                    }
+                }
+            }
+        }*/
+
+    }//GEN-LAST:event_rSButtonIcon_new18ActionPerformed
+
+    private void rSRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton3ActionPerformed
+        // TODO add your handling code here:
+        rSRadioButton1.setSelected(false);
+        rSRadioButton2.setSelected(false);
+        jLabel51.setVisible(false);
+        JTextbuscar.setVisible(false);
+        rSButtonIcon_new18.setLocation(149,111);
+        rSButtonIcon_new18.setVisible(true);
+    }//GEN-LAST:event_rSRadioButton3ActionPerformed
+
+    private void JEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JEstadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2026,36 +1901,41 @@ public class POS extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(POS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Compras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(POS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Compras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(POS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Compras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(POS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Compras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new POS().setVisible(true);
+                new Compras().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Header;
+    private rojerusan.RSComboMetro JEstado;
     private rojerusan.RSTableMetro1 JTableBancos;
     private rojerusan.RSTableMetro1 JTableBancos1;
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
+    private RSMaterialComponent.RSTextFieldIconUno JTextbuscar1;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -2070,6 +1950,7 @@ public class POS extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
@@ -2085,39 +1966,31 @@ public class POS extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel linesetting3;
     private javax.swing.JPanel linesetting4;
     private javax.swing.JPanel linesetting5;
-    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente10;
-    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente11;
-    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente12;
-    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente13;
-    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente14;
-    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente15;
-    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente4;
-    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente5;
-    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente6;
-    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente7;
-    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente8;
-    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente9;
     private rojeru_san.complementos.RSButtonHover rSButtonHover1;
     private rojeru_san.complementos.RSButtonHover rSButtonHover4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new13;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new14;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new15;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new16;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new17;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new18;
+    private rojeru_san.RSLabelFecha rSLabelFecha1;
+    private rojeru_san.rsdate.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon13;
     private rojerusan.RSLabelIcon rSLabelIcon14;
     private rojerusan.RSLabelIcon rSLabelIcon15;
@@ -2125,6 +1998,7 @@ public class POS extends javax.swing.JFrame {
     private rojerusan.RSLabelIcon rSLabelIcon17;
     private necesario.RSPanel rSPanel1;
     private necesario.RSPanel rSPanel2;
+    private rojeru_san.rspanel.RSPanelForma rSPanelForma3;
     private rspanelgradiente.RSPanelGradiente rSPanelGradiente1;
     private rspanelgradiente.RSPanelGradiente rSPanelGradiente3;
     private necesario.RSPanelShadow rSPanelShadow1;
@@ -2133,5 +2007,8 @@ public class POS extends javax.swing.JFrame {
     private rojerusan.RSPanelsSlider rSPanelsSlider1;
     private rojerusan.RSPanelsSlider rSPanelsSlider2;
     private rojerusan.RSPanelsSlider rSPanelsSlider3;
+    private rojerusan.RSRadioButton rSRadioButton1;
+    private rojerusan.RSRadioButton rSRadioButton2;
+    private rojerusan.RSRadioButton rSRadioButton3;
     // End of variables declaration//GEN-END:variables
 }
