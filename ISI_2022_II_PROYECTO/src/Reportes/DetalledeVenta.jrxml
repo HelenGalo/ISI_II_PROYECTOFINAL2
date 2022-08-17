@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f16f63f8-a741-4479-a129-44272d29e38f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="NFactura" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select dv.IdProducto, p.Nombre, p.Precio, dv.Cantidad, dv.Descuento, dv.Subtotal from DetalledeVenta dv
+INNER JOIN Productos p ON p.IdProducto = dv.IdProducto
+INNER JOIN Ventas v ON v.IdOrden = dv.idOrden
+INNER JOIN Factura f ON f.IdOrden = v.IdOrden
+Where f.IdFactura=$P{NFactura}]]>
+	</queryString>
+	<field name="IdProducto" class="java.lang.Integer"/>
+	<field name="Nombre" class="java.lang.String"/>
+	<field name="Precio" class="java.lang.Float"/>
+	<field name="Cantidad" class="java.lang.Integer"/>
+	<field name="Descuento" class="java.lang.Float"/>
+	<field name="Subtotal" class="java.lang.Float"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="36428dbf-2d67-4d0a-99aa-1b6b711bdaba" x="0" y="0" width="49" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{IdProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ec8738ad-4182-4804-ab33-50c3981ff29b" x="49" y="0" width="239" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8f63fc57-f2ba-4f24-b402-6492dca848c3" x="476" y="0" width="79" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Subtotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="03e62443-386a-477d-aba4-958c440bbbe7" x="409" y="0" width="67" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Descuento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4992c8b3-947a-47e7-a971-12e6fd27a594" x="355" y="0" width="54" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b0fd9e74-3066-42a8-b6ea-518d7cea52df" x="288" y="0" width="67" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Precio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
