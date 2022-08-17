@@ -7,6 +7,7 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ConfirmacionGuardar;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionModificar;
 import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -26,32 +27,34 @@ import rojerusan.RSEffectFade;
  *
  * @author Edwin Rafael
  */
-public class AgregarCategoria extends javax.swing.JFrame {
+public class ActualizarCategoria extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
 
-    int id;
+    int id=0;
+     String codiap;
       String categoria;
      public void setId(int id) {
         this.id = id;
     }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+       public void setCategoria(String Categoria) {
+        this.codiap = Categoria;
     }
-    
-    
-    boolean estadoagregar=false;
 
-    public void setEstadoagregar(boolean estadoagregar) {
-        this.estadoagregar = estadoagregar;
+  
+    
+    
+   boolean estadosModificar=false;
+
+    public void setEstadosModificar(boolean estadosModificar) {
+        this.estadosModificar = estadosModificar;
     }
 
    
     /**
      * Creates new form CalendarForm
      */
-    public AgregarCategoria() {
+    public ActualizarCategoria() {
         RSUtilities.setFullScreenJFrame(this);
         initComponents();
        inicializar();
@@ -62,13 +65,13 @@ public class AgregarCategoria extends javax.swing.JFrame {
         avisoT1.setVisible(false);
          setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());    
     }
-      public void validarConfirmacion(){
-        if(estadoagregar=true){
-            insertar();
+          public void validarConfirmacion(){
+        if(estadosModificar=true){
+            actualizar();
         }
     }
         public void inicializar(){
-       JCodigoDisponible.setText(categoria);
+       JCodigoDisponible.setText(codiap);
     }
       public void buscardatos(){
           String SQL = "SELECT * FROM Categorias WHERE IdCategoria=(SELECT max(IdCategoria) FROM Categorias)";
@@ -97,26 +100,47 @@ public class AgregarCategoria extends javax.swing.JFrame {
         }
     }
    
-    public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
-      public boolean insertar(){
+    public void mostrar(){
+           String nombre="";
+           String descrip="";
+     
+       
+        String SQL = "SELECT  c.NombreCategoria, c.Descripcion  FROM Categorias c\n" +
+               
+                      "WHERE c.IdCategoria="+id;
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+            nombre= rs.getString("c.NombreCategoria");
+            descrip = rs.getString("c.Descripcion");
+       
+               
+             } 
+            Nombre.setText(nombre);
+               Cant1.setText(descrip);
+              JCodigoDisponible.setText(String.valueOf(id));
+    
+          } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+        
+     public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
+      public boolean actualizar(){
         String nombre=""; 
         String descrip="";
- 
-     
-   
-       nombre= Nombre.getText();
-        descrip=Cant1.getText();
         
- 
-   
+    
         
-        String SQL = "INSERT INTO Categorias(IdCategoria,NombreCategoria,Descripcion) VALUES"
-                + "(?, ?, ?)";
+        String SQL = "UPDATE  Caategorias SET NombreCategoria=?,Descripcion=? WHERE IdCategoria="+"'"+id+"'";
+           
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
-            preparedStmt.setInt(1, id);
-            preparedStmt.setString(2, nombre);
-            preparedStmt.setString(3, descrip);  
+         
+            preparedStmt.setString (1, nombre);
+            preparedStmt.setString   (2,descrip );
             preparedStmt.execute();
             
            VentanaEmergente1 ve = new VentanaEmergente1();
@@ -233,11 +257,11 @@ public class AgregarCategoria extends javax.swing.JFrame {
         producto = new javax.swing.JLabel();
         Nombre = new rojeru_san.RSMTextFull();
         Cant1 = new rojeru_san.RSMTextFull();
-        guardar = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new3 = new newscomponents.RSButtonIcon_new();
         rSPanelCircle1 = new rojeru_san.rspanel.RSPanelCircle();
         JCodigoDisponible = new javax.swing.JLabel();
         avisoT1 = new javax.swing.JLabel();
+        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -500,17 +524,6 @@ public class AgregarCategoria extends javax.swing.JFrame {
         });
         jPanel3.add(Cant1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, 370, 40));
 
-        guardar.setBackground(new java.awt.Color(0, 55, 133));
-        guardar.setText("Guardar Categoria");
-        guardar.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        guardar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
-        guardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                guardarActionPerformed(evt);
-            }
-        });
-        jPanel3.add(guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, 170, 50));
-
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new3.setText("Regresar");
         rSButtonIcon_new3.setBackgroundHover(new java.awt.Color(0, 55, 133));
@@ -522,7 +535,7 @@ public class AgregarCategoria extends javax.swing.JFrame {
                 rSButtonIcon_new3ActionPerformed(evt);
             }
         });
-        jPanel3.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 70, 160, 50));
+        jPanel3.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 330, 160, 40));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -552,6 +565,18 @@ public class AgregarCategoria extends javax.swing.JFrame {
         avisoT1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         avisoT1.setText("*Formato invalído*");
         jPanel3.add(avisoT1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 180, -1));
+
+        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new9.setText("Modificar Cambios");
+        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
+        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new9ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 180, 40));
 
         rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 810, 370));
 
@@ -630,22 +655,6 @@ public class AgregarCategoria extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Cant1KeyTyped
 
-    private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-        // TODO add your handling code here:
-        if(validar()==true){
-           ConfirmacionGuardar cat= new  ConfirmacionGuardar();
-           cat.setAcat(this);
-            cat.setTipo("GCategoria");
-            cat.setVisible(true);
-         
-        }
-          
-        else{
-
-            JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
-        }
-    }//GEN-LAST:event_guardarActionPerformed
-
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         Categoria c = new Categoria();
         c.setVisible(true);
@@ -662,6 +671,18 @@ public class AgregarCategoria extends javax.swing.JFrame {
         }
         System.exit(0);
     }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
+
+    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
+        if(validar()==true){
+            ConfirmacionModificar cat = new ConfirmacionModificar();
+            cat.setAcat(this);
+            cat.setTipo("MCategoria");
+            cat.setVisible(true);
+        }else{
+
+            JOptionPane.showMessageDialog(this, "POR FAVOR VALIDE LA INFORMACION");
+        }
+    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -680,14 +701,22 @@ public class AgregarCategoria extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -700,7 +729,7 @@ public class AgregarCategoria extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgregarCategoria().setVisible(true);
+                new ActualizarCategoria().setVisible(true);
             }
         });
     }
@@ -710,7 +739,6 @@ public class AgregarCategoria extends javax.swing.JFrame {
     private javax.swing.JLabel JCodigoDisponible;
     private rojeru_san.RSMTextFull Nombre;
     private javax.swing.JLabel avisoT1;
-    private newscomponents.RSButtonIcon_new guardar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
@@ -732,6 +760,7 @@ public class AgregarCategoria extends javax.swing.JFrame {
     private javax.swing.JLabel producto;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new9;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon12;
@@ -742,4 +771,6 @@ public class AgregarCategoria extends javax.swing.JFrame {
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity2;
     // End of variables declaration//GEN-END:variables
+
+
 }

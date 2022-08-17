@@ -1010,7 +1010,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                          <Value id="LIST"/>
+                          <Value id="STYLE"/>
                         </Property>
                         <Property name="name" type="java.lang.String" value="" noResource="true"/>
                       </Properties>

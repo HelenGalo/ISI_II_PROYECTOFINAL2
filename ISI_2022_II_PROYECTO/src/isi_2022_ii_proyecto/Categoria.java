@@ -603,7 +603,7 @@ public class Categoria extends javax.swing.JFrame {
         jLabel11.setText("Modúlo Categoría");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LIST);
+        rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STYLE);
         rSLabelIcon17.setName(""); // NOI18N
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -823,8 +823,8 @@ public class Categoria extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-        Almacen m = new Almacen();
-        m.setVisible(true);
+        Productos p = new Productos();
+        p.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
@@ -834,8 +834,8 @@ public class Categoria extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
-     AgregarInventario inv = new AgregarInventario();
-     inv.setVisible(true);
+     AgregarCategoria cat = new AgregarCategoria();
+     cat.setVisible(true);
      this.dispose();
        
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
@@ -844,10 +844,10 @@ public class Categoria extends javax.swing.JFrame {
          try {
              if(codiap.isEmpty()==false){
           
-             ActualizarInventario inv = new   ActualizarInventario();
-           inv.setId(Integer.parseInt(codiap));
-           inv.mostrarP();
-           inv.setVisible(true);   
+             ActualizarCategoria c = new   ActualizarCategoria();
+           c.setId(Integer.parseInt(codiap));
+           c.mostrar();
+           c.setVisible(true);   
            this.dispose();
          
         } else{

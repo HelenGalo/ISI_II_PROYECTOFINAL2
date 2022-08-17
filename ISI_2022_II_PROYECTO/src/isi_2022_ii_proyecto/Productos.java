@@ -714,9 +714,9 @@ public class Productos extends javax.swing.JFrame {
         });
 
         rSButtonIcon_new10.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new10.setText("Imprimir ");
+        rSButtonIcon_new10.setText("Categorias");
         rSButtonIcon_new10.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new10.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
+        rSButtonIcon_new10.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.STYLE);
         rSButtonIcon_new10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new10ActionPerformed(evt);
@@ -802,7 +802,7 @@ public class Productos extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -810,7 +810,7 @@ public class Productos extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Productos");
+        jLabel11.setText("Modúlo Productos");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_MALL);
@@ -969,7 +969,7 @@ public class Productos extends javax.swing.JFrame {
         );
 
         deshabilitado.setBackground(new java.awt.Color(255, 153, 51));
-        deshabilitado.setText("Cuentas Deshabilitadas");
+        deshabilitado.setText("Deshabilitadas");
         deshabilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
         deshabilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_OFF);
         deshabilitado.addActionListener(new java.awt.event.ActionListener() {
@@ -979,7 +979,7 @@ public class Productos extends javax.swing.JFrame {
         });
 
         habilitado.setBackground(new java.awt.Color(33, 150, 243));
-        habilitado.setText("Cuentas Habilitadas");
+        habilitado.setText("Habilitadas");
         habilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
         habilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
         habilitado.addActionListener(new java.awt.event.ActionListener() {
@@ -1039,8 +1039,8 @@ public class Productos extends javax.swing.JFrame {
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 263, Short.MAX_VALUE)
-                .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 279, Short.MAX_VALUE)
+                .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, 1083, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1191,7 +1191,9 @@ public class Productos extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
     private void rSButtonIcon_new10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new10ActionPerformed
-        // TODO add your handling code here:
+        Categoria cat = new Categoria();
+        cat.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new10ActionPerformed
 
     private void JTableProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableProductosMouseClicked
