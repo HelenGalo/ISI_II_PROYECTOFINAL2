@@ -17,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -88,7 +89,7 @@ public class ActualizarProductos extends javax.swing.JFrame {
            String descrip="";
            String proveedor="";
            String Categoria="";
-           String precio="";
+           Float precio=0.00f;
            String estado="";
        
         String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.NombreCategoria,pr.NombreEmpresa, eu.Descripcion  FROM Productos p\n" +
@@ -99,12 +100,12 @@ public class ActualizarProductos extends javax.swing.JFrame {
          try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
-
+            DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
-         
+          
             nombre = rs.getString("p.Nombre");
             descrip = rs.getString("p.Descripcion");
-            precio = String.valueOf(rs.getInt("p.Precio"));
+            precio = rs.getFloat("p.Precio");
             proveedor= rs.getString("pr.NombreEmpresa");
             Categoria =rs.getString("c.NombreCategoria");
             estado=rs.getString("eu.Descripcion");
@@ -112,7 +113,7 @@ public class ActualizarProductos extends javax.swing.JFrame {
             
            NombreP.setText(nombre);
            Descrip1.setText(descrip);
-           pre.setText(String.valueOf(precio));
+           pre.setText(formato.format(precio));
            actualCat.setText(Categoria);
            actualp.setText(proveedor);
            actuale.setText(estado);
@@ -133,7 +134,7 @@ public class ActualizarProductos extends javax.swing.JFrame {
         JCategoria.setSelectedIndex(0);
         String cat = "";
         
-      String SQL = "SELECT C.NombreCategoria FROM Categorias C WHERE IdCategoria=1";
+      String SQL = "SELECT C.NombreCategoria FROM Categorias C";
         
          try {
             Statement st = (Statement) con.createStatement();
@@ -278,11 +279,11 @@ public class ActualizarProductos extends javax.swing.JFrame {
       public boolean ActualizarP(){
              String nombre="";
            String descrip="";
-            int precio = 0;
+         
           
          nombre = NombreP.getText();
         descrip = Descrip1.getText();
-        precio = Integer.parseInt(pre.getText());
+        Float precio = Float.valueOf(pre.getText());
         proveedor=ObtenerProveedor();
         Categoria=ObtenerCategoria();
         estado=Obtenerestado();
@@ -294,7 +295,7 @@ public class ActualizarProductos extends javax.swing.JFrame {
             preparedStmt.setInt(2, Categoria);
             preparedStmt.setInt(3, proveedor);
             preparedStmt.setString (4,descrip);
-            preparedStmt.setInt(5, precio);
+            preparedStmt.setFloat(5, precio);
             preparedStmt.setInt(6, estado);
           
             preparedStmt.execute();

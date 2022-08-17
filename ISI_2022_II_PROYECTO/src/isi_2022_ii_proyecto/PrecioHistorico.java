@@ -56,7 +56,7 @@ public class PrecioHistorico extends javax.swing.JFrame {
         String fechaI="";
         float precio=0.00f;
         
-        String SQL = "Select ph.IdPrecioH,ph.IdProducto,p.Nombre,ph.FechaInicio,ph.FechaFinal,ph.Precio from PrecioHistorico ph\n" +
+        String SQL = "SELECT ph.IdPrecioH,ph.IdProducto,p.Nombre,ph.FechaInicio, DATE_SUB(ph.FechaFinal, INTERVAL 1 DAY) as FechaFinal,ph.Precio from PrecioHistorico ph\n" +
                      "INNER JOIN  Productos p ON p.IdProducto=ph.IdProducto WHERE ph.IdProducto="+JTextbuscar.getText();
         try {
             Statement st = (Statement) con.createStatement();
@@ -68,7 +68,7 @@ public class PrecioHistorico extends javax.swing.JFrame {
                 registros[1] = rs.getString("ph.IdProducto");
                 registros[2] = rs.getString("p.Nombre");
                 registros[3] = rs.getString("ph.FechaInicio");
-                registros[4] = rs.getString("ph.FechaFinal");
+                registros[4] = rs.getString("FechaFinal");
                 registros[5] =formato.format(rs.getFloat("ph.Precio"));
               
                 modelo.addRow(registros);

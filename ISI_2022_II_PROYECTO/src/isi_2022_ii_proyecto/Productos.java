@@ -133,7 +133,7 @@ public class Productos extends javax.swing.JFrame {
         
         String SQL = "SELECT  p.IdProducto, p.Nombre, p.Descripcion, p.Precio, c.NombreCategoria,pr.NombreEmpresa  FROM Productos p\n" +
                       "INNER JOIN Proveedores pr ON pr.IdProveedor = p.IdProveedor\n" +
-                      "INNER JOIN Categorias c ON c.IdCategoria = p.IdCategoria WHERE p.IdEstado=1";
+                      "INNER JOIN Categorias c ON c.IdCategoria = p.IdCategoria ";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
