@@ -139,7 +139,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
           
         String SQL = "SELECT e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido FROM Empleados e\n" +
                     "LEFT JOIN Almacenes a ON e.IdEmpleado = a.IdEmpleado\n" +
-                    "WHERE a.IdEmpleado is null;";
+                    "WHERE a.IdEmpleado is  null;";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);

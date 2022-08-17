@@ -149,7 +149,6 @@ public class Inventario extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         Header = new javax.swing.JPanel();
-        iconminmaxclose = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -180,13 +179,13 @@ public class Inventario extends javax.swing.JFrame {
         rSLabelIcon3 = new rojerusan.RSLabelIcon();
         rSLabelIcon4 = new rojerusan.RSLabelIcon();
         rSLabelIcon5 = new rojerusan.RSLabelIcon();
-        linesetting12 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         rSButtonIcon_new5 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new7 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new10 = new newscomponents.RSButtonIcon_new();
+        linesetting12 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         dashboardview = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         rSPanelOpacity1 = new RSMaterialComponent.RSPanelOpacity();
@@ -212,33 +211,25 @@ public class Inventario extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1362, 712));
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
         Header.setPreferredSize(new java.awt.Dimension(800, 50));
-
-        iconminmaxclose.setBackground(new java.awt.Color(5, 10, 46));
-
-        javax.swing.GroupLayout iconminmaxcloseLayout = new javax.swing.GroupLayout(iconminmaxclose);
-        iconminmaxclose.setLayout(iconminmaxcloseLayout);
-        iconminmaxcloseLayout.setHorizontalGroup(
-            iconminmaxcloseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        iconminmaxcloseLayout.setVerticalGroup(
-            iconminmaxcloseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        Header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(20, 101, 187));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("SYSTEM");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("GEVEC");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 30));
 
         linesetting4.setBackground(new java.awt.Color(20, 101, 187));
         linesetting4.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -247,19 +238,23 @@ public class Inventario extends javax.swing.JFrame {
         linesetting4.setLayout(linesetting4Layout);
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 640, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
         linesetting4Layout.setVerticalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        jPanel2.add(linesetting4, new org.netbeans.lib.awtextra.AbsoluteConstraints(633, 0, -1, 50));
 
         linesetting5.setBackground(new java.awt.Color(20, 101, 187));
         linesetting5.setPreferredSize(new java.awt.Dimension(50, 10));
         linesetting5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(linesetting5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 0, 50));
 
         iconoshe.setBackground(new java.awt.Color(20, 101, 187));
         iconoshe.setPreferredSize(new java.awt.Dimension(50, 10));
+        iconoshe.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSButtonIconOne3.setBackground(new java.awt.Color(20, 101, 187));
         rSButtonIconOne3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FULLSCREEN);
@@ -268,6 +263,7 @@ public class Inventario extends javax.swing.JFrame {
                 rSButtonIconOne3ActionPerformed(evt);
             }
         });
+        iconoshe.add(rSButtonIconOne3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 30, 30));
 
         rSButtonIconOne4.setBackground(new java.awt.Color(20, 101, 187));
         rSButtonIconOne4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
@@ -276,6 +272,7 @@ public class Inventario extends javax.swing.JFrame {
                 rSButtonIconOne4ActionPerformed(evt);
             }
         });
+        iconoshe.add(rSButtonIconOne4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 30, 30));
 
         rSButtonIconOne5.setBackground(new java.awt.Color(20, 101, 187));
         rSButtonIconOne5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REMOVE);
@@ -284,72 +281,17 @@ public class Inventario extends javax.swing.JFrame {
                 rSButtonIconOne5ActionPerformed(evt);
             }
         });
+        iconoshe.add(rSButtonIconOne5, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 10, 30, 30));
 
-        javax.swing.GroupLayout iconosheLayout = new javax.swing.GroupLayout(iconoshe);
-        iconoshe.setLayout(iconosheLayout);
-        iconosheLayout.setHorizontalGroup(
-            iconosheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(iconosheLayout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        iconosheLayout.setVerticalGroup(
-            iconosheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(iconosheLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(iconosheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        jPanel2.add(iconoshe, new org.netbeans.lib.awtextra.AbsoluteConstraints(1430, 0, 140, 50));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel4))
-                    .addComponent(jLabel5))
-                .addGap(253, 253, 253)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
-                .addGap(51, 51, 51)
-                .addComponent(iconoshe, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                .addGap(32, 32, 32))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(iconoshe, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        Header.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1570, 50));
 
-        javax.swing.GroupLayout HeaderLayout = new javax.swing.GroupLayout(Header);
-        Header.setLayout(HeaderLayout);
-        HeaderLayout.setHorizontalGroup(
-            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        HeaderLayout.setVerticalGroup(
-            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        menu.setPreferredSize(new java.awt.Dimension(280, 666));
 
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
+        MenuIcon.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         linesetting.setBackground(new java.awt.Color(5, 10, 46));
         linesetting.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -365,6 +307,8 @@ public class Inventario extends javax.swing.JFrame {
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
+        MenuIcon.add(linesetting, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, -1, -1));
+
         linehidemenu.setBackground(new java.awt.Color(5, 10, 46));
         linehidemenu.setPreferredSize(new java.awt.Dimension(50, 10));
 
@@ -378,6 +322,8 @@ public class Inventario extends javax.swing.JFrame {
             linehidemenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
+
+        MenuIcon.add(linehidemenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         linesetting1.setBackground(new java.awt.Color(5, 10, 46));
         linesetting1.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -393,6 +339,8 @@ public class Inventario extends javax.swing.JFrame {
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
+        MenuIcon.add(linesetting1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, -1, -1));
+
         linesetting2.setBackground(new java.awt.Color(5, 10, 46));
         linesetting2.setPreferredSize(new java.awt.Dimension(50, 10));
 
@@ -406,6 +354,8 @@ public class Inventario extends javax.swing.JFrame {
             linesetting2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
+
+        MenuIcon.add(linesetting2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, -1, -1));
 
         linesetting7.setBackground(new java.awt.Color(0, 55, 133));
         linesetting7.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -422,6 +372,8 @@ public class Inventario extends javax.swing.JFrame {
         rSLabelIcon7.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon7.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.INFO);
         linesetting7.add(rSLabelIcon7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
+
+        MenuIcon.add(linesetting7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, -1, 50));
 
         linesetting8.setBackground(new java.awt.Color(0, 55, 133));
         linesetting8.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -442,6 +394,8 @@ public class Inventario extends javax.swing.JFrame {
         rSLabelIcon9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ENHANCED_ENCRYPTION);
         linesetting8.add(rSLabelIcon9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
 
+        MenuIcon.add(linesetting8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, -1, 50));
+
         linesetting9.setBackground(new java.awt.Color(0, 55, 133));
         linesetting9.setPreferredSize(new java.awt.Dimension(50, 10));
         linesetting9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -459,6 +413,8 @@ public class Inventario extends javax.swing.JFrame {
         rSLabelIcon10.setInheritsPopupMenu(true);
         linesetting9.add(rSLabelIcon10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
 
+        MenuIcon.add(linesetting9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, -1, 50));
+
         linesetting10.setBackground(new java.awt.Color(5, 10, 46));
         linesetting10.setPreferredSize(new java.awt.Dimension(50, 10));
 
@@ -472,6 +428,8 @@ public class Inventario extends javax.swing.JFrame {
             linesetting10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
+
+        MenuIcon.add(linesetting10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, -1, -1));
 
         linesetting11.setBackground(new java.awt.Color(0, 55, 133));
         linesetting11.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -489,44 +447,9 @@ public class Inventario extends javax.swing.JFrame {
         rSLabelIcon11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SETTINGS);
         linesetting11.add(rSLabelIcon11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
 
-        javax.swing.GroupLayout MenuIconLayout = new javax.swing.GroupLayout(MenuIcon);
-        MenuIcon.setLayout(MenuIconLayout);
-        MenuIconLayout.setHorizontalGroup(
-            MenuIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(linehidemenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        MenuIconLayout.setVerticalGroup(
-            MenuIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MenuIconLayout.createSequentialGroup()
-                .addComponent(linehidemenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(linesetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting11, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        MenuIcon.add(linesetting11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, -1, 50));
 
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
-        menuhide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new3.setText("Regresar");
@@ -539,7 +462,6 @@ public class Inventario extends javax.swing.JFrame {
                 rSButtonIcon_new3ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 210, -1));
 
         linesetting6.setBackground(new java.awt.Color(20, 101, 187));
         linesetting6.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -560,9 +482,9 @@ public class Inventario extends javax.swing.JFrame {
             .addGroup(linesetting6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
                 .addGap(19, 19, 19)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -574,48 +496,8 @@ public class Inventario extends javax.swing.JFrame {
                     .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(26, 26, 26))
         );
-
-        menuhide.add(linesetting6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 210, 50));
-
-        linesetting12.setBackground(new java.awt.Color(0, 55, 133));
-        linesetting12.setPreferredSize(new java.awt.Dimension(50, 10));
-        linesetting12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                linesetting12MouseClicked(evt);
-            }
-        });
-
-        jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Inventario");
-
-        jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Gestiones");
-
-        javax.swing.GroupLayout linesetting12Layout = new javax.swing.GroupLayout(linesetting12);
-        linesetting12.setLayout(linesetting12Layout);
-        linesetting12Layout.setHorizontalGroup(
-            linesetting12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(linesetting12Layout.createSequentialGroup()
-                .addGroup(linesetting12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        linesetting12Layout.setVerticalGroup(
-            linesetting12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(linesetting12Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-
-        menuhide.add(linesetting12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 70));
 
         rSButtonIcon_new5.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new5.setText("Buscar ");
@@ -626,7 +508,6 @@ public class Inventario extends javax.swing.JFrame {
                 rSButtonIcon_new5ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 77, 210, -1));
 
         rSButtonIcon_new7.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new7.setText("Agregar Inventario");
@@ -637,7 +518,6 @@ public class Inventario extends javax.swing.JFrame {
                 rSButtonIcon_new7ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new7, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 110, 210, -1));
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new9.setText("Modificar ");
@@ -648,7 +528,6 @@ public class Inventario extends javax.swing.JFrame {
                 rSButtonIcon_new9ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 210, -1));
 
         rSButtonIcon_new10.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new10.setText("Imprimir ");
@@ -659,7 +538,65 @@ public class Inventario extends javax.swing.JFrame {
                 rSButtonIcon_new10ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 210, -1));
+
+        linesetting12.setBackground(new java.awt.Color(0, 55, 133));
+        linesetting12.setPreferredSize(new java.awt.Dimension(50, 10));
+        linesetting12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                linesetting12MouseClicked(evt);
+            }
+        });
+        linesetting12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Inventario");
+        linesetting12.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 190, 40));
+
+        jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Gestiones");
+        linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 20));
+
+        javax.swing.GroupLayout menuhideLayout = new javax.swing.GroupLayout(menuhide);
+        menuhide.setLayout(menuhideLayout);
+        menuhideLayout.setHorizontalGroup(
+            menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(rSButtonIcon_new7, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(menuhideLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rSButtonIcon_new5, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonIcon_new10, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        menuhideLayout.setVerticalGroup(
+            menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuhideLayout.createSequentialGroup()
+                .addGroup(menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(menuhideLayout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(rSButtonIcon_new7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(menuhideLayout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(rSButtonIcon_new5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
+                .addGroup(menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(menuhideLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(rSButtonIcon_new10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(380, 380, 380)
+                .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
         menu.setLayout(menuLayout);
@@ -672,16 +609,15 @@ public class Inventario extends javax.swing.JFrame {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MenuIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menuhide, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(MenuIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(menuhide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
+        dashboardview.setPreferredSize(new java.awt.Dimension(1099, 662));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSPanelOpacity1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -773,6 +709,8 @@ public class Inventario extends javax.swing.JFrame {
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
+        jPanel3.add(rSPanelOpacity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1230, 50));
+
         JTableInv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -796,64 +734,26 @@ public class Inventario extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(JTableInv);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 976, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 1080, 390));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MENU);
+        jPanel4.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO INVENTARIO");
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
+        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1249, 0, 60, 50));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 823, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1112, 10, 108, -1));
 
         JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         JTextbuscar.setPlaceholder("Busqueda rapida");
@@ -873,45 +773,44 @@ public class Inventario extends javax.swing.JFrame {
         dashboardviewLayout.setHorizontalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(89, 89, 89))
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dashboardviewLayout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(9, 9, 9)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 1300, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(dashboardviewLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(dashboardviewLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         dashboardviewLayout.setVerticalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(20, 20, 20)
                 .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
+                .addGap(8, 8, 8)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1570, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(260, 260, 260)
                 .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1362, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -1199,7 +1098,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel MenuIcon;
     private javax.swing.JPanel dashboardview;
-    private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JPanel iconoshe;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

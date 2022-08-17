@@ -28,7 +28,7 @@ public class PrecioHistorico extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     String precioH="";
-    
+    String prod="";
     
     Productos producto;
 
@@ -48,31 +48,35 @@ public class PrecioHistorico extends javax.swing.JFrame {
     }
     
     private void buscarNombre(){
-         DecimalFormat formato = new DecimalFormat("##,###.00");
+        String[] registros = new String[6];
+        DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
+   
         String nombre="";
         String fechaF="";
         String fechaI="";
         float precio=0.00f;
         
-        String SQL = "Select p.Nombre,ph.FechaInicio,ph.FechaFinal,ph.Precio from PrecioHistorico ph\n" +
+        String SQL = "Select ph.IdPrecioH,ph.IdProducto,p.Nombre,ph.FechaInicio,ph.FechaFinal,ph.Precio from PrecioHistorico ph\n" +
                      "INNER JOIN  Productos p ON p.IdProducto=ph.IdProducto WHERE ph.IdProducto="+JTextbuscar.getText();
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                nombre = rs.getString("Nombre");
-                fechaI = rs.getString("FechaInicio");
-                fechaF = rs.getString("FechaInicio");
-                precio = rs.getFloat("Precio");
-               
+                DecimalFormat formato = new DecimalFormat("##,###.00");
+                registros[0] = rs.getString("ph.IdPrecioH");
+                registros[1] = rs.getString("ph.IdProducto");
+                registros[2] = rs.getString("p.Nombre");
+                registros[3] = rs.getString("ph.FechaInicio");
+                registros[4] = rs.getString("ph.FechaFinal");
+                registros[5] =formato.format(rs.getFloat("ph.Precio"));
+              
+                modelo.addRow(registros);
+                nombre = rs.getString("p.Nombre");
                 
             }
             NombreP.setText(nombre);
-            FI.setText(fechaI);
-            FF.setText(fechaF);
-            Pre.setText("L. "+formato.format(precio));
-        
+           
           
 
            
@@ -82,7 +86,19 @@ public class PrecioHistorico extends javax.swing.JFrame {
         }
         
     }
-
+ public void limpiartabla(){
+        DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
+        while (modelo.getRowCount() > 0)
+        {
+        modelo.removeRow(0);
+        }
+        
+        
+        
+       
+        
+     
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,6 +114,7 @@ public class PrecioHistorico extends javax.swing.JFrame {
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -120,20 +137,12 @@ public class PrecioHistorico extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         rSLabelIcon12 = new rojerusan.RSLabelIcon();
         jLabel14 = new javax.swing.JLabel();
-        rSButtonIcon_new12 = new newscomponents.RSButtonIcon_new();
-        jLabel29 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        JTableProductos = new rojerusan.RSTableMetro1();
+        JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
         jLabel31 = new javax.swing.JLabel();
         NombreP = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
-        FI = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
-        FF = new javax.swing.JLabel();
-        rSButtonPane1 = new rojerusan.RSButtonPane();
-        Pre = new javax.swing.JLabel();
-        jLabel38 = new javax.swing.JLabel();
-        JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
-        rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
-        jLabel6 = new javax.swing.JLabel();
+        rSButtonIcon_new3 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -155,6 +164,13 @@ public class PrecioHistorico extends javax.swing.JFrame {
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 108, -1));
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel6.setText("MODÚLO PRODUCTOS");
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 60));
 
         rSPanelOpacity1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 870, 60));
 
@@ -378,89 +394,32 @@ public class PrecioHistorico extends javax.swing.JFrame {
 
         jPanel3.add(rSPanelOpacity2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 911, 50));
 
-        rSButtonIcon_new12.setBackground(new java.awt.Color(255, 153, 0));
-        rSButtonIcon_new12.setText("Ver Movimientos");
-        rSButtonIcon_new12.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
-        rSButtonIcon_new12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new12ActionPerformed(evt);
+        JTableProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id PrecioH", "Codigo Producto", "Nombre  Producto", "Fecha de Inicio", "Fecha Final", "Precio"
+            }
+        ));
+        JTableProductos.setToolTipText("");
+        JTableProductos.setBackgoundHead(new java.awt.Color(60, 76, 143));
+        JTableProductos.setBackgoundHover(new java.awt.Color(60, 76, 143));
+        JTableProductos.setColorSecondary(new java.awt.Color(255, 255, 255));
+        JTableProductos.setEffectHover(true);
+        JTableProductos.setHighHead(50);
+        JTableProductos.setRowHeight(50);
+        JTableProductos.setShowHorizontalLines(true);
+        JTableProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTableProductosMouseClicked(evt);
             }
         });
-        jPanel3.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, 200, 50));
+        jScrollPane2.setViewportView(JTableProductos);
 
-        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("Id Producto:");
-        jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 143, 40));
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 690, 280));
 
-        jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel31.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel31.setText("Nombre del Producto:");
-        jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, 40));
-
-        NombreP.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        NombreP.setForeground(new java.awt.Color(153, 0, 255));
-        NombreP.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        NombreP.setText("Nombre:");
-        jPanel3.add(NombreP, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 250, 40));
-
-        jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("Fecha de Inicio");
-        jPanel3.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 143, 40));
-
-        FI.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        FI.setForeground(new java.awt.Color(153, 0, 255));
-        FI.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        FI.setText("Fecha Inicial");
-        jPanel3.add(FI, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, 170, 40));
-
-        jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel35.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel35.setText("Fecha Final:");
-        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 143, 40));
-
-        FF.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        FF.setForeground(new java.awt.Color(153, 0, 255));
-        FF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        FF.setText("Fecha Final:");
-        jPanel3.add(FF, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, 160, 40));
-
-        rSButtonPane1.setBackground(new java.awt.Color(0, 204, 102));
-        rSButtonPane1.setColorHover(new java.awt.Color(0, 55, 133));
-        rSButtonPane1.setColorNormal(new java.awt.Color(0, 204, 102));
-
-        Pre.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        Pre.setForeground(new java.awt.Color(255, 255, 255));
-        Pre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Pre.setText("0.00");
-
-        javax.swing.GroupLayout rSButtonPane1Layout = new javax.swing.GroupLayout(rSButtonPane1);
-        rSButtonPane1.setLayout(rSButtonPane1Layout);
-        rSButtonPane1Layout.setHorizontalGroup(
-            rSButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSButtonPane1Layout.createSequentialGroup()
-                .addComponent(Pre, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        rSButtonPane1Layout.setVerticalGroup(
-            rSButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Pre, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-        );
-
-        jPanel3.add(rSButtonPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, 230, 150));
-
-        jLabel38.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel38.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel38.setText("Precio:");
-        jPanel3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(471, 60, 200, 60));
+        rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 760, 350));
 
         JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         JTextbuscar.setPlaceholder("Busqueda rapida");
@@ -474,28 +433,32 @@ public class PrecioHistorico extends javax.swing.JFrame {
                 JTextbuscarKeyReleased(evt);
             }
         });
-        jPanel3.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 170, -1));
+        rSPanelOpacity1.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 170, 30));
 
-        rSButtonIcon_new13.setBackground(new java.awt.Color(102, 51, 255));
-        rSButtonIcon_new13.setText("Cerrar Ventana");
-        rSButtonIcon_new13.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSButtonIcon_new13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
-        rSButtonIcon_new13.addActionListener(new java.awt.event.ActionListener() {
+        jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("Nombre del Producto:");
+        rSPanelOpacity1.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, -1, 30));
+
+        NombreP.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        NombreP.setForeground(new java.awt.Color(153, 0, 255));
+        NombreP.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        NombreP.setText("Nombre:");
+        rSPanelOpacity1.add(NombreP, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, 250, 30));
+
+        rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
+        rSButtonIcon_new3.setText("Regresar");
+        rSButtonIcon_new3.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rSButtonIcon_new3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REPEAT);
+        rSButtonIcon_new3.setInheritsPopupMenu(true);
+        rSButtonIcon_new3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new13ActionPerformed(evt);
+                rSButtonIcon_new3ActionPerformed(evt);
             }
         });
-        jPanel3.add(rSButtonIcon_new13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 160, 50));
-
-        rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 760, 370));
-
-        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(102, 0, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODÚLO PRODUCTOS");
-        rSPanelOpacity1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 490, 60));
+        rSPanelOpacity1.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 120, 110, 30));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -530,27 +493,18 @@ public class PrecioHistorico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
-        try {
-            // TODO add your handling code here:
-            con.close();
-            this.dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(PrecioHistorico.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
-
     private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
         // TODO add your handling code here:
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            limpiartabla();
             buscarNombre();
 
         }
     }//GEN-LAST:event_JTextbuscarKeyReleased
 
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
-
+       limpiartabla();
+       buscarNombre();
     }//GEN-LAST:event_JTextbuscarActionPerformed
 
     private void rSButtonIconOne5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne5ActionPerformed
@@ -573,10 +527,18 @@ public class PrecioHistorico extends javax.swing.JFrame {
         this.setExtendedState(this.MAXIMIZED_BOTH);
     }//GEN-LAST:event_rSButtonIconOne3ActionPerformed
 
-    private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
-        // TODO add your handling code here:
-   
-    }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
+    private void JTableProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableProductosMouseClicked
+
+        int seleccion = JTableProductos.rowAtPoint(evt.getPoint());
+        prod =   String.valueOf(JTableProductos.getValueAt(seleccion, 0));
+        System.out.println("THIs" +prod);
+    }//GEN-LAST:event_JTableProductosMouseClicked
+
+    private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
+        Productos p = new Productos();
+        p.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -617,20 +579,14 @@ public class PrecioHistorico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel FF;
-    private javax.swing.JLabel FI;
+    private rojerusan.RSTableMetro1 JTableProductos;
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JLabel NombreP;
-    private javax.swing.JLabel Pre;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -641,15 +597,14 @@ public class PrecioHistorico extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel linesetting3;
     private javax.swing.JPanel linesetting4;
     private javax.swing.JPanel linesetting5;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new13;
-    private rojerusan.RSButtonPane rSButtonPane1;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon12;

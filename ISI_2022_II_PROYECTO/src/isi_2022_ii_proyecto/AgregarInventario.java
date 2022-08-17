@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -101,14 +101,17 @@ public class AgregarInventario extends javax.swing.JFrame {
         Jalmacen.setSelectedIndex(0);
         String nombre="";
          
-        String SQL = "SELECT a.NombreAlmacen From Almacenes a";
+        String SQL ="SELECT  a.NombreAlmacen From Almacenes a\n" +
+                     "LEFT JOIN AlmacenProducto ap ON ap.IdAlmacen= a.IdAlmacen\n"+
+                     "WHERE ap.IdAlmacen is null;"; 
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
+                
                 nombre =rs.getString("a.NombreAlmacen");
-    
+               
                 Jalmacen.addItem(nombre);
             }
             
@@ -846,7 +849,7 @@ public class AgregarInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_Cant2KeyTyped
 
     private void JalmacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JalmacenMouseClicked
-        // TODO add your handling code here:
+     
     }//GEN-LAST:event_JalmacenMouseClicked
 
     private void JalmacenMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JalmacenMouseEntered
