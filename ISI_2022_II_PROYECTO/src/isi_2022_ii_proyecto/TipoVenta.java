@@ -44,6 +44,7 @@ ConexionBD conexion = new ConexionBD();
     int seleccion;
     String codigodireccion;
     String tipodepagoenvio;
+    int tipov;
     
      public void setTablaorden(RSTableMetro1 tablaorden) {
         this.tablaorden = tablaorden;
@@ -1022,8 +1023,9 @@ ConexionBD conexion = new ConexionBD();
             rSPanel2.setSize(780,210);
             rSPanel2.setLocation(540,220);
         }else{
-             rSButtonIcon_new19.setVisible(false);
-             rSRadioButton3.setSelected(false);
+            tipov =2;
+            rSButtonIcon_new19.setVisible(false);
+            rSRadioButton3.setSelected(false);
             rSPanel1.setVisible(true);
             rSButtonIcon_new19.setLocation(580,410);
         }
@@ -1065,6 +1067,7 @@ ConexionBD conexion = new ConexionBD();
     private void rSRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton3ActionPerformed
         // TODO add your handling code here
         if(rSRadioButton3.isSelected()==false){
+            
             rSButtonIcon_new19.setVisible(false);
             rSPanel2.setSize(780,210);
             rSPanel2.setLocation(540,220);
@@ -1074,6 +1077,7 @@ ConexionBD conexion = new ConexionBD();
             
             
         }else{
+           tipov =1;
            rSButtonIcon_new19.setLocation(590,100);
            rSButtonIcon_new19.setVisible(true);
            rSRadioButton2.setSelected(false);
@@ -1094,7 +1098,7 @@ ConexionBD conexion = new ConexionBD();
         if(rSRadioButton3.isSelected()){
             VerificarOrden vo = new VerificarOrden();
             vo.setTablaorden(tablaorden);
-            vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(), subtotal,  total,  totalp,  descuento,  isv);
+            vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(), subtotal,  total,  totalp,  descuento,  isv, tipov);
             vo.cargartabla();
             vo.setVisible(true);
         }else{

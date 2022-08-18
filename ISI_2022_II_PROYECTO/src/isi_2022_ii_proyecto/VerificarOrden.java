@@ -33,6 +33,7 @@ import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -69,7 +70,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     String totalp;
     String envio;
     /*VARIABLES PARA TABLA DE ENVIOS*/
-    int tipodeVenta=1;
+    int tipodeVenta;
     int idDireccionCliente;
     String fechaentrega;
     String horaentrega;
@@ -105,7 +106,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSPanelForma6.setVisible(false);
         rSPanel4.setVisible(false);
         estadodetalleorden=false;
-        estadodetalleorden=false;
+  
         setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         
     }
@@ -147,6 +148,10 @@ public class VerificarOrden extends javax.swing.JFrame {
         }else{
             if(rSRadioButton1.isSelected()){
                 tipopago= 2;
+            }else{
+                if(rSRadioButton3.isSelected()){
+                tipopago= 3;
+            }
             }
         }
         return tipopago;
@@ -252,7 +257,7 @@ public class VerificarOrden extends javax.swing.JFrame {
       
      
          
-       String SQL = "INSERT INTO Ventas (IdOrden, FechaVenta, HoraVenta, IdCliente, IdEmpleado, IdUsuario, EstadoVenta, IdCaja, IdTipoPago, IdTipoVenta) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+       String SQL = "INSERT INTO Ventas (IdOrden, FechaVenta, HoraVenta, IdCliente, IdEmpleado, IdUsuario, IdCaja, IdTipoPago, IdTipoVenta) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, idorden);
@@ -339,7 +344,7 @@ public class VerificarOrden extends javax.swing.JFrame {
        
     }
     
-    public void seteardatosorden(int idorden,String usuario,int codigcliente, int codigvendedor, int codigocaja, String ncliente, String nvendedor, String ncajero, String subt, String tot, String cantp, String des, String isv){
+    public void seteardatosorden(int idorden,String usuario,int codigcliente, int codigvendedor, int codigocaja, String ncliente, String nvendedor, String ncajero, String subt, String tot, String cantp, String des, String isv, int tipoventa){
         this.usuario=usuario;
         this.codigcliente=codigcliente;
         this.codigvendedor = codigvendedor;
@@ -353,6 +358,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         this.isv=isv;
         this.totalp=cantp;
         this.idorden=idorden;
+        this.tipodeVenta=tipoventa;
         cargardatos();
         
         
@@ -371,6 +377,15 @@ public class VerificarOrden extends javax.swing.JFrame {
       
        
        
+    }
+    
+    public void mostrarfacturacion(){
+        rSPanelForma6.setVisible(true);
+        jLabel52.setVisible(true);
+        jLabel54.setVisible(true);
+        jLabel53.setVisible(true);
+        rSButtonIcon_new19.setVisible(true);
+        rSButtonIcon_new16.setVisible(true);
     }
     
     public void calcularcambio(){
@@ -453,28 +468,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         }
     }
     
-    public void insertarEnvio(){
-        String SQL = "INSERT INTO Envios (IdOrden, IdDireccionCliente, IdEstadoVenta, FechaEntrega, HoraEntrega, IdEmpresaEnvio, IdTipoPago) VALUES(?, ?, ?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement preparedStmt = con.prepareStatement(SQL);
-            preparedStmt.setInt(1, idorden);
-            preparedStmt.setInt(2, idDireccionCliente);
-            preparedStmt.setInt(3, 1);
-            preparedStmt.setString(4, fechaentrega);
-            preparedStmt.setString(5, horaentrega);
-            preparedStmt.setInt(6, idEmpresaEnvio);
-            preparedStmt.setInt(7, idTipoPagoEnvio);
-            preparedStmt.execute();
-      
-     
-           
-       
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-        
-    }
+ 
     
     public String ObtenerNumeroFactura(){
         String nfactura="";
@@ -543,7 +537,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         
      
             }catch(SQLException e){
-                 System.out.println("Error "+e.getMessage());
+                 System.out.println("Error al obtener el numero de formato"+e.getMessage());
         
             }
          
@@ -617,9 +611,9 @@ public class VerificarOrden extends javax.swing.JFrame {
            
        
 
-        } catch (Exception e) {
-            System.err.println("Error al guardar la factura");
-            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Error al guardar la factura "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error"+e.getMessage());
         }
         
         
@@ -652,17 +646,19 @@ public class VerificarOrden extends javax.swing.JFrame {
     public void ImprimirFactura(){
         try {
             JasperReport reporte = null;
-            String path = "src\\Reportes\\Factura.jasper";
+            String path1 = "src\\Reportes\\report1.jasper";
             Map parametro = new HashMap();
-            parametro.put("Nfactura", ObtenerNumerodeFacturaXOrden() );
+            parametro.put("Nfactura", "000-001-01-00000005" );
             
-            reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
+            reporte = (JasperReport) JRLoader.loadObjectFromFile(path1);
             JasperPrint jprint = JasperFillManager.fillReport(reporte, parametro, con);
             JasperViewer view = new JasperViewer(jprint, false);
             view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             view.setVisible(true);
-        } catch (Exception e) {
-            System.err.println("Error al imprimir la factura");
+         } catch (JRException jex) {
+            JOptionPane.showMessageDialog(null,"JasperException"+jex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getStackTrace());
         }
     }
     
@@ -1514,21 +1510,28 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSPanelForma3.setBounds(0, 270, 400, 200);
 
         rSPanelForma6.setBackground(new java.awt.Color(255, 255, 255));
+        rSPanelForma6.setLayout(null);
 
         jLabel52.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel52.setForeground(new java.awt.Color(102, 0, 255));
         jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel52.setText("Su cambio es:");
+        rSPanelForma6.add(jLabel52);
+        jLabel52.setBounds(10, 11, 360, 20);
 
         jLabel53.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel53.setForeground(new java.awt.Color(102, 0, 255));
         jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel53.setText("0.00");
+        rSPanelForma6.add(jLabel53);
+        jLabel53.setBounds(99, 49, 184, 20);
 
         jLabel54.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel54.setForeground(new java.awt.Color(102, 0, 255));
         jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel54.setText("L.");
+        rSPanelForma6.add(jLabel54);
+        jLabel54.setBounds(77, 49, 16, 20);
 
         rSButtonIcon_new19.setBackground(new java.awt.Color(0, 153, 102));
         rSButtonIcon_new19.setText("Generar Factura");
@@ -1541,6 +1544,8 @@ public class VerificarOrden extends javax.swing.JFrame {
                 rSButtonIcon_new19ActionPerformed(evt);
             }
         });
+        rSPanelForma6.add(rSButtonIcon_new19);
+        rSButtonIcon_new19.setBounds(85, 97, 220, 40);
 
         rSButtonIcon_new16.setBackground(new java.awt.Color(102, 102, 255));
         rSButtonIcon_new16.setText("Menu Principal");
@@ -1553,45 +1558,8 @@ public class VerificarOrden extends javax.swing.JFrame {
                 rSButtonIcon_new16ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout rSPanelForma6Layout = new javax.swing.GroupLayout(rSPanelForma6);
-        rSPanelForma6.setLayout(rSPanelForma6Layout);
-        rSPanelForma6Layout.setHorizontalGroup(
-            rSPanelForma6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelForma6Layout.createSequentialGroup()
-                .addGroup(rSPanelForma6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(rSPanelForma6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel52, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(rSPanelForma6Layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jLabel54)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 87, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelForma6Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(rSPanelForma6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(rSButtonIcon_new16, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSButtonIcon_new19, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(75, 75, 75))
-        );
-        rSPanelForma6Layout.setVerticalGroup(
-            rSPanelForma6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelForma6Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(rSPanelForma6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(rSButtonIcon_new19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSButtonIcon_new16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        rSPanelForma6.add(rSButtonIcon_new16);
+        rSButtonIcon_new16.setBounds(85, 143, 220, 40);
 
         rSPanel2.add(rSPanelForma6);
         rSPanelForma6.setBounds(400, 270, 380, 200);
@@ -1693,8 +1661,8 @@ public class VerificarOrden extends javax.swing.JFrame {
 
     private void rSButtonIcon_new17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new17ActionPerformed
         // TODO add your handling code here:
-        Factura();
-        /*mostrarelementos();*/
+        mostrarfacturacion();
+        mostrarelementos();
        
     }//GEN-LAST:event_rSButtonIcon_new17ActionPerformed
 
@@ -1702,7 +1670,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(rSRadioButton2.isSelected()){
            if(JTextbuscar.getText().length()>0){
-               if(tipodeVenta==1){
+               
                    insertarOrden();
                    enviarDetallesOrden();
                    
@@ -1715,34 +1683,15 @@ public class VerificarOrden extends javax.swing.JFrame {
                            Factura();
                            VentanaEmergente1 ve = new VentanaEmergente1();
                            ve.setVisible(true);
+                           mostrarfacturacion();
                         }
 
                     calcularcambio();
                     rSPanelForma3.setVisible(false);
-                    rSPanelForma6.setVisible(true);
+                            
                 }
                    
-               }else{
-                        if(tipodeVenta==2){
-                           insertarOrden();
-                           enviarDetallesOrden();
-                           insertarEnvio();
-                           if(estadodetalleorden==true && estadoorden==true){
-                             enviarActualizacionExistencia();
-                             actualizartotalcaja();
-                             if(estadototalcaja==true){
-                                actualizarHistoriaCaja();
-                                Factura();
-                                VentanaEmergente1 ve = new VentanaEmergente1();
-                                ve.setVisible(true);
-                             }
-
-                             calcularcambio();
-                             rSPanelForma3.setVisible(false);
-                             rSPanelForma6.setVisible(true);
-                             }    
-                        }
-               }
+               
             
            
             
@@ -1750,7 +1699,7 @@ public class VerificarOrden extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Ingrese un valor de efectivo");
             } 
         }else{
-            if(tipodeVenta==1){
+            if(rSRadioButton1.isSelected()){
                    insertarOrden();
                    enviarDetallesOrden();
                     if(estadodetalleorden==true && estadoorden==true){
@@ -1762,34 +1711,38 @@ public class VerificarOrden extends javax.swing.JFrame {
                            Factura();
                            VentanaEmergente1 ve = new VentanaEmergente1();
                            ve.setVisible(true);
+                           mostrarfacturacion();
                         }
 
-                    calcularcambio();
+                    
                     rSPanelForma3.setVisible(false);
-                    rSPanelForma6.setVisible(true);
+                 
                 }
                    
                }else{
-                        if(tipodeVenta==2){
-                           insertarOrden();
-                           enviarDetallesOrden();
-                           insertarEnvio();
-                           if(estadodetalleorden==true && estadoorden==true){
-                             enviarActualizacionExistencia();
-                             actualizartotalcaja();
-                             if(estadototalcaja==true){
-                                actualizarHistoriaCaja();
-                                Factura();
-                                VentanaEmergente1 ve = new VentanaEmergente1();
-                                ve.setVisible(true);
-                             }
+                if(rSRadioButton3.isSelected()){
+                   insertarOrden();
+                   enviarDetallesOrden();
+                    if(estadodetalleorden==true && estadoorden==true){
 
-                             calcularcambio();
-                             rSPanelForma3.setVisible(false);
-                             rSPanelForma6.setVisible(true);
-                             }    
+                        enviarActualizacionExistencia();
+                        actualizartotalcaja();
+                        if(estadototalcaja==true){
+                           actualizarHistoriaCaja();
+                           Factura();
+                           VentanaEmergente1 ve = new VentanaEmergente1();
+                           ve.setVisible(true);
+                           mostrarfacturacion();
                         }
+
+                  
+                    rSPanelForma3.setVisible(false);
+                   
+                }
+                   
                }
+                
+            }
         }
         
         
