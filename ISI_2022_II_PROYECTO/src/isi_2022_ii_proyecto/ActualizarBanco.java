@@ -5,8 +5,10 @@
  */
 package isi_2022_ii_proyecto;
 
+import static isi_2022_ii_proyecto.ActualizarCategoria.UNIQUE_CONSTRAINT_VIOLATED;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ConfirmacionGuardar;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionModificar;
 import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -26,50 +28,99 @@ import rojerusan.RSEffectFade;
  *
  * @author Edwin Rafael
  */
-public class AgregarInventario extends javax.swing.JFrame {
+public class ActualizarBanco extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    String Inventario="";
+
     int id;
-      String prod;
+      String banco;
      public void setId(int id) {
         this.id = id;
     }
-     public void setProducto(String producto) {
-        this.prod = producto;
+
+    public void setBanco(String banco) {
+        this.banco = banco;
     }
     
-    boolean estadoagregar=false;
+    
+  boolean estadosModificar=false;
 
-    public void setEstadoagregar(boolean estadoagregar) {
-        this.estadoagregar = estadoagregar;
+    public void setEstadosModificar(boolean estadosModificar) {
+        this.estadosModificar = estadosModificar;
     }
 
    
     /**
      * Creates new form CalendarForm
      */
-    public AgregarInventario() {
+    public ActualizarBanco() {
         RSUtilities.setFullScreenJFrame(this);
         initComponents();
-       listarAlmacen();
        inicializar();
+        buscardatos();
+        listarEstado();
         RSUtilities.setOpaqueWindow(this, false);
         RSUtilities.setOpacityComponent(this.jPanel1, 150);
        
-               Em.setVisible(false);
+        avisoT1.setVisible(false);
          setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());    
     }
       public void validarConfirmacion(){
-        if(estadoagregar=true){
-            insertar();
+        if(estadosModificar=true){
+            actualizar();
+        }
+    }  
+    
+        public void inicializar(){
+       JCodigoDisponible.setText(banco);
+    }
+      public void buscardatos(){
+          String SQL = "SELECT * FROM Bancos WHERE IdBanco=(SELECT max(IdBanco) FROM Bancos)";
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                id = rs.getInt("IdBanco");
+               
+                
+            }
+
+            
+            System.out.println("SIN SUMAR"+String.valueOf(id));
+            id = id +1;
+            System.out.println(String.valueOf(id));
+            JCodigoDisponible.setText(String.valueOf(id));
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }  public void listarEstado(){
+        JEstados.addItem("Seleccionar Estado");
+        JEstados.setSelectedIndex(0);
+        String descripcion="";
+         
+        String SQL = "SELECT b.Descripcion From EstadosUsuario b";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                descripcion =rs.getString("b.Descripcion");
+    
+                JEstados.addItem(descripcion);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
-       public void inicializar(){
-         ID.setText(prod);
-    }
-       public int ObtenerAlmacen(){
-          String SQL = "SELECT * FROM Almacenes a Where a.NombreAlmacen="+"'"+Jalmacen.getSelectedItem().toString()+"'";
+      public int Obtenerestado(){
+          String SQL = "SELECT * FROM EstadosUsuario g Where g.Descripcion="+"'"+JEstados.getSelectedItem().toString()+"'";
           int idg=0;
           
         try {
@@ -77,7 +128,7 @@ public class AgregarInventario extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                idg = rs.getInt("IdAlmacen");
+                idg = rs.getInt("IdEstado");
                
                 
             }
@@ -95,94 +146,47 @@ public class AgregarInventario extends javax.swing.JFrame {
         return idg;
         
     }
-
-        public void listarAlmacen(){
-        Jalmacen.addItem("Seleccionar Almacen");
-        Jalmacen.setSelectedIndex(0);
-        String nombre="";
-         
-        String SQL ="SELECT  a.NombreAlmacen From Almacenes a" ;
-                     //"INNER JOIN AlmacenProducto ap ON ap.IdAlmacen= a.IdAlmacen";
-                    
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                
-                nombre =rs.getString("a.NombreAlmacen");
-               
-                Jalmacen.addItem(nombre);
-            }
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-     public void mostrarP(){
+        public void mostrar(){
            String nombre="";
-           
-          
+
+       String estado="";
        
-        String SQL = "SELECT p.Nombre, p. IdProducto FROM Productos p WHERE p.IdProducto="+id;
-       try {
+        String SQL = "SELECT b.Nombre, b.IdEstado  FROM Bancos b\n" +
+                 "INNER JOIN EstadosUsuario eu ON eu.IdEstado = b.IdEstado\n" +
+                      "WHERE b.IdBanco="+id;
+         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                nombre = rs.getString("p.Nombre");
-                
-            }
-             producto.setText(nombre);
-             ID.setText(String.valueOf(id));
-        } catch (SQLException e) {
+            nombre= rs.getString("b.Nombre");
+            estado = rs.getString("eu.Descripcion");
+       
+               
+             } 
+            Nombre.setText(nombre);
+            estadob.setText(estado);
+              JCodigoDisponible.setText(String.valueOf(id));
+    
+          } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        
-    }
-    private void buscarNombre(){
-        String nombre="";
-        String codprod="";
-        
-        String SQL = "SELECT p.Nombre, p. IdProducto FROM Productos p WHERE p.IdProducto LIKE '"+JTextbuscar.getText()+"%'";
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                nombre = rs.getString("p.Nombre");
-                codprod = rs.getString("p.IdProducto");
-            }
-             producto.setText(nombre);
-             ID.setText(codprod);
-   
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        
     }
     public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
-      public boolean insertar(){
-        String actual=""; 
-        String maxima="";
-       String minima="";
-        int almacen = 0;
-   
-       actual= Cant.getText();
-        maxima=Cant1.getText();
-        minima= Cant2.getText();
-        almacen = ObtenerAlmacen();
-        id=Integer.parseInt(ID.getText());
+ public boolean actualizar(){
+        String nombre=""; 
+     
+        int estado=1;
+        estado=Obtenerestado();
+    
         
-        String SQL = "INSERT INTO AlmacenProducto(IdProducto,IdAlmacen,ExistenciaActual,ExistenciaMaxima,ExistenciaMinima) VALUES"
-                + "(?, ?, ?, ?, ?)";
+        String SQL = "UPDATE  Bancos SET Nombre=?,IdEstado=? WHERE IdBanco="+"'"+id+"'";
+           
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
-            preparedStmt.setInt(1, id);
-            preparedStmt.setInt (2, almacen);
-            preparedStmt.setString(3, actual);
-            preparedStmt.setString(4, maxima);  
-            preparedStmt.setString(5, minima); 
+         
+            preparedStmt.setString (1, nombre);
+            preparedStmt.setInt(2,estado);
             preparedStmt.execute();
             
            VentanaEmergente1 ve = new VentanaEmergente1();
@@ -208,55 +212,21 @@ public class AgregarInventario extends javax.swing.JFrame {
    
       
       
-        if(Cant.getText().isEmpty()){
-          JOptionPane.showMessageDialog(this, "Por favor ingrese la cantidad actual");
+        if(Nombre.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre");
           a= false;
+      }
+          if(validarNombre(Nombre.getText())==false){
+          a=false;
       }
     
        
-        if(Cant1.getText().isEmpty()){
-          JOptionPane.showMessageDialog(this, "Por favor ingrese la cantidad maxima");
-          a= false;
-          
-         
-    
-        
-          
-        }
-               if (validarmax()==false){
-              
-             a= false;
-        
-      
-             
-        
-        }
-          
-        
-        
-          
-      
-          if (Cant2.getText().isEmpty()){
-          JOptionPane.showMessageDialog(this, "Por favor ingrese la cantidad minima");
-          a= false;
-        
-      
-             
-        
-        }
-             
-       
-      
-             
-        
-        
-        if(Jalmacen.getSelectedItem().toString().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Por favor seleccione un almacen");
+          if(JEstados.getSelectedItem().toString().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione un estado");
           a= false;
       
     }
-         
-       
+
        
        
       
@@ -264,18 +234,28 @@ public class AgregarInventario extends javax.swing.JFrame {
        
       
     }
-      public boolean validarmax(){
-           boolean x;
-           int a = Integer.parseInt(Cant2.getText());
-         int b =Integer.parseInt(Cant1.getText());
-         if(a>=b){
-           x = false;
-      }else {
-              x = true;
-         }
-         return x;
-      }
-   
+    
+     public  boolean validarNombre(String Nombre){
+    boolean check=false;
+    
+    /*Verificamos que no sea null*/ 
+    if(Nombre != null){
+        /* 1ª Condición: que la letra inicial sea mayúscula*/
+        boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
+
+        /* 2ª Condición: que el tamaño sea >= 3 y <= 15*/
+        int stringSize=Nombre.length();
+        boolean isValidSize=(stringSize >= 3 && stringSize <= 25);
+
+        /* 3ª Condición: que contenga al menos un espacio*/
+        boolean isSpaced=Nombre.contains(" ");
+
+        /* Verificamos que las tres condiciones son verdaderas*/
+        check= ( (isFirstUpper==true)  && (isFirstUpper && isValidSize &&  isSpaced) );
+    }
+    /*Devolvemos el estado de la validación*/
+    return check;
+}
       
        
   
@@ -315,21 +295,17 @@ public class AgregarInventario extends javax.swing.JFrame {
         rSLabelIcon12 = new rojerusan.RSLabelIcon();
         jLabel14 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        Em = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
         producto = new javax.swing.JLabel();
-        JTextbuscar = new rojeru_san.rsfield.RSTextFull();
-        Cant = new rojeru_san.RSMTextFull();
-        Cant1 = new rojeru_san.RSMTextFull();
-        Cant2 = new rojeru_san.RSMTextFull();
-        Jalmacen = new rojerusan.RSComboMetro();
-        guardar = new newscomponents.RSButtonIcon_new();
-        ID = new rojeru_san.RSMTextFull();
-        rSButtonIcon_new12 = new newscomponents.RSButtonIcon_new();
+        Nombre = new rojeru_san.RSMTextFull();
         rSButtonIcon_new3 = new newscomponents.RSButtonIcon_new();
+        rSPanelCircle1 = new rojeru_san.rspanel.RSPanelCircle();
+        JCodigoDisponible = new javax.swing.JLabel();
+        JEstados = new rojerusan.RSComboMetro();
+        avisoT1 = new javax.swing.JLabel();
+        estadob = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
+        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -350,7 +326,7 @@ public class AgregarInventario extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO INVENTARIO");
+        jLabel6.setText("MODÚLO BANCOS");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 60));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
@@ -434,7 +410,7 @@ public class AgregarInventario extends javax.swing.JFrame {
         rSPanelOpacity2.setBackground(new java.awt.Color(60, 76, 143));
 
         rSLabelIcon6.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon6.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_TO_QUEUE);
+        rSLabelIcon6.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_TO_PHOTOS);
         rSLabelIcon6.setName(""); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -446,11 +422,11 @@ public class AgregarInventario extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("AgregaInventario");
+        jLabel8.setText("Agregar Bancos");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -458,10 +434,11 @@ public class AgregarInventario extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Inventario");
+        jLabel11.setText("Modúlo Bancos");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DEVELOPER_BOARD);
+        rSLabelIcon17.setFocusCycleRoot(true);
+        rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
         rSLabelIcon17.setName(""); // NOI18N
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -474,7 +451,7 @@ public class AgregarInventario extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Listado de Inventario");
+        jLabel14.setText("Listado de Bancos");
 
         rSPanelOpacity2.setLayer(rSLabelIcon6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         rSPanelOpacity2.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -515,7 +492,7 @@ public class AgregarInventario extends javax.swing.JFrame {
                 .addComponent(rSLabelIcon6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
         rSPanelOpacity2Layout.setVerticalGroup(
             rSPanelOpacity2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -538,173 +515,42 @@ public class AgregarInventario extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.add(rSPanelOpacity2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 911, 50));
+        jPanel3.add(rSPanelOpacity2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 50));
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("Codigo del Producto:");
+        jLabel29.setText("Codígo de Banco:");
         jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 80, 150, 40));
-
-        jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel31.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel31.setText("Nombre Almacen:");
-        jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, 130, 40));
-
-        Em.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Em.setForeground(new java.awt.Color(255, 0, 0));
-        Em.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Em.setText("*La Existencia maxima debe ser mayor que la Maxima*");
-        jPanel3.add(Em, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 400, -1));
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(153, 0, 255));
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel34.setText("Existencia Maxima");
-        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 170, 40));
-
-        jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel35.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel35.setText("Cantidad:");
-        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 120, 40));
+        jLabel34.setText("Estado de Banco Actual:");
+        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 190, 40));
 
         producto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         producto.setForeground(new java.awt.Color(153, 0, 255));
         producto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        producto.setText("Nombre Producto");
-        jPanel3.add(producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 360, 50));
+        producto.setText("Nombre de Banco");
+        jPanel3.add(producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 140, 50));
 
-        JTextbuscar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        JTextbuscar.setPlaceholder("Ingrese el codigo.");
-        JTextbuscar.setSoloNumeros(true);
-        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
+        Nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Nombre.setPlaceholder("                               ");
+        Nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTextbuscarActionPerformed(evt);
+                NombreActionPerformed(evt);
             }
         });
-        JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+        Nombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                JTextbuscarKeyReleased(evt);
-            }
-        });
-        jPanel3.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 180, -1));
-
-        Cant.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Cant.setPlaceholder("                               ");
-        Cant.setSoloNumeros(true);
-        Cant.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CantActionPerformed(evt);
-            }
-        });
-        Cant.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                CantKeyReleased(evt);
+                NombreKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                CantKeyTyped(evt);
+                NombreKeyTyped(evt);
             }
         });
-        jPanel3.add(Cant, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 220, 40));
-
-        Cant1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Cant1.setPlaceholder("                               ");
-        Cant1.setSoloNumeros(true);
-        Cant1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Cant1ActionPerformed(evt);
-            }
-        });
-        Cant1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                Cant1KeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                Cant1KeyTyped(evt);
-            }
-        });
-        jPanel3.add(Cant1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 210, 40));
-
-        Cant2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Cant2.setPlaceholder("                               ");
-        Cant2.setSoloNumeros(true);
-        Cant2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Cant2ActionPerformed(evt);
-            }
-        });
-        Cant2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                Cant2KeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                Cant2KeyTyped(evt);
-            }
-        });
-        jPanel3.add(Cant2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 200, 170, 40));
-
-        Jalmacen.setColorArrow(new java.awt.Color(102, 0, 255));
-        Jalmacen.setColorFondo(new java.awt.Color(60, 76, 143));
-        Jalmacen.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JalmacenMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                JalmacenMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                JalmacenMouseExited(evt);
-            }
-        });
-        Jalmacen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JalmacenActionPerformed(evt);
-            }
-        });
-        jPanel3.add(Jalmacen, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 140, 190, 30));
-
-        guardar.setBackground(new java.awt.Color(0, 55, 133));
-        guardar.setText("Guardar Inventario");
-        guardar.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        guardar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
-        guardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                guardarActionPerformed(evt);
-            }
-        });
-        jPanel3.add(guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 180, 50));
-
-        ID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ID.setPlaceholder("                               ");
-        ID.setSoloNumeros(true);
-        ID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                IDActionPerformed(evt);
-            }
-        });
-        ID.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                IDKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                IDKeyTyped(evt);
-            }
-        });
-        jPanel3.add(ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, 60, 40));
-
-        rSButtonIcon_new12.setBackground(new java.awt.Color(255, 153, 0));
-        rSButtonIcon_new12.setText("Ver Productos");
-        rSButtonIcon_new12.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
-        rSButtonIcon_new12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new12ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, 160, 30));
+        jPanel3.add(Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 370, 40));
 
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new3.setText("Regresar");
@@ -717,13 +563,68 @@ public class AgregarInventario extends javax.swing.JFrame {
                 rSButtonIcon_new3ActionPerformed(evt);
             }
         });
-        jPanel3.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 320, 120, 50));
+        jPanel3.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 320, 160, 50));
+
+        rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
+
+        JCodigoDisponible.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        JCodigoDisponible.setForeground(new java.awt.Color(255, 255, 255));
+        JCodigoDisponible.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        JCodigoDisponible.setText("1");
+
+        javax.swing.GroupLayout rSPanelCircle1Layout = new javax.swing.GroupLayout(rSPanelCircle1);
+        rSPanelCircle1.setLayout(rSPanelCircle1Layout);
+        rSPanelCircle1Layout.setHorizontalGroup(
+            rSPanelCircle1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelCircle1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(JCodigoDisponible, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        rSPanelCircle1Layout.setVerticalGroup(
+            rSPanelCircle1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(JCodigoDisponible, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+        );
+
+        jPanel3.add(rSPanelCircle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, 70, 70));
+
+        JEstados.setBorder(null);
+        JEstados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JEstadosActionPerformed(evt);
+            }
+        });
+        jPanel3.add(JEstados, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 260, 150, -1));
+
+        avisoT1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        avisoT1.setForeground(new java.awt.Color(255, 0, 0));
+        avisoT1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        avisoT1.setText("*Formato invalído*");
+        jPanel3.add(avisoT1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 180, -1));
+
+        estadob.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        estadob.setForeground(new java.awt.Color(153, 0, 255));
+        estadob.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        estadob.setText("Estado de Banco");
+        jPanel3.add(estadob, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, 160, 40));
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel36.setForeground(new java.awt.Color(153, 0, 255));
         jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel36.setText("Existencia Minima");
-        jPanel3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 210, 170, 40));
+        jLabel36.setText("Estado de Banco");
+        jPanel3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 250, 160, 40));
+
+        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new9.setText("Modificar Cambios");
+        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
+        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new9ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 180, 40));
 
         rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 810, 370));
 
@@ -760,141 +661,34 @@ public class AgregarInventario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
+    private void NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreActionPerformed
         // TODO add your handling code here:
-      TablaProductos tp = new TablaProductos();
-       //bm.setTipoc(jLabel34.getText());
-      //  bm.setCodigob(JTextbuscar.getText());
-      tp.setVisible(true);
-       // banco.dispose();
-      this.dispose();
-    }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
+    }//GEN-LAST:event_NombreActionPerformed
 
-    private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
-        // TODO add your handling code here:
-        if(JTextbuscar.getText().isEmpty()==false){
-            if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            buscarNombre();
-
+    private void NombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreKeyReleased
+         if (validarNombre(Nombre.getText())){
+             avisoT1.setVisible(false);
+             
         }
-        }else{
-            JOptionPane.showMessageDialog(this, "No ha ingresado ningun codigo");
-        }
-        
-    }//GEN-LAST:event_JTextbuscarKeyReleased
-
-    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JTextbuscarActionPerformed
-
-    private void CantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CantActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CantActionPerformed
-
-    private void CantKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CantKeyReleased
-
+          else{
+                    avisoT1.setVisible(true);
+              
+          }
       
 
-    }//GEN-LAST:event_CantKeyReleased
+    }//GEN-LAST:event_NombreKeyReleased
 
-    private void CantKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CantKeyTyped
+    private void NombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreKeyTyped
 
-        if (Cant.getText().trim().length() == 5) {
+         if (Nombre.getText().trim().length() == 30) {
             evt.consume();
 
         }
-    }//GEN-LAST:event_CantKeyTyped
-
-    private void Cant1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cant1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Cant1ActionPerformed
-
-    private void Cant1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cant1KeyReleased
-        
-        if(validarmax()){
-           Em.setVisible(false);
-          
-        }else{
-            
-               Em.setVisible(true);
-         
-    
-        }      
-    }//GEN-LAST:event_Cant1KeyReleased
-
-    private void Cant1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cant1KeyTyped
-      
-        if (Cant1.getText().trim().length() == 5) {
-            evt.consume();
-
-        }
-    }//GEN-LAST:event_Cant1KeyTyped
-
-    private void Cant2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cant2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Cant2ActionPerformed
-
-    private void Cant2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cant2KeyReleased
-        // TODO add your handling code here:
-       
-    
-    }//GEN-LAST:event_Cant2KeyReleased
-
-    private void Cant2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cant2KeyTyped
-
-        if (Cant2.getText().trim().length() == 5) {
-            evt.consume();
-
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_Cant2KeyTyped
-
-    private void JalmacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JalmacenMouseClicked
-     
-    }//GEN-LAST:event_JalmacenMouseClicked
-
-    private void JalmacenMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JalmacenMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JalmacenMouseEntered
-
-    private void JalmacenMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JalmacenMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JalmacenMouseExited
-
-    private void JalmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JalmacenActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JalmacenActionPerformed
-
-    private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-        // TODO add your handling code here:
-        if(validar()==true){
-           ConfirmacionGuardar inv= new  ConfirmacionGuardar();
-            inv.setAinv(this);
-            inv.setTipo("GInventario");
-            inv.setVisible(true);
-         
-        }
-          
-        else{
-
-            JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
-        }
-    }//GEN-LAST:event_guardarActionPerformed
-
-    private void IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_IDActionPerformed
-
-    private void IDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IDKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_IDKeyReleased
-
-    private void IDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IDKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_IDKeyTyped
+    }//GEN-LAST:event_NombreKeyTyped
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
-        Inventario al = new Inventario();
-        al.setVisible(true);
+        Banco c = new Banco();
+        c.setVisible(true);
         this.dispose();
 
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
@@ -908,6 +702,22 @@ public class AgregarInventario extends javax.swing.JFrame {
         }
         System.exit(0);
     }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
+
+    private void JEstadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JEstadosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JEstadosActionPerformed
+
+    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
+        if(validar()==true){
+            ConfirmacionModificar b = new ConfirmacionModificar();
+            b.setGbanco(this);
+            b.setTipo("Mbanco");
+            b.setVisible(true);
+        }else{
+
+            JOptionPane.showMessageDialog(this, "POR FAVOR VALIDE LA INFORMACION");
+        }
+    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -926,14 +736,42 @@ public class AgregarInventario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarInventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarBanco.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarInventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarBanco.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarInventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarBanco.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarInventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarBanco.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -942,28 +780,23 @@ public class AgregarInventario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgregarInventario().setVisible(true);
+                new ActualizarBanco().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private rojeru_san.RSMTextFull Cant;
-    private rojeru_san.RSMTextFull Cant1;
-    private rojeru_san.RSMTextFull Cant2;
-    private javax.swing.JLabel Em;
-    private rojeru_san.RSMTextFull ID;
-    private rojeru_san.rsfield.RSTextFull JTextbuscar;
-    private rojerusan.RSComboMetro Jalmacen;
-    private newscomponents.RSButtonIcon_new guardar;
+    private javax.swing.JLabel JCodigoDisponible;
+    private rojerusan.RSComboMetro JEstados;
+    private rojeru_san.RSMTextFull Nombre;
+    private javax.swing.JLabel avisoT1;
+    private javax.swing.JLabel estadob;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -979,14 +812,15 @@ public class AgregarInventario extends javax.swing.JFrame {
     private javax.swing.JPanel linesetting5;
     private javax.swing.JLabel producto;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new9;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon12;
     private rojerusan.RSLabelIcon rSLabelIcon17;
     private rojerusan.RSLabelIcon rSLabelIcon6;
     private rojerusan.RSLabelIcon rSLabelIcon8;
+    private rojeru_san.rspanel.RSPanelCircle rSPanelCircle1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity2;
     // End of variables declaration//GEN-END:variables

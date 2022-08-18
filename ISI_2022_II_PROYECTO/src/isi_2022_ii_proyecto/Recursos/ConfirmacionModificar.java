@@ -6,6 +6,7 @@
 package isi_2022_ii_proyecto.Recursos;
 
 import isi_2022_ii_proyecto.ActualizarAlmacen;
+import isi_2022_ii_proyecto.ActualizarBanco;
 import isi_2022_ii_proyecto.ActualizarCaja;
 import isi_2022_ii_proyecto.ActualizarCategoria;
 import isi_2022_ii_proyecto.ActualizarCliente;
@@ -35,6 +36,11 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
     ActualizarAlmacen almacen;
     ActualizarInventario ainv;
     ActualizarCategoria acat;
+    ActualizarBanco gbanco;
+
+    public void setGbanco(ActualizarBanco gbanco) {
+        this.gbanco = gbanco;
+    }
 
     public void setAcat(ActualizarCategoria acat) {
         this.acat = acat;
@@ -276,6 +282,12 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
               if(tipo=="MCategoria"){
                 acat.setEstadosModificar(true);
                 acat.validarConfirmacion();
+                this.dispose();
+                
+            }
+                if(tipo=="Mbanco"){
+                gbanco.setEstadosModificar(true);
+               gbanco.validarConfirmacion();
                 this.dispose();
                 
             }
