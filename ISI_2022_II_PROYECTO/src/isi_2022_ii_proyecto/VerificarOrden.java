@@ -24,12 +24,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 import rojerusan.RSTableMetro1;
 
@@ -67,7 +75,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     String horaentrega;
     int idEmpresaEnvio;
     int idTipoPagoEnvio;
-
+    String isv18="0.00";
 
     boolean estadoorden;
     boolean estadodetalleorden;
@@ -466,6 +474,196 @@ public class VerificarOrden extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
         
+    }
+    
+    public String ObtenerNumeroFactura(){
+        String nfactura="";
+        String contadori="";
+        String contadorf="";
+        String nfacturanueva="";
+        char vi;
+        char vf;
+        String SQL1 = "Select f.IdFactura From Factura f\n" +
+                     "WHERE f.IdFactura = (SELECT MAX(f1.IdFactura) FROM Factura f1);";
+        
+        
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL1);
+
+            while (rs.next()) {
+                nfactura =rs.getString("f.IdFactura");
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+         
+         
+         for(int i=0; i<11;i++){
+                vi= nfactura.charAt(i);
+                contadori = contadori+String.valueOf(vi);
+         }
+         
+         for(int i=11; i<19;i++){
+                vf= nfactura.charAt(i);
+                contadorf = contadorf+String.valueOf(vf);
+         }
+         
+         int nvalorfactura=0;
+         nvalorfactura = Integer.parseInt(contadorf) + 1;
+         String formatted = String.format("%0" + 8 + "d",nvalorfactura );
+     
+
+       
+         nfacturanueva = contadori + formatted;
+         
+         return nfacturanueva;
+        
+        
+    }
+    
+    public int ObtenerFormatoFactura(){
+        int numeroformato=0;
+        String SQL1 = "Select fc.NumeroFormato From FormatoFacturaCabecera fc\n" +
+                      "Where fc.IdEstado=1;";
+        
+        
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL1);
+
+            while (rs.next()) {
+                numeroformato =rs.getInt("fc.NumeroFormato");
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+         
+         return numeroformato;
+    }
+    
+    public String ObtenerFechaEmision(){
+        String fechae="";
+          String SQL1 = "Select v.FechaVenta From Ventas v\n" +
+                      "Where v.IdOrden="+idorden;
+        
+        
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL1);
+
+            while (rs.next()) {
+                fechae =rs.getString("v.FechaVenta");
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+         return fechae;
+    }
+    
+    public String ObtenerHoraEmision(){
+        String Horae="";
+          String SQL1 = "Select v.HoraVenta From Ventas v\n" +
+                      "Where v.IdOrden="+idorden;
+        
+        
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL1);
+
+            while (rs.next()) {
+                Horae =rs.getString("v.HoraVenta");
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+         return Horae;
+    }
+    
+    
+    public void Factura(){
+        String SQL = "INSERT INTO Factura (IdFactura, IdOrden, SubTotal, ISV15, ISV18, Total, NumeroFormato, FechaEmision, HoraEmision, TotalP) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setString(1, ObtenerNumeroFactura());
+            preparedStmt.setInt(2, idorden);
+            preparedStmt.setFloat(3, Float.valueOf(subtotal));
+            preparedStmt.setFloat(4, Float.valueOf(isv));
+            preparedStmt.setFloat(5, Float.valueOf(isv18));
+            preparedStmt.setFloat(6, Float.valueOf(total));
+            preparedStmt.setInt(7, ObtenerFormatoFactura());
+            preparedStmt.setString(8, ObtenerFechaEmision());
+            preparedStmt.setString(9, ObtenerHoraEmision());
+            preparedStmt.setInt(10, Integer.parseInt(totalp));
+            preparedStmt.execute();
+      
+     
+           
+       
+
+        } catch (Exception e) {
+            System.err.println("Error al guardar la factura");
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+        
+    }
+    
+    public String ObtenerNumerodeFacturaXOrden(){
+        String numerodefactura = "";
+        String SQL1 = "Select f.IdFactura from Factura f\n" +
+                      "Where f.IdOrden="+idorden;
+        
+        
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL1);
+
+            while (rs.next()) {
+                numerodefactura =rs.getString("f.IdFactura");
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error al obtener el numero de factura"+e.getMessage());
+        
+            }
+         return numerodefactura;
+         
+    }
+    
+    public void ImprimirFactura(){
+        try {
+            JasperReport reporte = null;
+            String path = "src\\Reportes\\Factura.jasper";
+            Map parametro = new HashMap();
+            parametro.put("Nfactura", ObtenerNumerodeFacturaXOrden() );
+            
+            reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint jprint = JasperFillManager.fillReport(reporte, parametro, con);
+            JasperViewer view = new JasperViewer(jprint, false);
+            view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            view.setVisible(true);
+        } catch (Exception e) {
+            System.err.println("Error al imprimir la factura");
+        }
     }
     
     
@@ -1495,7 +1693,8 @@ public class VerificarOrden extends javax.swing.JFrame {
 
     private void rSButtonIcon_new17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new17ActionPerformed
         // TODO add your handling code here:
-        mostrarelementos();
+        Factura();
+        /*mostrarelementos();*/
        
     }//GEN-LAST:event_rSButtonIcon_new17ActionPerformed
 
@@ -1506,12 +1705,14 @@ public class VerificarOrden extends javax.swing.JFrame {
                if(tipodeVenta==1){
                    insertarOrden();
                    enviarDetallesOrden();
+                   
                     if(estadodetalleorden==true && estadoorden==true){
 
                         enviarActualizacionExistencia();
                         actualizartotalcaja();
                         if(estadototalcaja==true){
                            actualizarHistoriaCaja();
+                           Factura();
                            VentanaEmergente1 ve = new VentanaEmergente1();
                            ve.setVisible(true);
                         }
@@ -1531,6 +1732,7 @@ public class VerificarOrden extends javax.swing.JFrame {
                              actualizartotalcaja();
                              if(estadototalcaja==true){
                                 actualizarHistoriaCaja();
+                                Factura();
                                 VentanaEmergente1 ve = new VentanaEmergente1();
                                 ve.setVisible(true);
                              }
@@ -1557,6 +1759,7 @@ public class VerificarOrden extends javax.swing.JFrame {
                         actualizartotalcaja();
                         if(estadototalcaja==true){
                            actualizarHistoriaCaja();
+                           Factura();
                            VentanaEmergente1 ve = new VentanaEmergente1();
                            ve.setVisible(true);
                         }
@@ -1576,6 +1779,7 @@ public class VerificarOrden extends javax.swing.JFrame {
                              actualizartotalcaja();
                              if(estadototalcaja==true){
                                 actualizarHistoriaCaja();
+                                Factura();
                                 VentanaEmergente1 ve = new VentanaEmergente1();
                                 ve.setVisible(true);
                              }
@@ -1605,6 +1809,7 @@ public class VerificarOrden extends javax.swing.JFrame {
 
     private void rSButtonIcon_new19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new19ActionPerformed
         // TODO add your handling code here:
+        ImprimirFactura();
     }//GEN-LAST:event_rSButtonIcon_new19ActionPerformed
 
     private void rSRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton3ActionPerformed
