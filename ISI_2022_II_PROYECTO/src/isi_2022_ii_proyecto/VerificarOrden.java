@@ -646,9 +646,9 @@ public class VerificarOrden extends javax.swing.JFrame {
     public void ImprimirFactura(){
         try {
             JasperReport reporte = null;
-            String path1 = "src\\Reportes\\report1.jasper";
+            String path1 = "src\\Reportes\\report2.jasper";
             Map parametro = new HashMap();
-            parametro.put("Nfactura", "000-001-01-00000005" );
+            parametro.put("Nfactura",ObtenerNumerodeFacturaXOrden());
             
             reporte = (JasperReport) JRLoader.loadObjectFromFile(path1);
             JasperPrint jprint = JasperFillManager.fillReport(reporte, parametro, con);
@@ -656,8 +656,10 @@ public class VerificarOrden extends javax.swing.JFrame {
             view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             view.setVisible(true);
          } catch (JRException jex) {
+             System.err.println("Error al imprimir factura "+ jex.getMessage());
             JOptionPane.showMessageDialog(null,"JasperException"+jex.getMessage());
         } catch (Exception ex) {
+             System.err.println("Error al imprimir factura "+ ex.getMessage());
             JOptionPane.showMessageDialog(null, ex.getStackTrace());
         }
     }
@@ -1661,7 +1663,6 @@ public class VerificarOrden extends javax.swing.JFrame {
 
     private void rSButtonIcon_new17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new17ActionPerformed
         // TODO add your handling code here:
-        mostrarfacturacion();
         mostrarelementos();
        
     }//GEN-LAST:event_rSButtonIcon_new17ActionPerformed
