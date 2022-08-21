@@ -11,6 +11,7 @@ package isi_2022_ii_proyecto;
 
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
+import isi_2022_ii_proyecto.Recursos.AvisoFacturaConRTN;
 import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 
 import java.awt.Font;
@@ -69,6 +70,11 @@ public class VerificarOrden extends javax.swing.JFrame {
     String isv;
     String totalp;
     String envio;
+    String RTNC="";
+
+    public void setRTNC(String RTNC) {
+        this.RTNC = RTNC;
+    }
     /*VARIABLES PARA TABLA DE ENVIOS*/
     int tipodeVenta;
     int idDireccionCliente;
@@ -646,7 +652,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     public void ImprimirFactura(){
         try {
             JasperReport reporte = null;
-            String path1 = "src\\Reportes\\report2.jasper";
+            String path1 = "src\\Reportes\\FacturaD.jasper";
             Map parametro = new HashMap();
             parametro.put("Nfactura",ObtenerNumerodeFacturaXOrden());
             
@@ -665,7 +671,85 @@ public class VerificarOrden extends javax.swing.JFrame {
     }
     
     
-    
+    public void pagar(){
+          
+        if(rSRadioButton2.isSelected()){
+           if(JTextbuscar.getText().length()>0){
+               
+                   insertarOrden();
+                   enviarDetallesOrden();
+                   
+                    if(estadodetalleorden==true && estadoorden==true){
+
+                        enviarActualizacionExistencia();
+                        actualizartotalcaja();
+                        if(estadototalcaja==true){
+                           actualizarHistoriaCaja();
+                           Factura();
+                           VentanaEmergente1 ve = new VentanaEmergente1();
+                           ve.setVisible(true);
+                           mostrarfacturacion();
+                        }
+
+                    calcularcambio();
+                    rSPanelForma3.setVisible(false);
+                            
+                }
+                   
+               
+            
+           
+            
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Ingrese un valor de efectivo");
+            } 
+        }else{
+            if(rSRadioButton1.isSelected()){
+                   insertarOrden();
+                   enviarDetallesOrden();
+                    if(estadodetalleorden==true && estadoorden==true){
+
+                        enviarActualizacionExistencia();
+                        actualizartotalcaja();
+                        if(estadototalcaja==true){
+                           actualizarHistoriaCaja();
+                           Factura();
+                           VentanaEmergente1 ve = new VentanaEmergente1();
+                           ve.setVisible(true);
+                           mostrarfacturacion();
+                        }
+
+                    
+                    rSPanelForma3.setVisible(false);
+                 
+                }
+                   
+               }else{
+                if(rSRadioButton3.isSelected()){
+                   insertarOrden();
+                   enviarDetallesOrden();
+                    if(estadodetalleorden==true && estadoorden==true){
+
+                        enviarActualizacionExistencia();
+                        actualizartotalcaja();
+                        if(estadototalcaja==true){
+                           actualizarHistoriaCaja();
+                           Factura();
+                           VentanaEmergente1 ve = new VentanaEmergente1();
+                           ve.setVisible(true);
+                           mostrarfacturacion();
+                        }
+
+                  
+                    rSPanelForma3.setVisible(false);
+                   
+                }
+                   
+               }
+                
+            }
+        }
+    }
  
     
     
@@ -1667,82 +1751,11 @@ public class VerificarOrden extends javax.swing.JFrame {
 
     private void rSButtonIcon_new18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new18ActionPerformed
         // TODO add your handling code here:
-        if(rSRadioButton2.isSelected()){
-           if(JTextbuscar.getText().length()>0){
-               
-                   insertarOrden();
-                   enviarDetallesOrden();
-                   
-                    if(estadodetalleorden==true && estadoorden==true){
-
-                        enviarActualizacionExistencia();
-                        actualizartotalcaja();
-                        if(estadototalcaja==true){
-                           actualizarHistoriaCaja();
-                           Factura();
-                           VentanaEmergente1 ve = new VentanaEmergente1();
-                           ve.setVisible(true);
-                           mostrarfacturacion();
-                        }
-
-                    calcularcambio();
-                    rSPanelForma3.setVisible(false);
-                            
-                }
-                   
-               
-            
-           
-            
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "Ingrese un valor de efectivo");
-            } 
-        }else{
-            if(rSRadioButton1.isSelected()){
-                   insertarOrden();
-                   enviarDetallesOrden();
-                    if(estadodetalleorden==true && estadoorden==true){
-
-                        enviarActualizacionExistencia();
-                        actualizartotalcaja();
-                        if(estadototalcaja==true){
-                           actualizarHistoriaCaja();
-                           Factura();
-                           VentanaEmergente1 ve = new VentanaEmergente1();
-                           ve.setVisible(true);
-                           mostrarfacturacion();
-                        }
-
-                    
-                    rSPanelForma3.setVisible(false);
-                 
-                }
-                   
-               }else{
-                if(rSRadioButton3.isSelected()){
-                   insertarOrden();
-                   enviarDetallesOrden();
-                    if(estadodetalleorden==true && estadoorden==true){
-
-                        enviarActualizacionExistencia();
-                        actualizartotalcaja();
-                        if(estadototalcaja==true){
-                           actualizarHistoriaCaja();
-                           Factura();
-                           VentanaEmergente1 ve = new VentanaEmergente1();
-                           ve.setVisible(true);
-                           mostrarfacturacion();
-                        }
-
-                  
-                    rSPanelForma3.setVisible(false);
-                   
-                }
-                   
-               }
-                
-            }
-        }
+        
+        
+        AvisoFacturaConRTN avf = new AvisoFacturaConRTN();
+        avf.setVo(this);
+        avf.setVisible(true);
         
         
     }//GEN-LAST:event_rSButtonIcon_new18ActionPerformed
