@@ -13,6 +13,7 @@ import isi_2022_ii_proyecto.ActualizarCliente;
 import isi_2022_ii_proyecto.ActualizarEmpleado;
 import isi_2022_ii_proyecto.ActualizarEnvio;
 import isi_2022_ii_proyecto.ActualizarInventario;
+import isi_2022_ii_proyecto.ActualizarLogistica;
 import isi_2022_ii_proyecto.ActualizarProductos;
 import isi_2022_ii_proyecto.ActualizarProveedor;
 import isi_2022_ii_proyecto.AgregarCuentaBancaria;
@@ -37,6 +38,11 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
     ActualizarInventario ainv;
     ActualizarCategoria acat;
     ActualizarBanco gbanco;
+
+    public void setGlog(ActualizarLogistica glog) {
+        this.glog = glog;
+    }
+    ActualizarLogistica glog;
 
     public void setGbanco(ActualizarBanco gbanco) {
         this.gbanco = gbanco;
@@ -288,6 +294,12 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
                 if(tipo=="Mbanco"){
                 gbanco.setEstadosModificar(true);
                gbanco.validarConfirmacion();
+                this.dispose();
+                
+            }
+                   if(tipo=="MLogistica"){
+                glog.setEstadosModificar(true);
+               glog.validarConfirmacion();
                 this.dispose();
                 
             }

@@ -9,6 +9,7 @@ import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
 import isi_2022_ii_proyecto.Recursos.ConfirmacionGuardar;
 import isi_2022_ii_proyecto.Recursos.ConfirmacionGuardarPro;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionModificar;
 import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -40,29 +41,33 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author orell
  */
-public class AgregarLogistica extends javax.swing.JFrame {
+public class ActualizarLogistica extends javax.swing.JFrame {
 
     /**
      * Creates new form AgregarCliente
      */
      boolean a = true;
     String logistica;
+    String logi;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     int id=0;
     
    HashMap<String, Integer> empleados = new HashMap<String, Integer>();
-    boolean estadoagregar=false;
+   boolean estadosModificar=false;
 
-    public void setEstadoagregar(boolean estadoagregar) {
-        this.estadoagregar = estadoagregar;
+    public void setEstadosModificar(boolean estadosModificar) {
+        this.estadosModificar = estadosModificar;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
   public void setLogistica(String env) {
-        this.logistica=env;
+        this.logi=env;
     }
   
     
-    public AgregarLogistica() {
+    public ActualizarLogistica() {
         initComponents();
          this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
@@ -78,8 +83,8 @@ public class AgregarLogistica extends javax.swing.JFrame {
        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
       public void validarConfirmacion(){
-        if(estadoagregar=true){
-            insertar();
+        if(estadosModificar=true){
+            Actualizar();
         }
     }
        public void listarCarga(){
@@ -107,7 +112,7 @@ public class AgregarLogistica extends javax.swing.JFrame {
       
    
     public void inicializar(){
-       JCodigoDisponible.setText(logistica);
+       JCodigoDisponible.setText(logi);
     }
     
     public void buscardatos(){
@@ -192,8 +197,48 @@ public class AgregarLogistica extends javax.swing.JFrame {
         return idg;
         
     }
+            public void mostrar(){
+           String nombre="";
+           String tarifa="";
+           
+           String apellidos="";
+           String descrip="";
+           String fechaS="";
+           String fechaE="";
+           String empleado="";
+           String carga="";
+       
+        String SQL = "SELECT l.TarifaDolar,l.FechaSalida, l.FechaLlegada,l.Descripcion,tc.Valor ,e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido  FROM Logistica l\n" +
+                      "INNER JOIN Empleados e ON e.IdEmpleado = l.EmpleadoaCargo\n" +
+                     "INNER JOIN TipoCarga tc ON tc.IdTipoCarga = l.IdTipoCarga \n" +
+                      "WHERE a.IdOrdenLogistica="+id;
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+         tarifa= rs.getString("l.TarifaDolar");
+            descrip = rs.getString("l.Descripcion");
+           fechaS=rs.getString("l.FechaSalida");
+            fechaE=rs.getString("l.FechaLlegada");
+              nombre =rs.getString("PrimerNombre")+" "+rs.getString("SegundoNombre");
+                apellidos = rs.getString("PrimerApellido")+" "+rs.getString("SegundoApellido");
+               carga=rs.getString("tc.Valor");
+             } 
+               Tarifa.setText(tarifa);
+               Descrip.setText(descrip);
+               Fsalida.setText(fechaS);
+               Fllegada.setText(fechaE);
+               emp.setText(nombre+" "+apellidos);
+                carg .setText(carga);
+                JCodigoDisponible.setText(String.valueOf(id));
+    
+          } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
      public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
-      public boolean insertar(){
+      public boolean Actualizar(){
         String tarifa="";
         String telefono=""; 
         String descripcion="";
@@ -216,18 +261,17 @@ public class AgregarLogistica extends javax.swing.JFrame {
  
         carga =ObtenereCarga();
         
-        String SQL = "INSERT INTO Logistica(IdOrdenLogistica,FechaSalida,FechaLlegada,EmpleadoaCargo,TarifaDolar,Descripcion,IdTipoCarga,Hora) VALUES"
-                + "(?, ?, ?, ?, ?,?,?,?)";
+        String SQL = "UPDATE  Logistica SET FechaSalida=?,FechaLlegada=?,EmpleadoaCargo=?,TarifaDolar=?,Descripcion=?,IdTipoCarga=?,Hora=? WHERE IdOrdenLogistica="+"'"+id+"'";
+          
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
-            preparedStmt.setInt(1, id);
-            preparedStmt.setString (2, FS);
-            preparedStmt.setString (3,FLL);
-            preparedStmt.setInt(4, empleado);
-            preparedStmt.setString(5, tarifa);
-            preparedStmt.setString(6, descripcion);
-            preparedStmt.setInt(7, carga);
-            preparedStmt.setString(8, hora);
+            preparedStmt.setString (1, FS);
+            preparedStmt.setString (2,FLL);
+            preparedStmt.setInt(3, empleado);
+            preparedStmt.setString(4, tarifa);
+            preparedStmt.setString(5, descripcion);
+            preparedStmt.setInt(6, carga);
+            preparedStmt.setString(7, hora);
             preparedStmt.execute();
             
            VentanaEmergente1 ve = new VentanaEmergente1();
@@ -364,9 +408,9 @@ public class AgregarLogistica extends javax.swing.JFrame {
         JCodigoDisponible = new javax.swing.JLabel();
         Descrip = new rojeru_san.RSMTextFull();
         jLabel29 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        emp = new javax.swing.JLabel();
         JComboEmpleados = new rojerusan.RSComboMetro();
-        jLabel30 = new javax.swing.JLabel();
+        Fsalida = new javax.swing.JLabel();
         Tarifa = new rojeru_san.RSMTextFull();
         FS = new rojeru_san.componentes.RSDateChooser();
         jLabel31 = new javax.swing.JLabel();
@@ -377,12 +421,20 @@ public class AgregarLogistica extends javax.swing.JFrame {
         rSLabelHora2 = new rojeru_san.rsdate.RSLabelHora();
         jLabel23 = new javax.swing.JLabel();
         avisoT = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        carg = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        Fllegada = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
-        guardar = new newscomponents.RSButtonIcon_new();
+        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -965,19 +1017,19 @@ public class AgregarLogistica extends javax.swing.JFrame {
                 DescripKeyTyped(evt);
             }
         });
-        jPanel5.add(Descrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 350, 400, -1));
+        jPanel5.add(Descrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 400, -1));
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel29.setText("Descripcion");
-        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 170, 40));
+        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 170, 40));
 
-        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText(" Empleado a Cargo:");
-        jPanel5.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, 190, 30));
+        emp.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        emp.setForeground(new java.awt.Color(153, 0, 255));
+        emp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        emp.setText(" Empleado a Cargo:");
+        jPanel5.add(emp, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 30, 190, 30));
 
         JComboEmpleados.setColorArrow(new java.awt.Color(102, 0, 255));
         JComboEmpleados.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -992,13 +1044,13 @@ public class AgregarLogistica extends javax.swing.JFrame {
                 JComboEmpleadosMouseExited(evt);
             }
         });
-        jPanel5.add(JComboEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 70, 230, 30));
+        jPanel5.add(JComboEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 90, 230, 30));
 
-        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel30.setText("Fecha Salida:");
-        jPanel5.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 150, 40));
+        Fsalida.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Fsalida.setForeground(new java.awt.Color(153, 0, 255));
+        Fsalida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Fsalida.setText("Fecha Salida:");
+        jPanel5.add(Fsalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 150, 40));
 
         Tarifa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Tarifa.setPlaceholder("");
@@ -1015,31 +1067,31 @@ public class AgregarLogistica extends javax.swing.JFrame {
                 TarifaKeyTyped(evt);
             }
         });
-        jPanel5.add(Tarifa, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, 400, -1));
+        jPanel5.add(Tarifa, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, 400, -1));
 
         FS.setFormatoFecha("dd/MM/yyyy");
-        jPanel5.add(FS, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
+        jPanel5.add(FS, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, -1, -1));
 
         jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(153, 0, 255));
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel31.setText("Tarifa de Dolar ");
-        jPanel5.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 160, 40));
+        jPanel5.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 160, 40));
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(153, 0, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel32.setText("Fecha Llegada:");
-        jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 160, 40));
+        jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, 130, 40));
 
         FLL.setFormatoFecha("dd/MM/yyyy");
-        jPanel5.add(FLL, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, -1, -1));
+        jPanel5.add(FLL, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 210, -1, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Hora:");
-        jPanel5.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 200, 60, 30));
+        jPanel5.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 150, 60, 30));
 
         Jcarga.setColorArrow(new java.awt.Color(102, 0, 255));
         Jcarga.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -1059,27 +1111,75 @@ public class AgregarLogistica extends javax.swing.JFrame {
                 JcargaActionPerformed(evt);
             }
         });
-        jPanel5.add(Jcarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 130, 230, 30));
-        jPanel5.add(rSLabelHora2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 190, 230, 40));
+        jPanel5.add(Jcarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 390, 230, 30));
+        jPanel5.add(rSLabelHora2, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 150, 150, 40));
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(153, 0, 255));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("Carga:");
-        jPanel5.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 140, 60, 30));
+        jLabel23.setText("Carga Actual:");
+        jPanel5.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 300, 100, 30));
 
         avisoT.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         avisoT.setForeground(new java.awt.Color(255, 0, 0));
         avisoT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         avisoT.setText("*Formato invalído*");
-        jPanel5.add(avisoT, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 370, -1));
+        jPanel5.add(avisoT, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 370, -1));
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setText("Carga:");
+        jPanel5.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 390, 60, 30));
+
+        carg.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        carg.setForeground(new java.awt.Color(153, 0, 255));
+        carg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        carg.setText("Carga:");
+        jPanel5.add(carg, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 300, 170, 30));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText(" Empleado a Cargo:");
+        jPanel5.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 190, 30));
+
+        jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel33.setText("Fecha Llegada:");
+        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 130, 40));
+
+        Fllegada.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Fllegada.setForeground(new java.awt.Color(153, 0, 255));
+        Fllegada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Fllegada.setText("Fecha Llegada:");
+        jPanel5.add(Fllegada, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 150, 130, 40));
+
+        jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel35.setText("Fecha Salida:");
+        jPanel5.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 150, 40));
+
+        jLabel36.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel36.setText("Fecha Salida:");
+        jPanel5.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 150, 40));
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setText(" Empleado a Cargo:");
+        jPanel5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 40, 190, 30));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1113,16 +1213,17 @@ public class AgregarLogistica extends javax.swing.JFrame {
 
         dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1102, -1));
 
-        guardar.setBackground(new java.awt.Color(33, 150, 243));
-        guardar.setText("Guardar Orden");
-        guardar.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        guardar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
-        guardar.addActionListener(new java.awt.event.ActionListener() {
+        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new9.setText("Modificar Cambios");
+        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
+        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                guardarActionPerformed(evt);
+                rSButtonIcon_new9ActionPerformed(evt);
             }
         });
-        dashboardview.add(guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 200, 40));
+        dashboardview.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, 40));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1254,22 +1355,6 @@ public class AgregarLogistica extends javax.swing.JFrame {
        
     }//GEN-LAST:event_DescripKeyReleased
 
-    private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-        // TODO add your handling code here:
-       if(validar()==true){
-        ConfirmacionGuardar lg = new  ConfirmacionGuardar();
-        lg.setAlog(this);
-        lg.setTipo("GLogistica");
-        lg.setVisible(true);
-         
-
-        }else{
-
-            JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
-        }
-
-    }//GEN-LAST:event_guardarActionPerformed
-
     private void JComboEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JComboEmpleadosMouseClicked
         // TODO add your handling code here:
 
@@ -1346,6 +1431,18 @@ public class AgregarLogistica extends javax.swing.JFrame {
     private void JcargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JcargaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JcargaActionPerformed
+
+    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
+        if(validar()==true){
+            ConfirmacionModificar log = new ConfirmacionModificar();
+            log.setGlog(this);
+            log.setTipo("MLogistica");
+            log.setVisible(true);
+        }else{
+
+            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
+        }
+    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1394,14 +1491,78 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarLogistica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarLogistica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarLogistica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarLogistica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarLogistica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarLogistica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarLogistica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarLogistica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -1470,7 +1631,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgregarLogistica().setVisible(true);
+                new ActualizarLogistica().setVisible(true);
             }
         });
     }
@@ -1479,6 +1640,8 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.RSMTextFull Descrip;
     private rojeru_san.componentes.RSDateChooser FLL;
     private rojeru_san.componentes.RSDateChooser FS;
+    private javax.swing.JLabel Fllegada;
+    private javax.swing.JLabel Fsalida;
     private javax.swing.JPanel Header;
     private javax.swing.JLabel JCodigoDisponible;
     private rojerusan.RSComboMetro JComboEmpleados;
@@ -1486,8 +1649,9 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel MenuIcon;
     private rojeru_san.RSMTextFull Tarifa;
     private javax.swing.JLabel avisoT;
+    private javax.swing.JLabel carg;
     private javax.swing.JPanel dashboardview;
-    private newscomponents.RSButtonIcon_new guardar;
+    private javax.swing.JLabel emp;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JPanel icono;
     private javax.swing.JLabel jLabel10;
@@ -1496,14 +1660,18 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1534,6 +1702,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new9;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojeru_san.rsdate.RSLabelHora rSLabelHora2;
     private rojerusan.RSLabelIcon rSLabelIcon1;

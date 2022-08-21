@@ -14,6 +14,7 @@ import isi_2022_ii_proyecto.AgregarCuentaBancaria;
 import isi_2022_ii_proyecto.AgregarEmpleado;
 import isi_2022_ii_proyecto.AgregarEnvio;
 import isi_2022_ii_proyecto.AgregarInventario;
+import isi_2022_ii_proyecto.AgregarLogistica;
 import isi_2022_ii_proyecto.AgregarProveedor;
 import isi_2022_ii_proyecto.AperturarCajas;
 import isi_2022_ii_proyecto.Banco;
@@ -34,7 +35,11 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
     AgregarInventario ainv;
     AgregarCategoria acat;
     AgregarBanco abanco;
+    AgregarLogistica alog;
 
+    public void setAlog(AgregarLogistica alog) {
+        this.alog = alog;
+    }
     
    public void setAbanco(AgregarBanco abanco) {
         this.abanco = abanco;
@@ -268,6 +273,11 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
                 abanco.validarConfirmacion();
                 this.dispose();
             }
+           if(tipo=="GLogistica"){
+                alog.setEstadoagregar(true);
+                alog.validarConfirmacion();
+                this.dispose();
+            }
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     /**
@@ -318,6 +328,8 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
     private RSMaterialComponent.RSLabelIcon rSLabelIcon1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
+
+  
 
     
 

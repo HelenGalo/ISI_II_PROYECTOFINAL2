@@ -37,7 +37,7 @@ public class Logistica extends javax.swing.JFrame {
      * Creates new form AgregarCliente
      */
      boolean a = true;
-    String prod;
+   String logi;
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
 
@@ -57,7 +57,7 @@ public class Logistica extends javax.swing.JFrame {
     
     
       public void deshabilitarp(){
-        String SQL = "UPDATE Productos SET IdEstado=? Where IdProductos="+prod;
+        String SQL = "UPDATE Productos SET IdEstado=? Where IdProductos="+logi;
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
           
@@ -74,7 +74,7 @@ public class Logistica extends javax.swing.JFrame {
    
     
      public void listarO(){
-        String[] registros = new String[6];
+        String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableLogistica.getModel();
         
        String SQL = "SELECT  l.IdOrdenLogistica,l.FechaSalida,l.FechaLLegada,e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido,tc.Valor   FROM Logistica l\n" +
@@ -91,10 +91,10 @@ public class Logistica extends javax.swing.JFrame {
                 
                 registros[0] = rs.getString("l.IdOrdenLogistica");
                 registros[1] = rs.getString("l.FechaSalida");
-                registros[2] = rs.getString("l.FechaSalida");
+                registros[2] = rs.getString("l.FechaLlegada");
                 registros[3] = rs.getString("e.PrimerNombre")+" "+rs.getString("e.SegundoNombre")+" "+rs.getString("e.PrimerApellido");
                 registros[4] = rs.getString("tc.Valor");
-                registros [5] = formato.format(rs.getFloat("TotalCanceladoLempira"));
+              
                 modelo.addRow(registros);
             }
 
@@ -125,7 +125,7 @@ public class Logistica extends javax.swing.JFrame {
 
     
    private void buscarNombre(){
-        String[] registros = new String[6];
+        String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableLogistica.getModel();
         
          String SQL = "SELECT  l.IdOrdenLogistica,l.FechaSalida,l.FechaLLegada,e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido,tc.Valor   FROM Logistica l\n" +
@@ -139,10 +139,10 @@ public class Logistica extends javax.swing.JFrame {
                  DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("l.IdOrdenLogistica");
                 registros[1] = rs.getString("l.FechaSalida");
-                registros[2] = rs.getString("l.FechaSalida");
+                registros[2] = rs.getString("l.FechaLlegada");
                 registros[3] = rs.getString("e.PrimerNombre")+" "+rs.getString("e.SegundoNombre")+" "+rs.getString("e.PrimerApellido");
                 registros[4] = rs.getString("tc.Valor");
-                registros [5] = formato.format(rs.getFloat("TotalCanceladoLempira"));
+               
                 modelo.addRow(registros);
             }
 
@@ -822,7 +822,7 @@ public class Logistica extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Orden Logistica", "Fecha Salida", "Fecha Entrada", "Empleado", "Carga", "TotalEfectivo"
+                "Orden Logistica", "Fecha Salida", "Fecha Entrada", "Empleado", "Carga"
             }
         ));
         JTableLogistica.setToolTipText("");
@@ -1109,11 +1109,11 @@ public class Logistica extends javax.swing.JFrame {
     private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
        // TODO add your handling code here:
          try {
-             if(prod.isEmpty()==false){
-          ActualizarProductos p = new  ActualizarProductos();
-           p.setId(Integer.parseInt(prod));
-           p.mostrarP();
-           p.setVisible(true);   
+             if(logi.isEmpty()==false){
+          ActualizarLogistica log = new  ActualizarLogistica();
+           log.setId(Integer.parseInt(logi));
+           log.mostrar();
+           log.setVisible(true);   
            this.dispose();
         }else{
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
@@ -1128,8 +1128,8 @@ public class Logistica extends javax.swing.JFrame {
     private void JTableLogisticaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableLogisticaMouseClicked
         
         int seleccion = JTableLogistica.rowAtPoint(evt.getPoint());
-      prod =   String.valueOf(JTableLogistica.getValueAt(seleccion, 0));
-         System.out.println("THIs" +prod);
+      logi =   String.valueOf(JTableLogistica.getValueAt(seleccion, 0));
+         System.out.println("THIs" +logi);
     }//GEN-LAST:event_JTableLogisticaMouseClicked
 
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
