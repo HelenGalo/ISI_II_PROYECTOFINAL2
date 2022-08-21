@@ -199,7 +199,7 @@
                               <Component id="rSButtonIconOne3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                               <Component id="rSButtonIconOne4" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="11" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -815,9 +815,6 @@
                               </Constraints>
                             </Component>
                             <Component class="rojeru_san.RSLabelFecha" name="rSLabelFecha1">
-                              <Properties>
-                                <Property name="formato" type="java.lang.String" value="yyyy/MM/dd"/>
-                              </Properties>
                               <Constraints>
                                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                                   <AbsoluteConstraints x="150" y="20" width="80" height="20"/>

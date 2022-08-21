@@ -129,9 +129,9 @@
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                          <Component id="linesetting5" pref="336" max="32767" attributes="0"/>
+                          <Component id="linesetting5" pref="335" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="linesetting4" pref="740" max="32767" attributes="0"/>
+                          <Component id="linesetting4" pref="739" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="linesetting3" min="-2" pref="150" max="-2" attributes="0"/>
                       </Group>
@@ -193,7 +193,7 @@
                               <Component id="rSButtonIconOne3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                               <Component id="rSButtonIconOne4" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="11" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -752,7 +752,7 @@
                       <Color blue="85" green="37" red="0" type="rgb"/>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor Por defecto"/>
+                      <Color id="Default Cursor"/>
                     </Property>
                     <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                       <Value id="WC"/>
@@ -891,6 +891,9 @@
                       <Value id="WIDGETS"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new11ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new12">
                   <Properties>
@@ -974,7 +977,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="rSLabelIcon4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="rSLabelIcon5" pref="51" max="32767" attributes="0"/>
+                              <Component id="rSLabelIcon5" pref="49" max="32767" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="rSLabelIcon3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>

@@ -669,6 +669,11 @@ public class Menu extends javax.swing.JFrame {
         rSButtonIcon_new11.setText("Logisticas");
         rSButtonIcon_new11.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIDGETS);
+        rSButtonIcon_new11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new11ActionPerformed(evt);
+            }
+        });
 
         rSButtonIcon_new12.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new12.setText("Ventas");
@@ -1773,6 +1778,12 @@ public class Menu extends javax.swing.JFrame {
         al.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
+
+    private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
+       Logistica lg = new Logistica();
+       lg.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
 
     /**
      * @param args the command line arguments

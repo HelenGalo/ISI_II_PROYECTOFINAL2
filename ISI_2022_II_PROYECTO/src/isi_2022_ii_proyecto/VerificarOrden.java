@@ -837,7 +837,7 @@ public class VerificarOrden extends javax.swing.JFrame {
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1121,7 +1121,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         );
 
         dashboardview.add(rSPanelGradiente3);
-        rSPanelGradiente3.setBounds(0, 0, 1360, 108);
+        rSPanelGradiente3.setBounds(0, 0, 1358, 108);
 
         rSPanelShadow2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
@@ -1140,8 +1140,6 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel47.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel47.setText("Fecha de Emisión:");
         rSPanelForma5.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 130, 20));
-
-        rSLabelFecha1.setFormato("yyyy/MM/dd");
         rSPanelForma5.add(rSLabelFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 80, 20));
 
         jLabel48.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
@@ -1533,7 +1531,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel54.setText("L.");
         rSPanelForma6.add(jLabel54);
-        jLabel54.setBounds(77, 49, 16, 20);
+        jLabel54.setBounds(77, 49, 15, 20);
 
         rSButtonIcon_new19.setBackground(new java.awt.Color(0, 153, 102));
         rSButtonIcon_new19.setText("Generar Factura");
