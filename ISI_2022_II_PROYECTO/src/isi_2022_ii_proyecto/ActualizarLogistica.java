@@ -1335,7 +1335,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
     }//GEN-LAST:event_DescripActionPerformed
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
-      Almacen al = new Almacen();
+     Logistica al = new Logistica();
       al.setVisible(true);
       this.dispose();
     
