@@ -860,6 +860,9 @@
                       <Value id="RECEIPT"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new9ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new10">
                   <Properties>

@@ -82,6 +82,8 @@ public class AvisoFacturaConRTN extends javax.swing.JFrame {
 
         rSButtonRound1.setBackground(new java.awt.Color(255, 51, 102));
         rSButtonRound1.setText("No");
+        rSButtonRound1.setFocusPainted(false);
+        rSButtonRound1.setFocusable(false);
         rSButtonRound1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rSButtonRound1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +101,7 @@ public class AvisoFacturaConRTN extends javax.swing.JFrame {
 
         rSButtonRound2.setBackground(new java.awt.Color(0, 153, 102));
         rSButtonRound2.setText("Si");
+        rSButtonRound2.setFocusable(false);
         rSButtonRound2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rSButtonRound2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

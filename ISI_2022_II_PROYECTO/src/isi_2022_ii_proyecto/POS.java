@@ -166,12 +166,12 @@ public class POS extends javax.swing.JFrame {
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
-
+             DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
-                DecimalFormat formato = new DecimalFormat("##,###.00");
+               
                 registros[0] = String.valueOf(idproducto);
                 registros[1] = rs.getString("p.Nombre");
-                registros[2] = formato.format(rs.getFloat("p.Precio"));
+                registros[2] = formato.format(rs.getFloat("p.Precio")).toString();
                 registros[3] = rs.getString("Ex");
                 modelo.addRow(registros);
             }
@@ -277,15 +277,16 @@ public class POS extends javax.swing.JFrame {
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
+            DecimalFormat formato = new DecimalFormat("##,###.00");
 
             while (rs.next()) {
                 
                 registros[0] = String.valueOf(idproducto);
                 registros[1] = rs.getString("p.Nombre");
-                registros[2] = rs.getString("p.Precio");
+                registros[2] = formato.format(rs.getFloat("p.Precio"));
                 registros[3] = "1";
                 registros[4] = obtenerdescuento(idproducto);
-                registros[5] = String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]));
+                registros[5] = formato.format(String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4])));
                 modelo1.addRow(registros);
             }
         

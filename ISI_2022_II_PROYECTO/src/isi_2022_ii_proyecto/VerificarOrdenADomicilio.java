@@ -550,7 +550,7 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
     }
     
     public void Factura(){
-        String SQL = "INSERT INTO Factura (IdFactura, IdOrden, SubTotal, ISV15, ISV18, Total, NumeroFormato, FechaEmision, HoraEmision, TotalP, FRTN) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+        String SQL = "INSERT INTO Factura (IdFactura, IdOrden, SubTotal, ISV15, ISV18, Total, NumeroFormato, FechaEmision, HoraEmision, TotalP, FRTN, IdEstado) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setString(1, ObtenerNumeroFactura());
@@ -564,6 +564,7 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
             preparedStmt.setString(9, ObtenerHoraEmision());
             preparedStmt.setInt(10, Integer.parseInt(totalp));
             preparedStmt.setString(11, RTNC);
+            preparedStmt.setInt(12, 1);
             preparedStmt.execute();
       
      
