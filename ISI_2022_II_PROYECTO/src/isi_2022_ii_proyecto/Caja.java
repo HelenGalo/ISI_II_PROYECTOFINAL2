@@ -55,6 +55,11 @@ public class Caja extends javax.swing.JFrame {
         
     }
     
+    public void conectar(){
+        conexion.setCaja(this);
+        con = conexion.conexion();
+    }
+    
     public void deshabilitar(){
         String SQL = "UPDATE  Caja SET IdEstado=? Where IdCaja="+codigoc;
         try {

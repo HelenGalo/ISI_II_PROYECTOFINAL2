@@ -27,6 +27,7 @@ import isi_2022_ii_proyecto.AgregarClientes;
 import isi_2022_ii_proyecto.AgregarCuentaBancaria;
 import isi_2022_ii_proyecto.AgregarEmpleado;
 import isi_2022_ii_proyecto.AgregarEnvio;
+import isi_2022_ii_proyecto.AgregarBanco;
 import isi_2022_ii_proyecto.AgregarInventario;
 import isi_2022_ii_proyecto.AgregarLogistica;
 import isi_2022_ii_proyecto.AgregarProducto;
@@ -85,6 +86,11 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
     ActualizarCaja ac = null;
     ActualizarCategoria aca = null;
     ActualizarCliente acl = null;
+    AgregarBanco agregarbanco=null;
+
+    public void setAgregarbanco(AgregarBanco agregarbanco) {
+        this.agregarbanco = agregarbanco;
+    }
 
     public void setActualizaralmacen(ActualizarAlmacen actualizaralmacen) {
         this.actualizaralmacen = actualizaralmacen;
@@ -651,7 +657,12 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
                         if(vodomicilio  !=null){
                             vodomicilio.conectar();
                         this.dispose();
-                    }
+                        }else{
+                            if(agregarbanco  !=null){
+                            agregarbanco.conectar();
+                            this.dispose();
+                            }
+                        }
                         
                     }
                 }

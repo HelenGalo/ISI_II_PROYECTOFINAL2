@@ -59,6 +59,12 @@ public class Banco extends javax.swing.JFrame {
         
     }
     
+    
+    public void conectar(){
+        conexion.setBanco(this);
+        con = conexion.conexion();
+    }
+    
     public void deshabilitar(){
         String SQL = "UPDATE  CuentasBancarias SET IdEstado=? Where IdCuenta="+codigob;
         try {

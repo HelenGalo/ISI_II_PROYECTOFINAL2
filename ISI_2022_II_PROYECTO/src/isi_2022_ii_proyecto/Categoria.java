@@ -55,6 +55,12 @@ public class Categoria extends javax.swing.JFrame {
         
     }
     
+    
+    public void conectar(){
+        conexion.setCate(this);
+        con = conexion.conexion();
+    }
+    
       public void listarAl(){
         String[] registros = new String[3];
         DefaultTableModel modelo =  (DefaultTableModel) JTableInv.getModel();
