@@ -57,11 +57,14 @@ import isi_2022_ii_proyecto.Logistica;
 import isi_2022_ii_proyecto.Menu;
 import isi_2022_ii_proyecto.ModificarCuentaB;
 import isi_2022_ii_proyecto.POS;
+import isi_2022_ii_proyecto.POSCLOUD;
+import isi_2022_ii_proyecto.POS1;
 import isi_2022_ii_proyecto.PrecioHistorico;
 import isi_2022_ii_proyecto.Productos;
 import isi_2022_ii_proyecto.Proveedores;
 import isi_2022_ii_proyecto.RecuperarContraseña;
 import isi_2022_ii_proyecto.TablaProductos;
+import isi_2022_ii_proyecto.TablaProductosCompras;
 import isi_2022_ii_proyecto.TipoVenta;
 import isi_2022_ii_proyecto.Usuario;
 import isi_2022_ii_proyecto.Ventas;
@@ -87,6 +90,16 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
     ActualizarCategoria aca = null;
     ActualizarCliente acl = null;
     AgregarBanco agregarbanco=null;
+    TablaProductosCompras tbc = null;
+    POS1 pos1 = null;
+
+    public void setTbc(TablaProductosCompras tbc) {
+        this.tbc = tbc;
+    }
+
+    public void setPos1(POS1 pos1) {
+        this.pos1 = pos1;
+    }
 
     public void setAgregarbanco(AgregarBanco agregarbanco) {
         this.agregarbanco = agregarbanco;

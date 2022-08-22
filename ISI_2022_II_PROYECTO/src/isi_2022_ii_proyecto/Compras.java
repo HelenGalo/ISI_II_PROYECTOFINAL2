@@ -45,7 +45,15 @@ public class Compras extends javax.swing.JFrame {
     String valorsiete="";
     int seleccion1;
      int seleccion2;
+    int idproductocompra;
 
+    public void setIdproductocompra(int idproductocompra) {
+        this.idproductocompra = idproductocompra;
+        JTextbuscar.setText(String.valueOf(idproductocompra));
+        limpiartabla();
+        buscarProductoPorId(Integer.valueOf(JTextbuscar.getText()));
+        codigop=null;
+    }
 
 
     public void setCodigvendedor(int codigvendedor) {
@@ -1563,6 +1571,9 @@ public class Compras extends javax.swing.JFrame {
 
     private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
         // TODO add your handling code here:
+        TablaProductosCompras tb = new TablaProductosCompras();
+        tb.setCompras(this);
+        tb.setVisible(true);
     }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
 
     private void JTableBancos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancos1MouseClicked
@@ -1668,7 +1679,7 @@ public class Compras extends javax.swing.JFrame {
         rSRadioButton2.setSelected(false);
         rSRadioButton3.setSelected(false);
         jLabel51.setVisible(false);
-        JTextbuscar.setVisible(false);
+    
         rSButtonIcon_new18.setLocation(149,111);
         rSButtonIcon_new18.setVisible(true);
 
@@ -1679,7 +1690,7 @@ public class Compras extends javax.swing.JFrame {
         rSRadioButton1.setSelected(false);
         rSRadioButton3.setSelected(false);
         jLabel51.setVisible(true);
-        JTextbuscar.setVisible(true);
+   
         rSButtonIcon_new18.setLocation(250,130);
         rSButtonIcon_new18.setVisible(true);
     }//GEN-LAST:event_rSRadioButton2ActionPerformed

@@ -1,29 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
+/*//GEN-FIRST:event_rSButtonGradiente8ActionPerformed
+ * To change this license header, choose License Headers in Project Properties.//GEN-LAST:event_rSButtonGradiente8ActionPerformed
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package isi_2022_ii_proyecto;
-
 import Atxy2k.CustomTextField.RestrictedTextField;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
+import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.time.chrono.IsoEra;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author Edwin Rafael
  */
-public class POS extends javax.swing.JFrame {
-    
-     boolean a = true;
+public class POS1 extends javax.swing.JFrame {
+    boolean a = true;
     
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
@@ -39,24 +45,10 @@ public class POS extends javax.swing.JFrame {
     RestrictedTextField r;
     String valorsiete="";
     int seleccion1;
-    int seleccion2;
+     int seleccion2;
 
 
-    /**
-     * Creates new form POV
-     */
-    public POS() {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        this.setExtendedState(this.MAXIMIZED_BOTH);
-        buscarUltimoId();
-        modelo1=(DefaultTableModel) JTableBancos.getModel();
-        modelo=(DefaultTableModel) JTableBancos1.getModel();
-        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
-    }
-    
-    
-    
+
     public void setCodigvendedor(int codigvendedor) {
         this.codigvendedor = codigvendedor;
     }
@@ -73,11 +65,23 @@ public class POS extends javax.swing.JFrame {
         this.usuario = usuario;
      
     }
-    
+    /**
+     * Creates new form Menu
+     */
+    public POS1() {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.setExtendedState(this.MAXIMIZED_BOTH);
+        buscarUltimoId();
+        modelo1=(DefaultTableModel) JTableBancos.getModel();
+        modelo=(DefaultTableModel) JTableBancos1.getModel();
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
+        
+    }
     
     public void conectar(){
-        conexion.setPos(this);
-        con = conexion.conexion();
+       /* conexion.setPos(this);
+        con = conexion.conexion();*/
     }
     
     
@@ -195,6 +199,39 @@ public class POS extends javax.swing.JFrame {
         }
     }
     
+    
+    
+    public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
+        if(numberbool == 1){
+            h1.setBackground(new Color(25,29,74));
+            h2.setBackground(new Color(5,10,46));
+        }
+        else{
+             h1.setBackground(new Color(5,10,46));
+            h2.setBackground(new Color(25,29,74));
+        }
+    }
+    
+    public void changeimage(JLabel button, String resourcheimg){
+        ImageIcon aimg = new ImageIcon(getClass().getResource(resourcheimg));
+        button.setIcon(aimg);
+        
+    }
+    
+    public void hideshow(JPanel menushowhide, boolean dashboard , JLabel button){
+        if(dashboard == true){
+            menushowhide.setPreferredSize(new Dimension(50,menushowhide.getHeight()));
+           // changeimage(button, "/image/menu_32px.png");
+        }
+        else{
+             menushowhide.setPreferredSize(new Dimension(270,menushowhide.getHeight()));
+              //changeimage(button, "/image/back_32px.png");
+        }
+    } 
+    
+    public void  changecolor(JPanel hover, Color rand){
+     hover.setBackground(rand);
+    }
     
     
     public String obtenerdescuento(int idproducto){
@@ -356,9 +393,8 @@ public class POS extends javax.swing.JFrame {
          
         if(modelo1.getRowCount()>0){
             float total=0.00f;
-             float totales=0.00f;
             total =  Float.valueOf(jLabel18.getText()) + Float.valueOf(jLabel23.getText()) -Float.valueOf(jLabel28.getText()) ;
-           totales = (float) (total);
+           
        
             jLabel22.setText(String.valueOf(total));
         }else{
@@ -474,6 +510,8 @@ public class POS extends javax.swing.JFrame {
      }
         
            
+           
+    
     
     public void QuitarproductoId(int codigproducto){
         int corredor=0;
@@ -579,7 +617,10 @@ public class POS extends javax.swing.JFrame {
         jLabel45.setText(usuario);
          
     }
-  
+    
+    
+    
+    
     
      public void iniciarcliente(){
            Connection con = conexion.conexion();
@@ -663,148 +704,6 @@ public class POS extends javax.swing.JFrame {
         
     }
     
-    public void enviarproductosatabla(){
-         if(codigop!=null){
-            if(Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())>0){
-                if(JTableBancos.getRowCount()==0){
-                    agregarproductosorden(Integer.valueOf(codigop));
-                    sumarcantidadproductos();
-                    sumarsubtotal();
-                    sumardescuento();
-                    sumarisv();
-                    total();
-                
-                    
-                }else{
-                    if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())<Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())){
-                    agregarproductosorden(Integer.valueOf(codigop));
-                    sumarcantidadproductos();
-                    sumarsubtotal();
-                    sumardescuento();
-                    sumarisv();
-                    total();
-                    }else{
-                        JOptionPane.showMessageDialog(rootPane, "Maxima cantidad de productos disponibles");
-                    }
-                }
-                
-                
-               
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "No hay productos en existencia para el producto seleccionado");
-            }
-            
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
-        }
-    
-    }
-    
-    
-    
-    public void restarproductostable(){
-         if(codigop1!=null){
-            if(Integer.valueOf(modelo1.getValueAt(seleccion1, 3).toString())>0){
-                restarcantidadproductos(Integer.valueOf(codigop1));
-                sumarcantidadproductos();
-                sumarsubtotal();
-                sumardescuento();
-                sumarisv();
-                total();
-            }
-          
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
-        }
-    }
-    
-    public void irtipoventa(){
-         TipoVenta vo = new TipoVenta();
-            vo.setTablaorden(JTableBancos);
-            vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(),jLabel23.getText(),jLabel22.getText(),jLabel8.getText(),jLabel28.getText(),jLabel18.getText());
-            vo.setVisible(true);
-
-            this.dispose();
-    }
-    
-    public void quitarproducto(){
-        if(codigop1!=null){
-            QuitarproductoId(Integer.valueOf(codigop1));
-            sumarcantidadproductos();
-            sumarsubtotal();
-            sumarisv();
-            total();
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
-        }
-    }
-    
-    
-    public void calculartablageneral(java.awt.event.KeyEvent evt ){
-        if(codigop1!=null){
-            if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            
-            if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())>0){
-              
-               
-                if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())<=Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())){
-                actualizarEnter();
-                sumarcantidadproductos();
-                sumarsubtotal();
-                sumardescuento();
-                sumarisv();
-                total();
-                codigop=null;
-                
-                }else{
-                   JOptionPane.showMessageDialog(rootPane, "Ha ingresado una cantidad que sobrepasa la cantidad disponbible, el maximo de productos es de: "+Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString()));
-                   JTableBancos.setValueAt(Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString()), seleccion1, 3);
- 
-                }
-                
-                
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "Debe agregar el minimo de producto");
-                JTableBancos.setValueAt(1, seleccion1, 3);
-
-            }
-            
-            }
-                
-                
-               
-        
-            
-    }else{
-                JOptionPane.showMessageDialog(rootPane, "No hay productos en existencia para el producto seleccionado");
-
-            }
-        
-    } 
-    
-    
-    
-    public void buscardespuesdeenter(java.awt.event.KeyEvent evt){
-        if(JTextbuscar.getText().length()>0){
-            JTextbuscar.setPlaceholder("");
-        }else{
-            JTextbuscar.setPlaceholder("Buscar por codigo");
-        }
-        
-     
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER && JTextbuscar.getText().isEmpty()==false){
-            limpiartabla();
-            buscarProductoPorId(Integer.valueOf(JTextbuscar.getText()));
-            codigop=null;
-        }else{
-            if(evt.getKeyCode()==KeyEvent.VK_ENTER && JTextbuscar.getText().isEmpty()==true){
-                limpiartabla();
-                codigop=null;
-            }
-        }
-    }
-    
-
     
     
 
@@ -814,9 +713,10 @@ public class POS extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
+        rSPanelVector1 = new rojeru_san.rspanel.RSPanelVector();
         jPanel1 = new javax.swing.JPanel();
         Header = new javax.swing.JPanel();
         iconminmaxclose = new javax.swing.JPanel();
@@ -904,7 +804,21 @@ public class POS extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
 
+        javax.swing.GroupLayout rSPanelVector1Layout = new javax.swing.GroupLayout(rSPanelVector1);
+        rSPanelVector1.setLayout(rSPanelVector1Layout);
+        rSPanelVector1Layout.setHorizontalGroup(
+            rSPanelVector1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        rSPanelVector1Layout.setVerticalGroup(
+            rSPanelVector1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setFocusable(false);
+        setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(20, 101, 187));
         jPanel1.setForeground(new java.awt.Color(20, 101, 187));
@@ -1874,7 +1788,7 @@ public class POS extends javax.swing.JFrame {
                 .addGroup(dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rSPanelShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSPanelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1904,162 +1818,288 @@ public class POS extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void rSButtonIconOne5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne5ActionPerformed
-        // TODO add your handling code here:
-        this.setExtendedState(ICONIFIED);
-    }//GEN-LAST:event_rSButtonIconOne5ActionPerformed
-
-    private void rSButtonIconOne3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne3ActionPerformed
+    private void rSButtonIconOne3ActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         // TODO add your handling code here:
         this.setExtendedState(this.MAXIMIZED_BOTH);
-    }//GEN-LAST:event_rSButtonIconOne3ActionPerformed
+    }                                                
 
-    private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne4ActionPerformed
+    private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+     
+            System.exit(0);
+      
+        
+    }                                                
+
+    private void rSButtonIconOne5ActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         // TODO add your handling code here:
-         System.exit(0);
-    }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
+        this.setExtendedState(ICONIFIED);
+    }                                                
 
-    private void JTableBancosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancosMouseClicked
+    private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         // TODO add your handling code here:
-         seleccion1 = JTableBancos.rowAtPoint(evt.getPoint());
-       codigop1 =   String.valueOf(JTableBancos.getValueAt(seleccion1, 0));
-    }//GEN-LAST:event_JTableBancosMouseClicked
+    
+            regresar();
+     
+    }                                                  
 
-    private void JTableBancosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTableBancosKeyReleased
+    private void rSButtonHover4ActionPerformed(java.awt.event.ActionEvent evt) {                                               
         // TODO add your handling code here:
-        calculartablageneral(evt);
+       
+        if(codigop!=null){
+            if(Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())>0){
+                if(JTableBancos.getRowCount()==0){
+                    agregarproductosorden(Integer.valueOf(codigop));
+                    sumarcantidadproductos();
+                    sumarsubtotal();
+                    sumardescuento();
+                    sumarisv();
+                    total();
+                
+                    
+                }else{
+                    if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())<Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())){
+                    agregarproductosorden(Integer.valueOf(codigop));
+                    sumarcantidadproductos();
+                    sumarsubtotal();
+                    sumardescuento();
+                    sumarisv();
+                    total();
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "Maxima cantidad de productos disponibles");
+                    }
+                }
+                
+                
+               
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "No hay productos en existencia para el producto seleccionado");
+            }
+            
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
+        }
+        
+    }                                              
 
-    }//GEN-LAST:event_JTableBancosKeyReleased
-
-    private void rSButtonGradiente4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente4ActionPerformed
+    private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         // TODO add your handling code here:
+        limpiartabla2();
+    }                                                  
+
+    private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+        // TODO add your handling code here:
+    }                                                  
+
+    private void rSButtonGradiente15ActionPerformed(java.awt.event.ActionEvent evt) {                                                    
+        // TODO add your handling code here:
+    }                                                   
+
+    private void rSButtonGradiente14ActionPerformed(java.awt.event.ActionEvent evt) {                                                    
+        // TODO add your handling code here:
+    
         String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"9");
-    }//GEN-LAST:event_rSButtonGradiente4ActionPerformed
+        JTextbuscar.setText(a+"0");
+    }                                                   
 
-    private void rSButtonGradiente5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSButtonGradiente5MouseClicked
+    private void rSButtonGradiente13ActionPerformed(java.awt.event.ActionEvent evt) {                                                    
         // TODO add your handling code here:
-    }//GEN-LAST:event_rSButtonGradiente5MouseClicked
+        JTextbuscar.setText("");
+    }                                                   
 
-    private void rSButtonGradiente5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente5ActionPerformed
-        // TODO add your handling code here:
-          String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"7");
-    }//GEN-LAST:event_rSButtonGradiente5ActionPerformed
-
-    private void rSButtonGradiente6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente6ActionPerformed
-        // TODO add your handling code here:
-          String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"8");
-    }//GEN-LAST:event_rSButtonGradiente6ActionPerformed
-
-    private void rSButtonGradiente7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente7ActionPerformed
-        // TODO add your handling code here:
-          String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"4");
-    }//GEN-LAST:event_rSButtonGradiente7ActionPerformed
-
-    private void rSButtonGradiente8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente8ActionPerformed
-        String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"5");
-    }//GEN-LAST:event_rSButtonGradiente8ActionPerformed
-
-    private void rSButtonGradiente9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente9ActionPerformed
-        // TODO add your handling code here:
-        String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"6");
-    }//GEN-LAST:event_rSButtonGradiente9ActionPerformed
-
-    private void rSButtonGradiente10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente10ActionPerformed
-        // TODO add your handling code here:
-             String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"1");
-    }//GEN-LAST:event_rSButtonGradiente10ActionPerformed
-
-    private void rSButtonGradiente11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente11ActionPerformed
-        // TODO add your handling code here:
-            String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"2");
-    }//GEN-LAST:event_rSButtonGradiente11ActionPerformed
-
-    private void rSButtonGradiente12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente12ActionPerformed
-        // TODO add your handling code here:
-         String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"3");
-    }//GEN-LAST:event_rSButtonGradiente12ActionPerformed
-
-    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JTextbuscarActionPerformed
-
-    private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
-        // TODO add your handling code here:
-        buscardespuesdeenter(evt);
-    }//GEN-LAST:event_JTextbuscarKeyReleased
-
-    private void JTableBancos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancos1MouseClicked
+    private void JTableBancos1MouseClicked(java.awt.event.MouseEvent evt) {                                           
         // TODO add your handling code here:
         seleccion2 = JTableBancos1.rowAtPoint(evt.getPoint());
         codigop =  JTableBancos1.getValueAt(seleccion2,0 ).toString();
-    }//GEN-LAST:event_JTableBancos1MouseClicked
+ 
+    }                                          
 
-    private void rSButtonHover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover1ActionPerformed
+    private void rSButtonGradiente12ActionPerformed(java.awt.event.ActionEvent evt) {                                                    
         // TODO add your handling code here:
-        restarproductostable();
-    }//GEN-LAST:event_rSButtonHover1ActionPerformed
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"3");
+    }                                                   
 
-    private void rSButtonGradiente13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente13ActionPerformed
+    private void rSButtonGradiente11ActionPerformed(java.awt.event.ActionEvent evt) {                                                    
         // TODO add your handling code here:
-        JTextbuscar.setText("");
-    }//GEN-LAST:event_rSButtonGradiente13ActionPerformed
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"2");
+    }                                                   
 
-    private void rSButtonGradiente14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente14ActionPerformed
+    private void rSButtonGradiente10ActionPerformed(java.awt.event.ActionEvent evt) {                                                    
         // TODO add your handling code here:
-        String a = JTextbuscar.getText();
-        JTextbuscar.setText(a+"0");
-    }//GEN-LAST:event_rSButtonGradiente14ActionPerformed
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"1");
+    }                                                   
 
-    private void rSButtonGradiente15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente15ActionPerformed
+    private void rSButtonGradiente9ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         // TODO add your handling code here:
-    }//GEN-LAST:event_rSButtonGradiente15ActionPerformed
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"6");
+    }                                                  
 
-    private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
+    private void rSButtonGradiente8ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         // TODO add your handling code here:
-    }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"5");
+    }                                                  
 
-    private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
+    private void rSButtonGradiente7ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         // TODO add your handling code here:
-          limpiartabla2();
-    }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"4");
+    }                                                  
 
-    private void rSButtonHover4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover4ActionPerformed
+    private void rSButtonGradiente6ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         // TODO add your handling code here:
-        enviarproductosatabla();
-    }//GEN-LAST:event_rSButtonHover4ActionPerformed
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"8");
+    }                                                  
 
-    private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
+    private void rSButtonGradiente5ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         // TODO add your handling code here:
-        regresar();
-    }//GEN-LAST:event_rSButtonIcon_new14ActionPerformed
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"7");
+      
+    }                                                  
 
-    private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new15ActionPerformed
+    private void rSButtonGradiente4ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         // TODO add your handling code here:
-        irtipoventa();
-    }//GEN-LAST:event_rSButtonIcon_new15ActionPerformed
+          String a = JTextbuscar.getText();
+        JTextbuscar.setText(a+"9");
+    }                                                  
 
-    private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
+    private void JTableBancosMouseClicked(java.awt.event.MouseEvent evt) {                                          
         // TODO add your handling code here:
-         limpiartabla();
+         seleccion1 = JTableBancos.rowAtPoint(evt.getPoint());
+       codigop1 =   String.valueOf(JTableBancos.getValueAt(seleccion1, 0));
+    }                                         
+
+    private void rSButtonHover1ActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        // TODO add your handling code here:
+        if(codigop1!=null){
+            if(Integer.valueOf(modelo1.getValueAt(seleccion1, 3).toString())>0){
+                restarcantidadproductos(Integer.valueOf(codigop1));
+                sumarcantidadproductos();
+                sumarsubtotal();
+                sumardescuento();
+                sumarisv();
+                total();
+            }
+          
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
+        }
+    }                                              
+
+    private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+        
+             
+            // TODO add your handling code here:
+            TipoVenta vo = new TipoVenta();
+            vo.setTablaorden(JTableBancos);
+            vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(),jLabel23.getText(),jLabel22.getText(),jLabel8.getText(),jLabel28.getText(),jLabel18.getText());
+            vo.setVisible(true);
+
+            this.dispose();
+       
+    }                                                  
+
+    private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+        // TODO add your handling code here:
+        limpiartabla();
         JTextbuscar.setText("");
         codigop=null;
-    }//GEN-LAST:event_rSButtonIcon_new16ActionPerformed
+    }                                                  
 
-    private void rSButtonIcon_new17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new17ActionPerformed
+    private void rSButtonIcon_new17ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         // TODO add your handling code here:
-        quitarproducto();
-    }//GEN-LAST:event_rSButtonIcon_new17ActionPerformed
+        
+          if(codigop1!=null){
+            QuitarproductoId(Integer.valueOf(codigop1));
+            sumarcantidadproductos();
+            sumarsubtotal();
+            sumarisv();
+            total();
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
+        }
+    }                                                  
+
+    private void rSButtonGradiente5MouseClicked(java.awt.event.MouseEvent evt) {                                                
+        // TODO add your handling code here:
+        
+     
+    }                                               
+
+    private void JTableBancosKeyReleased(java.awt.event.KeyEvent evt) {                                         
+        // TODO add your handling code here:
+        if(codigop1!=null){
+            if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            
+            if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())>0){
+              
+               
+                if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())<=Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())){
+                actualizarEnter();
+                sumarcantidadproductos();
+                sumarsubtotal();
+                sumardescuento();
+                sumarisv();
+                total();
+                codigop=null;
+                
+                }else{
+                   JOptionPane.showMessageDialog(rootPane, "Ha ingresado una cantidad que sobrepasa la cantidad disponbible, el maximo de productos es de: "+Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString()));
+                   JTableBancos.setValueAt(Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString()), seleccion1, 3);
+ 
+                }
+                
+                
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Debe agregar el minimo de producto");
+                JTableBancos.setValueAt(1, seleccion1, 3);
+
+            }
+            
+            }
+                
+                
+               
+        
+            
+    }else{
+                JOptionPane.showMessageDialog(rootPane, "No hay productos en existencia para el producto seleccionado");
+
+            }
+        
+    }                                        
+
+    private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {                                        
+        // TODO add your handling code here:
+        if(JTextbuscar.getText().length()>0){
+            JTextbuscar.setPlaceholder("");
+        }else{
+            JTextbuscar.setPlaceholder("Buscar por codigo");
+        }
+        
+     
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER && JTextbuscar.getText().isEmpty()==false){
+            limpiartabla();
+            buscarProductoPorId(Integer.valueOf(JTextbuscar.getText()));
+            codigop=null;
+        }else{
+            if(evt.getKeyCode()==KeyEvent.VK_ENTER && JTextbuscar.getText().isEmpty()==true){
+                limpiartabla();
+                codigop=null;
+            }
+        }
+    }                                       
+
+    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {                                            
+
+    }                                           
 
     /**
      * @param args the command line arguments
@@ -2078,26 +2118,28 @@ public class POS extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(POS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(POS1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(POS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(POS1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(POS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(POS1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(POS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(POS1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new POS().setVisible(true);
+                new POS1().setVisible(true);
             }
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JPanel Header;
     private rojerusan.RSTableMetro1 JTableBancos;
     private rojerusan.RSTableMetro1 JTableBancos1;
@@ -2181,8 +2223,9 @@ public class POS extends javax.swing.JFrame {
     private rspanelgradiente.RSPanelGradiente rSPanelGradiente3;
     private necesario.RSPanelShadow rSPanelShadow1;
     private RSMaterialComponent.RSPanelShadow rSPanelShadow2;
+    private rojeru_san.rspanel.RSPanelVector rSPanelVector1;
     private rojerusan.RSPanelsSlider rSPanelsSlider1;
     private rojerusan.RSPanelsSlider rSPanelsSlider2;
     private rojerusan.RSPanelsSlider rSPanelsSlider3;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }

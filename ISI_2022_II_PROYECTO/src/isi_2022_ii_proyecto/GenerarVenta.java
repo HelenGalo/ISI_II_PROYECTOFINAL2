@@ -686,7 +686,7 @@ public class GenerarVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(validar()==true){
             
-            POS pos = new POS();
+            POSCLOUD pos = new POSCLOUD();
             pos.setUsuario(usuario);
             pos.setCodigvendedor(Integer.valueOf(JTextbuscar.getText()));
             pos.setCodigoCliente(buscarIdCliente());
