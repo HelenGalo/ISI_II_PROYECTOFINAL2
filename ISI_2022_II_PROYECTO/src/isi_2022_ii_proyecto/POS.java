@@ -32,7 +32,7 @@ public class POS extends javax.swing.JFrame {
     boolean a = true;
     
     ConexionBD conexion = new ConexionBD();
-    Connection con = conexion.conexion();
+  
     DefaultTableModel modelo1;  
     DefaultTableModel modelo;
     String usuario;
@@ -81,6 +81,7 @@ public class POS extends javax.swing.JFrame {
     
     
     public void buscarUltimoId(){
+          Connection con = conexion.conexion();
           String SQL = "SELECT v.IdOrden FROM Ventas v WHERE v.IdOrden=(SELECT max(IdOrden) FROM Ventas)";
           
           
@@ -110,6 +111,7 @@ public class POS extends javax.swing.JFrame {
     
     
     public int obteneridalmacendesucursal(){
+          Connection con = conexion.conexion();
         int idalmacen=0;
         String sql = "Select s.IdAlmacen From Sucursales s\n" +
                     "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
@@ -138,6 +140,7 @@ public class POS extends javax.swing.JFrame {
    
     
       public void buscarProductoPorId(int idproducto){
+            Connection con = conexion.conexion();
         String[] registros = new String[4];
           System.out.println("ID EN ALMACEN "+obteneridalmacendesucursal());
           
@@ -206,6 +209,7 @@ public class POS extends javax.swing.JFrame {
     
     
     public String obtenerdescuento(int idproducto){
+          Connection con = conexion.conexion();
          String descuento="0.00";
          String SQL = "SELECT ifnull(d.Descuento,0.00) as 'Des' FROM DetalleDescuentoProducto d Where d.IdProducto="+idproducto;
           
@@ -228,6 +232,7 @@ public class POS extends javax.swing.JFrame {
     
     
     public void agregarproductosorden(int idproducto){
+          Connection con = conexion.conexion();
         int validarexistenciaorden=0;
         boolean estadoproducto=false;
         int posicion=0;
@@ -247,12 +252,13 @@ public class POS extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
+                DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = String.valueOf(idproducto);
                 registros[1] = rs.getString("p.Nombre");
-                registros[2] = rs.getString("p.Precio");
+                registros[2] = formato.format(rs.getString("p.Precio"));
                 registros[3] = "1";
-                registros[4] = obtenerdescuento(idproducto);
-                registros[5] = String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]));
+                registros[4] = formato.format(obtenerdescuento(idproducto));
+                registros[5] = formato.format(String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4])));
                 modelo1.addRow(registros);
             }
         
@@ -300,7 +306,7 @@ public class POS extends javax.swing.JFrame {
                             registros[2] = formato.format(rs.getFloat("p.Precio"));
                             registros[3] = "1";
                             registros[4] = "0.00";
-                            registros[5] = String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]));
+                            registros[5] = formato.format(String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4])));
                             modelo1.addRow(registros);
                         }
 
@@ -478,6 +484,7 @@ public class POS extends javax.swing.JFrame {
     }
     
     public void iniciarvendedor(){
+          Connection con = conexion.conexion();
         String nombrevendedor="";
         String SQL = "SELECT e.PrimerNombre, e.PrimerApellido FROM Empleados e Where e.IdEmpleado="+codigvendedor;
         
@@ -503,6 +510,7 @@ public class POS extends javax.swing.JFrame {
     }
     
      public void iniciarcajero(){
+           Connection con = conexion.conexion();
          String nombrecajero="";
         String SQL3 = "SELECT e.PrimerNombre, e.PrimerApellido FROM Empleados e\n"
                    +"INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n"+
@@ -536,6 +544,7 @@ public class POS extends javax.swing.JFrame {
     
     
      public void iniciarcliente(){
+           Connection con = conexion.conexion();
         String nombrecliente="";
         String SQL1 = "SELECT c.Nombres, c.Apellidos FROM Clientes c Where c.IdCliente="+codigcliente;
         
@@ -562,6 +571,7 @@ public class POS extends javax.swing.JFrame {
      
     
      public void iniciarcaja(){
+           Connection con = conexion.conexion();
         int codigocaja=0;
               
         String SQL2 = "SELECT c.IdCaja FROM Caja c\n"
@@ -1726,6 +1736,7 @@ public class POS extends javax.swing.JFrame {
 
     private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne4ActionPerformed
         try {
+              Connection con = conexion.conexion();
             // TODO add your handling code here:
             con.close();
             System.exit(0);
@@ -1743,6 +1754,7 @@ public class POS extends javax.swing.JFrame {
     private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
         // TODO add your handling code here:
          try {
+               Connection con = conexion.conexion();
             // TODO add your handling code here:
             con.close();
             regresar();
@@ -1902,6 +1914,7 @@ public class POS extends javax.swing.JFrame {
 
     private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new15ActionPerformed
         try {
+              Connection con = conexion.conexion();
             // TODO add your handling code here:
             TipoVenta vo = new TipoVenta();
             vo.setTablaorden(JTableBancos);

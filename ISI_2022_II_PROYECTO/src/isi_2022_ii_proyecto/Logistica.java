@@ -39,7 +39,7 @@ public class Logistica extends javax.swing.JFrame {
      boolean a = true;
    String logi;
     ConexionBD conexion = new ConexionBD();
-    Connection con = conexion.conexion();
+
 
 
     
@@ -57,6 +57,7 @@ public class Logistica extends javax.swing.JFrame {
     
     
       public void deshabilitarp(){
+              Connection con = conexion.conexion();
         String SQL = "UPDATE Productos SET IdEstado=? Where IdProductos="+logi;
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
@@ -76,7 +77,7 @@ public class Logistica extends javax.swing.JFrame {
      public void listarO(){
         String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableLogistica.getModel();
-        
+            Connection con = conexion.conexion();
        String SQL = "SELECT  l.IdOrdenLogistica,l.FechaSalida,l.FechaLLegada,e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido,tc.Valor   FROM Logistica l\n" +
                       "INNER JOIN Empleados e ON e.IdEmpleado = l.EmpleadoaCargo\n" +
                       "INNER JOIN TipoCarga tc ON tc.IdTipoCarga=l.IdTipoCarga";
@@ -127,7 +128,7 @@ public class Logistica extends javax.swing.JFrame {
    private void buscarNombre(){
         String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableLogistica.getModel();
-        
+            Connection con = conexion.conexion();
          String SQL = "SELECT  l.IdOrdenLogistica,l.FechaSalida,l.FechaLLegada,e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido,tc.Valor   FROM Logistica l\n" +
                       "INNER JOIN Empleados e ON e.IdEmpleado = l.EmpleadoaCargo\n" +
                       "INNER JOIN TipoCarga tc ON tc.IdTipoCarga=l.IdTipoCarga  WHERE l.IdOrdenLogistica LIKE '"+JTextbuscar.getText()+"%'";
@@ -723,8 +724,10 @@ public class Logistica extends javax.swing.JFrame {
         );
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
+        dashboardview.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSPanelOpacity1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -817,6 +820,8 @@ public class Logistica extends javax.swing.JFrame {
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
+        jPanel3.add(rSPanelOpacity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1036, 50));
+
         JTableLogistica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -840,68 +845,30 @@ public class Logistica extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(JTableLogistica);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 1036, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane2)
-                .addGap(40, 40, 40))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
-        );
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 112, 900, 390));
+
+        dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 980, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MENU);
+        jPanel4.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, -1));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO LOGISTICA");
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 310, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
+        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1113, 0, 60, 50));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
+        jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 10, 108, -1));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 823, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(1, 1, 1))
-        );
+        dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, -1));
 
         deshabilitado.setBackground(new java.awt.Color(255, 153, 51));
         deshabilitado.setText("Deshabilitadas");
@@ -912,6 +879,7 @@ public class Logistica extends javax.swing.JFrame {
                 deshabilitadoActionPerformed(evt);
             }
         });
+        dashboardview.add(deshabilitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 60, -1, -1));
 
         habilitado.setBackground(new java.awt.Color(33, 150, 243));
         habilitado.setText("Habilitadas");
@@ -922,6 +890,7 @@ public class Logistica extends javax.swing.JFrame {
                 habilitadoActionPerformed(evt);
             }
         });
+        dashboardview.add(habilitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, -1, -1));
 
         JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         JTextbuscar.setPlaceholder("Busqueda rapida");
@@ -935,35 +904,7 @@ public class Logistica extends javax.swing.JFrame {
                 JTextbuscarKeyReleased(evt);
             }
         });
-
-        javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
-        dashboardview.setLayout(dashboardviewLayout);
-        dashboardviewLayout.setHorizontalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(220, 220, 220)
-                .addComponent(habilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(deshabilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        dashboardviewLayout.setVerticalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addGroup(dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(habilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deshabilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        dashboardview.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1001,6 +942,7 @@ public class Logistica extends javax.swing.JFrame {
 
     private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne4ActionPerformed
         try {
+                Connection con = conexion.conexion();
             // TODO add your handling code here:
             con.close();
         } catch (SQLException ex) {
@@ -1028,6 +970,7 @@ public class Logistica extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         try {
+                Connection con = conexion.conexion();
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);

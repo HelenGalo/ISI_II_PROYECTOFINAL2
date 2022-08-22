@@ -48,7 +48,7 @@ public class AgregarLogistica extends javax.swing.JFrame {
      boolean a = true;
     String logistica;
     ConexionBD conexion = new ConexionBD();
-    Connection con = conexion.conexion();
+   
     int id=0;
     
    HashMap<String, Integer> empleados = new HashMap<String, Integer>();
@@ -83,6 +83,7 @@ public class AgregarLogistica extends javax.swing.JFrame {
         }
     }
        public void listarCarga(){
+       Connection con = conexion.conexion();
         Jcarga.addItem("Seleccionar Carga");
         Jcarga.setSelectedIndex(0);
         String descripcion="";
@@ -111,6 +112,7 @@ public class AgregarLogistica extends javax.swing.JFrame {
     }
     
     public void buscardatos(){
+         Connection con = conexion.conexion();
           String SQL = "SELECT * FROM Logistica WHERE IdOrdenLogistica=(SELECT max(IdOrdenLogistica) FROM Logistica)";
           
           
@@ -136,7 +138,8 @@ public class AgregarLogistica extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
-         public void listarEmpleados(){
+         public void listarEmpleados(){ 
+             Connection con = conexion.conexion();
        JComboEmpleados.addItem("Seleccionar Empleado");
         JComboEmpleados.setSelectedIndex(0);
           String nombres="";
@@ -168,7 +171,7 @@ public class AgregarLogistica extends javax.swing.JFrame {
        public int ObtenereCarga(){
           String SQL = "SELECT * FROM TipoCarga c Where c.Valor="+"'"+Jcarga.getSelectedItem().toString()+"'";
           int idg=0;
-          
+           Connection con = conexion.conexion();
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -194,6 +197,7 @@ public class AgregarLogistica extends javax.swing.JFrame {
     }
      public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
       public boolean insertar(){
+           Connection con = conexion.conexion();
         String tarifa="";
         String telefono=""; 
         String descripcion="";
@@ -1158,6 +1162,7 @@ public class AgregarLogistica extends javax.swing.JFrame {
 
     private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne4ActionPerformed
         try {
+             Connection con = conexion.conexion();
             // TODO add your handling code here:
             con.close();
         } catch (SQLException ex) {
@@ -1185,6 +1190,7 @@ public class AgregarLogistica extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         try {
+             Connection con = conexion.conexion();
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);

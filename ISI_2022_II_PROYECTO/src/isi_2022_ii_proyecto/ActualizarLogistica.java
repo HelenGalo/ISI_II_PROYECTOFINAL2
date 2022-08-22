@@ -50,7 +50,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
     String logistica;
     String logi;
     ConexionBD conexion = new ConexionBD();
-    Connection con = conexion.conexion();
+
     int id=0;
     
    HashMap<String, Integer> empleados = new HashMap<String, Integer>();
@@ -88,6 +88,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         }
     }
        public void listarCarga(){
+           Connection con = conexion.conexion();
         Jcarga.addItem("Seleccionar Carga");
         Jcarga.setSelectedIndex(0);
         String descripcion="";
@@ -116,6 +117,8 @@ public class ActualizarLogistica extends javax.swing.JFrame {
     }
     
     public void buscardatos(){
+          
+            Connection con = conexion.conexion();
           String SQL = "SELECT * FROM Logistica WHERE IdOrdenLogistica=(SELECT max(IdOrdenLogistica) FROM Logistica)";
           
           
@@ -142,6 +145,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         }
     }
          public void listarEmpleados(){
+               Connection con = conexion.conexion();
        JComboEmpleados.addItem("Seleccionar Empleado");
         JComboEmpleados.setSelectedIndex(0);
           String nombres="";
@@ -171,6 +175,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
     }
    
        public int ObtenereCarga(){
+             Connection con = conexion.conexion();
           String SQL = "SELECT * FROM TipoCarga c Where c.Valor="+"'"+Jcarga.getSelectedItem().toString()+"'";
           int idg=0;
           
@@ -198,9 +203,10 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         
     }
             public void mostrar(){
+            Connection con = conexion.conexion();
            String nombre="";
            String tarifa="";
-           
+        
            String apellidos="";
            String descrip="";
            String fechaS="";
@@ -211,20 +217,24 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         String SQL = "SELECT l.TarifaDolar,l.FechaSalida, l.FechaLlegada,l.Descripcion,tc.Valor ,e.IdEmpleado,e.PrimerNombre,e.SegundoNombre, e.PrimerApellido,e.SegundoApellido  FROM Logistica l\n" +
                       "INNER JOIN Empleados e ON e.IdEmpleado = l.EmpleadoaCargo\n" +
                      "INNER JOIN TipoCarga tc ON tc.IdTipoCarga = l.IdTipoCarga \n" +
-                      "WHERE a.IdOrdenLogistica="+id;
+                      "WHERE l.IdOrdenLogistica="+id;
          try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
-
+             String formato="dd/MM/yyyy";
+        SimpleDateFormat formateador = new SimpleDateFormat(formato);
+          
             while (rs.next()) {
+         
          tarifa= rs.getString("l.TarifaDolar");
             descrip = rs.getString("l.Descripcion");
-           fechaS=rs.getString("l.FechaSalida");
-            fechaE=rs.getString("l.FechaLlegada");
+           fechaS=formateador.format(rs.getDate("l.FechaSalida"));
+            fechaE=formateador.format(rs.getDate("l.FechaLlegada"));
               nombre =rs.getString("PrimerNombre")+" "+rs.getString("SegundoNombre");
                 apellidos = rs.getString("PrimerApellido")+" "+rs.getString("SegundoApellido");
                carga=rs.getString("tc.Valor");
              } 
+         
                Tarifa.setText(tarifa);
                Descrip.setText(descrip);
                Fsalida.setText(fechaS);
@@ -239,7 +249,9 @@ public class ActualizarLogistica extends javax.swing.JFrame {
     }
      public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
       public boolean Actualizar(){
-        String tarifa="";
+          Connection con = conexion.conexion();
+          
+          String tarifa="";
         String telefono=""; 
         String descripcion="";
         
@@ -1029,7 +1041,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         emp.setForeground(new java.awt.Color(153, 0, 255));
         emp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         emp.setText(" Empleado a Cargo:");
-        jPanel5.add(emp, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 30, 190, 30));
+        jPanel5.add(emp, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 40, 280, 30));
 
         JComboEmpleados.setColorArrow(new java.awt.Color(102, 0, 255));
         JComboEmpleados.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -1206,10 +1218,10 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 823, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
-        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, 60, 50));
+        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 0, 60, 50));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
-        jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
+        jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 108, -1));
 
         dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1102, -1));
 
@@ -1259,6 +1271,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
 
     private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne4ActionPerformed
         try {
+              Connection con = conexion.conexion();
             // TODO add your handling code here:
             con.close();
         } catch (SQLException ex) {
@@ -1286,6 +1299,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         try {
+              Connection con = conexion.conexion();
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);

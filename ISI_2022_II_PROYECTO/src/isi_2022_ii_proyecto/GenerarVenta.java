@@ -80,7 +80,7 @@ public class GenerarVenta extends javax.swing.JFrame {
 
             while (rs.next()) {
            
-                nombre = rs.getString("c.Nombres")+rs.getString("c.Apellidos");
+                nombre = rs.getString("c.Nombres")+" "+rs.getString("c.Apellidos");
     
                
                 
