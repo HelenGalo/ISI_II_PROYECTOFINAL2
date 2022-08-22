@@ -110,14 +110,14 @@ public class CampoRTN extends javax.swing.JFrame {
         rSPanelOpacity1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 470, -1));
 
         rSButtonRound2.setBackground(new java.awt.Color(0, 153, 102));
-        rSButtonRound2.setText("Si");
+        rSButtonRound2.setText("Aceptar");
         rSButtonRound2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         rSButtonRound2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonRound2ActionPerformed(evt);
             }
         });
-        rSPanelOpacity1.add(rSButtonRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 140, -1));
+        rSPanelOpacity1.add(rSButtonRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, 140, -1));
 
         rSTextFullRound1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         rSTextFullRound1.setPlaceholder("Campo de RTN");
@@ -170,7 +170,7 @@ public class CampoRTN extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();

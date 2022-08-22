@@ -23,8 +23,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Formatter;
@@ -251,7 +254,25 @@ public class VerificarOrden extends javax.swing.JFrame {
     
     public void insertarOrden(){
         int idorden = Integer.valueOf(jLabel46.getText());
-        String fechaventa=rSLabelFecha1.getFecha();
+        
+        String a= rSLabelFecha1.getFecha();
+        Date date1=null;  
+        try {
+            date1 = new SimpleDateFormat("dd/MM/yyyy").parse(a);
+        } catch (ParseException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+       System.out.println(a+"\t"+date1);
+       SimpleDateFormat formateador = new SimpleDateFormat("yyyy/MM/dd");
+       String FechaVenta = formateador.format(date1);
+       System.out.println(a+"\t"+FechaVenta);
+        
+        
+        
+        
+        
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
         String horaapertura = dtf.format(LocalDateTime.now());
         int idcliente = this.codigcliente;
@@ -267,7 +288,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, idorden);
-            preparedStmt.setString(2, fechaventa);
+            preparedStmt.setString(2, FechaVenta);
             preparedStmt.setString(3, horaapertura);
             preparedStmt.setInt(4, idcliente);
             preparedStmt.setInt(5, idempleado);
@@ -598,7 +619,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     
     
     public void Factura(){
-        String SQL = "INSERT INTO Factura (IdFactura, IdOrden, SubTotal, ISV15, ISV18, Total, NumeroFormato, FechaEmision, HoraEmision, TotalP) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO Factura (IdFactura, IdOrden, SubTotal, ISV15, ISV18, Total, NumeroFormato, FechaEmision, HoraEmision, TotalP,FRTN) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setString(1, ObtenerNumeroFactura());
@@ -611,6 +632,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             preparedStmt.setString(8, ObtenerFechaEmision());
             preparedStmt.setString(9, ObtenerHoraEmision());
             preparedStmt.setInt(10, Integer.parseInt(totalp));
+            preparedStmt.setString(11, RTNC);
             preparedStmt.execute();
       
      

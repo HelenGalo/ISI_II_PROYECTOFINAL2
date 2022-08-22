@@ -16,6 +16,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -824,6 +827,10 @@ public class Inicio extends javax.swing.JFrame {
         if(validar()==true){
             obteneracceso();
         }
+        
+      
+        
+       
     }//GEN-LAST:event_rSButtonRound1ActionPerformed
 
     private void rSButtonRound1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSButtonRound1MouseEntered
