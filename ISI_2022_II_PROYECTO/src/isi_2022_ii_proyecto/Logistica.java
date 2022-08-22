@@ -41,6 +41,7 @@ public class Logistica extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
 
 
+    Connection con = conexion.conexion();
 
     
 
@@ -55,6 +56,11 @@ public class Logistica extends javax.swing.JFrame {
         
     }
     
+    
+      public void conectar(){
+        conexion.setLogistica(this);
+        con = conexion.conexion();
+    }
     
       public void deshabilitarp(){
               Connection con = conexion.conexion();

@@ -475,7 +475,7 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
                             this.dispose();
                     }else{
                         if(apro!=null){
-                            apro.conectar()
+                            apro.conectar();
                             this.dispose();
                     }else{
                         if(au!=null){
@@ -555,7 +555,7 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
                             this.dispose();
                     }else{
                         if(caja  !=null){
-                            caja.conectar()
+                            caja.conectar();
                             this.dispose();
                     }else{
                         if(cambiarcontra !=null){
@@ -595,10 +595,10 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
                             this.dispose();
                     }else{
                         if(inventario   !=null){
-                            inventario.conectar()
+                            inventario.conectar();
                             this.dispose();
                     }else{
-                        if(logistica   !=null){
+                        if(logistica!=null){
                             logistica.conectar();
                         this.dispose();
                     }else{
@@ -607,7 +607,7 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
                         this.dispose();
                     }else{
                         if(mcuentb   !=null){
-                            mcuentb.conectar()
+                            mcuentb.conectar();
                         this.dispose();
                     }else{
                         if(pos   !=null){
@@ -659,7 +659,7 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
                         this.dispose();
                         }else{
                             if(agregarbanco  !=null){
-//                            agregarbanco.conectar();
+                            agregarbanco.conectar();
                             this.dispose();
                             }
                         }

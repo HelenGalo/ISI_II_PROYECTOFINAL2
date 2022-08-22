@@ -32,6 +32,7 @@ public class POS extends javax.swing.JFrame {
     boolean a = true;
     
     ConexionBD conexion = new ConexionBD();
+    Connection con = conexion.conexion();
   
     DefaultTableModel modelo1;  
     DefaultTableModel modelo;
@@ -78,10 +79,14 @@ public class POS extends javax.swing.JFrame {
         
     }
     
+    public void conectar(){
+        conexion.setPos(this);
+        con = conexion.conexion();
+    }
     
     
     public void buscarUltimoId(){
-          Connection con = conexion.conexion();
+          
           String SQL = "SELECT v.IdOrden FROM Ventas v WHERE v.IdOrden=(SELECT max(IdOrden) FROM Ventas)";
           
           
