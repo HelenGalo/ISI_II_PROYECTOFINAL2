@@ -63,7 +63,10 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             actualizar();
         }
      }
-    
+    public void conectar(){
+        conexion.setAe(this);
+        con = conexion.conexion();
+    }
        
     public ActualizarEmpleado() {
         initComponents();

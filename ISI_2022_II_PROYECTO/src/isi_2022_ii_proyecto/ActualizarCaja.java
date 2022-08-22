@@ -42,7 +42,10 @@ public class ActualizarCaja extends javax.swing.JFrame {
             modificar();
         }
     }
-    
+    public void conectar(){
+        conexion.setAc(this);
+        con = conexion.conexion();
+    }
     
     public int ObtenerUsuarios(){
         int idusuario=0;

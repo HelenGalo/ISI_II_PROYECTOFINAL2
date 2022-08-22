@@ -61,7 +61,10 @@ public class ActualizarProductos extends javax.swing.JFrame {
   public void setProducto(String producto) {
         this.prod = producto;
     }
-  
+  public void conectar(){
+        conexion.setAp(this);
+        con = conexion.conexion();
+    }
     
     public ActualizarProductos() {
         initComponents();

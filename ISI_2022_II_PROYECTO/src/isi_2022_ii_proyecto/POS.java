@@ -240,7 +240,8 @@ public class POS extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                  descuento= rs.getString("Des");
+                DecimalFormat formato = new DecimalFormat("##,###.00");
+                  descuento=formato.format( rs.getString("Des"));
             }
         }catch(SQLException e){
                  System.out.println("Error "+e.getMessage());
@@ -283,10 +284,11 @@ public class POS extends javax.swing.JFrame {
                 
                 registros[0] = String.valueOf(idproducto);
                 registros[1] = rs.getString("p.Nombre");
-                registros[2] = formato.format(rs.getFloat("p.Precio"));
+                registros[2] = rs.getString("p.Precio");
                 registros[3] = "1";
                 registros[4] = obtenerdescuento(idproducto);
-                registros[5] = formato.format(String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4])));
+                float g =(Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]);
+                registros[5] = formato.format(g);
                 modelo1.addRow(registros);
             }
         
@@ -316,11 +318,12 @@ public class POS extends javax.swing.JFrame {
            
             if(estadoproducto==true){
             nuevacantidad=Integer.valueOf(modelo1.getValueAt(posicion, 3).toString())+1;
-            
+             DecimalFormat formato = new DecimalFormat("##,###.00");
             modelo1.setValueAt(nuevacantidad, posicion, 3);
             nuevodescuento=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(obtenerdescuento(idproducto)));
             modelo1.setValueAt(nuevodescuento, posicion, 4);
             nuevosubtotal=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(modelo1.getValueAt(posicion, 2).toString()))-Float.valueOf(modelo1.getValueAt(posicion, 4).toString());
+            formato.format(nuevosubtotal);
             modelo1.setValueAt(nuevosubtotal, posicion, 5);
             }else{
                String[] registros = new String[6];
@@ -332,15 +335,18 @@ public class POS extends javax.swing.JFrame {
                 try {
                         Statement st = (Statement) con.createStatement();
                         ResultSet rs = st.executeQuery(SQL);
+           
 
                         while (rs.next()) {
                             
+                           DecimalFormat formato = new DecimalFormat("##,###.00");
                             registros[0] = String.valueOf(idproducto);
                             registros[1] = rs.getString("p.Nombre");
-                            registros[2] = String.valueOf(rs.getFloat("p.Precio"));
+                            registros[2] = rs.getString("p.Precio");
                             registros[3] = "1";
                             registros[4] = "0.00";
-                            registros[5] = String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]));
+                            float g = (Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]);
+                            registros[5] =  formato.format(g);
                             modelo1.addRow(registros);
                         }
 
@@ -372,9 +378,20 @@ public class POS extends javax.swing.JFrame {
     
     
     public void total(){
+         //String s ="";
+       // s=jLabel18.getText();
+         //String x=;
+         // String y=
+          
+             
+             
+         
         if(modelo1.getRowCount()>0){
             float total=0.00f;
-            total = Float.valueOf(jLabel18.getText()) + Float.valueOf(jLabel23.getText())-Float.valueOf(jLabel28.getText());
+             float totales=0.00f;
+            total =  Float.valueOf(jLabel18.getText()) + Float.valueOf(jLabel23.getText()) -Float.valueOf(jLabel28.getText()) ;
+           totales = (float) (total);
+       
             jLabel22.setText(String.valueOf(total));
         }else{
             jLabel22.setText("0.00");
@@ -386,13 +403,14 @@ public class POS extends javax.swing.JFrame {
     
     
     public void actualizarEnter(){
-     
+     DecimalFormat formato = new DecimalFormat("##,###.00");
         float nuevosubtotal=0.00f;
         float nuevodescuento=0.00f;
         
         nuevodescuento=Float.valueOf(modelo1.getValueAt(seleccion1, 3).toString())*Float.valueOf(String.valueOf(obtenerdescuento(Integer.valueOf(codigop1))));
         modelo1.setValueAt(nuevodescuento, seleccion1, 4);
         nuevosubtotal=(Float.valueOf(modelo1.getValueAt(seleccion1, 3).toString())*Float.valueOf(modelo1.getValueAt(seleccion1, 2).toString()))-Float.valueOf(modelo1.getValueAt(seleccion1, 4).toString());
+        
         modelo1.setValueAt(nuevosubtotal, seleccion1, 5);
         
         
@@ -410,7 +428,8 @@ public class POS extends javax.swing.JFrame {
         
         subtotal= (float) (sumador-(sumador*0.15));
         
-        jLabel23.setText(String.valueOf(subtotal));
+   DecimalFormat formato = new DecimalFormat("##,###.00");
+        jLabel23.setText(formato.format(subtotal));
         }else{
             jLabel23.setText("");
         }
@@ -434,7 +453,8 @@ public class POS extends javax.swing.JFrame {
         
         isv= (float) (sumador*0.15);
         
-        jLabel18.setText(String.valueOf(isv));
+   DecimalFormat formato = new DecimalFormat("##,###.00");
+        jLabel18.setText(formato.format(isv));
     }
     
     
@@ -447,7 +467,8 @@ public class POS extends javax.swing.JFrame {
         
         descuento= sumador;
         
-        jLabel28.setText(String.valueOf(descuento));
+      DecimalFormat formato = new DecimalFormat("##,##0.00");
+        jLabel28.setText(formato.format(descuento));
     }
     
     

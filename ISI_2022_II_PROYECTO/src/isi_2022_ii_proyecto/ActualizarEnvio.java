@@ -59,7 +59,10 @@ public class ActualizarEnvio extends javax.swing.JFrame {
          public void setId(int id) {
         this.id = id;
     }
-     
+     public void conectar(){
+        conexion.setAenv(this);
+        con = conexion.conexion();
+    }
     public ActualizarEnvio() {
         initComponents();
          this.setLocationRelativeTo(null);

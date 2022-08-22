@@ -48,7 +48,10 @@ public class ActualizarBanco extends javax.swing.JFrame {
     public void setEstadosModificar(boolean estadosModificar) {
         this.estadosModificar = estadosModificar;
     }
-
+      public void conectar(){
+        conexion.setAb(this);
+        con = conexion.conexion();
+    }
    
     /**
      * Creates new form CalendarForm

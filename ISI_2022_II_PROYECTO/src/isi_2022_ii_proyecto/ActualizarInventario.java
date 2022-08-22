@@ -47,6 +47,10 @@ public class ActualizarInventario extends javax.swing.JFrame {
     public void setEstadosModificar(boolean estadosModificar) {
         this.estadosModificar = estadosModificar;
     }
+    public void conectar(){
+        conexion.setAin(this);
+        con = conexion.conexion();
+    }
 
    
     /**

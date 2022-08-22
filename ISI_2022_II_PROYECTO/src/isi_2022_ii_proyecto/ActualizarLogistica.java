@@ -50,7 +50,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
     String logistica;
     String logi;
     ConexionBD conexion = new ConexionBD();
-
+    Connection con = conexion.conexion();
     int id=0;
     
    HashMap<String, Integer> empleados = new HashMap<String, Integer>();
@@ -66,7 +66,10 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         this.logi=env;
     }
   
-    
+    public void conectar(){
+        conexion.setAl(this);
+        con = conexion.conexion();
+    }
     public ActualizarLogistica() {
         initComponents();
          this.setLocationRelativeTo(null);
@@ -88,7 +91,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         }
     }
        public void listarCarga(){
-           Connection con = conexion.conexion();
+           
         Jcarga.addItem("Seleccionar Carga");
         Jcarga.setSelectedIndex(0);
         String descripcion="";
@@ -122,7 +125,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
     
     public void buscardatos(){
           
-            Connection con = conexion.conexion();
+         
           String SQL = "SELECT * FROM Logistica WHERE IdOrdenLogistica=(SELECT max(IdOrdenLogistica) FROM Logistica)";
           
           
@@ -153,7 +156,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         }
     }
          public void listarEmpleados(){
-               Connection con = conexion.conexion();
+               
        JComboEmpleados.addItem("Seleccionar Empleado");
         JComboEmpleados.setSelectedIndex(0);
           String nombres="";
@@ -187,7 +190,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
     }
    
        public int ObtenereCarga(){
-             Connection con = conexion.conexion();
+      
           String SQL = "SELECT * FROM TipoCarga c Where c.Valor="+"'"+Jcarga.getSelectedItem().toString()+"'";
           int idg=0;
           
@@ -225,7 +228,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         
     }
             public void mostrar(){
-            Connection con = conexion.conexion();
+          
            String nombre="";
            String tarifa="";
         
@@ -279,7 +282,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
     }
      public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
       public boolean Actualizar(){
-          Connection con = conexion.conexion();
+         
            
           String tarifa="";
         String telefono=""; 

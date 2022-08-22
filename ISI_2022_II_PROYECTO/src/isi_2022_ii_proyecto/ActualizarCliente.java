@@ -51,7 +51,10 @@ public class ActualizarCliente extends javax.swing.JFrame {
     public void setId(String id) {
         this.id = id;
     }
-    
+    public void conectar(){
+        conexion.setAcl(this);
+        con = conexion.conexion();
+    }
     HashMap<String, Integer> empleados = new HashMap<String, Integer>();
 
    boolean estadosModificar=false;
