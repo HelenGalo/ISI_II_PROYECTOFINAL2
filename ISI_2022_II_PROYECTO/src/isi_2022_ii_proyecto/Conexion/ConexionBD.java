@@ -413,286 +413,336 @@ public class ConexionBD {
                     }else{
                         if(ac!=null){
                             VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                            v.set(ac);
+                            v.setAc(ac);
                             v.setVisible(true);
                     }else{
                         if(aca!=null){
-                   VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                   v.set(aca);
-                   v.setVisible(true);
+                            VentanaErrorDeconexion v = new VentanaErrorDeconexion();
+                            v.setAca(aca);
+                            v.setVisible(true);
                     }else{
                         if(acl!=null){
-                   VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                   v.setInicio(inicio);
-                   v.setVisible(true);
+                            VentanaErrorDeconexion v = new VentanaErrorDeconexion();
+                            v.setAcl(acl);
+                            v.setVisible(true);
                     }else{
                         if(ae!=null){
                    VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                   v.setInicio(inicio);
+                   v.setAe(ae);
                    v.setVisible(true);
                     }else{
                         if(aenv!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAenv(aenv);
                         v.setVisible(true);
                     }else{
                         if(ain!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAin(ain);
                         v.setVisible(true);
                     }else{
                         if(al!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAl(al);
                         v.setVisible(true);
                     }else{
                         if(anc!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAnc(anc);
                         v.setVisible(true);
                     }else{
                         if(ap!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAp(ap);
                         v.setVisible(true);
                     }else{
                         if(apro!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setApro(apro);
                         v.setVisible(true);
                     }else{
                         if(au!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAu(au);
                         v.setVisible(true);
                     }else{
                         if(aal!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAal(aal);
                         v.setVisible(true);
                     }else{
                         if(acaja!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAcaja(acaja);
                         v.setVisible(true);
                     }else{
                         if(acat!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAcat(acat);
                         v.setVisible(true);
                     }else{
                         if(agcliente!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAgcliente(agcliente);
                         v.setVisible(true);
                     }else{
                         if(acban!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAcban(acban);
                         v.setVisible(true);
                     }else{
                         if(aem!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAem(aem);
                         v.setVisible(true);
                     }else{
                         if(aenvio!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAenvio(aenvio);
                         v.setVisible(true);
                     }else{
                         if(ainven!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAinven(ainven);
                         v.setVisible(true);
                     }else{
                         if(aglogi!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAglogi(aglogi);
                         v.setVisible(true);
                     }else{
                         if(agprod!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAgprod(agprod);
                         v.setVisible(true);
                     }else{
                         if(agprovee!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAgprovee(agprovee);
                         v.setVisible(true);
                     }else{
                         if(almacen  !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setAlmacen(almacen);
                         v.setVisible(true);
                     }else{
                         if(apertcajas !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setApertcajas(apertcajas);
                         v.setVisible(true);
                     }else{
                         if(banco !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setBanco(banco);
                         v.setVisible(true);
                     }else{
                         if(bm !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setBm(bm);
                         v.setVisible(true);
                     }else{
                         if(bc !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setBc(bc);
                         v.setVisible(true);
                     }else{
                         if(bcb !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setBcb(bcb);
                         v.setVisible(true);
                     }else{
                         if(bproducto !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setBproducto(bproducto);
                         v.setVisible(true);
                     }else{
-                        if(caja  !=null){
+                        if(caja!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setCaja(caja);
                         v.setVisible(true);
                     }else{
                         if(cambiarcontra !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setCambiarcontra(cambiarcontra);
                         v.setVisible(true);
                     }else{
                         if(cate  !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setCate(cate);
                         v.setVisible(true);
                     }else{
                         if(cliente  !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setCliente(cliente);
                         v.setVisible(true);
                     }else{
                         if(compras  !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setCompras(compras);
                         v.setVisible(true);
                     }else{
                         if(das  !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setDas(das);
                         v.setVisible(true);
                     }else{
                         if(empleado   !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setEmpleado(empleado);
                         v.setVisible(true);
                     }else{
                         if(envio   !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setEnvio(envio);
                         v.setVisible(true);
                     }else{
                         if(facturas   !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setFacturas(facturas);
                         v.setVisible(true);
                     }else{
                         if(gnerarve   !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setGnerarve(gnerarve);
                         v.setVisible(true);
                     }else{
                         if(inventario   !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setInventario(inventario);
                         v.setVisible(true);
                     }else{
                         if(logistica   !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setLogistica(logistica);
                         v.setVisible(true);
                     }else{
                         if(menu   !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setMenu(menu);
                         v.setVisible(true);
                     }else{
                         if(mcuentb   !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setMcuentb(mcuentb);
                         v.setVisible(true);
                     }else{
                         if(pos   !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setPos(pos);
                         v.setVisible(true);
                     }else{
                         if(precioh    !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setPrecioh(precioh);
                         v.setVisible(true);
                     }else{
                         if(productos    !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setProductos(productos);
                         v.setVisible(true);
                     }else{
                         if(proveedores    !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setProveedores(proveedores);
                         v.setVisible(true);
                     }else{
                         if(rcontrase    !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setRcontrase(rcontrase);
                         v.setVisible(true);
                     }else{
                         if(tproductos    !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setTproductos(tproductos);
                         v.setVisible(true);
                     }else{
                         if(tventa    !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setTventa(tventa);
                         v.setVisible(true);
                     }else{
                         if(usuario!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setUsuario(usuario);
                         v.setVisible(true);
                     }else{
                         if(ventas!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setVentas(ventas);
                         v.setVisible(true);
                     }else{
                         if(ventaempleado!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setVentaempleado(ventaempleado);
                         v.setVisible(true);
                     }else{
                         if(vorden !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setVorden(vorden);
                         v.setVisible(true);
                     }else{
                         if(vodomicilio  !=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
+                        v.setVodomicilio(vodomicilio);
                         v.setVisible(true);
-                    }
-                        
-                    }
-                }
-                
-            }
-            
-        }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+                        }            
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
             }else{
                 
             }
