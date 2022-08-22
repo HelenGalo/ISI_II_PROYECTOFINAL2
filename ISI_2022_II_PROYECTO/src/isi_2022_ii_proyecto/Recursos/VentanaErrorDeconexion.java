@@ -497,120 +497,159 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
                             this.dispose();
                     }else{
                         if(aem!=null){
+                            aem.conectar();
                             this.dispose();
                     }else{
                         if(aenvio!=null){
+                            aenvio.conectar();
                             this.dispose();
                     }else{
                         if(ainven!=null){
+                            ainven.conectar();
                             this.dispose();
                     }else{
                         if(aglogi!=null){
+                            aglogi.conectar();
                             this.dispose();
                     }else{
                         if(agprod!=null){
+                            agprod.conectar();
                             this.dispose();
                     }else{
                         if(agprovee!=null){
+                            agprovee.conectar();
                             this.dispose();
                     }else{
                         if(almacen  !=null){
+                            almacen.conectar();
                             this.dispose();
                     }else{
                         if(apertcajas !=null){
+                            apertcajas.conectar();
                             this.dispose();
                     }else{
                         if(banco !=null){
+                            banco.conectar();
                             this.dispose();
                     }else{
                         if(bm !=null){
+                            bm.conectar();
                             this.dispose();
                     }else{
                         if(bc !=null){
+                            bc.conectar();
                             this.dispose();
                     }else{
                         if(bcb !=null){
+                            bcb.conectar();
                             this.dispose();
                     }else{
                         if(bproducto !=null){
+                            bproducto.conectar();
                             this.dispose();
                     }else{
                         if(caja  !=null){
+                            caja.conectar()
                             this.dispose();
                     }else{
                         if(cambiarcontra !=null){
+                            cambiarcontra.conectar();
                             this.dispose();
                     }else{
                         if(cate  !=null){
+                            cate.conectar();
                             this.dispose();
                     }else{
                         if(cliente  !=null){
+                            cliente.conectar();
                             this.dispose();
                     }else{
                         if(compras  !=null){
+                            compras.conectar();
                             this.dispose();
                     }else{
                         if(das  !=null){
+                            das.conectar();
                             this.dispose();
                     }else{
                         if(empleado   !=null){
+                            empleado.conectar();
                             this.dispose();
                     }else{
                         if(envio   !=null){
+                            envio.conectar();
                             this.dispose();
                     }else{
                         if(facturas   !=null){
+                            facturas.conectar();
                             this.dispose();
                     }else{
                         if(gnerarve   !=null){
+                            gnerarve.conectar();
                             this.dispose();
                     }else{
                         if(inventario   !=null){
+                            inventario.conectar()
                             this.dispose();
                     }else{
                         if(logistica   !=null){
+                            logistica.conectar();
                         this.dispose();
                     }else{
                         if(menu   !=null){
+                            menu.conectar();
                         this.dispose();
                     }else{
                         if(mcuentb   !=null){
+                            mcuentb.conectar()
                         this.dispose();
                     }else{
                         if(pos   !=null){
+                            pos.conectar();
                         this.dispose();
                     }else{
                         if(precioh    !=null){
+                            precioh.conectar();
                         this.dispose();
                     }else{
                         if(productos    !=null){
+                            productos.conectar();
                         this.dispose();
                     }else{
                         if(proveedores    !=null){
+                            proveedores.conectar();
                         this.dispose();
                     }else{
                         if(rcontrase    !=null){
+                            rcontrase.conectar();
                         this.dispose();
                     }else{
                         if(tproductos    !=null){
+                            tproductos.conectar();
                         this.dispose();
                     }else{
                         if(tventa    !=null){
+                            tventa.conectar();
                         this.dispose();
                     }else{
                         if(usuario!=null){
+                            usuario.conectar();
                         this.dispose();
                     }else{
                         if(ventas!=null){
+                            ventas.conectar();
                         this.dispose();
                     }else{
                         if(ventaempleado!=null){
+                            ventaempleado.conectar();
                         this.dispose();
                     }else{
                         if(vorden !=null){
+                            vorden.conectar();
                         this.dispose();
                     }else{
                         if(vodomicilio  !=null){
+                            vodomicilio.conectar();
                         this.dispose();
                     }
                         
