@@ -7,6 +7,8 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.Conteo;
+import isi_2022_ii_proyecto.Recursos.ConteoDeConexion;
+import isi_2022_ii_proyecto.Recursos.VentanaErrorDeconexion;
 import java.awt.Color;
 
 
@@ -36,6 +38,15 @@ import javax.swing.JPanel;
  */
 public class Inicio extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
+    Connection con;
+    VentanaErrorDeconexion verr;
+
+    public void setVerr(VentanaErrorDeconexion verr) {
+        this.verr = verr;
+    }
+    public void setCon(Connection con) {
+        this.con = con;
+    }
     
     String usuario;
     String acceso;
@@ -58,9 +69,18 @@ public class Inicio extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         inicializarValoresC();
       setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
+        ConteoDeConexion n1 = new ConteoDeConexion();
+        n1.setInicio(this);
+        Thread h1 = new Thread(n1);
+        h1.start();
+      
         
         
-        
+    }
+    
+    public void conectar(){
+        conexion.setInicio(this);
+        con = conexion.conexion();
     }
    
     
@@ -154,7 +174,7 @@ public class Inicio extends javax.swing.JFrame {
     }
     
     public void obtenerInt(){
-        Connection con = conexion.conexion();
+        
           String Sql = "Select u.Intentos from Usuarios u Where u.Usuario="+"'"+usuario+"'";
          try {
             Statement st = (Statement) con.createStatement();
@@ -166,16 +186,25 @@ public class Inicio extends javax.swing.JFrame {
         
         
         
-         }catch(Exception e){
+         }catch(SQLException e){
              System.out.println("Error "+e.getMessage());
+             
          }
          
-         try {
+      
+    }
+    
+    
+    public void reconectar(){
+        con = conexion.conexion();
+    }
+    
+    public void cerrarconexion(){
+        try {
             con.close();
-        } catch (SQLException e) {
-            System.out.println("Error al cerrar conexion"+e.getMessage());
+        } catch (SQLException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
     
@@ -255,7 +284,7 @@ public class Inicio extends javax.swing.JFrame {
     
     private void refrescarIntentos(){
         
-        Connection con = conexion.conexion();
+       
        String Sql = "Select u.Intentos from Usuarios u Where u.Usuario="+"'"+usuario+"'";
          try {
             Statement st = (Statement) con.createStatement();
@@ -271,14 +300,8 @@ public class Inicio extends javax.swing.JFrame {
              System.out.println("Error "+e.getMessage());
          }
          
-          try {
-            con.close();
-        } catch (SQLException e) {
-            System.out.println("Error al cerrar conexion"+e.getMessage());
-        }
-        
-        con = conexion.conexion();
-        
+       
+      
         
         String SQL1 = "UPDATE Usuarios u SET u.Intentos=? WHERE u.Usuario="+"'"+usuario+"'";
   
@@ -294,17 +317,13 @@ public class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
         
-         try {
-            con.close();
-        } catch (SQLException e) {
-            System.out.println("Error al cerrar conexion"+e.getMessage());
-        }
+      
         
         
     }
     
     private void obteneracceso(){
-        Connection con = conexion.conexion();
+     
       
         char [] arrayC=Jpassword.getPassword();
         
@@ -324,16 +343,11 @@ public class Inicio extends javax.swing.JFrame {
         
         
         
-         }catch(Exception e){
-             System.out.println("Error "+e.getMessage());
+         }catch(SQLException e){
+             System.out.println("Error "+e.getErrorCode());
           
                     }
-           try {
-            con.close();
-            } catch (SQLException e) {
-            System.out.println("Error al cerrar conexion"+e.getMessage());
-            }
-        
+       
          
          
          System.out.println("contra ingre "+acceso);
