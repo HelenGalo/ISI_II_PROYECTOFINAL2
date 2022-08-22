@@ -106,6 +106,10 @@ public class Logistica extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        } try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
     }
      
@@ -151,6 +155,10 @@ public class Logistica extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        } try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
         
     } 

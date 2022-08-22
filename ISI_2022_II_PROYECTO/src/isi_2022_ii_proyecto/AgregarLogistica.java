@@ -101,6 +101,10 @@ public class AgregarLogistica extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        } try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
     }
       
@@ -136,6 +140,10 @@ public class AgregarLogistica extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        } try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
     }
          public void listarEmpleados(){ 
@@ -165,6 +173,10 @@ public class AgregarLogistica extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        } try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
     }
    
@@ -191,6 +203,10 @@ public class AgregarLogistica extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        } try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
         return idg;
         
@@ -249,6 +265,10 @@ public class AgregarLogistica extends javax.swing.JFrame {
         }catch (Exception e) {
                JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
             return false;
+        } try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
         return true;
     }

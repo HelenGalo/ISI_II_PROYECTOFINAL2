@@ -106,6 +106,10 @@ public class ActualizarLogistica extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        } try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
     }
       
@@ -142,6 +146,10 @@ public class ActualizarLogistica extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        } try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
     }
          public void listarEmpleados(){
@@ -171,6 +179,10 @@ public class ActualizarLogistica extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        } try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
     }
    
@@ -198,8 +210,18 @@ public class ActualizarLogistica extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+        
+        } try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
         return idg;
+         
+       
+        
+    
         
     }
             public void mostrar(){
@@ -246,11 +268,19 @@ public class ActualizarLogistica extends javax.swing.JFrame {
           } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+          
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
+        }
+        
+    
     }
      public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
       public boolean Actualizar(){
           Connection con = conexion.conexion();
-          
+           
           String tarifa="";
         String telefono=""; 
         String descripcion="";
@@ -301,9 +331,17 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         }catch (Exception e) {
                JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
             return false;
+        } try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
         return true;
+         
+       
+        
     }
+    
       
          
     public Boolean validar(){
