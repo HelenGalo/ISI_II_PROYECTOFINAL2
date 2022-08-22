@@ -70,7 +70,10 @@ public class AgregarProducto extends javax.swing.JFrame {
          JCodigoDisponible1.setText(prod);
     }
     
-    
+    public void conectar(){
+        conexion.setAgprod(this);
+        con = conexion.conexion();
+    }
     
         public void validarConfirmacion(){
         if(estadoagregar=true){

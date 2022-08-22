@@ -58,6 +58,10 @@ public class AgregarProveedor extends javax.swing.JFrame {
          aviso2.setVisible(false);
          setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
+    public void conectar(){
+        conexion.setAgprovee(this);
+        con = conexion.conexion();
+    }
      public void validarConfirmacion(){
         if(estadoagregar=true){
             insertarP();

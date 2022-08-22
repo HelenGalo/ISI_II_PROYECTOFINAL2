@@ -40,7 +40,10 @@ public class AgregarBanco extends javax.swing.JFrame {
         this.banco = banco;
     }
     
-    
+    public void conectar(){
+        conexion.setAgregarbanco(this);
+        con = conexion.conexion();
+    }
     boolean estadoagregar=false;
 
     public void setEstadoagregar(boolean estadoagregar) {

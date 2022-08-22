@@ -61,7 +61,10 @@ public class BancosMovimientos extends javax.swing.JFrame {
         totalc();
   }
   
-  
+  public void conectar(){
+        conexion.setBm(this);
+        con = conexion.conexion();
+    }
     
     public BancosMovimientos() {
         RSUtilities.setFullScreenJFrame(this);

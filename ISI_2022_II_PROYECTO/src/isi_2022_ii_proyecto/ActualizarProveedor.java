@@ -62,7 +62,10 @@ public class ActualizarProveedor extends javax.swing.JFrame {
    public void setProveedor(String proveedor) {
       this.proveedor = proveedor;
     }
-    
+    public void conectar(){
+        conexion.setApro(this);
+        con = conexion.conexion();
+    }
     public ActualizarProveedor() {
         initComponents();
        this.setLocationRelativeTo(null);

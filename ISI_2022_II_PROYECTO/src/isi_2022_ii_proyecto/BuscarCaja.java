@@ -38,6 +38,10 @@ public class BuscarCaja extends javax.swing.JFrame {
     public void setCuentab(String cuentab) {
         this.cuentab = cuentab;
     }
+    public void conectar(){
+        conexion.setBc(this);
+        con = conexion.conexion();
+    }
     /**
      * Creates new form CalendarForm
      */

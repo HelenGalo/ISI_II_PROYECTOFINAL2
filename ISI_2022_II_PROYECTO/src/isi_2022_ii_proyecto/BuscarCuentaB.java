@@ -42,6 +42,10 @@ public class BuscarCuentaB extends javax.swing.JFrame {
     /**
      * Creates new form CalendarForm
      */
+    public void conectar(){
+        conexion.setBcb(this);
+        con = conexion.conexion();
+    }
     public BuscarCuentaB() {
         RSUtilities.setFullScreenJFrame(this);
         initComponents();

@@ -65,6 +65,10 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         aviso.setVisible(false);
         setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
+    public void conectar(){
+        conexion.setAem(this);
+        con = conexion.conexion();
+    }
     
         public void validarConfirmacion(){
         if(estadoagregar=true){

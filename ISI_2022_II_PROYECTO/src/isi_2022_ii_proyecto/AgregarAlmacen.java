@@ -55,7 +55,10 @@ public class AgregarAlmacen extends javax.swing.JFrame {
   public void setAlmacen(String env) {
         this.almacen=env;
     }
-  
+  public void conectar(){
+        conexion.setAal(this);
+        con = conexion.conexion();
+    }
     
     public AgregarAlmacen() {
         initComponents();

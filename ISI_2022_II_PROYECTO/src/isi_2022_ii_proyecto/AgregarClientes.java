@@ -54,7 +54,10 @@ public class AgregarClientes extends javax.swing.JFrame {
         this.usuario = usuario;
     }
     
-
+  public void conectar(){
+        conexion.setAgcliente(this);
+        con = conexion.conexion();
+    }
     public void setEstadoagregar(boolean estadoagregar) {
         this.estadoagregar = estadoagregar;
     }

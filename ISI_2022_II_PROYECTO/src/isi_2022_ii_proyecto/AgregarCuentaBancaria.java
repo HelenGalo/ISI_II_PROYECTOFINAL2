@@ -58,6 +58,10 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
          avisoT.setVisible(false);
       
     }
+    public void conectar(){
+        conexion.setAcban(this);
+        con = conexion.conexion();
+    }
     
     public void validarConfirmacion(){
         if(estadoagregar=true){

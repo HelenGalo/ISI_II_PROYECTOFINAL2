@@ -120,7 +120,7 @@
                           <EmptySpace min="-2" pref="253" max="-2" attributes="0"/>
                           <Component id="linesetting5" pref="2" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="linesetting4" pref="601" max="32767" attributes="0"/>
+                          <Component id="linesetting4" pref="600" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="278" max="-2" attributes="0"/>
                           <Component id="linesetting13" min="-2" pref="120" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>

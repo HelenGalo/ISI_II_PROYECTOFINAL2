@@ -44,7 +44,10 @@ public class AgregarInventario extends javax.swing.JFrame {
     public void setEstadoagregar(boolean estadoagregar) {
         this.estadoagregar = estadoagregar;
     }
-
+     public void conectar(){
+        conexion.setAinven(this);
+        con = conexion.conexion();
+    }
    
     /**
      * Creates new form CalendarForm

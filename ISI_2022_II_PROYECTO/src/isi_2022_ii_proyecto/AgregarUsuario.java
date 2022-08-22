@@ -44,7 +44,10 @@ public class AgregarUsuario extends javax.swing.JFrame {
     Hashtable<String, String> cifrador = new Hashtable<String, String>();
 
   
-    
+    public void conectar(){
+        conexion.setAgusuario(this);
+        con = conexion.conexion();
+    }
     public AgregarUsuario() {
         initComponents();
         buscardatos();

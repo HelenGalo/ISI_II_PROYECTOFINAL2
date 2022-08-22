@@ -52,7 +52,10 @@ public class AperturarCajas extends javax.swing.JFrame {
     public void setEstadosModificar(boolean estadosModificar) {
         this.estadosModificar = estadosModificar;
     }
-    
+    public void conectar(){
+        conexion.setApertcajas(this);
+        con = conexion.conexion();
+    }
     
     public void validarConfirmacion(){
         if(estadosModificar=true){

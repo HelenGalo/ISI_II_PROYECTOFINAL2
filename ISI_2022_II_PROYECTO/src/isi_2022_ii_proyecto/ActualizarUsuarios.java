@@ -56,7 +56,10 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         inicializarValoresC();
         setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
-       
+       public void conectar(){
+        conexion.setAu(this);
+        con = conexion.conexion();
+    }
     
     public void inicializarValoresC(){
         cifrador.put("A", "E3:$%^");

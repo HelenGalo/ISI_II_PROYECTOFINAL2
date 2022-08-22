@@ -55,7 +55,10 @@ public class AgregarEnvio extends javax.swing.JFrame {
         this.envio =env;
     }
   
-    
+    public void conectar(){
+        conexion.setAenvio(this);
+        con = conexion.conexion();
+    }
     public AgregarEnvio() {
         initComponents();
          this.setLocationRelativeTo(null);

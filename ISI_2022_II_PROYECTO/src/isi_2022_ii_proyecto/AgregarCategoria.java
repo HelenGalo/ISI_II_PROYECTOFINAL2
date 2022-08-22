@@ -46,6 +46,10 @@ public class AgregarCategoria extends javax.swing.JFrame {
     public void setEstadoagregar(boolean estadoagregar) {
         this.estadoagregar = estadoagregar;
     }
+    public void conectar(){
+        conexion.setAcat(this);
+        con = conexion.conexion();
+    }
 
    
     /**
