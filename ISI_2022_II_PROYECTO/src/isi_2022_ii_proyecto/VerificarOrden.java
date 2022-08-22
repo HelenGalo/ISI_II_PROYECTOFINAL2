@@ -43,6 +43,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import rojeru_san.complementos.RSUtilities;
 
 import rojerusan.RSTableMetro1;
 
@@ -108,6 +109,7 @@ public class VerificarOrden extends javax.swing.JFrame {
      * Creates new form VerificarOrden
      */
     public VerificarOrden() {
+        RSUtilities.setFullScreenJFrame(this);
         initComponents();
         rSPanel2.setSize(780, 210);
         rSPanel4.setVisible(false);

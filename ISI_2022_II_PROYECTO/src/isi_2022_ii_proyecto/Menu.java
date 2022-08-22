@@ -28,7 +28,7 @@ public class Menu extends javax.swing.JFrame {
     boolean a = true;
     String usuario;
     ConexionBD conexion = new ConexionBD();
-    Connection con = conexion.conexion();
+   
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
@@ -53,6 +53,7 @@ public class Menu extends javax.swing.JFrame {
     
     
     public void refrescarInt(){
+        Connection con = conexion.conexion();
         String SQL1 = "UPDATE Usuarios u SET u.Intentos=? WHERE u.Usuario="+"'"+usuario+"'";
   
         try {
@@ -65,6 +66,12 @@ public class Menu extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            System.err.println("Error al cerrar conexion desde refrescarInt");
         }
     }
     
@@ -80,6 +87,7 @@ public class Menu extends javax.swing.JFrame {
     }
     
     public boolean validarRol(){
+        Connection con = conexion.conexion();
         boolean estado=false;
         int idrol=0;
          String SQL = "SELECT u.IdRol FROM Usuarios u WHERE u.Usuario='"+usuario+"';";
@@ -100,7 +108,13 @@ public class Menu extends javax.swing.JFrame {
         
         if(idrol==2){
             estado = true;
-        } 
+        }
+        
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            System.err.println("Error al cerrar conexion desde validarRol");
+        }
         
         return estado;
         
@@ -108,6 +122,7 @@ public class Menu extends javax.swing.JFrame {
     }
     
     public boolean validarcaja(){
+        Connection con = conexion.conexion();
         boolean estado=false;
         int idestadocaja=0;
          String SQL = "Select c.IdEstadoCaja from Caja c\n" +
@@ -131,6 +146,12 @@ public class Menu extends javax.swing.JFrame {
         if(idestadocaja==2){
             estado = true;
         } 
+        
+         try {
+            con.close();
+        } catch (SQLException ex) {
+            System.err.println("Error al cerrar conexion desde validarcaja");
+        }
         
         return estado;
         
@@ -160,13 +181,7 @@ public class Menu extends javax.swing.JFrame {
      hover.setBackground(rand);
     }
     
-    public void cerrarconexion(){
-        try {
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+  
 
     /**
      * This method is called from within the constructor to initialize the form.

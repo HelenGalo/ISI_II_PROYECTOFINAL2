@@ -140,6 +140,15 @@ public class AvisoFacturaConRTN extends javax.swing.JFrame {
 
     private void rSButtonRound1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonRound1ActionPerformed
         // TODO add your handling code here:
+        if(vo!=null){
+            vo.pagar();
+            this.setVisible(false);
+        }else{
+            if(vod!=null){
+            vod.pagar();
+            this.setVisible(false);
+        }
+        }
         this.dispose();
     }//GEN-LAST:event_rSButtonRound1ActionPerformed
 

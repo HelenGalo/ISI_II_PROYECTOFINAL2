@@ -23,8 +23,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -40,6 +43,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import rojeru_san.complementos.RSUtilities;
 
 import rojerusan.RSTableMetro1;
 
@@ -66,10 +70,10 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
     String cajero;
     String subtotal;
     String total;
-    String descuento;
-    String isv;
-    String isv18;
-    String totalp;
+    String descuento="0.00";
+    String isv="0.00";
+    String isv18="0.00";
+    String totalp="0";
     String envio;
     String RTNC="";
 
@@ -106,6 +110,7 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
      * Creates new form VerificarOrden
      */
     public VerificarOrdenADomicilio() {
+        RSUtilities.setFullScreenJFrame(this);
         initComponents();
         rSPanel2.setSize(780, 210);
         rSPanel4.setVisible(false);
@@ -252,7 +257,19 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
     
     public void insertarOrden(){
         int idorden = Integer.valueOf(jLabel46.getText());
-        String fechaventa=rSLabelFecha1.getFecha();
+        String a= rSLabelFecha1.getFecha();
+        Date date1=null;  
+        try {
+            date1 = new SimpleDateFormat("dd/MM/yyyy").parse(a);
+        } catch (ParseException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+       System.out.println(a+"\t"+date1);
+       SimpleDateFormat formateador = new SimpleDateFormat("yyyy/MM/dd");
+       String FechaVenta = formateador.format(date1);
+       System.out.println(a+"\t"+FechaVenta);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
         String horaapertura = dtf.format(LocalDateTime.now());
         int idcliente = this.codigcliente;
@@ -264,17 +281,18 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
       
      
          
-       String SQL = "INSERT INTO Ventas (IdOrden, FechaVenta, HoraVenta, IdCliente, IdEmpleado, IdUsuario, IdCaja, IdTipoPago) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+       String SQL = "INSERT INTO Ventas (IdOrden, FechaVenta, HoraVenta, IdCliente, IdEmpleado, IdUsuario, IdCaja, IdTipoPago,IdTipoVenta) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, idorden);
-            preparedStmt.setString(2, fechaventa);
+            preparedStmt.setString(2, FechaVenta);
             preparedStmt.setString(3, horaapertura);
             preparedStmt.setInt(4, idcliente);
             preparedStmt.setInt(5, idempleado);
             preparedStmt.setInt(6, idusuario);
             preparedStmt.setInt(7, idcaja);
             preparedStmt.setInt(8, idtipopago);
+            preparedStmt.setInt(9, 2);
             preparedStmt.execute();
             estadoorden = true;
             
@@ -775,7 +793,7 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
                            ve.setVisible(true);
                         }
 
-                    calcularcambio();
+                    
                     rSPanelForma3.setVisible(false);
                     rSPanelForma6.setVisible(true);
                     }   
@@ -795,7 +813,7 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
                                    VentanaEmergente1 ve = new VentanaEmergente1();
                                    ve.setVisible(true);
                                 }
-                                calcularcambio();
+                                
                                 rSPanelForma3.setVisible(false);
                                 rSPanelForma6.setVisible(true);
                                }   
@@ -1284,8 +1302,6 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         jLabel47.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel47.setText("Fecha de Emisión:");
         rSPanelForma5.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 130, 20));
-
-        rSLabelFecha1.setFormato("yyyy/MM/dd");
         rSPanelForma5.add(rSLabelFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 80, 20));
 
         jLabel48.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
