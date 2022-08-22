@@ -106,6 +106,14 @@ public class POS extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+        
+        
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
+        }
+        
     }
     
     
@@ -132,6 +140,12 @@ public class POS extends javax.swing.JFrame {
                  System.out.println("Error "+e.getMessage());
         
             }
+           
+             try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
+        }
            
            return idalmacen;
             
@@ -170,6 +184,13 @@ public class POS extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+          try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
     }
     
@@ -226,6 +247,12 @@ public class POS extends javax.swing.JFrame {
         
             }
         
+          try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
+        }
+        
         return descuento;
         
     }
@@ -252,13 +279,13 @@ public class POS extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                DecimalFormat formato = new DecimalFormat("##,###.00");
+                
                 registros[0] = String.valueOf(idproducto);
                 registros[1] = rs.getString("p.Nombre");
-                registros[2] = formato.format(rs.getString("p.Precio"));
+                registros[2] = rs.getString("p.Precio");
                 registros[3] = "1";
-                registros[4] = formato.format(obtenerdescuento(idproducto));
-                registros[5] = formato.format(String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4])));
+                registros[4] = obtenerdescuento(idproducto);
+                registros[5] = String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]));
                 modelo1.addRow(registros);
             }
         
@@ -267,6 +294,12 @@ public class POS extends javax.swing.JFrame {
                  System.out.println("Error "+e.getMessage());
         
             }
+        
+          try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
+        }
             
         
         }else{
@@ -300,13 +333,13 @@ public class POS extends javax.swing.JFrame {
                         ResultSet rs = st.executeQuery(SQL);
 
                         while (rs.next()) {
-                            DecimalFormat formato = new DecimalFormat("##,###.00");
+                            
                             registros[0] = String.valueOf(idproducto);
                             registros[1] = rs.getString("p.Nombre");
-                            registros[2] = formato.format(rs.getFloat("p.Precio"));
+                            registros[2] = String.valueOf(rs.getFloat("p.Precio"));
                             registros[3] = "1";
                             registros[4] = "0.00";
-                            registros[5] = formato.format(String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4])));
+                            registros[5] = String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]));
                             modelo1.addRow(registros);
                         }
 
@@ -315,6 +348,14 @@ public class POS extends javax.swing.JFrame {
                         System.out.println("Error "+e.getMessage());
 
                     }
+                
+                
+                    try {
+                        con.close();
+                    } catch (SQLException ex) {
+                        System.out.println("error al cerrar conexion");
+                    }
+                
                 
             }
            
@@ -503,6 +544,12 @@ public class POS extends javax.swing.JFrame {
             System.out.println("Error "+ ex.getMessage());
         }
         
+          try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
+        }
+        
          
         jLabel35.setText(nombrevendedor);
         jLabel36.setText(String.valueOf(codigvendedor));
@@ -530,6 +577,12 @@ public class POS extends javax.swing.JFrame {
         
         }catch(SQLException e){
             System.out.println("Error "+ e.getMessage());
+        }
+        
+          try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
         
         
@@ -563,6 +616,12 @@ public class POS extends javax.swing.JFrame {
             System.out.println("Error "+ ex.getMessage());
         }
         
+          try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
+        }
+        
         jLabel38.setText(nombrecliente);
         jLabel39.setText(String.valueOf(codigcliente));
          
@@ -592,6 +651,12 @@ public class POS extends javax.swing.JFrame {
             
         } catch (SQLException ex) {
             System.out.println("Error "+ ex.getMessage());
+        }
+        
+          try {
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("error al cerrar conexion");
         }
           jLabel42.setText(String.valueOf(codigocaja));
     }
@@ -1735,14 +1800,9 @@ public class POS extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIconOne3ActionPerformed
 
     private void rSButtonIconOne4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconOne4ActionPerformed
-        try {
-              Connection con = conexion.conexion();
-            // TODO add your handling code here:
-            con.close();
+     
             System.exit(0);
-        } catch (SQLException ex) {
-            Logger.getLogger(POS.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      
         
     }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
 
@@ -1753,14 +1813,9 @@ public class POS extends javax.swing.JFrame {
 
     private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
         // TODO add your handling code here:
-         try {
-               Connection con = conexion.conexion();
-            // TODO add your handling code here:
-            con.close();
+    
             regresar();
-        } catch (SQLException ex) {
-            Logger.getLogger(POS.class.getName()).log(Level.SEVERE, null, ex);
-        }
+     
     }//GEN-LAST:event_rSButtonIcon_new14ActionPerformed
 
     private void rSButtonHover4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover4ActionPerformed
@@ -1913,18 +1968,16 @@ public class POS extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonHover1ActionPerformed
 
     private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new15ActionPerformed
-        try {
-              Connection con = conexion.conexion();
+        
+             
             // TODO add your handling code here:
             TipoVenta vo = new TipoVenta();
             vo.setTablaorden(JTableBancos);
             vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(),jLabel23.getText(),jLabel22.getText(),jLabel8.getText(),jLabel28.getText(),jLabel18.getText());
             vo.setVisible(true);
-            con.close();
+
             this.dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(POS.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }//GEN-LAST:event_rSButtonIcon_new15ActionPerformed
 
     private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed

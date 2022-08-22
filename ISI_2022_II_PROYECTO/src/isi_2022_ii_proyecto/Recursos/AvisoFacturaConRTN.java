@@ -143,13 +143,15 @@ public class AvisoFacturaConRTN extends javax.swing.JFrame {
         if(vo!=null){
             vo.pagar();
             this.setVisible(false);
+            this.dispose();
         }else{
             if(vod!=null){
             vod.pagar();
             this.setVisible(false);
+            this.dispose();
         }
         }
-        this.dispose();
+        
     }//GEN-LAST:event_rSButtonRound1ActionPerformed
 
     private void rSButtonRound2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonRound2ActionPerformed
