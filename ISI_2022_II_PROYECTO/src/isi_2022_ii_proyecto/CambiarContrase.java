@@ -104,6 +104,11 @@ public class CambiarContrase extends javax.swing.JFrame {
         
     }
     
+    public void conectar(){
+        conexion.setCambiarcontra(this);
+        con = conexion.conexion();
+    }
+    
     public void cerrarc(){
         try {
             con.close();

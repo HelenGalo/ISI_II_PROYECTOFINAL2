@@ -53,6 +53,12 @@ public class Almacen extends javax.swing.JFrame {
     setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         
     }
+    
+    
+    public void conectar(){
+        conexion.setAlmacen(this);
+        con = conexion.conexion();
+    }
      public void deshabilitar(){
         String SQL = "UPDATE Almacen SET IdEstado=? Where IdAlmacen="+codigoalm;
         try {
