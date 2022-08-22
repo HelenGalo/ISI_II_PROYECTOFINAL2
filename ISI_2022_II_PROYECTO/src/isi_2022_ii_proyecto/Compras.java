@@ -561,37 +561,13 @@ public class Compras extends javax.swing.JFrame {
      
      
     
-     public void iniciarcaja(){
-        int codigocaja=0;
-              
-        String SQL2 = "SELECT c.IdCaja FROM Caja c\n"
-                 +"INNER JOIN Usuarios u ON u.IdUsuario = c.IdUsuario\n"+
-                 "Where u.Usuario='"+usuario+"';";
-        
-        
-     
-        try {
-             
-            Statement st2 = (Statement) con.createStatement();
-            ResultSet rs2 = st2.executeQuery(SQL2);;
-        
-            while (rs2.next()) {
-           
-                codigocaja = rs2.getInt("c.IdCaja");
-            }
-            
-        } catch (SQLException ex) {
-            System.out.println("Error "+ ex.getMessage());
-        }
-          jLabel42.setText(String.valueOf(codigocaja));
-    }
-    
+
     
     public void iniciardatos(){
         
         
        iniciarcajero();
-       iniciarcaja();
+
        iniciarcliente();
        iniciarvendedor();
        
@@ -639,10 +615,6 @@ public class Compras extends javax.swing.JFrame {
         rSLabelIcon14 = new rojerusan.RSLabelIcon();
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
-        rSLabelIcon15 = new rojerusan.RSLabelIcon();
-        jLabel41 = new javax.swing.JLabel();
-        jLabel42 = new javax.swing.JLabel();
         rSLabelIcon16 = new rojerusan.RSLabelIcon();
         jLabel43 = new javax.swing.JLabel();
         rSLabelIcon17 = new rojerusan.RSLabelIcon();
@@ -918,26 +890,6 @@ public class Compras extends javax.swing.JFrame {
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel39.setText("Provvedor");
 
-        jLabel40.setFont(new java.awt.Font("Franklin Gothic Book", 0, 16)); // NOI18N
-        jLabel40.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel40.setText("Caja");
-
-        rSLabelIcon15.setBackground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon15.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon15.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        rSLabelIcon15.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.AIRPLAY);
-
-        jLabel41.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
-        jLabel41.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel41.setText("CodigoCaja");
-
-        jLabel42.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
-        jLabel42.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel42.setText("Caja");
-
         rSLabelIcon16.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon16.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon16.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
@@ -992,16 +944,7 @@ public class Compras extends javax.swing.JFrame {
                         .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(20, 20, 20)
-                .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(rSLabelIcon15, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(10, 10, 10)
+                .addGap(250, 250, 250)
                 .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
@@ -1033,15 +976,6 @@ public class Compras extends javax.swing.JFrame {
                                 .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rSLabelIcon15, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1426,7 +1360,7 @@ public class Compras extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(102, 0, 255));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Observaciones");
-        rSPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 190, 30));
+        rSPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 190, 30));
 
         jLabel15.setFont(new java.awt.Font("Franklin Gothic Book", 2, 16)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(102, 0, 255));
@@ -1482,10 +1416,10 @@ public class Compras extends javax.swing.JFrame {
                 JTextbuscar1KeyReleased(evt);
             }
         });
-        rSPanelForma3.add(JTextbuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 188, -1));
+        rSPanelForma3.add(JTextbuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 188, -1));
 
         rSButtonIcon_new18.setBackground(new java.awt.Color(0, 102, 204));
-        rSButtonIcon_new18.setText("Pagar");
+        rSButtonIcon_new18.setText("Registrar");
         rSButtonIcon_new18.setAlignmentX(0.5F);
         rSButtonIcon_new18.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1495,7 +1429,7 @@ public class Compras extends javax.swing.JFrame {
                 rSButtonIcon_new18ActionPerformed(evt);
             }
         });
-        rSPanelForma3.add(rSButtonIcon_new18, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 108, -1));
+        rSPanelForma3.add(rSButtonIcon_new18, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 130, 130, -1));
 
         rSRadioButton3.setText("MIXTO");
         rSRadioButton3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -1927,9 +1861,6 @@ public class Compras extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel41;
-    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
@@ -1960,7 +1891,6 @@ public class Compras extends javax.swing.JFrame {
     private rojeru_san.rsdate.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon13;
     private rojerusan.RSLabelIcon rSLabelIcon14;
-    private rojerusan.RSLabelIcon rSLabelIcon15;
     private rojerusan.RSLabelIcon rSLabelIcon16;
     private rojerusan.RSLabelIcon rSLabelIcon17;
     private necesario.RSPanel rSPanel1;
