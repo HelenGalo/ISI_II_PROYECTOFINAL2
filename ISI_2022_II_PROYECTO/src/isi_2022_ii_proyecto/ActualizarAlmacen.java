@@ -112,6 +112,14 @@ setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagene
        JCodigoDisponible.setText(codigoalm);
     }
     
+    
+    
+    public void conectar(){
+        conexion.setActualizaralmacen(this);
+        con = conexion.conexion();
+    }
+    
+    
     public void buscardatos(){
           String SQL = "SELECT * FROM Almacenes WHERE IdAlmacen=(SELECT max(IdAlmacen) FROM Almacenes)";
           

@@ -1,9 +1,12 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-package isi_2022_ii_proyecto.Conexion;
+package isi_2022_ii_proyecto.Recursos;
 
+import RSMaterialComponent.RSLabelIcon;
+import RSMaterialComponent.RSPanelOpacity;
 import isi_2022_ii_proyecto.ActualizarAlmacen;
 import isi_2022_ii_proyecto.ActualizarBanco;
 import isi_2022_ii_proyecto.ActualizarCaja;
@@ -41,6 +44,7 @@ import isi_2022_ii_proyecto.CambiarContrase;
 import isi_2022_ii_proyecto.Categoria;
 import isi_2022_ii_proyecto.Cliente;
 import isi_2022_ii_proyecto.Compras;
+import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Dashboard;
 import isi_2022_ii_proyecto.Empleados;
 import isi_2022_ii_proyecto.Envio;
@@ -56,7 +60,6 @@ import isi_2022_ii_proyecto.PrecioHistorico;
 import isi_2022_ii_proyecto.Productos;
 import isi_2022_ii_proyecto.Proveedores;
 import isi_2022_ii_proyecto.RecuperarContraseña;
-import isi_2022_ii_proyecto.Recursos.VentanaErrorDeconexion;
 import isi_2022_ii_proyecto.TablaProductos;
 import isi_2022_ii_proyecto.TipoVenta;
 import isi_2022_ii_proyecto.Usuario;
@@ -65,16 +68,23 @@ import isi_2022_ii_proyecto.VentasEmpleado;
 import isi_2022_ii_proyecto.VerificarOrden;
 import isi_2022_ii_proyecto.VerificarOrdenADomicilio;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import rojeru_san.complementos.RSUtilities;
+import rojerusan.RSButtonRound;
 
 /**
  *
  * @author Edwin Rafael
  */
-public class ConexionBD {
+public class VentanaErrorDeconexion extends javax.swing.JFrame {
+ 
     Inicio inicio=null;
+    ActualizarAlmacen actualizaralmacen=null;
+    ActualizarBanco ab = null;
+    ActualizarCaja ac = null;
+    ActualizarCategoria aca = null;
+    ActualizarCliente acl = null;
 
     public void setActualizaralmacen(ActualizarAlmacen actualizaralmacen) {
         this.actualizaralmacen = actualizaralmacen;
@@ -308,14 +318,29 @@ public class ConexionBD {
         this.vodomicilio = vodomicilio;
     }
 
-    public void setConectar(Connection conectar) {
-        this.conectar = conectar;
+    public void setjLabel6(JLabel jLabel6) {
+        this.jLabel6 = jLabel6;
     }
-    ActualizarAlmacen actualizaralmacen=null;
-    ActualizarBanco ab = null;
-    ActualizarCaja ac = null;
-    ActualizarCategoria aca = null;
-    ActualizarCliente acl = null;
+
+    public void setjLabel7(JLabel jLabel7) {
+        this.jLabel7 = jLabel7;
+    }
+
+    public void setjPanel1(JPanel jPanel1) {
+        this.jPanel1 = jPanel1;
+    }
+
+    public void setrSButtonRound1(RSButtonRound rSButtonRound1) {
+        this.rSButtonRound1 = rSButtonRound1;
+    }
+
+    public void setrSLabelIcon1(RSLabelIcon rSLabelIcon1) {
+        this.rSLabelIcon1 = rSLabelIcon1;
+    }
+
+    public void setrSPanelOpacity1(RSPanelOpacity rSPanelOpacity1) {
+        this.rSPanelOpacity1 = rSPanelOpacity1;
+    }
     ActualizarEmpleado ae = null;
     ActualizarEnvio aenv = null;
     ActualizarInventario ain =null;
@@ -369,322 +394,224 @@ public class ConexionBD {
     VentasEmpleado ventaempleado = null;
     VerificarOrden vorden = null;
     VerificarOrdenADomicilio vodomicilio = null;
-    
-    
-    
-    
-    
-    
+ 
+  
 
     public void setInicio(Inicio inicio) {
         this.inicio = inicio;
     }
-    
-    
-     Connection conectar = null;
 
-    public Connection conexion() {
+   
+
+    /**
+     * Creates new form VentanaEmergente1
+     */
+    public VentanaErrorDeconexion() {
+        RSUtilities.setFullScreenJFrame(this);
+        initComponents();
+        RSUtilities.setOpaqueWindow(this, false);
+        RSUtilities.setOpacityComponent(this.jPanel1, 150);
+    }
     
-        try {
-            String url = "jdbc:mysql://162.241.62.192:3306/fhopenet_GEVEC?useSSL=false&allowPublicKeyRetrieval=true";
-            String usuario = "fhopenet_gestionador";
-            String password = "#+6ePODf*=,}";
-            
-            conectar = DriverManager.getConnection(url,usuario,password);
-                    
-            
-                    
-        }catch(SQLException e){
-            if(e.getErrorCode()==0){
-                if(inicio!=null){
-                   VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                   v.setInicio(inicio);
-                   v.setVisible(true);
+    
+
+    
+    
+    public void reconectarpantalla(){
+        if(inicio!=null){
+                   inicio.conectar();
+                   this.dispose();
                 }else{
                     if(actualizaralmacen!=null){
-                   VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                   v.setActualizaralmacen(actualizaralmacen);
-                   v.setVisible(true);
+                        actualizaralmacen.conectar();
+                        this.dispose();
+                   
                     }else{
                         if(ab!=null){
-                   VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                   v.setAb(ab);
-                   v.setVisible(true);
+                            ab.conectar();
+                            this.dispose();
+                   
                     }else{
                         if(ac!=null){
-                            VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                            v.set(ac);
-                            v.setVisible(true);
+                            ac.conectar();
+                            this.dispose();
                     }else{
                         if(aca!=null){
-                   VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                   v.set(aca);
-                   v.setVisible(true);
+                            aca.conectar();
+                            this.dispose();
                     }else{
                         if(acl!=null){
-                   VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                   v.setInicio(inicio);
-                   v.setVisible(true);
+                            acl.conectar();
+                            this.dispose();
                     }else{
                         if(ae!=null){
-                   VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                   v.setInicio(inicio);
-                   v.setVisible(true);
+                            ae.conectar();
+                            this.dispose();
                     }else{
                         if(aenv!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            aenv.conectar();
+                            this.dispose();
                     }else{
                         if(ain!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            ain.conectar();
+                            this.dispose();
                     }else{
                         if(al!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            al.conectar();
+                            this.dispose();
                     }else{
                         if(anc!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            anc.conectar();
+                            this.dispose();
                     }else{
                         if(ap!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            ap.conectar();
+                            this.dispose();
                     }else{
                         if(apro!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            apro.conectar()
+                            this.dispose();
                     }else{
                         if(au!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            au.conectar();
+                            this.dispose();
                     }else{
                         if(aal!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            aal.conectar();
+                            this.dispose();
                     }else{
                         if(acaja!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            acaja.conectar();
+                            this.dispose();
                     }else{
                         if(acat!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            acat.conectar();
+                            this.dispose();
                     }else{
                         if(agcliente!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            agcliente.conectar();
+                            this.dispose();
                     }else{
                         if(acban!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            acban.conectar();
+                            this.dispose();
                     }else{
                         if(aem!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(aenvio!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(ainven!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(aglogi!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(agprod!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(agprovee!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(almacen  !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(apertcajas !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(banco !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(bm !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(bc !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(bcb !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(bproducto !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(caja  !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(cambiarcontra !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(cate  !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(cliente  !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(compras  !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(das  !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(empleado   !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(envio   !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(facturas   !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(gnerarve   !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(inventario   !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                            this.dispose();
                     }else{
                         if(logistica   !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(menu   !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(mcuentb   !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(pos   !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(precioh    !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(productos    !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(proveedores    !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(rcontrase    !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(tproductos    !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(tventa    !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(usuario!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(ventas!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(ventaempleado!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(vorden !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }else{
                         if(vodomicilio  !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setInicio(inicio);
-                        v.setVisible(true);
+                        this.dispose();
                     }
                         
                     }
@@ -693,17 +620,143 @@ public class ConexionBD {
             }
             
         }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
-            }else{
-                
-            }
-        
-      
-            
-        }
-        return conectar;
-        
-        
     }
     
-}
+    
+    
 
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        rSPanelOpacity1 = new RSMaterialComponent.RSPanelOpacity();
+        rSLabelIcon1 = new RSMaterialComponent.RSLabelIcon();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        rSButtonRound1 = new rojerusan.RSButtonRound();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+
+        rSPanelOpacity1.setBackground(new java.awt.Color(0, 55, 133));
+        rSPanelOpacity1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        rSLabelIcon1.setForeground(new java.awt.Color(255, 255, 255));
+        rSLabelIcon1.setToolTipText("");
+        rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ERROR);
+        rSPanelOpacity1.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 150, 140));
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 40)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("ERROR");
+        rSPanelOpacity1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 550, -1));
+
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setFont(new java.awt.Font("Franklin Gothic Book", 0, 36)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel7.setText("ERROR DE CONEXION");
+        rSPanelOpacity1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, -1));
+
+        rSButtonRound1.setBackground(new java.awt.Color(0, 153, 102));
+        rSButtonRound1.setText("Reconectar");
+        rSButtonRound1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        rSButtonRound1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonRound1ActionPerformed(evt);
+            }
+        });
+        rSPanelOpacity1.add(rSButtonRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, -1, -1));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void rSButtonRound1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonRound1ActionPerformed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_rSButtonRound1ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(VentanaErrorDeconexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(VentanaErrorDeconexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(VentanaErrorDeconexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(VentanaErrorDeconexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new VentanaErrorDeconexion().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private rojerusan.RSButtonRound rSButtonRound1;
+    private RSMaterialComponent.RSLabelIcon rSLabelIcon1;
+    private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
+    // End of variables declaration//GEN-END:variables
+}
