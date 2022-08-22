@@ -28,7 +28,7 @@ public class Menu extends javax.swing.JFrame {
     boolean a = true;
     String usuario;
     ConexionBD conexion = new ConexionBD();
-   Connection con = conexion.conexion();
+    Connection con = conexion.conexion();
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
@@ -58,7 +58,7 @@ public class Menu extends javax.swing.JFrame {
     
     
     public void refrescarInt(){
-        Connection con = conexion.conexion();
+       
         String SQL1 = "UPDATE Usuarios u SET u.Intentos=? WHERE u.Usuario="+"'"+usuario+"'";
   
         try {
@@ -69,15 +69,11 @@ public class Menu extends javax.swing.JFrame {
             
              JOptionPane.showMessageDialog(null, "Intentos Refresacados");
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
         
-        try {
-            con.close();
-        } catch (SQLException ex) {
-            System.err.println("Error al cerrar conexion desde refrescarInt");
-        }
+       
     }
     
     public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
@@ -92,7 +88,7 @@ public class Menu extends javax.swing.JFrame {
     }
     
     public boolean validarRol(){
-        Connection con = conexion.conexion();
+        
         boolean estado=false;
         int idrol=0;
          String SQL = "SELECT u.IdRol FROM Usuarios u WHERE u.Usuario='"+usuario+"';";
@@ -115,11 +111,7 @@ public class Menu extends javax.swing.JFrame {
             estado = true;
         }
         
-        try {
-            con.close();
-        } catch (SQLException ex) {
-            System.err.println("Error al cerrar conexion desde validarRol");
-        }
+   
         
         return estado;
         
@@ -127,7 +119,7 @@ public class Menu extends javax.swing.JFrame {
     }
     
     public boolean validarcaja(){
-        Connection con = conexion.conexion();
+     
         boolean estado=false;
         int idestadocaja=0;
          String SQL = "Select c.IdEstadoCaja from Caja c\n" +
@@ -152,15 +144,23 @@ public class Menu extends javax.swing.JFrame {
             estado = true;
         } 
         
-         try {
-            con.close();
-        } catch (SQLException ex) {
-            System.err.println("Error al cerrar conexion desde validarcaja");
-        }
+        
         
         return estado;
         
         
+    }
+    
+    public boolean validarconexion(){
+        boolean a = false;
+        if(con==null){
+            conectar();
+            
+            
+        }else{
+            a = true;
+        }
+        return a;
     }
     
     
@@ -1741,8 +1741,8 @@ public class Menu extends javax.swing.JFrame {
     private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
         // TODO add your handling code here:
         
-        
-        if(validarRol()==true){
+        if(validarconexion()==true){
+             if(validarRol()==true){
             if(validarcaja()==true){
                 GenerarVenta gv = new GenerarVenta();
                 gv.setUsuario(usuario);
@@ -1760,6 +1760,11 @@ public class Menu extends javax.swing.JFrame {
             vi.setEstado("N");
             vi.setVisible(true);
         }
+            
+        }else{
+           
+        }
+        
        
         
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
@@ -1779,7 +1784,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_BOTONVMouseExited
 
     private void BOTONALMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONALMouseClicked
-           Almacen al = new Almacen();
+        Almacen al = new Almacen();
         al.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BOTONALMouseClicked
