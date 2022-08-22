@@ -44,6 +44,11 @@ public class Proveedores extends javax.swing.JFrame {
         listar();
         setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
+    
+    public void conectar(){
+        conexion.setProveedores(this);
+        con = conexion.conexion();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -56,6 +56,13 @@ public class Facturas extends javax.swing.JFrame {
       
        
     }
+    
+     public void conectar(){
+        conexion.setFacturas(this);
+        con = conexion.conexion();
+    }
+    
+    
      public void deshabilitar(){
         String SQL = "UPDATE Factura SET IdEstado=? Where IdFactura='"+codigoc+"';";
         try {

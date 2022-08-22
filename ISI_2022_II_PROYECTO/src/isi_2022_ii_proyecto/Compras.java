@@ -78,6 +78,10 @@ public class Compras extends javax.swing.JFrame {
         
     }
     
+    public void conectar(){
+        conexion.setCompras(this);
+        con = conexion.conexion();
+    }
     
     
     public void buscarUltimoId(){

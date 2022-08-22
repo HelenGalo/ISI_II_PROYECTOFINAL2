@@ -47,6 +47,11 @@ public class PrecioHistorico extends javax.swing.JFrame {
         
     }
     
+    public void conectar(){
+        conexion.setPrecioh(this);
+        con = conexion.conexion();
+    }
+    
     private void buscarNombre(){
         String[] registros = new String[6];
         DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();

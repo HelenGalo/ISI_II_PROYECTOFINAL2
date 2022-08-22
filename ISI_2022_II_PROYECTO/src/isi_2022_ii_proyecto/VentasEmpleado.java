@@ -47,6 +47,12 @@ public class VentasEmpleado extends javax.swing.JFrame {
        
         
     }
+    
+    
+    public void conectar(){
+        conexion.setVentaempleado(this);
+        con = conexion.conexion();
+    }
       
      
      

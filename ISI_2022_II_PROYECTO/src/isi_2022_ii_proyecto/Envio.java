@@ -46,6 +46,11 @@ public class Envio extends javax.swing.JFrame {
         this.codenvio = envio;
     }
   
+   public void conectar(){
+        conexion.setEnvio(this);
+        con = conexion.conexion();
+    }
+  
     
     public Envio() {
         initComponents();

@@ -55,6 +55,11 @@ public class Productos extends javax.swing.JFrame {
         
     }
     
+    public void conectar(){
+        conexion.setProductos(this);
+        con = conexion.conexion();
+    }
+    
     
       public void deshabilitarp(){
         String SQL = "UPDATE Productos SET IdEstado=? Where IdProductos="+prod;

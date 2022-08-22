@@ -55,6 +55,14 @@ public class Ventas extends javax.swing.JFrame {
         
     }
     
+    
+    public void conectar(){
+        conexion.setVentas(this);
+        con = conexion.conexion();
+    }
+    
+    
+    
       public void listaV(){
       String[] registros = new String[7];
         DefaultTableModel modelo =  (DefaultTableModel) JTableAlmacen.getModel();

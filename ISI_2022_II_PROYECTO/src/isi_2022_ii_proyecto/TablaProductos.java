@@ -52,6 +52,14 @@ public class TablaProductos extends javax.swing.JFrame {
        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         
     }
+    
+    
+    
+    public void conectar(){
+        conexion.setTproductos(this);
+        con = conexion.conexion();
+    }
+    
       public void listarP(){
         String[] registros = new String[6];
         DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();

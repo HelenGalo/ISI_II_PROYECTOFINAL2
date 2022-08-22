@@ -78,6 +78,11 @@ public class RecuperarContraseña extends javax.swing.JFrame {
         
         
     }
+    
+    public void conectar(){
+        conexion.setRcontrase(this);
+        con = conexion.conexion();
+    }
    
     
     public void MostrarMensaje(){

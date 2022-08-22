@@ -55,6 +55,12 @@ public class Inventario extends javax.swing.JFrame {
         
     }
     
+    
+     public void conectar(){
+        conexion.setInventario(this);
+        con = conexion.conexion();
+    }
+    
       public void listarAl(){
         String[] registros = new String[6];
         DefaultTableModel modelo =  (DefaultTableModel) JTableInv.getModel();

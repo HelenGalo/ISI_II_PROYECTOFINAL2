@@ -47,6 +47,12 @@ public class Cliente extends javax.swing.JFrame {
       
        
     }
+    
+    public void conectar(){
+        conexion.setCliente(this);
+        con = conexion.conexion();
+    }
+    
      public void deshabilitar(){
         String SQL = "UPDATE Clientes SET Estado=? Where IdCliente="+codigoc;
         try {

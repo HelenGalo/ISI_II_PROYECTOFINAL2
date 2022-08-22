@@ -5,12 +5,17 @@
  */
 package isi_2022_ii_proyecto;
 
+import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import java.sql.Connection;
 /**
  *
  * @author Edwin Rafael
  */
 public class Dashboard extends javax.swing.JFrame {
+    
+    ConexionBD conexion = new ConexionBD();
+    Connection con = conexion.conexion();
 
     /**
      * Creates new form Dashboard
@@ -21,6 +26,11 @@ public class Dashboard extends javax.swing.JFrame {
         this.setExtendedState(this.MAXIMIZED_BOTH);
 
 
+    }
+    
+    public void conectar(){
+        conexion.setDas(this);
+        con = conexion.conexion();
     }
 
     /**

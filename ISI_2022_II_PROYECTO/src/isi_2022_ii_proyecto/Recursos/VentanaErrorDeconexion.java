@@ -659,7 +659,7 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
                         this.dispose();
                         }else{
                             if(agregarbanco  !=null){
-                            agregarbanco.conectar();
+//                            agregarbanco.conectar();
                             this.dispose();
                             }
                         }

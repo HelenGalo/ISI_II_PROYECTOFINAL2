@@ -123,6 +123,11 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         
     }
     
+    public void conectar(){
+        conexion.setVodomicilio(this);
+        con = conexion.conexion();
+    }
+    
     
     
     public void cargartabla(){

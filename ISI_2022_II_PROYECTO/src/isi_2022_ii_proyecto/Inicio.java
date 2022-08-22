@@ -57,7 +57,7 @@ public class Inicio extends javax.swing.JFrame {
     int intentos;
     String des = "";
 
-    
+  
  
 
     /**

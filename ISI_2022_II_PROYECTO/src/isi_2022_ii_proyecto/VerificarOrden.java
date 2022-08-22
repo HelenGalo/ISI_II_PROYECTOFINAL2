@@ -122,6 +122,11 @@ public class VerificarOrden extends javax.swing.JFrame {
         
     }
     
+    public void conectar(){
+        conexion.setVorden(this);
+        con = conexion.conexion();
+    }
+    
     
     
     public void cargartabla(){

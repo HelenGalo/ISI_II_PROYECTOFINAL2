@@ -27,7 +27,7 @@ import rojerusan.RSEffectFade;
  */
 public class GenerarVenta extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
-    
+    Connection con = conexion.conexion();
     
     Menu menu;
 
@@ -61,6 +61,11 @@ public class GenerarVenta extends javax.swing.JFrame {
   
        
         
+    }
+    
+     public void conectar(){
+        conexion.setGnerarve(this);
+        con = conexion.conexion();
     }
     
     

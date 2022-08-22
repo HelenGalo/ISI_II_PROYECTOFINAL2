@@ -28,7 +28,7 @@ public class Menu extends javax.swing.JFrame {
     boolean a = true;
     String usuario;
     ConexionBD conexion = new ConexionBD();
-   
+   Connection con = conexion.conexion();
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
@@ -43,6 +43,11 @@ public class Menu extends javax.swing.JFrame {
         this.setExtendedState(this.MAXIMIZED_BOTH);
         setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         
+    }
+    
+     public void conectar(){
+        conexion.setMenu(this);
+        con = conexion.conexion();
     }
     
     

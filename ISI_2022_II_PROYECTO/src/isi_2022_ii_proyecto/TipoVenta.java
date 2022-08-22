@@ -68,6 +68,11 @@ ConexionBD conexion = new ConexionBD();
       
     }
     
+    public void conectar(){
+        conexion.setTventa(this);
+        con = conexion.conexion();
+    }
+    
     
     public void iniciarEmpresasEnvio(){
         rSComboBox1.addItem("Seleccionar Empresa");

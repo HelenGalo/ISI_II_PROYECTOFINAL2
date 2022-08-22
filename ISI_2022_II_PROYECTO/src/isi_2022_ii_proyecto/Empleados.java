@@ -45,6 +45,12 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
     
+    
+    public void conectar(){
+        conexion.setEmpleado(this);
+        con = conexion.conexion();
+    }
+    
     public void deshabilitarem(){
         String SQL = "UPDATE Empleados SET IdEstado=? Where IdEmpleado="+code;
         try {
