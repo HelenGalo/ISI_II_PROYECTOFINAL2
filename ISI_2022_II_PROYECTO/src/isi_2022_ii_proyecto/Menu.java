@@ -51,15 +51,12 @@ public class Menu extends javax.swing.JFrame {
     }
     
     
-    public void validarRol(String usuario){
-        
-        
-    }
+ 
     
     
     public void refrescarInt(){
-       
-        String SQL1 = "UPDATE Usuarios u SET u.Intentos=? WHERE u.Usuario="+"'"+usuario+"'";
+       if(validarconexion()==true){
+           String SQL1 = "UPDATE Usuarios u SET u.Intentos=? WHERE u.Usuario="+"'"+usuario+"'";
   
         try {
             int intentosAct=3 ;
@@ -72,6 +69,11 @@ public class Menu extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
+       }else{
+           conectar();
+           
+       }
+        
         
        
     }
@@ -88,9 +90,10 @@ public class Menu extends javax.swing.JFrame {
     }
     
     public boolean validarRol(){
-        
         boolean estado=false;
-        int idrol=0;
+        if(validarconexion()==true){
+             
+            int idrol=0;
          String SQL = "SELECT u.IdRol FROM Usuarios u WHERE u.Usuario='"+usuario+"';";
           
           
@@ -107,9 +110,15 @@ public class Menu extends javax.swing.JFrame {
               JOptionPane.showMessageDialog(this, e.getMessage());
         }
         
+        
         if(idrol==2){
             estado = true;
         }
+        }else{
+            
+        }
+       
+        
         
    
         
@@ -119,9 +128,9 @@ public class Menu extends javax.swing.JFrame {
     }
     
     public boolean validarcaja(){
-     
         boolean estado=false;
-        int idestadocaja=0;
+     if(validarconexion()==true){
+          int idestadocaja=0;
          String SQL = "Select c.IdEstadoCaja from Caja c\n" +
                     "INNER JOIN Usuarios u ON u.IdUsuario = c.IdUsuario\n" +
                     "WHERE u.Usuario ='"+usuario+"' and c.IdEstado=1;";
@@ -143,6 +152,11 @@ public class Menu extends javax.swing.JFrame {
         if(idestadocaja==2){
             estado = true;
         } 
+     }else{
+         
+     }
+        
+       
         
         
         
@@ -1541,7 +1555,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIconOne5ActionPerformed
 
     private void rSButtonIcon_new1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new1ActionPerformed
-          Productos p = new Productos();
+        Productos p = new Productos();
         p.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new1ActionPerformed

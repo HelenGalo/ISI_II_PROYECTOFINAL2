@@ -188,7 +188,8 @@ public class Inicio extends javax.swing.JFrame {
         
          }catch(SQLException e){
              System.out.println("Error "+e.getMessage());
-             
+             con=null;
+             validarconexion();
          }
          
       
@@ -296,8 +297,10 @@ public class Inicio extends javax.swing.JFrame {
         
         
         
-         }catch(Exception e){
+         }catch(SQLException e){
              System.out.println("Error "+e.getMessage());
+             con=null;
+             validarconexion();
          }
          
        
@@ -313,8 +316,10 @@ public class Inicio extends javax.swing.JFrame {
             
              JOptionPane.showMessageDialog(null, "Intentos Refresacados");
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+            validarconexion();
         }
         
       
@@ -324,8 +329,8 @@ public class Inicio extends javax.swing.JFrame {
     
     private void obteneracceso(){
      
-      
-        char [] arrayC=Jpassword.getPassword();
+
+          char [] arrayC=Jpassword.getPassword();
         
         
         usuario=Jtextuser.getText();
@@ -340,17 +345,7 @@ public class Inicio extends javax.swing.JFrame {
                 vacceso = rs.getString("Contrase");
             }
             
-        
-        
-        
-         }catch(SQLException e){
-             System.out.println("Error "+e.getErrorCode());
-          
-                    }
-       
-         
-         
-         System.out.println("contra ingre "+acceso);
+          System.out.println("contra ingre "+acceso);
          System.out.println("user "+usuario);
          System.out.println("contra reci "+vacceso);
          System.out.println("contra reci "+vacceso.length());
@@ -360,6 +355,20 @@ public class Inicio extends javax.swing.JFrame {
             obtenerInt();
             temporizador(); 
          }
+          
+        
+        
+         }catch(SQLException e){
+             System.out.println("Error "+e.getErrorCode());
+             con=null;
+             validarconexion();
+         }
+       
+         
+         
+       
+      
+        
          
         
     }
@@ -414,6 +423,20 @@ public class Inicio extends javax.swing.JFrame {
              
              
         }
+    }
+    
+    
+    public boolean validarconexion(){
+        boolean a = false;
+  
+        if(con==null){
+            conectar();
+            
+            
+        }else{
+            a = true;
+        }
+        return a;
     }
 
     /**
@@ -838,9 +861,12 @@ public class Inicio extends javax.swing.JFrame {
 
     private void rSButtonRound1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonRound1ActionPerformed
         // TODO add your handling code here:
-        if(validar()==true){
+        
+            if(validar()==true){
             obteneracceso();
-        }
+            }
+       
+        
         
       
         
