@@ -42,8 +42,14 @@ public class VentanaInformativaPOSMENU extends javax.swing.JFrame {
             jLabel8.setText("CAJA CERRADA");
             jLabel9.setText("La caja a la que desea ingresar, se encuentra cerrada.");
             jLabel7.setText("Por favor comunicarse con su supervisor.");
+        }else{
+            if(estado=="FC"){
+            jLabel8.setText("FACTURAS AGOTADAS");
+            jLabel9.setText("EL LÍMITE DE FACTURAS HA LLEGADO AL MÁXIMO");
+            jLabel7.setText("Por favor comunicarse con su supervisor.");
+        
         }
-    }
+    }}
 
     /**
      * This method is called from within the constructor to initialize the form.

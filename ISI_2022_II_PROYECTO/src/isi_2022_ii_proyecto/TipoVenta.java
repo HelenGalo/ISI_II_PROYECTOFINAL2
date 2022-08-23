@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -65,12 +66,43 @@ ConexionBD conexion = new ConexionBD();
         rSButtonIcon_new19.setVisible(false);
         iniciarEmpresasEnvio();
         
+        
       
     }
     
     public void conectar(){
         conexion.setTventa(this);
         con = conexion.conexion();
+    }
+    
+    public void transformarvalores(){
+     
+         String Total="";
+         
+     
+            
+          
+             
+              for(int j=0; j<this.total.length(); j++ ){
+                                char a = this.total.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Totalt "+ a);
+                                   Total= Total + vs;
+                                }else{
+
+                                }
+            }
+              
+  
+        this.total=Total;
+        
+        
+            
+             
+        
     }
     
     
@@ -1109,10 +1141,12 @@ ConexionBD conexion = new ConexionBD();
         }else{
             if(rSRadioButton2.isSelected()){
                 if(rSDateChooser2.getDatoFecha().toString().length()>0 && rSComboBox2.getSelectedItem().toString()!="Seleccionar Hora de Entrega"){
+                    DecimalFormat formato1 = new DecimalFormat("##,###.00");
                     float ntotal = Float.parseFloat(total)+Float.parseFloat(jLabel61.getText());
+                    String ntotat = formato1.format(Double.valueOf(String.valueOf(ntotal)));
                     VerificarOrdenADomicilio vo = new VerificarOrdenADomicilio();
                     vo.setTablaorden(tablaorden);
-                    vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(), subtotal,  String.valueOf(ntotal),  totalp,  descuento,  isv, jLabel61.getText(),2);
+                    vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(), subtotal,  ntotat,  totalp,  descuento,  isv, jLabel61.getText(),2);
                     String formato="yyyy/MM/dd";
                     String Fe="";
                     Date FechaE;

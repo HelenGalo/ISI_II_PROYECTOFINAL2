@@ -106,21 +106,19 @@ public class POS extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+           
         }
         
         
-        try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+      
         
     }
     
     
     
     public int obteneridalmacendesucursal(){
-          Connection con = conexion.conexion();
+          
         int idalmacen=0;
         String sql = "Select s.IdAlmacen From Sucursales s\n" +
                     "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
@@ -142,11 +140,7 @@ public class POS extends javax.swing.JFrame {
         
             }
            
-             try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+          
            
            return idalmacen;
             
@@ -155,7 +149,7 @@ public class POS extends javax.swing.JFrame {
    
     
       public void buscarProductoPorId(int idproducto){
-            Connection con = conexion.conexion();
+           
         String[] registros = new String[4];
           System.out.println("ID EN ALMACEN "+obteneridalmacendesucursal());
           
@@ -172,7 +166,7 @@ public class POS extends javax.swing.JFrame {
                
                 registros[0] = String.valueOf(idproducto);
                 registros[1] = rs.getString("p.Nombre");
-                registros[2] = formato.format(rs.getFloat("p.Precio")).toString();
+                registros[2] = formato.format(Double.valueOf(rs.getString("p.Precio")));
                 registros[3] = rs.getString("Ex");
                 modelo.addRow(registros);
             }
@@ -188,17 +182,13 @@ public class POS extends javax.swing.JFrame {
         }
         
         
-          try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+         
     }
     
     
     
     public String obtenerdescuento(int idproducto){
-          Connection con = conexion.conexion();
+          
          String descuento="0.00";
          String SQL = "SELECT ifnull(d.Descuento,0.00) as 'Des' FROM DetalleDescuentoProducto d Where d.IdProducto="+idproducto;
           
@@ -208,19 +198,15 @@ public class POS extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                DecimalFormat formato = new DecimalFormat("##,###.00");
-                  descuento=formato.format( rs.getString("Des"));
+                  DecimalFormat formato = new DecimalFormat("##,###.00");
+                  descuento= formato.format(Double.valueOf(rs.getString("Des")));
             }
         }catch(SQLException e){
                  System.out.println("Error "+e.getMessage());
         
             }
         
-          try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+        
         
         return descuento;
         
@@ -228,7 +214,8 @@ public class POS extends javax.swing.JFrame {
     
     
     public void agregarproductosorden(int idproducto){
-          Connection con = conexion.conexion();
+          
+          DecimalFormat formato = new DecimalFormat("##,###.00");
         int validarexistenciaorden=0;
         boolean estadoproducto=false;
         int posicion=0;
@@ -240,23 +227,57 @@ public class POS extends javax.swing.JFrame {
             String[] registros = new String[6];
             String SQL = "SELECT p.Nombre, p.Precio FROM Productos p\n"
                   +"LEFT JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
-                  +"WHERE p.IdProducto="+idproducto+" AND ap.IdAlmacen="+obteneridalmacendesucursal();;
+                  +"WHERE p.IdProducto="+idproducto+" AND ap.IdAlmacen="+obteneridalmacendesucursal();
           
           
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
-            DecimalFormat formato = new DecimalFormat("##,###.00");
+           
 
             while (rs.next()) {
                 
                 registros[0] = String.valueOf(idproducto);
                 registros[1] = rs.getString("p.Nombre");
-                registros[2] = rs.getString("p.Precio");
+                registros[2] = formato.format(Double.valueOf(rs.getString("p.Precio")));
                 registros[3] = "1";
                 registros[4] = obtenerdescuento(idproducto);
-                float g =(Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]);
-                registros[5] = formato.format(g);
+                String precioc="";
+                String descuentoc="";
+                
+                for(int i=0; i<registros[2].length(); i++ ){
+                    char a = registros[2].charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       precioc= precioc + vs;
+                    }else{
+                        
+                    }
+                }
+                
+                System.out.println("P CONVER "+ precioc);
+                
+                
+                for(int i=0; i<registros[4].length(); i++ ){
+                    char a = registros[4].charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       descuentoc= descuentoc + vs;
+                    }else{
+                        
+                    }
+                }
+                
+                System.out.println("DES CONVER "+ descuentoc);
+                float g =(Float.valueOf(precioc)*Float.valueOf(registros[3]))-Float.valueOf(descuentoc);
+                String f= String.valueOf(g);
+                 registros[5] =  formato.format(Double.valueOf(f));
                 modelo1.addRow(registros);
             }
         
@@ -266,11 +287,7 @@ public class POS extends javax.swing.JFrame {
         
             }
         
-          try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+         
             
         
         }else{
@@ -286,13 +303,68 @@ public class POS extends javax.swing.JFrame {
            
             if(estadoproducto==true){
             nuevacantidad=Integer.valueOf(modelo1.getValueAt(posicion, 3).toString())+1;
-             DecimalFormat formato = new DecimalFormat("##,###.00");
+             
             modelo1.setValueAt(nuevacantidad, posicion, 3);
-            nuevodescuento=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(obtenerdescuento(idproducto)));
-            modelo1.setValueAt(nuevodescuento, posicion, 4);
-            nuevosubtotal=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(modelo1.getValueAt(posicion, 2).toString()))-Float.valueOf(modelo1.getValueAt(posicion, 4).toString());
-            formato.format(nuevosubtotal);
-            modelo1.setValueAt(nuevosubtotal, posicion, 5);
+            String descientobyid =obtenerdescuento(idproducto);
+            String descuentoresultado="";
+            for(int i=0; i<descientobyid.length(); i++ ){
+                    char a = descientobyid.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       descuentoresultado= descuentoresultado + vs;
+                    }else{
+                        
+                    }
+                }
+            
+            
+            nuevodescuento=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(descuentoresultado));
+           
+            String descuentontrans = formato.format(nuevodescuento);
+           
+            modelo1.setValueAt(descuentontrans, posicion, 4);
+            
+            String preciopc="";
+            
+            
+            String preciotrans=modelo1.getValueAt(posicion, 2).toString();
+            
+             for(int i=0; i<preciotrans.length(); i++ ){
+                    char a = preciotrans.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       preciopc= preciopc + vs;
+                    }else{
+                        
+                    }
+                }
+            
+            String descuentotrans=modelo1.getValueAt(posicion, 4).toString();
+            String despc = "";
+            for(int i=0; i<descuentotrans.length(); i++ ){
+                    char a = descuentotrans.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       despc= despc + vs;
+                    }else{
+                        
+                    }
+                }
+            
+            nuevosubtotal=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(preciopc))-Float.valueOf(despc);
+            String pase="";
+            pase = String.valueOf(nuevosubtotal);
+            String nuevosubtotalparse =formato.format(Double.valueOf(pase));
+            modelo1.setValueAt(nuevosubtotalparse, posicion, 5);
             }else{
                String[] registros = new String[6];
                String SQL = "SELECT p.Nombre, p.Precio   FROM Productos p\n"
@@ -306,15 +378,50 @@ public class POS extends javax.swing.JFrame {
            
 
                         while (rs.next()) {
-                            
-                           DecimalFormat formato = new DecimalFormat("##,###.00");
+                           
                             registros[0] = String.valueOf(idproducto);
                             registros[1] = rs.getString("p.Nombre");
-                            registros[2] = rs.getString("p.Precio");
+                            registros[2] = formato.format(Double.valueOf(rs.getString("p.Precio")));
                             registros[3] = "1";
                             registros[4] = "0.00";
-                            float g = (Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]);
-                            registros[5] =  formato.format(g);
+
+                            String precioc="";
+                            String descuentoc="";
+
+                            for(int i=0; i<registros[2].length(); i++ ){
+                                char a = registros[2].charAt(i);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   precioc= precioc + vs;
+                                }else{
+
+                                }
+                            }
+
+                            System.out.println("P CONVER "+ precioc);
+
+
+                            for(int i=0; i<registros[4].length(); i++ ){
+                                char a = registros[4].charAt(i);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   descuentoc= descuentoc + vs;
+                                }else{
+
+                                }
+                            }
+
+                            System.out.println("DES CONVER "+ descuentoc);
+
+                            
+                            float g = (Float.valueOf(precioc)*Float.valueOf(registros[3]))-Float.valueOf(descuentoc);
+                            registros[5] =  formato.format(Double.valueOf(String.valueOf(g)));
                             modelo1.addRow(registros);
                         }
 
@@ -325,11 +432,7 @@ public class POS extends javax.swing.JFrame {
                     }
                 
                 
-                    try {
-                        con.close();
-                    } catch (SQLException ex) {
-                        System.out.println("error al cerrar conexion");
-                    }
+                    
                 
                 
             }
@@ -346,21 +449,64 @@ public class POS extends javax.swing.JFrame {
     
     
     public void total(){
-         //String s ="";
-       // s=jLabel18.getText();
-         //String x=;
-         // String y=
-          
+       DecimalFormat formato = new DecimalFormat("##,###.00");
              
              
-         
         if(modelo1.getRowCount()>0){
+            String descuento=jLabel28.getText();
+            String ISV = jLabel18.getText();
+            String subtotal=jLabel23.getText();
             float total=0.00f;
-             float totales=0.00f;
-            total =  Float.valueOf(jLabel18.getText()) + Float.valueOf(jLabel23.getText()) -Float.valueOf(jLabel28.getText()) ;
-           totales = (float) (total);
-       
-            jLabel22.setText(String.valueOf(total));
+            String descuentoc="";
+            String ISVc = "";
+            String subtotalc="";
+            
+             for(int i=0; i<descuento.length(); i++ ){
+                                char a = descuento.charAt(i);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   descuentoc= descuentoc + vs;
+                                }else{
+
+                                }
+                            }
+             
+            for(int i=0; i<ISV.length(); i++ ){
+                                char a = ISV.charAt(i);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   ISVc= ISVc + vs;
+                                }else{
+
+                                }
+                            }
+            
+            for(int i=0; i<subtotal.length(); i++ ){
+                                char a = subtotal.charAt(i);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   subtotalc= subtotalc + vs;
+                                }else{
+
+                                }
+                            }
+             
+             
+            
+            
+            total =  (Float.valueOf(subtotalc))- Float.valueOf(descuentoc) ;
+            String totalt=String.valueOf(total);
+            String totalv = formato.format(Double.parseDouble(totalt));
+            jLabel22.setText(totalv);
         }else{
             jLabel22.setText("0.00");
         }
@@ -387,17 +533,34 @@ public class POS extends javax.swing.JFrame {
     
     
     public void sumarsubtotal(){
+        DecimalFormat formato = new DecimalFormat("##,###.00");
         if(modelo1.getRowCount()>0){
         float sumador=0.00f;
         float subtotal=0.00f;
         for(int i=0;i<modelo1.getRowCount();i++){
-            sumador=sumador+(Float.valueOf(modelo1.getValueAt(i, 2).toString())*Float.valueOf(modelo1.getValueAt(i, 3).toString()));
+            String subtotalp="";
+            for(int j=0; j<modelo1.getValueAt(i, 2).toString().length(); j++ ){
+                                char a = modelo1.getValueAt(i, 2).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   subtotalp= subtotalp + vs;
+                                }else{
+
+                                }
+            }
+              
+            
+            
+                    sumador=sumador+(Float.valueOf(subtotalp)*Float.valueOf(modelo1.getValueAt(i, 3).toString()));
         }
         
-        subtotal= (float) (sumador-(sumador*0.15));
+        subtotal= (float) (sumador);
         
-   DecimalFormat formato = new DecimalFormat("##,###.00");
-        jLabel23.setText(formato.format(subtotal));
+        
+        jLabel23.setText(formato.format(Double.valueOf(subtotal)));
         }else{
             jLabel23.setText("");
         }
@@ -414,29 +577,63 @@ public class POS extends javax.swing.JFrame {
     
     public void sumarisv(){
         float sumador=0.00f;
+        DecimalFormat formato = new DecimalFormat("##,###.00");
         float isv=0.00f;
         for(int i=0;i<modelo1.getRowCount();i++){
-            sumador=sumador+(Float.valueOf(modelo1.getValueAt(i, 2).toString())*Float.valueOf(modelo1.getValueAt(i, 3).toString()));
+       
+            
+            String subtotalp="";
+             for(int j=0; j<modelo1.getValueAt(i, 5).toString().length(); j++ ){
+                                char a = modelo1.getValueAt(i, 5).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   subtotalp= subtotalp + vs;
+                                }else{
+
+                                }
+            }
+            
+            
+            
+            
+            
+            sumador=sumador+(Float.valueOf(subtotalp));
         }
         
         isv= (float) (sumador*0.15);
-        
-   DecimalFormat formato = new DecimalFormat("##,###.00");
-        jLabel18.setText(formato.format(isv));
+        String isvm = String.valueOf(isv);
+        jLabel18.setText(formato.format(Double.valueOf(isvm)));
     }
     
     
     public void sumardescuento(){
+        DecimalFormat formato = new DecimalFormat("##,###.00");
         float sumador=0.00f;
         float descuento=0.00f;
         for(int i=0;i<modelo1.getRowCount();i++){
-            sumador=sumador+Float.valueOf(modelo1.getValueAt(i, 4).toString());
+            String descuentoc = "";
+             for(int j=0; j<modelo1.getValueAt(i, 4).toString().length(); j++ ){
+                                char a = modelo1.getValueAt(i, 4).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   descuentoc= descuentoc + vs;
+                                }else{
+
+                                }
+            }
+            sumador=sumador+Float.valueOf(descuentoc);
         }
         
         descuento= sumador;
-        
-      DecimalFormat formato = new DecimalFormat("##,##0.00");
-        jLabel28.setText(formato.format(descuento));
+        String descuenton = String.valueOf(descuento);
+      
+        jLabel28.setText(formato.format(Double.valueOf(descuenton)));
     }
     
     
@@ -451,6 +648,7 @@ public class POS extends javax.swing.JFrame {
     
     
      public void restarcantidadproductos(int codigproducto){
+        DecimalFormat formato = new DecimalFormat("##,###.00");
         int corredor=0;
         int posicion=0;
         int nuevacantidad=0;
@@ -462,14 +660,51 @@ public class POS extends javax.swing.JFrame {
                posicion=i;
             }
             }
+           
+        
+        
+        
           
             nuevacantidad=Integer.valueOf(modelo1.getValueAt(posicion, 3).toString())-1;
             
             modelo1.setValueAt(nuevacantidad, posicion, 3);
-            nuevodescuento=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(obtenerdescuento(codigproducto)));
-            modelo1.setValueAt(nuevodescuento, posicion, 4);
-            nuevosubtotal=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(modelo1.getValueAt(posicion, 2).toString()))-Float.valueOf(modelo1.getValueAt(posicion, 4).toString());
-            modelo1.setValueAt(nuevosubtotal, posicion, 5);
+            
+             String nuevapt="";
+            for(int j=0; j<modelo1.getValueAt(posicion, 2).toString().length(); j++ ){
+                                char a = modelo1.getValueAt(posicion, 2).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   nuevapt= nuevapt + vs;
+                                }else{
+
+                                }
+            }
+            
+             String nuevades=obtenerdescuento(codigproducto);
+             String nuevodest="";
+            for(int j=0; j<nuevades.length(); j++ ){
+                                char a = nuevades.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   nuevodest= nuevodest + vs;
+                                }else{
+
+                                }
+            }
+            
+            nuevodescuento=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(nuevodest));
+            String nds = String.valueOf(nuevodescuento);
+            modelo1.setValueAt(formato.format(Double.valueOf(nds)), posicion, 4);
+            
+            nuevosubtotal=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(nuevapt))-Float.valueOf(nuevodescuento);
+            String nsubtt = String.valueOf(nuevosubtotal);
+            modelo1.setValueAt(formato.format(Double.valueOf(nsubtt)), posicion, 5);
           
      }
         
@@ -513,7 +748,7 @@ public class POS extends javax.swing.JFrame {
     }
     
     public void iniciarvendedor(){
-          Connection con = conexion.conexion();
+          
         String nombrevendedor="";
         String SQL = "SELECT e.PrimerNombre, e.PrimerApellido FROM Empleados e Where e.IdEmpleado="+codigvendedor;
         
@@ -532,12 +767,7 @@ public class POS extends javax.swing.JFrame {
             System.out.println("Error "+ ex.getMessage());
         }
         
-          try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
-        
+          
          
         jLabel35.setText(nombrevendedor);
         jLabel36.setText(String.valueOf(codigvendedor));
@@ -545,7 +775,7 @@ public class POS extends javax.swing.JFrame {
     }
     
      public void iniciarcajero(){
-           Connection con = conexion.conexion();
+           
          String nombrecajero="";
         String SQL3 = "SELECT e.PrimerNombre, e.PrimerApellido FROM Empleados e\n"
                    +"INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n"+
@@ -567,11 +797,7 @@ public class POS extends javax.swing.JFrame {
             System.out.println("Error "+ e.getMessage());
         }
         
-          try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+        
         
         
         
@@ -582,7 +808,7 @@ public class POS extends javax.swing.JFrame {
   
     
      public void iniciarcliente(){
-           Connection con = conexion.conexion();
+           
         String nombrecliente="";
         String SQL1 = "SELECT c.Nombres, c.Apellidos FROM Clientes c Where c.IdCliente="+codigcliente;
         
@@ -601,11 +827,7 @@ public class POS extends javax.swing.JFrame {
             System.out.println("Error "+ ex.getMessage());
         }
         
-          try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+         
         
         jLabel38.setText(nombrecliente);
         jLabel39.setText(String.valueOf(codigcliente));
@@ -615,7 +837,7 @@ public class POS extends javax.swing.JFrame {
      
     
      public void iniciarcaja(){
-           Connection con = conexion.conexion();
+           
         int codigocaja=0;
               
         String SQL2 = "SELECT c.IdCaja FROM Caja c\n"
@@ -638,11 +860,7 @@ public class POS extends javax.swing.JFrame {
             System.out.println("Error "+ ex.getMessage());
         }
         
-          try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+         
           jLabel42.setText(String.valueOf(codigocaja));
     }
     
@@ -676,23 +894,34 @@ public class POS extends javax.swing.JFrame {
                 
                     
                 }else{
-                    if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())<Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())){
-                    agregarproductosorden(Integer.valueOf(codigop));
-                    sumarcantidadproductos();
-                    sumarsubtotal();
-                    sumardescuento();
-                    sumarisv();
-                    total();
-                    }else{
-                        JOptionPane.showMessageDialog(rootPane, "Maxima cantidad de productos disponibles");
+                    /*int c=Integer.valueOf(codigop);
+                    int b = Integer.valueOf(codigop1);
+                    if(c==b){
+                       if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())<Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())){
+                        agregarproductosorden(Integer.valueOf(codigop));
+                        sumarcantidadproductos();
+                        sumarsubtotal();
+                        sumardescuento();
+                        sumarisv();
+                        total();
+                        }else{
+                            JOptionPane.showMessageDialog(rootPane, "Maxima cantidad de productos disponibles");
+                        } 
+                    }else{*/
+                        
+                        agregarproductosorden(Integer.valueOf(codigop));
+                        sumarcantidadproductos();
+                        sumarsubtotal();
+                        sumardescuento();
+                        sumarisv();
+                        total();
                     }
+                    
                 }
                 
                 
                
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "No hay productos en existencia para el producto seleccionado");
-            }
+           
             
         }else{
             JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
@@ -722,6 +951,7 @@ public class POS extends javax.swing.JFrame {
          TipoVenta vo = new TipoVenta();
             vo.setTablaorden(JTableBancos);
             vo.seteardatosorden(idorden,usuario, codigcliente, codigvendedor, Integer.valueOf(jLabel42.getText()), jLabel38.getText(), jLabel35.getText(), jLabel44.getText(),jLabel23.getText(),jLabel22.getText(),jLabel8.getText(),jLabel28.getText(),jLabel18.getText());
+            vo.transformarvalores();
             vo.setVisible(true);
 
             this.dispose();
@@ -733,6 +963,7 @@ public class POS extends javax.swing.JFrame {
             sumarcantidadproductos();
             sumarsubtotal();
             sumarisv();
+            sumardescuento();
             total();
         }else{
             JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
@@ -1260,7 +1491,7 @@ public class POS extends javax.swing.JFrame {
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true, false
+                false, false, false, true, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

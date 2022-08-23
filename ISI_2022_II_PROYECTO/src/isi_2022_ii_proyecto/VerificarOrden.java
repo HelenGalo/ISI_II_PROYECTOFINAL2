@@ -15,6 +15,7 @@ import isi_2022_ii_proyecto.Recursos.AvisoFacturaConRTN;
 import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -56,8 +57,10 @@ public class VerificarOrden extends javax.swing.JFrame {
     
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    
-    
+     String ve="";
+     String vasox="";
+    boolean statuspagotipo=false;
+    boolean passe=false;
     RSTableMetro1 tablaorden;
     DefaultTableModel modelo;
     String usuario;
@@ -198,7 +201,20 @@ public class VerificarOrden extends javax.swing.JFrame {
         float totalcajaa=0.00f;
         totalcajaa=obtenertotalcajaA();
         String SQL = "UPDATE Caja SET TotalCaja=? WHERE IdUsuario="+obteneridusuario();
-        float totalcajan=Float.valueOf(jLabel22.getText())+totalcajaa;
+        String totalct = "";
+             for(int j=0; j<jLabel22.getText().length(); j++ ){
+                                char a = jLabel22.getText().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   totalct= totalct + vs;
+                                }else{
+
+                                }
+            }
+        float totalcajan=Float.valueOf(totalct)+totalcajaa;
         
   
         try {
@@ -238,12 +254,92 @@ public class VerificarOrden extends javax.swing.JFrame {
         
     }
     
+    public void transformarvalores(){
+         String subtotal = "";
+         String ISV15= "";
+         String ISV18="";
+         String Total="";
+             for(int j=0; j<this.subtotal.length(); j++ ){
+                                char a = this.subtotal.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   subtotal= subtotal + vs;
+                                }else{
+
+                                }
+            }
+             
+            for(int j=0; j<this.isv.length(); j++ ){
+                                char a = this.isv.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   ISV15= ISV15 + vs;
+                                }else{
+
+                                }
+            }
+            
+             for(int j=0; j<this.isv18.length(); j++ ){
+                                char a = this.isv18.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   ISV18= ISV18 + vs;
+                                }else{
+
+                                }
+            }
+             
+              for(int j=0; j<this.total.length(); j++ ){
+                                char a = this.total.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   Total= Total + vs;
+                                }else{
+
+                                }
+            }
+              
+              
+        this.subtotal=subtotal;
+        this.total=Total;
+        this.isv=ISV15;
+        this.isv18=ISV18;
+            
+             
+        
+    }
+    
     
     public void actualizarHistoriaCaja(){
         float montooperaciona=0.00f;
         montooperaciona=obtenerMontoOperacion();
         String SQL = "UPDATE HistoriaCajas SET MontoOperacion=? WHERE IdCaja="+codigocaja+" AND IdEstadoHistoria="+1;
-        float montooperacionn=Float.valueOf(jLabel22.getText())+montooperaciona;
+        String montoo = "";
+             for(int j=0; j<jLabel22.getText().length(); j++ ){
+                                char a = jLabel22.getText().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   montoo= montoo + vs;
+                                }else{
+
+                                }
+            }
+        float montooperacionn=Float.valueOf(montoo)+montooperaciona;
         
   
         try {
@@ -350,8 +446,38 @@ public class VerificarOrden extends javax.swing.JFrame {
         for(int i=0; i<JTableBancos.getRowCount();i++){
              idproducto=Integer.valueOf(modelo.getValueAt(i, 0).toString());
              cantidad=Integer.valueOf(modelo.getValueAt(i, 3).toString());
-             descuento=Float.valueOf(modelo.getValueAt(i, 4).toString());
-             subtotal=Float.valueOf(modelo.getValueAt(i, 5).toString());
+             String subtott = "";
+             for(int j=0; j<modelo.getValueAt(i, 5).toString().length(); j++ ){
+                                char a = modelo.getValueAt(i, 5).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   subtott= subtott + vs;
+                                }else{
+
+                                }
+            }
+             
+             String descuent = "";
+             for(int j=0; j<modelo.getValueAt(i, 4).toString().length(); j++ ){
+                                char a = modelo.getValueAt(i, 4).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   descuent= descuent + vs;
+                                }else{
+
+                                }
+            }
+             
+             descuento=Float.valueOf(descuent);
+             
+             
+             subtotal=Float.valueOf(subtott);
              insertarDetallesOrden(idorden,idproducto,cantidad,descuento,subtotal);
             }
         
@@ -375,6 +501,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel8.setText(totalp);
         jLabel22.setText(total);
         jLabel46.setText(String.valueOf(idorden));
+        transformarvalores();
        
     }
     
@@ -951,7 +1078,7 @@ public class VerificarOrden extends javax.swing.JFrame {
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1235,7 +1362,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         );
 
         dashboardview.add(rSPanelGradiente3);
-        rSPanelGradiente3.setBounds(0, 0, 1358, 108);
+        rSPanelGradiente3.setBounds(0, 0, 1360, 108);
 
         rSPanelShadow2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
@@ -1559,7 +1686,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             }
         });
         rSPanelForma3.add(rSRadioButton1);
-        rSRadioButton1.setBounds(140, 40, 110, 40);
+        rSRadioButton1.setBounds(120, 40, 110, 40);
 
         rSRadioButton2.setText("EFECTIVO");
         rSRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -1618,10 +1745,10 @@ public class VerificarOrden extends javax.swing.JFrame {
             }
         });
         rSPanelForma3.add(rSRadioButton3);
-        rSRadioButton3.setBounds(260, 40, 110, 40);
+        rSRadioButton3.setBounds(230, 40, 110, 40);
 
         rSPanel2.add(rSPanelForma3);
-        rSPanelForma3.setBounds(0, 270, 400, 200);
+        rSPanelForma3.setBounds(0, 270, 400, 230);
 
         rSPanelForma6.setBackground(new java.awt.Color(255, 255, 255));
         rSPanelForma6.setLayout(null);
@@ -1645,7 +1772,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel54.setText("L.");
         rSPanelForma6.add(jLabel54);
-        jLabel54.setBounds(77, 49, 15, 20);
+        jLabel54.setBounds(77, 49, 16, 20);
 
         rSButtonIcon_new19.setBackground(new java.awt.Color(0, 153, 102));
         rSButtonIcon_new19.setText("Generar Factura");
@@ -1679,7 +1806,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSPanelForma6.setBounds(400, 270, 380, 200);
 
         dashboardview.add(rSPanel2);
-        rSPanel2.setBounds(544, 119, 780, 470);
+        rSPanel2.setBounds(544, 119, 780, 500);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1762,7 +1889,23 @@ public class VerificarOrden extends javax.swing.JFrame {
 
     private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
         // TODO add your handling code here:
-  
+       
+        if(rSRadioButton3.isSelected()==true){
+            if(evt.getKeyCode()==KeyEvent.VK_ENTER && JTextbuscar.getText().isEmpty()==false && statuspagotipo==false){
+            ve=JTextbuscar.getText();
+            JTextbuscar.setPlaceholder("Ingrese la el monto cobrado en tarjeta");
+            statuspagotipo=true;
+           
+            
+        }else{
+            if(evt.getKeyCode()==KeyEvent.VK_ENTER && JTextbuscar.getText().isEmpty()==false && statuspagotipo==true){
+                jLabel51.setText("Ingrese el monto cobrado en tarjeta:");
+                vasox = JTextbuscar.getText();
+                passe=true;
+            }
+        }}
+        
+        
     }//GEN-LAST:event_JTextbuscarKeyReleased
 
     private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
@@ -1782,10 +1925,24 @@ public class VerificarOrden extends javax.swing.JFrame {
     private void rSButtonIcon_new18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new18ActionPerformed
         // TODO add your handling code here:
         
-        
-        AvisoFacturaConRTN avf = new AvisoFacturaConRTN();
+        if(rSRadioButton3.isSelected()==true && passe==true){
+          AvisoFacturaConRTN avf = new AvisoFacturaConRTN();
         avf.setVo(this);
         avf.setVisible(true);
+        }else{
+           if(rSRadioButton2.isSelected()==true && passe==true){
+            AvisoFacturaConRTN avf = new AvisoFacturaConRTN();
+            avf.setVo(this);
+            avf.setVisible(true);
+        }else{
+              if(rSRadioButton1.isSelected()==true && passe==true){
+                  AvisoFacturaConRTN avf = new AvisoFacturaConRTN();
+                  avf.setVo(this);
+                  avf.setVisible(true);
+        }
+           }
+        }
+        
         
         
     }//GEN-LAST:event_rSButtonIcon_new18ActionPerformed
@@ -1798,6 +1955,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         JTextbuscar.setVisible(false);
         rSButtonIcon_new18.setLocation(149,111);
         rSButtonIcon_new18.setVisible(true);
+        passe=true;
         
         
     }//GEN-LAST:event_rSRadioButton1ActionPerformed
@@ -1809,12 +1967,14 @@ public class VerificarOrden extends javax.swing.JFrame {
 
     private void rSRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton3ActionPerformed
         // TODO add your handling code here:
+        idTipoPagoEnvio=5;
         rSRadioButton1.setSelected(false);
         rSRadioButton2.setSelected(false);
-        jLabel51.setVisible(false);
-        JTextbuscar.setVisible(false);
-        rSButtonIcon_new18.setLocation(149,111);
+        jLabel51.setVisible(true);
+        JTextbuscar.setVisible(true);
+        rSButtonIcon_new18.setLocation(250,130);
         rSButtonIcon_new18.setVisible(true);
+        
     }//GEN-LAST:event_rSRadioButton3ActionPerformed
 
     /**

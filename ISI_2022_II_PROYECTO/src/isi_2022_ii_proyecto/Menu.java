@@ -178,6 +178,100 @@ public class Menu extends javax.swing.JFrame {
     }
     
     
+    public int obtenerlimitefactura(){
+    String SQL1 = "Select fc.RangoFinal from FormatoFacturaCabecera fc Where fc.IdEstado=1;";
+     String nfactura=""; 
+      char vi;
+      char vf;
+      String contadori="";
+      String contadorf="";
+        
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL1);
+
+            while (rs.next()) {
+                nfactura =rs.getString("fc.RangoFinal");
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+         
+         
+         for(int i=0; i<11;i++){
+                vi= nfactura.charAt(i);
+                contadori = contadori+String.valueOf(vi);
+         }
+         
+         for(int i=11; i<19;i++){
+                vf= nfactura.charAt(i);
+                contadorf = contadorf+String.valueOf(vf);
+         }
+         
+         int nvalorfactura=0;
+         nvalorfactura = Integer.parseInt(contadorf);
+         return nvalorfactura;
+         
+}
+    
+    
+    public boolean validarfactura(){
+          boolean a= false;
+        String nfactura="";
+        String contadori="";
+        String contadorf="";
+        String nfacturanueva="";
+        char vi;
+        char vf;
+        String SQL1 = "Select f.IdFactura From Factura f\n" +
+                     "WHERE f.IdFactura = (SELECT MAX(f1.IdFactura) FROM Factura f1);";
+        
+        
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL1);
+
+            while (rs.next()) {
+                nfactura =rs.getString("f.IdFactura");
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+         
+         
+         for(int i=0; i<11;i++){
+                vi= nfactura.charAt(i);
+                contadori = contadori+String.valueOf(vi);
+         }
+         
+         for(int i=11; i<19;i++){
+                vf= nfactura.charAt(i);
+                contadorf = contadorf+String.valueOf(vf);
+         }
+         
+         int nvalorfactura=0;
+         nvalorfactura = Integer.parseInt(contadorf)+1;
+     
+
+       
+         
+         if(nvalorfactura<=obtenerlimitefactura()){
+             a=true;
+         }
+         
+         return a;
+        
+        
+    }
+    
     
     public void changeimage(JLabel button, String resourcheimg){
         ImageIcon aimg = new ImageIcon(getClass().getResource(resourcheimg));
@@ -1758,10 +1852,17 @@ public class Menu extends javax.swing.JFrame {
         if(validarconexion()==true){
              if(validarRol()==true){
             if(validarcaja()==true){
-                GenerarVenta gv = new GenerarVenta();
-                gv.setUsuario(usuario);
-                gv.setMenu(this);
-                gv.setVisible(true);
+                if(validarfactura()==true){
+                    GenerarVenta gv = new GenerarVenta();
+                    gv.setUsuario(usuario);
+                    gv.setMenu(this);
+                    gv.setVisible(true);
+                }else{
+                    VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+                    vi.setEstado("FC");
+                    vi.setVisible(true);
+                }
+                
             }else{
                 VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
                 vi.setEstado("CC");

@@ -623,9 +623,9 @@ public class GenerarVenta extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -686,7 +686,7 @@ public class GenerarVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(validar()==true){
             
-            POSCLOUD pos = new POSCLOUD();
+            POS pos = new POS();
             pos.setUsuario(usuario);
             pos.setCodigvendedor(Integer.valueOf(JTextbuscar.getText()));
             pos.setCodigoCliente(buscarIdCliente());

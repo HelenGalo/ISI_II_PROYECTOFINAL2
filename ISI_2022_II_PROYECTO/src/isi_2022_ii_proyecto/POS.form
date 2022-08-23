@@ -779,7 +779,7 @@
                                     <Column editable="false" title="Nombre" type="java.lang.Object"/>
                                     <Column editable="false" title="Precio" type="java.lang.Object"/>
                                     <Column editable="true" title="Cantidad" type="java.lang.Integer"/>
-                                    <Column editable="true" title="Descuento" type="java.lang.Object"/>
+                                    <Column editable="false" title="Descuento" type="java.lang.Object"/>
                                     <Column editable="false" title="Subtotal" type="java.lang.Object"/>
                                   </Table>
                                 </Property>
@@ -804,6 +804,40 @@
                                 </Property>
                                 <Property name="colorSecondary" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                </Property>
+                                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                                  <TableColumnModel selectionModel="0">
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                  </TableColumnModel>
                                 </Property>
                                 <Property name="effectHover" type="boolean" value="true"/>
                                 <Property name="foregroundHead" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">

@@ -15,6 +15,7 @@ import isi_2022_ii_proyecto.Recursos.AvisoFacturaConRTN;
 import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,6 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -56,7 +58,10 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
     
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    
+    String ve="";
+    String vasox="";
+    boolean statuspagotipo=false;
+    boolean passe=false;
     
     RSTableMetro1 tablaorden;
     DefaultTableModel modelo;
@@ -199,7 +204,20 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         float totalcajaa=0.00f;
         totalcajaa=obtenertotalcajaA();
         String SQL = "UPDATE Caja SET TotalCaja=? WHERE IdUsuario="+obteneridusuario();
-        float totalcajan=Float.valueOf(jLabel22.getText())+totalcajaa;
+        String totalct = "";
+             for(int j=0; j<jLabel22.getText().length(); j++ ){
+                                char a = jLabel22.getText().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   totalct= totalct + vs;
+                                }else{
+
+                                }
+            }
+        float totalcajan=Float.valueOf(totalct)+totalcajaa;
         
   
         try {
@@ -212,6 +230,73 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
+    }
+    
+     public void transformarvalores(){
+         String subtotal = "";
+         String ISV15= "";
+         String ISV18="";
+         String Total="";
+             for(int j=0; j<this.subtotal.length(); j++ ){
+                                char a = this.subtotal.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   subtotal= subtotal + vs;
+                                }else{
+
+                                }
+            }
+             
+            for(int j=0; j<this.isv.length(); j++ ){
+                                char a = this.isv.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   ISV15= ISV15 + vs;
+                                }else{
+
+                                }
+            }
+            
+             for(int j=0; j<this.isv18.length(); j++ ){
+                                char a = this.isv18.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   ISV18= ISV18 + vs;
+                                }else{
+
+                                }
+            }
+             
+              for(int j=0; j<this.total.length(); j++ ){
+                                char a = this.total.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Totalt "+ a);
+                                   Total= Total + vs;
+                                }else{
+
+                                }
+            }
+              
+              
+        this.subtotal=subtotal;
+        this.total=Total;
+        this.isv=ISV15;
+        this.isv18=ISV18;
+            
+             
+        
     }
     
     public float obtenerMontoOperacion(){
@@ -240,11 +325,24 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
     }
     
     
-    public void actualizarHistoriaCaja(){
+     public void actualizarHistoriaCaja(){
         float montooperaciona=0.00f;
         montooperaciona=obtenerMontoOperacion();
         String SQL = "UPDATE HistoriaCajas SET MontoOperacion=? WHERE IdCaja="+codigocaja+" AND IdEstadoHistoria="+1;
-        float montooperacionn=Float.valueOf(jLabel22.getText())+montooperaciona;
+        String montoo = "";
+             for(int j=0; j<jLabel22.getText().length(); j++ ){
+                                char a = jLabel22.getText().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   montoo= montoo + vs;
+                                }else{
+
+                                }
+            }
+        float montooperacionn=Float.valueOf(montoo)+montooperaciona;
         
   
         try {
@@ -336,7 +434,7 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         }
     }
     
-    public void enviarDetallesOrden(){
+     public void enviarDetallesOrden(){
         int idproducto=0;
         int cantidad=0;
         float descuento =0.00f;
@@ -345,8 +443,38 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         for(int i=0; i<JTableBancos.getRowCount();i++){
              idproducto=Integer.valueOf(modelo.getValueAt(i, 0).toString());
              cantidad=Integer.valueOf(modelo.getValueAt(i, 3).toString());
-             descuento=Float.valueOf(modelo.getValueAt(i, 4).toString());
-             subtotal=Float.valueOf(modelo.getValueAt(i, 5).toString());
+             String subtott = "";
+             for(int j=0; j<modelo.getValueAt(i, 5).toString().length(); j++ ){
+                                char a = modelo.getValueAt(i, 5).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   subtott= subtott + vs;
+                                }else{
+
+                                }
+            }
+             
+             String descuent = "";
+             for(int j=0; j<modelo.getValueAt(i, 4).toString().length(); j++ ){
+                                char a = modelo.getValueAt(i, 4).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   descuent= descuent + vs;
+                                }else{
+
+                                }
+            }
+             
+             descuento=Float.valueOf(descuent);
+             
+             
+             subtotal=Float.valueOf(subtott);
              insertarDetallesOrden(idorden,idproducto,cantidad,descuento,subtotal);
             }
         
@@ -371,6 +499,7 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         jLabel22.setText(total);
         jLabel46.setText(String.valueOf(idorden));
         jLabel21.setText(envio);
+        transformarvalores();
     }
     
     public void seteardatosorden(int idorden,String usuario,int codigcliente, int codigvendedor, int codigocaja, String ncliente, String nvendedor, String ncajero, String subt, String tot, String cantp, String des, String isv, String envio, int tipov){
@@ -417,9 +546,44 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
     }
     
     public void calcularcambio(){
+        DecimalFormat formato = new DecimalFormat("##,###.00");
         float cambio=0.00f;
-        cambio=Float.valueOf(JTextbuscar.getText())-Float.valueOf(jLabel22.getText());
-        jLabel53.setText(String.valueOf(cambio));
+         String cambiot = "";
+         String totalt = "";
+         String bv="";
+         String bv2="";
+         bv=JTextbuscar.getText();
+         bv2=jLabel22.getText();
+             for(int j=0; j<bv.length(); j++ ){
+                                char a = bv.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   cambiot= cambiot + vs;
+                                }else{
+
+                                }
+            }
+             
+             
+            for(int j=0; j<bv2.length(); j++ ){
+                                char a = bv2.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   totalt= totalt + vs;
+                                }else{
+
+                                }
+            }
+             
+        cambio=Float.valueOf(cambiot)-Float.valueOf(totalt);
+        String cp = String.valueOf(cambio);
+        jLabel53.setText(formato.format(Double.valueOf(cp)));
     }
     
     
@@ -525,7 +689,22 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, idorden);
-            preparedStmt.setFloat(2, Float.valueOf(jLabel22.getText()));
+            String valoratransformar=jLabel22.getText();
+            String total="";
+              for(int j=0; j<valoratransformar.length(); j++ ){
+                                char a = valoratransformar.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   total= total + vs;
+                                }else{
+
+                                }
+            }
+            
+            preparedStmt.setFloat(2, Float.valueOf(total));
             preparedStmt.execute();
       
      
@@ -539,10 +718,24 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
     
     public void insertarTotalEnvio(){
         String SQL = "INSERT INTO DetalleEnvio (IdOrden, Total) VALUES(?, ?)";
+        String valoratransformar=jLabel21.getText();
+            String totalenvio="";
+              for(int j=0; j<valoratransformar.length(); j++ ){
+                                char a = valoratransformar.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   totalenvio= totalenvio + vs;
+                                }else{
+
+                                }
+            }
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, idorden);
-            preparedStmt.setFloat(2, Float.valueOf(jLabel21.getText()));
+            preparedStmt.setFloat(2, Float.valueOf(totalenvio));
             preparedStmt.execute();
       
      
@@ -749,6 +942,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         
         
     }
+     
+     
      
      
      public void pagar(){
@@ -1857,6 +2052,7 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         JTextbuscar.setVisible(true);
         rSButtonIcon_new18.setLocation(250,130);
         rSButtonIcon_new18.setVisible(true);
+        passe=true;
     }//GEN-LAST:event_rSRadioButton2ActionPerformed
 
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
@@ -1865,7 +2061,9 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
 
     private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
         // TODO add your handling code here:
-  
+        
+        
+        
     }//GEN-LAST:event_JTextbuscarKeyReleased
 
     private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
@@ -1886,9 +2084,26 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
-        AvisoFacturaConRTN avfr = new AvisoFacturaConRTN();
-        avfr.setVod(this);
-        avfr.setVisible(true);
+              if(rSRadioButton3.isSelected()==true && passe==true){
+                AvisoFacturaConRTN avf = new AvisoFacturaConRTN();
+                avf.setVod(this);
+                avf.setVisible(true);
+        }else{
+           if(rSRadioButton2.isSelected()==true && passe==true &&JTextbuscar.getText().isEmpty()==false){
+            AvisoFacturaConRTN avf = new AvisoFacturaConRTN();
+            avf.setVod(this);
+            avf.setVisible(true);
+        }else{
+               if(JTextbuscar.getText().isEmpty()==true){
+                   JOptionPane.showMessageDialog(rootPane, "Campo de efectivo vacio");
+               }
+              if(rSRadioButton1.isSelected()==true && passe==true){
+                  AvisoFacturaConRTN avf = new AvisoFacturaConRTN();
+                  avf.setVod(this);
+                  avf.setVisible(true);
+        }
+           }
+        }
         
     }//GEN-LAST:event_rSButtonIcon_new18ActionPerformed
 
@@ -1901,6 +2116,7 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         JTextbuscar.setVisible(false);
         rSButtonIcon_new18.setLocation(149,111);
         rSButtonIcon_new18.setVisible(true);
+        passe=true;
         
         
     }//GEN-LAST:event_rSRadioButton1ActionPerformed
@@ -1919,6 +2135,7 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         JTextbuscar.setVisible(false);
         rSButtonIcon_new18.setLocation(149,111);
         rSButtonIcon_new18.setVisible(true);
+        passe=true;
     }//GEN-LAST:event_rSRadioButton3ActionPerformed
 
     /**
