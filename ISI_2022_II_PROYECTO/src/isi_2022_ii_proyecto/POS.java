@@ -80,6 +80,16 @@ public class POS extends javax.swing.JFrame {
         con = conexion.conexion();
     }
     
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
+    
     
     public void buscarUltimoId(){
           
@@ -107,6 +117,7 @@ public class POS extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
             con=null;
+            validarconexion();
            
         }
         
@@ -137,6 +148,8 @@ public class POS extends javax.swing.JFrame {
             }
            }catch(SQLException e){
                  System.out.println("Error "+e.getMessage());
+                 con=null;
+                 validarconexion();
         
             }
            
@@ -179,6 +192,8 @@ public class POS extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+             con=null;
+             validarconexion();
         }
         
         
@@ -203,6 +218,8 @@ public class POS extends javax.swing.JFrame {
             }
         }catch(SQLException e){
                  System.out.println("Error "+e.getMessage());
+                 con=null;
+                 validarconexion();
         
             }
         
@@ -284,6 +301,8 @@ public class POS extends javax.swing.JFrame {
      
             }catch(SQLException e){
                  System.out.println("Error "+e.getMessage());
+                 con=null;
+                validarconexion();
         
             }
         
@@ -428,6 +447,8 @@ public class POS extends javax.swing.JFrame {
                         
                     }catch(SQLException e){
                         System.out.println("Error "+e.getMessage());
+                        con=null;
+                        validarconexion();
 
                     }
                 
@@ -765,6 +786,8 @@ public class POS extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             System.out.println("Error "+ ex.getMessage());
+            con=null;
+            validarconexion();
         }
         
           
@@ -795,6 +818,8 @@ public class POS extends javax.swing.JFrame {
         
         }catch(SQLException e){
             System.out.println("Error "+ e.getMessage());
+            con=null;
+            validarconexion();
         }
         
         
@@ -825,6 +850,8 @@ public class POS extends javax.swing.JFrame {
             
         } catch (SQLException ex) {
             System.out.println("Error "+ ex.getMessage());
+             con=null;
+             validarconexion();
         }
         
          
@@ -858,6 +885,8 @@ public class POS extends javax.swing.JFrame {
             
         } catch (SQLException ex) {
             System.out.println("Error "+ ex.getMessage());
+            con=null;
+            validarconexion();
         }
         
          

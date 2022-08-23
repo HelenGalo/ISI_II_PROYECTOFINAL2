@@ -107,7 +107,15 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         this.tablaorden = tablaorden;
     }
     
-    
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
     
 
@@ -156,6 +164,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
             }
         }catch(SQLException e){
               JOptionPane.showMessageDialog(this, e.getMessage());
+              con=null;
+              validarconexion();
         } 
         
         return idusuario;
@@ -194,6 +204,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
      
             }catch(SQLException e){
                  System.out.println("Error "+e.getMessage());
+                  con=null;
+                  validarconexion();
         
             }
          return totalcajaa;
@@ -227,8 +239,10 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
             estadototalcaja=true;
           
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+            validarconexion();
         }
     }
     
@@ -317,6 +331,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
      
             }catch(SQLException e){
                  System.out.println("Error "+e.getMessage());
+                 con=null;
+                 validarconexion();
         
             }
         
@@ -352,8 +368,10 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
             
     
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+            validarconexion();
         }
     }
     
@@ -405,6 +423,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+             con=null;
+             validarconexion();
         }
         
         
@@ -429,8 +449,10 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
            
        
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+            validarconexion();
         }
     }
     
@@ -624,6 +646,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
      
             }catch(SQLException e){
                  System.out.println("Error "+e.getMessage());
+                 con=null;
+                validarconexion();
         
             }
          return existenciactual;
@@ -657,6 +681,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+            validarconexion();
         }
     }
     
@@ -679,6 +705,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+            validarconexion();
         }
         
     }
@@ -711,8 +739,10 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
            
        
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+            validarconexion();
         }
     }
     
@@ -742,8 +772,10 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
            
        
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+            validarconexion();
         }
     }
     
@@ -772,6 +804,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.err.println("Error al guardar la factura "+e.getMessage());
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error"+e.getMessage());
+            con=null;
+            validarconexion();
         }
         
         
@@ -796,6 +830,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
      
             }catch(SQLException e){
                  System.out.println("Error al obtener el numero de factura"+e.getMessage());
+                con=null;
+                validarconexion();
         
             }
          return numerodefactura;
@@ -841,6 +877,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
      
             }catch(SQLException e){
                  System.out.println("Error al obtener el numero de formato"+e.getMessage());
+                 con=null;
+                 validarconexion();
         
             }
          
@@ -865,6 +903,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
      
             }catch(SQLException e){
                  System.out.println("Error "+e.getMessage());
+                 con=null;
+                validarconexion();
         
             }
          return fechae;
@@ -888,6 +928,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
      
             }catch(SQLException e){
                  System.out.println("Error "+e.getMessage());
+                 con=null;
+                 validarconexion();
         
             }
          return Horae;
@@ -916,6 +958,8 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
      
             }catch(SQLException e){
                  System.out.println("Error "+e.getMessage());
+                 con=null;
+                 validarconexion();
         
             }
          
