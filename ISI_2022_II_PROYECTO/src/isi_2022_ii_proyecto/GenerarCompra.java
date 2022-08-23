@@ -148,7 +148,7 @@ public class GenerarCompra extends javax.swing.JFrame {
         }
       
         try {
-            con.close();
+            con.close(); 
         } catch (Exception e) {
              System.out.println("Ha ocurrido un error al cerrar la conexion: "+e.getMessage());
         }

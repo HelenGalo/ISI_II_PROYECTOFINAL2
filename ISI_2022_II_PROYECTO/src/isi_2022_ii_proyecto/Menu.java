@@ -89,7 +89,9 @@ public class Menu extends javax.swing.JFrame {
         }
     }
     
-    public boolean validarRol(){
+    
+    
+     public boolean validarRol(){
         boolean estado=false;
         if(validarconexion()==true){
              
@@ -112,6 +114,46 @@ public class Menu extends javax.swing.JFrame {
         
         
         if(idrol==2){
+            estado = true;
+        }
+        }else{
+            
+        }
+       
+        
+        
+   
+        
+        return estado;
+        
+        
+    }
+    
+    public boolean validarRolCompra(){
+        boolean estado=false;
+        if(validarconexion()==true){
+             
+            int idrol=0;
+         String SQL = "SELECT u.IdRol FROM Usuarios u WHERE u.Usuario='"+usuario+"';";
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idrol = rs.getInt("u.IdRol");
+               
+                
+            }
+        }catch(SQLException e){
+              JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+        if(idrol==2){
+            estado = true;
+        }
+        if(idrol==1){
             estado = true;
         }
         }else{
@@ -1943,9 +1985,31 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
     private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
-        GenerarCompra gc = new GenerarCompra ();
-        gc.setVisible(true);
-           this.dispose();
+     //  if(validarconexion()==true){
+             if(validarRolCompra()==true){
+                    GenerarCompra gc= new GenerarCompra();
+                    gc.setUsuario(usuario);
+                    gc.setMenu(this);
+                    gc.setVisible(true);
+                //}else{
+                   // VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+                   // vi.setEstado("FC");
+                   // vi.setVisible(true);
+               // }
+                
+        
+            
+        }else{
+            VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+            vi.setEstado("N");
+            vi.setVisible(true);
+        }
+            
+        
+        
+       
+        
+
         
     }//GEN-LAST:event_rSButtonIcon_new14ActionPerformed
 
