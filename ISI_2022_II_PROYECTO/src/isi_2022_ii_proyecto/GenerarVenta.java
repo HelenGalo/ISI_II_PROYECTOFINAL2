@@ -67,10 +67,23 @@ public class GenerarVenta extends javax.swing.JFrame {
         conexion.setGnerarve(this);
         con = conexion.conexion();
     }
+     
+     
+     public boolean validarconexion(){
+        boolean a = false;
+        if(con==null){
+            conectar();
+            
+            
+        }else{
+            a = true;
+        }
+        return a;
+    }
     
     
     private void EstablecerCliente(){
-        Connection con = conexion.conexion();
+        
         int idcliente=buscarIdCliente();
         String nombre="";
         
@@ -96,15 +109,13 @@ public class GenerarVenta extends javax.swing.JFrame {
         
         } catch (SQLException e) {
             System.out.println("Ha ocurrido un error al obtener el cliente: "+e.getMessage());
+             con=null;
+            validarconexion();
         }
         
         }
         
-        try {
-            con.close();
-        } catch (Exception e) {
-             System.out.println("Ha ocurrido un error al cerrar la conexion: "+e.getMessage());
-        }
+       
  
         
         
@@ -115,7 +126,7 @@ public class GenerarVenta extends javax.swing.JFrame {
     }
     
     private void EstablecerVendedor(){
-        Connection con = conexion.conexion();
+        
         String nombre="";
         if(JTextbuscar.getText().isEmpty() || JTextbuscar.getText().length()<1 ){
             
@@ -147,17 +158,15 @@ public class GenerarVenta extends javax.swing.JFrame {
         
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+             con=null;
+            validarconexion();
         }
             
         }
         
         }
       
-        try {
-            con.close();
-        } catch (Exception e) {
-             System.out.println("Ha ocurrido un error al cerrar la conexion: "+e.getMessage());
-        }
+        
         
         
         jLabel29.setText(nombre);
@@ -171,7 +180,7 @@ public class GenerarVenta extends javax.swing.JFrame {
     
     
     private int buscarIdCliente(){
-        Connection con = conexion.conexion();
+        
         int idcliente=0;
  
         String SQL = "Select d.IdCliente From DetalleClienteDocumento d\n"
@@ -194,15 +203,12 @@ public class GenerarVenta extends javax.swing.JFrame {
         
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
         
         
-        try {
-            con.close();
-        } catch (Exception e) {
-             System.out.println("Ha ocurrido un error al cerrar la conexion: "+e.getMessage());
-        }
-        
+      
      
         
         return idcliente;
