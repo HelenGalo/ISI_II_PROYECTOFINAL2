@@ -36,7 +36,7 @@ public class Compras extends javax.swing.JFrame {
     DefaultTableModel modelo1;  
     DefaultTableModel modelo;
     String usuario;
-    int codigcliente; 
+    int codigprov; 
     int codigvendedor;
     int idorden=0;
     String codigop;
@@ -60,8 +60,8 @@ public class Compras extends javax.swing.JFrame {
         this.codigvendedor = codigvendedor;
     }
 
-    public void setCodigoCliente(int codigcliente) {
-        this.codigcliente = codigcliente;
+    public void setCodigprov(int codigprov) {
+        this.codigprov= codigprov;
     }
     
     
@@ -93,7 +93,7 @@ public class Compras extends javax.swing.JFrame {
     
     
     public void buscarUltimoId(){
-          String SQL = "SELECT c.IdCompra FROM Compras c WHERE c.IdCompras=(SELECT max(IdOrden) FROM Compras)";
+          String SQL = "SELECT c.IdCompra FROM Compras c WHERE c.IdCompra=(SELECT max(IdCompra) FROM Compras)";
           
           
         try {
@@ -546,9 +546,9 @@ public class Compras extends javax.swing.JFrame {
     
     
     
-     public void iniciarcliente(){
+     public void iniciarproveedor(){
         String nombrecliente="";
-        String SQL1 = "SELECT p.NombreEmpresa FROM Proveedores p Where p.IdProveedor="+codigcliente;
+        String SQL1 = "SELECT p.NombreEmpresa FROM Proveedores p Where p.IdProveedor="+codigprov;
         
         
      
@@ -566,7 +566,7 @@ public class Compras extends javax.swing.JFrame {
         }
         
         jLabel38.setText(nombrecliente);
-        jLabel39.setText(String.valueOf(codigcliente));
+        jLabel39.setText(String.valueOf(codigprov));
          
     }
      
@@ -579,7 +579,7 @@ public class Compras extends javax.swing.JFrame {
         
        iniciarcajero();
 
-       iniciarcliente();
+       iniciarproveedor();
        iniciarvendedor();
        
         

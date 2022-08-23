@@ -99,12 +99,6 @@ public class GenerarCompra extends javax.swing.JFrame {
         }
         
         }
-        
-        try {
-            con.close();
-        } catch (Exception e) {
-             System.out.println("Ha ocurrido un error al cerrar la conexion: "+e.getMessage());
-        }
  
         
         
@@ -174,7 +168,7 @@ public class GenerarCompra extends javax.swing.JFrame {
         Connection con = conexion.conexion();
         int idpro=0;
  
-        String SQL = "Select d.IdProveedor From Proveedores p\n"
+        String SQL = "Select p.IdProveedor From Proveedores p\n"
                 + "WHERE p.IdProveedor="+JTextbuscar1.getText()+";";
         try {
             Statement st = (Statement) con.createStatement();
@@ -492,7 +486,7 @@ public class GenerarCompra extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 200, 40));
+        jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, 220, 40));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
@@ -689,7 +683,7 @@ public class GenerarCompra extends javax.swing.JFrame {
             Compras cp = new Compras();
             cp.setUsuario(usuario);
             cp.setCodigvendedor(Integer.valueOf(JTextbuscar.getText()));
-            cp.setCodigoCliente(buscarIdProv());
+            cp.setCodigprov(buscarIdProv());
             cp.iniciardatos();
             cp.setVisible(true);
             this.dispose();
@@ -700,10 +694,10 @@ public class GenerarCompra extends javax.swing.JFrame {
 
     private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
         // TODO add your handling code here:
-          if(JTextbuscar1.getText().length()==13){
+          //if(JTextbuscar1.getText().length()==13){
             EstablecerProveedor();
             
-        }
+       // }
     }//GEN-LAST:event_rSButtonIcon_new16ActionPerformed
 
     private void rSLabelIcon2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSLabelIcon2MouseClicked

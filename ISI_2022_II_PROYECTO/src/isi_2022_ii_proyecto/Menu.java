@@ -64,7 +64,7 @@ public class Menu extends javax.swing.JFrame {
             preparedStmt.setInt (1, intentosAct);
             preparedStmt.execute();
             
-             JOptionPane.showMessageDialog(null, "Intentos Refresacados");
+             JOptionPane.showMessageDialog(null, "Intentos Refrescados");
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -472,7 +472,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -524,9 +524,9 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(13, 13, 13)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -829,9 +829,14 @@ public class Menu extends javax.swing.JFrame {
         });
 
         rSButtonIcon_new14.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new14.setText("Categorias");
+        rSButtonIcon_new14.setText("Compras");
         rSButtonIcon_new14.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new14.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WEB_ASSET);
+        rSButtonIcon_new14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new14ActionPerformed(evt);
+            }
+        });
 
         rSButtonIcon_new15.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new15.setText("Envios");
@@ -863,7 +868,7 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -1936,6 +1941,13 @@ public class Menu extends javax.swing.JFrame {
         f.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
+
+    private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
+        GenerarCompra gc = new GenerarCompra ();
+        gc.setVisible(true);
+           this.dispose();
+        
+    }//GEN-LAST:event_rSButtonIcon_new14ActionPerformed
 
     /**
      * @param args the command line arguments

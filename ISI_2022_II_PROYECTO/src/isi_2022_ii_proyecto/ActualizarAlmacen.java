@@ -276,9 +276,7 @@ setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagene
                 JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
                 return false;
         
-        }catch (Exception e) {
-               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
-            return false;
+    
         }
         return true;
     }
