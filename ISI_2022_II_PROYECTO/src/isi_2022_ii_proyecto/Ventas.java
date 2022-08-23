@@ -71,8 +71,8 @@ public class Ventas extends javax.swing.JFrame {
                       "INNER JOIN Clientes c ON c.IdCliente = v.IdCliente\n" +
                      "INNER JOIN Empleados e ON e.IdEmpleado = v.IdEmpleado\n" +
                      "INNER JOIN TipoPago tp ON tp.IdTipoPago = v.IdTipoPago\n" +
-                     "INNER JOIN Usuarios u ON u.IdUsuario = v.IdUsuario\n" +
-                     "INNER JOIN  EstadosVenta ev ON ev.idEstadosVenta = v.EstadoVenta WHERE v.EstadoVenta=1" ;
+                     "INNER JOIN Usuarios u ON u.IdUsuario = v.IdUsuario";
+                      
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -98,7 +98,7 @@ public class Ventas extends javax.swing.JFrame {
         }
     }
      
-       public void listarh(){
+      /* public void listarh(){
         String[] registros = new String[7];
         DefaultTableModel modelo =  (DefaultTableModel) JTableAlmacen.getModel();
 
@@ -165,7 +165,7 @@ public class Ventas extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-    }
+    }*/
      
      public void limpiartabla(){
         DefaultTableModel modelo =  (DefaultTableModel) JTableAlmacen.getModel();
@@ -1139,14 +1139,14 @@ public class Ventas extends javax.swing.JFrame {
         // TODO add your handling code here:
         rSButtonIcon_new6.setEnabled(true);
         limpiartabla();
-        listarh();
+        //listarh();
     }//GEN-LAST:event_habilitadoActionPerformed
 
     private void deshabilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deshabilitadoActionPerformed
         // TODO add your handling code here:
         rSButtonIcon_new6.setEnabled(false);
         limpiartabla();
-        listardesh();
+        //listardesh();
     }//GEN-LAST:event_deshabilitadoActionPerformed
 
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed

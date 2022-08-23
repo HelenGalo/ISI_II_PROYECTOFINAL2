@@ -93,7 +93,7 @@ public class Compras extends javax.swing.JFrame {
     
     
     public void buscarUltimoId(){
-          String SQL = "SELECT v.IdOrden FROM Ventas v WHERE v.IdOrden=(SELECT max(IdOrden) FROM Ventas)";
+          String SQL = "SELECT c.IdCompra FROM Compras c WHERE c.IdCompras=(SELECT max(IdOrden) FROM Compras)";
           
           
         try {
@@ -101,7 +101,7 @@ public class Compras extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                idorden = rs.getInt("v.IdOrden");
+                idorden = rs.getInt("c.IdCompra");
                
                 
             }
@@ -150,10 +150,10 @@ public class Compras extends javax.swing.JFrame {
    
     
       public void buscarProductoPorId(int idproducto){
-        String[] registros = new String[4];
+        String[] registros = new String[3];
           System.out.println("ID EN ALMACEN "+obteneridalmacendesucursal());
           
-          String SQL = "SELECT p.Nombre, p.Precio, ifnull(ExistenciaActual,0) as 'Ex' FROM Productos p\n"
+          String SQL = "SELECT p.Nombre,  ifnull(ExistenciaActual,0) as 'Ex' FROM Productos p\n"
                   +"INNER JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
                   +"WHERE p.IdProducto="+idproducto+" AND ap.IdAlmacen="+obteneridalmacendesucursal();
           
@@ -163,11 +163,10 @@ public class Compras extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                DecimalFormat formato = new DecimalFormat("##,###.00");
+               
                 registros[0] = String.valueOf(idproducto);
                 registros[1] = rs.getString("p.Nombre");
-                registros[2] = formato.format(rs.getFloat("p.Precio"));
-                registros[3] = rs.getString("Ex");
+                registros[2] = rs.getString("Ex");
                 modelo.addRow(registros);
             }
 
@@ -249,7 +248,7 @@ public class Compras extends javax.swing.JFrame {
         
         if(modelo1.getRowCount()==0){
             String[] registros = new String[6];
-            String SQL = "SELECT p.Nombre, p.Precio FROM Productos p\n"
+            String SQL = "SELECT p.Nombre FROM Productos p\n"
                   +"LEFT JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
                   +"WHERE p.IdProducto="+idproducto+" AND ap.IdAlmacen="+obteneridalmacendesucursal();;
           
@@ -261,7 +260,7 @@ public class Compras extends javax.swing.JFrame {
             while (rs.next()) {
                 registros[0] = String.valueOf(idproducto);
                 registros[1] = rs.getString("p.Nombre");
-                registros[2] = rs.getString("p.Precio");
+                registros[2] = "0.00";
                 registros[3] = "1";
                 registros[4] = obtenerdescuento(idproducto);
                 registros[5] = String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]));
@@ -296,7 +295,7 @@ public class Compras extends javax.swing.JFrame {
             modelo1.setValueAt(nuevosubtotal, posicion, 5);
             }else{
                String[] registros = new String[6];
-               String SQL = "SELECT p.Nombre, p.Precio   FROM Productos p\n"
+               String SQL = "SELECT p.Nombre,  FROM Productos p\n"
                   +"LEFT JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
                   +"WHERE p.IdProducto="+idproducto+" AND ap.IdAlmacen="+obteneridalmacendesucursal();
           
@@ -306,10 +305,10 @@ public class Compras extends javax.swing.JFrame {
                         ResultSet rs = st.executeQuery(SQL);
 
                         while (rs.next()) {
-                            DecimalFormat formato = new DecimalFormat("##,###.00");
+                       
                             registros[0] = String.valueOf(idproducto);
                             registros[1] = rs.getString("p.Nombre");
-                            registros[2] = formato.format(rs.getFloat("p.Precio"));
+                            registros[2] = "0.00";
                             registros[3] = "1";
                             registros[4] = "0.00";
                             registros[5] = String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]));
@@ -549,7 +548,7 @@ public class Compras extends javax.swing.JFrame {
     
      public void iniciarcliente(){
         String nombrecliente="";
-        String SQL1 = "SELECT c.Nombres, c.Apellidos FROM Clientes c Where c.IdCliente="+codigcliente;
+        String SQL1 = "SELECT p.NombreEmpresa FROM Proveedores p Where p.IdProveedor="+codigcliente;
         
         
      
@@ -559,7 +558,7 @@ public class Compras extends javax.swing.JFrame {
         
          while (rs1.next()) {
            
-                nombrecliente = rs1.getString("c.Nombres")+" "+rs1.getString("c.Apellidos");
+                nombrecliente = rs1.getString(" p.NombreEmpresa");
             }
             
         } catch (SQLException ex) {
@@ -758,7 +757,7 @@ public class Compras extends javax.swing.JFrame {
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -785,7 +784,7 @@ public class Compras extends javax.swing.JFrame {
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, linesetting4Layout.createSequentialGroup()
-                .addContainerGap(682, Short.MAX_VALUE)
+                .addContainerGap(680, Short.MAX_VALUE)
                 .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -1024,14 +1023,14 @@ public class Compras extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CódigoProducto", "Nombre", "Cantidad", "Subtotal"
+                "CódigoProducto", "Nombre", "Precio Compra", "Cantidad", "Descuento", "Subtotal"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1222,6 +1221,7 @@ public class Compras extends javax.swing.JFrame {
         rSPanel1.setLayout(rSPanel1Layout);
         rSPanel1Layout.setHorizontalGroup(
             rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(rSPanelGradiente1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(rSPanel1Layout.createSequentialGroup()
                 .addGroup(rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(rSPanel1Layout.createSequentialGroup()
@@ -1238,13 +1238,12 @@ public class Compras extends javax.swing.JFrame {
                             .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(rSPanelsSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(rSPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rSPanel1Layout.createSequentialGroup()
                         .addGap(168, 168, 168)
-                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(rSPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(rSPanelGradiente1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         rSPanel1Layout.setVerticalGroup(
             rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

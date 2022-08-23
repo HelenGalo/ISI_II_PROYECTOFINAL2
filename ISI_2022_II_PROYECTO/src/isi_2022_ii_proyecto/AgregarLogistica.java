@@ -105,11 +105,8 @@ public class AgregarLogistica extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        } try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+                con=null;
+                 validarconexion(); } 
     }
       
    
@@ -144,6 +141,10 @@ public class AgregarLogistica extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+                 con=null;
+                 validarconexion();
+        
         } 
     }
          public void listarEmpleados(){ 
@@ -173,6 +174,9 @@ public class AgregarLogistica extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+                 con=null;
+                 validarconexion();
+        
         } 
     }
    
@@ -199,9 +203,19 @@ public class AgregarLogistica extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+                con=null;
+                 validarconexion();
+        
+        
         } 
         return idg;
         
+    }
+       
+       public void validarconexion(){
+        if(con==null){
+            conectar();
+        }
     }
      public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
       public boolean insertar(){
@@ -256,7 +270,12 @@ public class AgregarLogistica extends javax.swing.JFrame {
         
         }catch (Exception e) {
                JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
-            return false;
+                   con=null;
+                 validarconexion();
+               return false;
+               
+               
+               
         } 
         return true;
     }
@@ -774,7 +793,7 @@ public class AgregarLogistica extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Almacén");
+        jLabel3.setText("Logistica");
         linesetting12.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 210, 40));
 
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N

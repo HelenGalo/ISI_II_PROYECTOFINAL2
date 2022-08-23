@@ -70,6 +70,11 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         conexion.setAl(this);
         con = conexion.conexion();
     }
+    public void validarconexion(){
+        if(con==null){
+            conectar();
+        }
+    }
     public ActualizarLogistica() {
         initComponents();
          this.setLocationRelativeTo(null);
@@ -109,11 +114,10 @@ public class ActualizarLogistica extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        } try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+         con=null;
+                 validarconexion();
+        
+        } 
     }
       
    
@@ -149,11 +153,9 @@ public class ActualizarLogistica extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        } try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+          con=null;
+                 validarconexion();
+        } 
     }
          public void listarEmpleados(){
                
@@ -182,11 +184,9 @@ public class ActualizarLogistica extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        } try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+              con=null;
+                 validarconexion();
+        } 
     }
    
        public int ObtenereCarga(){
@@ -213,13 +213,10 @@ public class ActualizarLogistica extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+                 validarconexion();
         
-        
-        } try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+        } 
         return idg;
          
        
@@ -270,13 +267,11 @@ public class ActualizarLogistica extends javax.swing.JFrame {
     
           } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+              con=null;
+                 validarconexion();
         }
           
-        try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+        
         
     
     }
@@ -333,12 +328,10 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         
         }catch (Exception e) {
                JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
+                 con=null;
+                 validarconexion();
             return false;
-        } try {
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("error al cerrar conexion");
-        }
+        } 
         return true;
          
        
@@ -867,13 +860,13 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Almacén");
+        jLabel3.setText("Logistica");
         linesetting12.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 210, 40));
 
         jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Agregar");
+        jLabel12.setText("Modificar");
         linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
 
         javax.swing.GroupLayout menuhideLayout = new javax.swing.GroupLayout(menuhide);
@@ -929,7 +922,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Agregar Orden");
+        jLabel8.setText("Modificar Orden");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
