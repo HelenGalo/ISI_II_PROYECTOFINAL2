@@ -1305,6 +1305,7 @@ public class Caja extends javax.swing.JFrame {
           
           CerraCaja cc = new CerraCaja();
           cc.setCodigocaja(Integer.valueOf(codigoc));
+          cc.setUsuario(usuario);
           cc.inicializar();
           cc.setVisible(true);
         }else{

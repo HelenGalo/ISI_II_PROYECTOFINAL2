@@ -469,7 +469,7 @@ public class CerraCaja extends javax.swing.JFrame {
 
             while (rs.next()) {
            
-                montooperacion =Float.valueOf(rs.getString("h.MontoOperacion"));
+                montooperacion =rs.getFloat("h.MontoOperacion");
 
             }
         
@@ -510,7 +510,7 @@ public class CerraCaja extends javax.swing.JFrame {
                         }
                     }
 
-           String SQL = "INSERT INTO CortesCaja (IdCaja, ResultadoOperacionCaja, TotalCaja, FechaCorte, HoraCorte, IdUsuarioEncargadoCorte) VALUES(?, ?, ?, ?, ?)";
+           String SQL = "INSERT INTO CortesCaja (IdCaja, ResultadoOperacionCaja, TotalCaja, FechaCorte, HoraCorte, IdUsuarioEncargadoCorte) VALUES(?, ?, ?, ?, ?,?)";
             try {
                 PreparedStatement preparedStmt = con.prepareStatement(SQL);
                 preparedStmt.setInt(1, codigocaja);
@@ -518,13 +518,13 @@ public class CerraCaja extends javax.swing.JFrame {
                 preparedStmt.setFloat(3, obtenertotalcajaA());
                 preparedStmt.setString(4, fechaderegistro);
                 preparedStmt.setString(5, horaregistro);
-                preparedStmt.setInt(5, ObtenerIdUsuarios());
+                preparedStmt.setInt(6, ObtenerIdUsuarios());
                 preparedStmt.execute();
 
                 estadopostcorte=true;
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage());
+                JOptionPane.showMessageDialog(this, "Error desde realizar corrte"+e.getMessage());
               con=null;
                 validarconexion();
 
@@ -546,7 +546,7 @@ public class CerraCaja extends javax.swing.JFrame {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setFloat(1, totalcajaa);
             preparedStmt.execute();
-            estadototalcaja=true;
+            estadopostotalcaja=true;
           
 
         } catch (SQLException e) {
@@ -586,7 +586,7 @@ public class CerraCaja extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                montoinicial = Float.valueOf(rs.getString("c.MontoInicial"));
+                montoinicial = rs.getFloat("c.MontoInicial");
              
             }
         
