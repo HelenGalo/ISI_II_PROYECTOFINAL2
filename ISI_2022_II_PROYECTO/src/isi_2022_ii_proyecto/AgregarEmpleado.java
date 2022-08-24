@@ -45,6 +45,13 @@ public class AgregarEmpleado extends javax.swing.JFrame {
     private String rol;
    
     String codigoe="";
+    String usuario;
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabel15.setText("Usuario en sesion: "+usuario);
+    }
+      
 
     boolean estadoagregar=false;
 
@@ -79,6 +86,23 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         }
         
     }
+  public void conectarerror(){
+        conexion.setAem(this);
+        conexion.setPass(false);
+        con = conexion.conexion();
+    }
+    
+       public void conectarinicio(){
+        conexion.setAem(this);
+        con = conexion.conexion();
+    }
+       
+        public void conectarsinerror(){
+        conexion.setPass(true);
+        conexion.setAem(this);
+        con = conexion.conexion();
+    }
+
         public void validarConfirmacion(){
         if(estadoagregar=true){
             insertar();
@@ -411,21 +435,33 @@ public class AgregarEmpleado extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
           a= false;
       }
+      if (validarNombre(primern.getText())==false){
+           a=false;
+       }
+          
       
        if(segundon.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
           a= false;
       }
+        if (validarNombre(segundon.getText())==false){
+           a=false;
+       }
         if(Apellidop.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un apellido valido");
           a= false;
       }
-         
+          if (validarNombre(Apellidop.getText())==false){
+           a=false;
+       }
        
         if(Apellido2.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un apellido valido");
           a= false;
       }
+         if (validarNombre(Apellido2.getText())==false){
+           a=false;
+       }
         if(cuenta.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
           a= false;
@@ -435,10 +471,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
           a= false;
       }
-       if (validarC(correoE.getText())==false){
-           a=false;
-       }
-            
+         
      
        
        
@@ -448,12 +481,52 @@ public class AgregarEmpleado extends javax.swing.JFrame {
       
     }
         
+      public  boolean validarNombre(String Nombre){
+    boolean check=false;
     
-     public boolean validarC(String correo){
+    /*Verificamos que no sea null*/ 
+    if(Nombre != null){
+        /* 1ª Condición: que la letra inicial sea mayúscula*/
+        //boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
+
+        /* 2ª Condición: que el tamaño sea >= 3 y <= 15*/
+        int stringSize=Nombre.length();
+        boolean isValidSize=(stringSize >= 3 && stringSize <= 25);
+
+        /* 3ª Condición: que contenga al menos un espacio*/
+        boolean isSpaced=Nombre.contains(" ");
+
+        /* Verificamos que las tres condiciones son verdaderas*/
+        check=  (isValidSize &&  isSpaced) ;
+    }
+    /*Devolvemos el estado de la validación*/
+    return check;
+   }
+     public boolean verificar(){
+        if (validarcorreo(correoE.getText())==false && validarC(correoE.getText())==false){
+            System.out.println("FALLO");
+             return false;
+        }else{
+            return true;
+         }
+       
+    }
+
+  
+ public boolean validarC(String correo){
             
         Pattern patron = Pattern
                 .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})+(\\.[A-Za-z]{2,3})$");
+        Matcher comparar = patron.matcher(correo);
+        return comparar.find();
+     
+    }
+   public boolean validarcorreo(String correo){
+            
+          Pattern patron = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})$");
         Matcher comparar = patron.matcher(correo);
         return comparar.find();
      
@@ -546,11 +619,16 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         FN = new rojeru_san.componentes.RSDateChooser();
         FC = new rojeru_san.componentes.RSDateChooser();
         aviso = new javax.swing.JLabel();
+        aviso4 = new javax.swing.JLabel();
+        aviso5 = new javax.swing.JLabel();
+        aviso6 = new javax.swing.JLabel();
+        aviso7 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel15 = new javax.swing.JLabel();
         guardar = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1127,27 +1205,51 @@ public class AgregarEmpleado extends javax.swing.JFrame {
 
         Apellido2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Apellido2.setPlaceholder("Ingresa Apellido");
+        Apellido2.setSoloLetras(true);
         Apellido2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Apellido2ActionPerformed(evt);
+            }
+        });
+        Apellido2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Apellido2KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                Apellido2KeyTyped(evt);
             }
         });
         jPanel3.add(Apellido2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 130, -1));
 
         cuenta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         cuenta.setPlaceholder("Ingrese Cuenta");
+        cuenta.setSoloNumeros(true);
         cuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cuentaActionPerformed(evt);
+            }
+        });
+        cuenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cuentaKeyTyped(evt);
             }
         });
         jPanel3.add(cuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 230, 220, 30));
 
         segundon.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         segundon.setPlaceholder("Ingresa nombre");
+        segundon.setSoloLetras(true);
         segundon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 segundonActionPerformed(evt);
+            }
+        });
+        segundon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                segundonKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                segundonKeyTyped(evt);
             }
         });
         jPanel3.add(segundon, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 130, -1));
@@ -1215,9 +1317,18 @@ public class AgregarEmpleado extends javax.swing.JFrame {
 
         primern.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         primern.setPlaceholder("Ingresar Nombre");
+        primern.setSoloLetras(true);
         primern.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 primernActionPerformed(evt);
+            }
+        });
+        primern.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                primernKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                primernKeyTyped(evt);
             }
         });
         jPanel3.add(primern, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 140, -1));
@@ -1302,9 +1413,18 @@ public class AgregarEmpleado extends javax.swing.JFrame {
 
         Apellidop.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Apellidop.setPlaceholder("Ingresa Apellido");
+        Apellidop.setSoloLetras(true);
         Apellidop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ApellidopActionPerformed(evt);
+            }
+        });
+        Apellidop.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ApellidopKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ApellidopKeyTyped(evt);
             }
         });
         jPanel3.add(Apellidop, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, 140, -1));
@@ -1320,7 +1440,11 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel27.setText("Fecha de nacimiento");
         jPanel3.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 180, 30));
+
+        FN.setFormatoFecha("dd/MM/yyyy");
         jPanel3.add(FN, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, -1, -1));
+
+        FC.setFormatoFecha("dd/MM/yyyy");
         jPanel3.add(FC, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 90, -1, -1));
 
         aviso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1328,6 +1452,30 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         aviso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         aviso.setText("*Correo invalido*");
         jPanel3.add(aviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 140, 170, -1));
+
+        aviso4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso4.setForeground(new java.awt.Color(255, 0, 0));
+        aviso4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso4.setText("*Formato invalido*");
+        jPanel3.add(aviso4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, 170, -1));
+
+        aviso5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso5.setForeground(new java.awt.Color(255, 0, 0));
+        aviso5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso5.setText("*Formato invalido*");
+        jPanel3.add(aviso5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 170, -1));
+
+        aviso6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso6.setForeground(new java.awt.Color(255, 0, 0));
+        aviso6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso6.setText("*Formato invalido*");
+        jPanel3.add(aviso6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 350, 170, -1));
+
+        aviso7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso7.setForeground(new java.awt.Color(255, 0, 0));
+        aviso7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso7.setText("*Formato invalido*");
+        jPanel3.add(aviso7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 350, 170, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1340,13 +1488,19 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO EMPLEADO");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 350, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
         jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, 60, 50));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
+
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, -1, -1));
 
         guardar.setBackground(new java.awt.Color(33, 150, 243));
         guardar.setText("Guardar Empleado");
@@ -1464,6 +1618,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
         Empleados em= new Empleados();
+        em.setUsuario(usuario);
         em.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
@@ -1569,6 +1724,8 @@ public class AgregarEmpleado extends javax.swing.JFrame {
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         // TODO add your handling code here:
         if(validar()==true){
+            if(verificar()==true){
+                
             ConfirmacionGuardar ge = new  ConfirmacionGuardar();
             ge.setGemp(this);
             ge.setTipo("GEmpleado");
@@ -1578,6 +1735,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
         }
+             }
     }//GEN-LAST:event_guardarActionPerformed
 
     private void correoEKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_correoEKeyReleased
@@ -1591,6 +1749,84 @@ public class AgregarEmpleado extends javax.swing.JFrame {
           }
             
     }//GEN-LAST:event_correoEKeyReleased
+
+    private void primernKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_primernKeyTyped
+     char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+
+    }//GEN-LAST:event_primernKeyTyped
+
+    private void segundonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_segundonKeyTyped
+       char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+
+    }//GEN-LAST:event_segundonKeyTyped
+
+    private void ApellidopKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ApellidopKeyTyped
+       char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+
+    }//GEN-LAST:event_ApellidopKeyTyped
+
+    private void Apellido2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Apellido2KeyTyped
+        char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+
+    }//GEN-LAST:event_Apellido2KeyTyped
+
+    private void primernKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_primernKeyReleased
+         if(validarNombre(primern.getText())){
+            aviso4.setVisible(false);
+           } else{
+                    aviso4.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+    }//GEN-LAST:event_primernKeyReleased
+
+    private void segundonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_segundonKeyReleased
+        if(validarNombre(segundon.getText())){
+            aviso5.setVisible(false);
+           } else{
+                    aviso5.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+    }//GEN-LAST:event_segundonKeyReleased
+
+    private void ApellidopKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ApellidopKeyReleased
+        if(validarNombre(Apellidop.getText())){
+            aviso6.setVisible(false);
+           } else{
+                    aviso6.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+    }//GEN-LAST:event_ApellidopKeyReleased
+
+    private void Apellido2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Apellido2KeyReleased
+        if(validarNombre(Apellido2.getText())){
+            aviso7.setVisible(false);
+           } else{
+                    aviso7.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }
+    }//GEN-LAST:event_Apellido2KeyReleased
+
+    private void cuentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cuentaKeyTyped
+             if (cuenta.getText().trim().length() == 13) {
+        evt.consume();
+             }
+    }//GEN-LAST:event_cuentaKeyTyped
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1676,6 +1912,10 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel MenuIcon;
     private rojeru_san.RSMTextFull NombreE4;
     private javax.swing.JLabel aviso;
+    private javax.swing.JLabel aviso4;
+    private javax.swing.JLabel aviso5;
+    private javax.swing.JLabel aviso6;
+    private javax.swing.JLabel aviso7;
     private rojeru_san.RSMTextFull correoE;
     private rojeru_san.RSMTextFull cuenta;
     private javax.swing.JPanel dashboardview;
@@ -1687,6 +1927,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;

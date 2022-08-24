@@ -47,7 +47,14 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
    
     String codigoe="";
 
-   
+    String usuario;
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabel15.setText("Usuario en sesion: "+usuario);
+    }
+      
+
     HashMap<String, Integer> puestos = new HashMap<String, Integer>();
     HashMap<String, Integer> documentos = new HashMap<String, Integer>();
   boolean estadosModificar=false;
@@ -76,6 +83,23 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         }
         
     }
+      public void conectarerror(){
+        conexion.setAe(this);
+        conexion.setPass(false);
+        con = conexion.conexion();
+    }
+    
+       public void conectarinicio(){
+        conexion.setAe(this);
+        con = conexion.conexion();
+    }
+       
+        public void conectarsinerror(){
+        conexion.setPass(true);
+        conexion.setAe(this);
+        con = conexion.conexion();
+    }
+
        
     public ActualizarEmpleado() {
         initComponents();
@@ -483,27 +507,39 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
      
        public Boolean validar(){
         boolean a=true;
-      if(pnomb.getText().isEmpty()){
+         if(pnomb.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
           a= false;
       }
+      if (validarNombre(pnomb.getText())==false){
+           a=false;
+       }
+          
       
        if(segundonom.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
           a= false;
       }
+        if (validarNombre(segundonom.getText())==false){
+           a=false;
+       }
         if(ape1.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un apellido valido");
           a= false;
       }
-         
+          if (validarNombre(ape1.getText())==false){
+           a=false;
+       }
        
         if(ape2.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un apellido valido");
           a= false;
       }
+         if (validarNombre(ape2.getText())==false){
+           a=false;
+       }
         if(cuenta.getText().isEmpty()){
-          JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
+          JOptionPane.showMessageDialog(this, "Por favor ingrese una cuenta valido");
           a= false;
       }
         
@@ -511,10 +547,6 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
           a= false;
       }
-       if (validarC(correo1.getText())==false){
-           a=false;
-       }
-            
      
        
        
@@ -523,13 +555,53 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
        
       
     }
+       public  boolean validarNombre(String Nombre){
+    boolean check=false;
+    
+    /*Verificamos que no sea null*/ 
+    if(Nombre != null){
+        /* 1ª Condición: que la letra inicial sea mayúscula*/
+        //boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
+
+        /* 2ª Condición: que el tamaño sea >= 3 y <= 15*/
+        int stringSize=Nombre.length();
+        boolean isValidSize=(stringSize >= 3 && stringSize <= 25);
+
+        /* 3ª Condición: que contenga al menos un espacio*/
+        boolean isSpaced=Nombre.contains(" ");
+
+        /* Verificamos que las tres condiciones son verdaderas*/
+        check=  (isValidSize &&  isSpaced) ;
+    }
+    /*Devolvemos el estado de la validación*/
+    return check;
+       }
         
+    
+           public boolean verificar(){
+        if (validarcorreo(correo1.getText())==false && validarC(correo1.getText())==false){
+            System.out.println("FALLO");
+             return false;
+        }else{
+            return true;
+         }
+       
+    } 
     
      public boolean validarC(String correo){
             
         Pattern patron = Pattern
                 .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})+(\\.[A-Za-z]{2,3})$");
+        Matcher comparar = patron.matcher(correo);
+        return comparar.find();
+     
+    }
+     public boolean validarcorreo(String correo){
+            
+          Pattern patron = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})$");
         Matcher comparar = patron.matcher(correo);
         return comparar.find();
      
@@ -635,11 +707,16 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel25 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
+        aviso4 = new javax.swing.JLabel();
+        aviso5 = new javax.swing.JLabel();
+        aviso6 = new javax.swing.JLabel();
+        aviso7 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel15 = new javax.swing.JLabel();
         rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1194,6 +1271,14 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 ape2ActionPerformed(evt);
             }
         });
+        ape2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ape2KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ape2KeyTyped(evt);
+            }
+        });
         jPanel3.add(ape2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 130, -1));
 
         cuenta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1211,6 +1296,14 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         segundonom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 segundonomActionPerformed(evt);
+            }
+        });
+        segundonom.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                segundonomKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                segundonomKeyTyped(evt);
             }
         });
         jPanel3.add(segundonom, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 130, -1));
@@ -1283,6 +1376,14 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         pnomb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pnombActionPerformed(evt);
+            }
+        });
+        pnomb.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                pnombKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                pnombKeyTyped(evt);
             }
         });
         jPanel3.add(pnomb, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 140, -1));
@@ -1373,6 +1474,14 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 ape1ActionPerformed(evt);
             }
         });
+        ape1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ape1KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ape1KeyTyped(evt);
+            }
+        });
         jPanel3.add(ape1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, 140, -1));
 
         FechaContracion1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1443,6 +1552,30 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel29.setText("Tipo documento");
         jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, 170, 30));
 
+        aviso4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso4.setForeground(new java.awt.Color(255, 0, 0));
+        aviso4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso4.setText("*Formato invalido*");
+        jPanel3.add(aviso4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, 170, -1));
+
+        aviso5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso5.setForeground(new java.awt.Color(255, 0, 0));
+        aviso5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso5.setText("*Formato invalido*");
+        jPanel3.add(aviso5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 220, 170, -1));
+
+        aviso6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso6.setForeground(new java.awt.Color(255, 0, 0));
+        aviso6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso6.setText("*Formato invalido*");
+        jPanel3.add(aviso6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 170, -1));
+
+        aviso7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso7.setForeground(new java.awt.Color(255, 0, 0));
+        aviso7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso7.setText("*Formato invalido*");
+        jPanel3.add(aviso7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 290, 170, -1));
+
         dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 105, 1047, 541));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -1456,13 +1589,19 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO EMPLEADO");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 823, 40));
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 340, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
         jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 10, 60, 40));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
+
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, -1, -1));
 
         dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1156, -1));
 
@@ -1561,6 +1700,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
         Empleados em= new Empleados();
+        em.setUsuario(usuario);
         em.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
@@ -1665,6 +1805,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
     private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
         if(validar()==true){
+           if( verificar()==true){
+               
             ConfirmacionModificar me = new ConfirmacionModificar();
             me.setAemp(this);
             me.setTipo("Prov");
@@ -1672,11 +1814,12 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         }else{
 
             JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACION");
+        }  
         }
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
     private void correo1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_correo1KeyReleased
-         if (validarC(correo1.getText())){
+         if (validarC(correo1.getText())||validarcorreo(correo1.getText()) ){
               aviso.setVisible(false);
              //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
         }
@@ -1684,7 +1827,77 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                     aviso.setVisible(true);
               //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
           }
+              
+         // }
     }//GEN-LAST:event_correo1KeyReleased
+
+    private void pnombKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pnombKeyTyped
+     char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+    }//GEN-LAST:event_pnombKeyTyped
+
+    private void pnombKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pnombKeyReleased
+   if(validarNombre(pnomb.getText())){
+            aviso4.setVisible(false);
+           } else{
+                    aviso4.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }    
+    }//GEN-LAST:event_pnombKeyReleased
+
+    private void ape1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ape1KeyTyped
+        char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+    }//GEN-LAST:event_ape1KeyTyped
+
+    private void segundonomKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_segundonomKeyTyped
+        char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+    }//GEN-LAST:event_segundonomKeyTyped
+
+    private void ape2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ape2KeyTyped
+      char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+    }//GEN-LAST:event_ape2KeyTyped
+
+    private void segundonomKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_segundonomKeyReleased
+      if(validarNombre(segundonom.getText())){
+            aviso5.setVisible(false);
+           } else{
+                    aviso5.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          }  
+    }//GEN-LAST:event_segundonomKeyReleased
+
+    private void ape1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ape1KeyReleased
+      if(validarNombre(ape1.getText())){
+            aviso6.setVisible(false);
+           } else{
+                    aviso6.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          } 
+    }//GEN-LAST:event_ape1KeyReleased
+
+    private void ape2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ape2KeyReleased
+     if(validarNombre(ape2.getText())){
+            aviso7.setVisible(false);
+           } else{
+                    aviso7.setVisible(true);
+              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
+          } 
+    }//GEN-LAST:event_ape2KeyReleased
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1776,6 +1989,10 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.RSMTextFull ape1;
     private rojeru_san.RSMTextFull ape2;
     private javax.swing.JLabel aviso;
+    private javax.swing.JLabel aviso4;
+    private javax.swing.JLabel aviso5;
+    private javax.swing.JLabel aviso6;
+    private javax.swing.JLabel aviso7;
     private rojeru_san.RSMTextFull correo1;
     private rojeru_san.RSMTextFull cuenta;
     private javax.swing.JPanel dashboardview;
@@ -1788,6 +2005,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;

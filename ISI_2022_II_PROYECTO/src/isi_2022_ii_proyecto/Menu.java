@@ -1774,6 +1774,7 @@ public class Menu extends javax.swing.JFrame {
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
         Empleados empleados = new Empleados();
+        empleados.setUsuario(usuario);
         empleados.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
@@ -1825,6 +1826,7 @@ public class Menu extends javax.swing.JFrame {
     private void BOTONEMPLEADOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONEMPLEADOMouseClicked
         // TODO add your handling code here:
       Empleados empleados = new Empleados();
+         empleados.setUsuario(usuario);
         empleados.setVisible(true);
         this.setVisible(false);
         
