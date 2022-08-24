@@ -438,7 +438,7 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
     
     public void reconectarpantalla(){
         if(inicio!=null){
-                   inicio.conectar();
+                   inicio.conectarsinerror();
                    this.dispose();
                 }else{
                     if(actualizaralmacen!=null){

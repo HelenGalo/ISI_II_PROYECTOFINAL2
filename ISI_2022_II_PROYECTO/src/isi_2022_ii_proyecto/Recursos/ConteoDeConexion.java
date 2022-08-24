@@ -28,7 +28,7 @@ public class ConteoDeConexion implements Runnable {
                for (int i = 0; i <= 100; i++) {
                 Thread.sleep(30);
                 if (i == 100) {
-                     inicio.conectar();
+                     inicio.conectarinicio();
         
                 }
             }

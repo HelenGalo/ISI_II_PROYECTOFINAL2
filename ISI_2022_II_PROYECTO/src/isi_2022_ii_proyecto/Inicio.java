@@ -78,10 +78,23 @@ public class Inicio extends javax.swing.JFrame {
         
     }
     
-    public void conectar(){
+    public void conectarerror(){
+        conexion.setInicio(this);
+        conexion.setPass(false);
+        con = conexion.conexion();
+    }
+    
+       public void conectarinicio(){
         conexion.setInicio(this);
         con = conexion.conexion();
     }
+       
+        public void conectarsinerror(){
+        conexion.setPass(true);
+        conexion.setInicio(this);
+        con = conexion.conexion();
+    }
+   
    
     
     public void inicializarValoresC(){
@@ -196,9 +209,7 @@ public class Inicio extends javax.swing.JFrame {
     }
     
     
-    public void reconectar(){
-        con = conexion.conexion();
-    }
+
     
     public void cerrarconexion(){
         try {
@@ -430,7 +441,7 @@ public class Inicio extends javax.swing.JFrame {
         boolean a = false;
   
         if(con==null){
-            conectar();
+            conectarerror();
             
             
         }else{

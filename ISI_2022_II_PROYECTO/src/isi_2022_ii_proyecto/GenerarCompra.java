@@ -7,6 +7,7 @@ package isi_2022_ii_proyecto;
 
 import Atxy2k.CustomTextField.RestrictedTextField;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
+import isi_2022_ii_proyecto.Recursos.RegistrarFacturaCompra;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -37,6 +38,11 @@ public class GenerarCompra extends javax.swing.JFrame {
     
     String usuario;
     RestrictedTextField r;
+    String Nfacturac;
+
+    public void setNfacturac(String Nfacturac) {
+        this.Nfacturac = Nfacturac;
+    }
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
@@ -102,63 +108,13 @@ public class GenerarCompra extends javax.swing.JFrame {
  
         
         
-        jLabel32.setText(nombre);
-        
- 
-        
-    }
-    
-    private void EstablecerVendedor(){
-        Connection con = conexion.conexion();
-        String nombre="";
-        if(JTextbuscar.getText().isEmpty() || JTextbuscar.getText().length()<1 ){
-            
-        }else{
-            int idvendedor=Integer.valueOf(JTextbuscar.getText());
-        
-        
-        if(idvendedor==0){
-            JOptionPane.showMessageDialog(rootPane, "No existe el vendedor");
-            
-        }else{
-            String SQL = "SELECT e.PrimerNombre, e.SegundoNombre, e.PrimerApellido, e.SegundoApellido FROM Empleados e\n"
-                    + "Where e.IdPuesto ="+2+" AND e.IdEmpleado='"+JTextbuscar.getText()+"'";
-                    
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-           
-                nombre = rs.getString("e.PrimerNombre")+" "+rs.getString("e.SegundoNombre")+" "+rs.getString("e.PrimerApellido")+" "+rs.getString("e.SegundoApellido") ;
-    
-               
-                
-            }
-       
-    
-            
-        
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-            
-        }
-        
-        }
-      
-        try {
-            con.close(); 
-        } catch (Exception e) {
-             System.out.println("Ha ocurrido un error al cerrar la conexion: "+e.getMessage());
-        }
-        
-        
         jLabel29.setText(nombre);
         
  
         
     }
+    
+
     
     
     
@@ -212,17 +168,31 @@ public class GenerarCompra extends javax.swing.JFrame {
       if(JTextbuscar1.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Seleccione un proveedpr");
           a= false;
-      }else{
-          if(JTextbuscar.getText().isEmpty()){
-          JOptionPane.showMessageDialog(this, "Seleccione un vendedor");
-          a= false;
-          
       }
     
              
-      }
+      
       return a;
     }
+    
+    public void iracompra(){
+            Compras cp = new Compras();
+            cp.setUsuario(usuario);
+            cp.setCodigprov(buscarIdProv());
+            cp.setNfacturac(Nfacturac);
+            cp.iniciardatos();
+            cp.setVisible(true);
+            menu.dispose();
+            this.dispose();
+    }
+    
+    
+    public void registrarfacturac(){
+        RegistrarFacturaCompra rc = new RegistrarFacturaCompra();
+        rc.setGc(this);
+        rc.setVisible(true);
+    }
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -259,19 +229,14 @@ public class GenerarCompra extends javax.swing.JFrame {
         rSLabelIcon12 = new rojerusan.RSLabelIcon();
         jLabel14 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel38 = new javax.swing.JLabel();
         rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
-        jLabel42 = new javax.swing.JLabel();
-        rSButtonIcon_new14 = new newscomponents.RSButtonIcon_new();
-        JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
         JTextbuscar1 = new RSMaterialComponent.RSTextFieldIconUno();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
         rSButtonIcon_new15 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new16 = new newscomponents.RSButtonIcon_new();
+        jLabel34 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -486,19 +451,7 @@ public class GenerarCompra extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, 220, 40));
-
-        jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("Codigo del Proveedor:");
-        jPanel3.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 240, 40));
-
-        jLabel38.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel38.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel38.setText("Nombre del Vendedor:");
-        jPanel3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, 180, 30));
+        jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 140, 260, 40));
 
         rSButtonIcon_new13.setBackground(new java.awt.Color(102, 51, 255));
         rSButtonIcon_new13.setText("Cerrar Ventana");
@@ -511,38 +464,6 @@ public class GenerarCompra extends javax.swing.JFrame {
             }
         });
         jPanel3.add(rSButtonIcon_new13, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 260, 160, 50));
-
-        jLabel42.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel42.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel42.setText("Código del Vendedor:");
-        jPanel3.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 160, 40));
-
-        rSButtonIcon_new14.setBackground(new java.awt.Color(102, 51, 255));
-        rSButtonIcon_new14.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSButtonIcon_new14.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REMOVE_RED_EYE);
-        rSButtonIcon_new14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new14ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(rSButtonIcon_new14, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 50, 40));
-
-        JTextbuscar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
-        JTextbuscar.setPlaceholder("Buscar por codigo");
-        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTextbuscarActionPerformed(evt);
-            }
-        });
-        JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                JTextbuscarKeyReleased(evt);
-            }
-        });
-        jPanel3.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 180, -1));
 
         JTextbuscar1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JTextbuscar1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
@@ -557,7 +478,7 @@ public class GenerarCompra extends javax.swing.JFrame {
                 JTextbuscar1KeyReleased(evt);
             }
         });
-        jPanel3.add(JTextbuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 180, -1));
+        jPanel3.add(JTextbuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 180, -1));
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(153, 0, 255));
@@ -570,16 +491,11 @@ public class GenerarCompra extends javax.swing.JFrame {
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 220, 40));
 
-        jLabel32.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel32.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 110, 200, 40));
-
         jLabel40.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(153, 0, 255));
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel40.setText("Nombre del Cliente:");
-        jPanel3.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 180, 30));
+        jLabel40.setText("Nombre del Proveedor:");
+        jPanel3.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, 270, 30));
 
         rSButtonIcon_new15.setBackground(new java.awt.Color(102, 51, 255));
         rSButtonIcon_new15.setText("Generar Orden");
@@ -602,7 +518,13 @@ public class GenerarCompra extends javax.swing.JFrame {
                 rSButtonIcon_new16ActionPerformed(evt);
             }
         });
-        jPanel3.add(rSButtonIcon_new16, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, 50, 40));
+        jPanel3.add(rSButtonIcon_new16, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, 50, 40));
+
+        jLabel34.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel34.setText("Codigo del Proveedor:");
+        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 180, 40));
 
         rSPanelOpacity1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 760, 310));
 
@@ -644,24 +566,6 @@ public class GenerarCompra extends javax.swing.JFrame {
         
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
 
-    private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
-        // TODO add your handling code here:
-            EstablecerVendedor();
-    }//GEN-LAST:event_rSButtonIcon_new14ActionPerformed
-
-    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
-
-    }//GEN-LAST:event_JTextbuscarActionPerformed
-
-    private void JTextbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscarKeyReleased
-        // TODO add your handling code here:
-           if(JTextbuscar.getText().length()==0){
-            JTextbuscar.setPlaceholder("Buscar por código");
-        }else{
-            JTextbuscar.setPlaceholder("");
-        }
-    }//GEN-LAST:event_JTextbuscarKeyReleased
-
     private void JTextbuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscar1ActionPerformed
         // TODO add your handling code here:
        
@@ -680,14 +584,7 @@ public class GenerarCompra extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(validar()==true){
             
-            Compras cp = new Compras();
-            cp.setUsuario(usuario);
-            cp.setCodigvendedor(Integer.valueOf(JTextbuscar.getText()));
-            cp.setCodigprov(buscarIdProv());
-            cp.iniciardatos();
-            cp.setVisible(true);
-            this.dispose();
-            menu.dispose();
+           registrarfacturac();
             
         }
     }//GEN-LAST:event_rSButtonIcon_new15ActionPerformed
@@ -769,7 +666,6 @@ public class GenerarCompra extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -778,12 +674,9 @@ public class GenerarCompra extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -796,7 +689,6 @@ public class GenerarCompra extends javax.swing.JFrame {
     private javax.swing.JPanel linesetting4;
     private javax.swing.JPanel linesetting5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new13;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new14;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new15;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new16;
     private rojeru_san.RSLabelHora rSLabelHora1;

@@ -46,6 +46,11 @@ public class Compras extends javax.swing.JFrame {
     int seleccion1;
      int seleccion2;
     int idproductocompra;
+    String Nfacturac;
+
+    public void setNfacturac(String Nfacturac) {
+        this.Nfacturac = Nfacturac;
+    }
 
     public void setIdproductocompra(int idproductocompra) {
         this.idproductocompra = idproductocompra;
@@ -153,7 +158,7 @@ public class Compras extends javax.swing.JFrame {
         String[] registros = new String[3];
           System.out.println("ID EN ALMACEN "+obteneridalmacendesucursal());
           
-          String SQL = "SELECT p.Nombre,  ifnull(ExistenciaActual,0) as 'Ex' FROM Productos p\n"
+          String SQL = "SELECT p.Nombre,ifnull(ExistenciaActual,0) as 'Ex' FROM Productos p\n"
                   +"INNER JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
                   +"WHERE p.IdProducto="+idproducto+" AND ap.IdAlmacen="+obteneridalmacendesucursal();
           
@@ -237,8 +242,9 @@ public class Compras extends javax.swing.JFrame {
         
     }
     
-    
     public void agregarproductosorden(int idproducto){
+          
+          DecimalFormat formato = new DecimalFormat("##,###.00");
         int validarexistenciaorden=0;
         boolean estadoproducto=false;
         int posicion=0;
@@ -250,28 +256,75 @@ public class Compras extends javax.swing.JFrame {
             String[] registros = new String[6];
             String SQL = "SELECT p.Nombre FROM Productos p\n"
                   +"LEFT JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
-                  +"WHERE p.IdProducto="+idproducto+" AND ap.IdAlmacen="+obteneridalmacendesucursal();;
+                  +"WHERE p.IdProducto="+idproducto+" AND ap.IdAlmacen="+obteneridalmacendesucursal();
           
           
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
+           
 
             while (rs.next()) {
-                registros[0] = String.valueOf(idproducto);
-                registros[1] = rs.getString("p.Nombre");
-                registros[2] = "0.00";
-                registros[3] = "1";
-                registros[4] = obtenerdescuento(idproducto);
-                registros[5] = String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]));
+                
+                  registros[0] = String.valueOf(idproducto);
+                  registros[1] = rs.getString("p.Nombre");
+                  registros[2] = "0.00";
+                  registros[3] = "1";
+                  registros[4] = "0.00";
+                String precioc="";
+                String descuentoc="";
+                
+                for(int i=0; i<registros[2].length(); i++ ){
+                    char a = registros[2].charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       precioc= precioc + vs;
+                    }else{
+                        
+                    }
+                }
+                
+                System.out.println("P CONVER "+ precioc);
+                
+                
+                for(int i=0; i<registros[4].length(); i++ ){
+                    char a = registros[4].charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       descuentoc= descuentoc + vs;
+                    }else{
+                        
+                    }
+                }
+                
+                System.out.print("DES CONVER "+ descuentoc);
+                float g =(Float.valueOf(precioc)*Float.valueOf(registros[3]))-Float.valueOf(descuentoc);
+                String f= String.valueOf(g);
+                String formatof = formato.format(Double.valueOf(f));
+                if(formatof.equals(".00")){
+                   registros[5] ="0.00"; 
+                }else{
+                    registros[5] =formatof ; 
+                }
+                
                 modelo1.addRow(registros);
             }
         
      
             }catch(SQLException e){
                  System.out.println("Error "+e.getMessage());
+                 con=null;
+                validarconexion();
         
             }
+        
+         
             
         
         }else{
@@ -287,15 +340,81 @@ public class Compras extends javax.swing.JFrame {
            
             if(estadoproducto==true){
             nuevacantidad=Integer.valueOf(modelo1.getValueAt(posicion, 3).toString())+1;
-            
+             
             modelo1.setValueAt(nuevacantidad, posicion, 3);
-            nuevodescuento=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(obtenerdescuento(idproducto)));
-            modelo1.setValueAt(nuevodescuento, posicion, 4);
-            nuevosubtotal=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(modelo1.getValueAt(posicion, 2).toString()))-Float.valueOf(modelo1.getValueAt(posicion, 4).toString());
-            modelo1.setValueAt(nuevosubtotal, posicion, 5);
+            
+            String descuentoresultado="";
+            for(int i=0; i< modelo1.getValueAt(posicion, 4).toString().length(); i++ ){
+                    char a = modelo1.getValueAt(posicion, 4).toString().charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       descuentoresultado= descuentoresultado + vs;
+                    }else{
+                        
+                    }
+                }
+            
+            
+            nuevodescuento=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(descuentoresultado));
+           
+            String descuentontrans = formato.format(nuevodescuento);
+           if(descuentontrans.equals(".00")){
+               modelo1.setValueAt("0.00", posicion, 4);
+           }else{
+               modelo1.setValueAt(descuentontrans, posicion, 4);
+           }
+            
+            
+            String preciopc="";
+            
+            
+            String preciotrans=modelo1.getValueAt(posicion, 2).toString();
+            
+             for(int i=0; i<preciotrans.length(); i++ ){
+                    char a = preciotrans.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       preciopc= preciopc + vs;
+                    }else{
+                        
+                    }
+                }
+            
+            String descuentotrans=modelo1.getValueAt(posicion, 4).toString();
+            String despc = "";
+            for(int i=0; i<descuentotrans.length(); i++ ){
+                    char a = descuentotrans.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       despc= despc + vs;
+                    }else{
+                        
+                    }
+                }
+            
+            nuevosubtotal=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(preciopc))-Float.valueOf(despc);
+            String pase="";
+            pase = String.valueOf(nuevosubtotal);
+            String nuevosubtotalparse =formato.format(Double.valueOf(pase));
+            if(nuevosubtotalparse.equals(".00")){
+                modelo1.setValueAt("0.00", posicion, 5);
+            }else{
+               modelo1.setValueAt(nuevosubtotalparse, posicion, 5); 
+            }
+            
+            
             }else{
                String[] registros = new String[6];
-               String SQL = "SELECT p.Nombre,  FROM Productos p\n"
+               String SQL = "SELECT p.Nombre FROM Productos p\n"
                   +"LEFT JOIN AlmacenProducto ap ON ap.IdProducto = p.IdProducto\n"
                   +"WHERE p.IdProducto="+idproducto+" AND ap.IdAlmacen="+obteneridalmacendesucursal();
           
@@ -303,23 +422,74 @@ public class Compras extends javax.swing.JFrame {
                 try {
                         Statement st = (Statement) con.createStatement();
                         ResultSet rs = st.executeQuery(SQL);
+           
 
                         while (rs.next()) {
-                       
                             registros[0] = String.valueOf(idproducto);
                             registros[1] = rs.getString("p.Nombre");
                             registros[2] = "0.00";
                             registros[3] = "1";
                             registros[4] = "0.00";
-                            registros[5] = String.valueOf((Float.valueOf(registros[2])*Float.valueOf(registros[3]))-Float.valueOf(registros[4]));
+                           
+                            String precioc="";
+                            String descuentoc="";
+
+                            for(int i=0; i<registros[2].length(); i++ ){
+                                char a = registros[2].charAt(i);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   precioc= precioc + vs;
+                                }else{
+
+                                }
+                            }
+
+                            System.out.println("P CONVER "+ precioc);
+
+
+                            for(int i=0; i<registros[4].length(); i++ ){
+                                char a = registros[4].charAt(i);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   descuentoc= descuentoc + vs;
+                                }else{
+
+                                }
+                            }
+
+                            System.out.println("DES CONVER "+ descuentoc);
+
+                            
+                            float g = (Float.valueOf(precioc)*Float.valueOf(registros[3]))-Float.valueOf(descuentoc);
+                            String valorg = String.valueOf(g);
+                            String finalf =  formato.format(Double.valueOf(valorg));
+                            
+                            if(finalf.equals(".00")){
+                                 registros[5] = "0.00";
+                            }else{
+                                registros[5] = finalf;
+                            }
+                           
                             modelo1.addRow(registros);
                         }
 
                         
                     }catch(SQLException e){
                         System.out.println("Error "+e.getMessage());
+                        con=null;
+                        validarconexion();
 
                     }
+                
+                
+                    
+                
                 
             }
            
@@ -333,12 +503,88 @@ public class Compras extends javax.swing.JFrame {
        
     }
     
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
-    public void total(){
+    
+   
+    
+    
+     public void total(){
+       DecimalFormat formato = new DecimalFormat("##,###.00");
+             
+             
         if(modelo1.getRowCount()>0){
+            String descuento=jLabel28.getText();
+            String ISV = jLabel18.getText();
+            String subtotal=jLabel23.getText();
             float total=0.00f;
-            total = Float.valueOf(jLabel18.getText()) + Float.valueOf(jLabel23.getText())-Float.valueOf(jLabel28.getText());
-            jLabel22.setText(String.valueOf(total));
+            String descuentoc="";
+            String ISVc = "";
+            String subtotalc="";
+            
+             for(int i=0; i<descuento.length(); i++ ){
+                                char a = descuento.charAt(i);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   descuentoc= descuentoc + vs;
+                                }else{
+
+                                }
+                            }
+             
+            for(int i=0; i<ISV.length(); i++ ){
+                                char a = ISV.charAt(i);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   ISVc= ISVc + vs;
+                                }else{
+
+                                }
+                            }
+            
+            for(int i=0; i<subtotal.length(); i++ ){
+                                char a = subtotal.charAt(i);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   subtotalc= subtotalc + vs;
+                                }else{
+
+                                }
+                            }
+             
+           
+            
+            
+            
+            total =  (Float.valueOf(subtotalc))- Float.valueOf(descuentoc)+Float.valueOf(ISVc) ;
+            String totalt=String.valueOf(total);
+            String totalv=formato.format(Double.parseDouble(totalt));
+            System.out.println(totalv);
+            if(totalv.equals(".00")){
+                jLabel22.setText("0.00");
+            }else{
+               jLabel22.setText(totalv);
+            }
+            
+            
+            
         }else{
             jLabel22.setText("0.00");
         }
@@ -348,34 +594,124 @@ public class Compras extends javax.swing.JFrame {
     
     
     
-    public void actualizarEnter(){
-     
+   public void actualizarEnter(){
+     DecimalFormat formato = new DecimalFormat("##,###.00");
         float nuevosubtotal=0.00f;
         float nuevodescuento=0.00f;
         
-        nuevodescuento=Float.valueOf(modelo1.getValueAt(seleccion1, 3).toString())*Float.valueOf(String.valueOf(obtenerdescuento(Integer.valueOf(codigop1))));
-        modelo1.setValueAt(nuevodescuento, seleccion1, 4);
-        nuevosubtotal=(Float.valueOf(modelo1.getValueAt(seleccion1, 3).toString())*Float.valueOf(modelo1.getValueAt(seleccion1, 2).toString()))-Float.valueOf(modelo1.getValueAt(seleccion1, 4).toString());
-        modelo1.setValueAt(nuevosubtotal, seleccion1, 5);
+            
+           String descuentoresultado="";
+            for(int i=0; i< modelo1.getValueAt(seleccion1, 4).toString().length(); i++ ){
+                    char a = modelo1.getValueAt(seleccion1, 4).toString().charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       descuentoresultado= descuentoresultado + vs;
+                    }else{
+                        
+                    }
+                }
+            
+            
+            nuevodescuento=(Float.valueOf(modelo1.getValueAt(seleccion1, 3).toString())*Float.valueOf(descuentoresultado));
+           
+            String descuentontrans = formato.format(nuevodescuento);
+           if(descuentontrans.equals(".00")){
+               modelo1.setValueAt("0.00", seleccion1, 4);
+           }else{
+               modelo1.setValueAt(descuentontrans, seleccion1, 4);
+           }
+            
+            
+            String preciopc="";
+            
+            
+            String preciotrans=modelo1.getValueAt(seleccion1, 2).toString();
+            
+             for(int i=0; i<preciotrans.length(); i++ ){
+                    char a = preciotrans.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       preciopc= preciopc + vs;
+                    }else{
+                        
+                    }
+                }
+            
+            String descuentotrans=modelo1.getValueAt(seleccion1, 4).toString();
+            String despc = "";
+            for(int i=0; i<descuentotrans.length(); i++ ){
+                    char a = descuentotrans.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       despc= despc + vs;
+                    }else{
+                        
+                    }
+                }
+            
+            nuevosubtotal=(Float.valueOf(modelo1.getValueAt(seleccion1, 3).toString())*Float.valueOf(preciopc))-Float.valueOf(despc);
+            String pase="";
+            pase = String.valueOf(nuevosubtotal);
+            String nuevosubtotalparse =formato.format(Double.valueOf(pase));
+            if(nuevosubtotalparse.equals(".00")){
+                modelo1.setValueAt("0.00", seleccion1, 5);
+            }else{
+               modelo1.setValueAt(nuevosubtotalparse, seleccion1, 5); 
+            }
+        
+      
         
         
     
     }
     
     
-    public void sumarsubtotal(){
+     public void sumarsubtotal(){
+        DecimalFormat formato = new DecimalFormat("##,###.00");
         if(modelo1.getRowCount()>0){
         float sumador=0.00f;
         float subtotal=0.00f;
         for(int i=0;i<modelo1.getRowCount();i++){
-            sumador=sumador+(Float.valueOf(modelo1.getValueAt(i, 2).toString())*Float.valueOf(modelo1.getValueAt(i, 3).toString()));
+            String subtotalp="";
+            for(int j=0; j<modelo1.getValueAt(i, 2).toString().length(); j++ ){
+                                char a = modelo1.getValueAt(i, 2).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   subtotalp= subtotalp + vs;
+                                }else{
+
+                                }
+            }
+              
+            
+            
+                    sumador=sumador+(Float.valueOf(subtotalp)*Float.valueOf(modelo1.getValueAt(i, 3).toString()));
         }
         
-        subtotal= (float) (sumador-(sumador*0.15));
+        subtotal= (float) (sumador);
+        String formatof= formato.format(Double.valueOf(subtotal));
         
-        jLabel23.setText(String.valueOf(subtotal));
+        if(formatof.equals(".00")){
+            jLabel23.setText("0.00");
         }else{
-            jLabel23.setText("");
+            jLabel23.setText(formatof);
+        }
+        
+      
+        }else{
+            jLabel23.setText("0.00");
         }
         
     }
@@ -388,29 +724,78 @@ public class Compras extends javax.swing.JFrame {
     }
     
     
-    public void sumarisv(){
+     public void sumarisv(){
         float sumador=0.00f;
+        DecimalFormat formato = new DecimalFormat("##,###.00");
         float isv=0.00f;
         for(int i=0;i<modelo1.getRowCount();i++){
-            sumador=sumador+(Float.valueOf(modelo1.getValueAt(i, 2).toString())*Float.valueOf(modelo1.getValueAt(i, 3).toString()));
+       
+            
+            String subtotalp="";
+             for(int j=0; j<modelo1.getValueAt(i, 5).toString().length(); j++ ){
+                                char a = modelo1.getValueAt(i, 5).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   subtotalp= subtotalp + vs;
+                                }else{
+
+                                }
+            }
+            
+            
+            
+            
+            
+            sumador=sumador+(Float.valueOf(subtotalp));
         }
         
         isv= (float) (sumador*0.15);
+        String isvm = String.valueOf(isv);
+        String formatof = formato.format(Double.valueOf(isvm));
+        if(formatof.equals(".00")){
+            jLabel18.setText("0.00"); 
+        }else{
+           jLabel18.setText(formatof); 
+        }
         
-        jLabel18.setText(String.valueOf(isv));
     }
     
     
+    
     public void sumardescuento(){
+        DecimalFormat formato = new DecimalFormat("##,###.00");
         float sumador=0.00f;
         float descuento=0.00f;
         for(int i=0;i<modelo1.getRowCount();i++){
-            sumador=sumador+Float.valueOf(modelo1.getValueAt(i, 4).toString());
+            String descuentoc = "";
+             for(int j=0; j<modelo1.getValueAt(i, 4).toString().length(); j++ ){
+                                char a = modelo1.getValueAt(i, 4).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   descuentoc= descuentoc + vs;
+                                }else{
+
+                                }
+            }
+            sumador=sumador+Float.valueOf(descuentoc);
         }
         
         descuento= sumador;
+        String descuenton = String.valueOf(descuento);
+        String descuentot=formato.format(Double.valueOf(descuenton));
+        if(descuentot.equals(".00")){
+            jLabel28.setText("0.00");
+        }else{
+            jLabel28.setText(descuentot);
+        }
+      
         
-        jLabel28.setText(String.valueOf(descuento));
     }
     
     
@@ -424,7 +809,8 @@ public class Compras extends javax.swing.JFrame {
     }
     
     
-     public void restarcantidadproductos(int codigproducto){
+      public void restarcantidadproductos(int codigproducto){
+        DecimalFormat formato = new DecimalFormat("##,###.00");
         int corredor=0;
         int posicion=0;
         int nuevacantidad=0;
@@ -436,14 +822,65 @@ public class Compras extends javax.swing.JFrame {
                posicion=i;
             }
             }
+           
+        
+        
+        
           
             nuevacantidad=Integer.valueOf(modelo1.getValueAt(posicion, 3).toString())-1;
             
             modelo1.setValueAt(nuevacantidad, posicion, 3);
-            nuevodescuento=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(obtenerdescuento(codigproducto)));
-            modelo1.setValueAt(nuevodescuento, posicion, 4);
-            nuevosubtotal=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(modelo1.getValueAt(posicion, 2).toString()))-Float.valueOf(modelo1.getValueAt(posicion, 4).toString());
-            modelo1.setValueAt(nuevosubtotal, posicion, 5);
+            
+             String nuevapt="";
+            for(int j=0; j<modelo1.getValueAt(posicion, 2).toString().length(); j++ ){
+                                char a = modelo1.getValueAt(posicion, 2).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   nuevapt= nuevapt + vs;
+                                }else{
+
+                                }
+            }
+            
+             String nuevades=obtenerdescuento(codigproducto);
+             String nuevodest="";
+            for(int j=0; j<nuevades.length(); j++ ){
+                                char a = nuevades.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   nuevodest= nuevodest + vs;
+                                }else{
+
+                                }
+            }
+            
+            if(nuevodest==".00"){
+                nuevodest="0.00";
+            }
+            
+            if(nuevapt==".00"){
+                nuevodest="0.00";
+            }
+            
+            nuevodescuento=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(nuevodest));
+            String nds = String.valueOf(nuevodescuento);
+            modelo1.setValueAt(formato.format(Double.valueOf(nds)), posicion, 4);
+            
+            nuevosubtotal=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(nuevapt))-Float.valueOf(nuevodescuento);
+            String nsubtt = String.valueOf(nuevosubtotal);
+            String formatof = formato.format(Double.valueOf(nsubtt));
+            if(formatof.equals(".00")){
+                modelo1.setValueAt("0.00", posicion, 5);
+            }else{
+                modelo1.setValueAt(formatof, posicion, 5);
+            }
+            
           
      }
         
@@ -558,7 +995,7 @@ public class Compras extends javax.swing.JFrame {
         
          while (rs1.next()) {
            
-                nombrecliente = rs1.getString(" p.NombreEmpresa");
+                nombrecliente = rs1.getString("p.NombreEmpresa");
             }
             
         } catch (SQLException ex) {
@@ -581,6 +1018,7 @@ public class Compras extends javax.swing.JFrame {
 
        iniciarproveedor();
        iniciarvendedor();
+       jLabel15.setText(Nfacturac);
        
         
        
@@ -682,6 +1120,8 @@ public class Compras extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout rSPanelVector1Layout = new javax.swing.GroupLayout(rSPanelVector1);
         rSPanelVector1.setLayout(rSPanelVector1Layout);
@@ -757,7 +1197,7 @@ public class Compras extends javax.swing.JFrame {
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -784,7 +1224,7 @@ public class Compras extends javax.swing.JFrame {
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, linesetting4Layout.createSequentialGroup()
-                .addContainerGap(680, Short.MAX_VALUE)
+                .addContainerGap(682, Short.MAX_VALUE)
                 .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -826,7 +1266,8 @@ public class Compras extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -856,157 +1297,92 @@ public class Compras extends javax.swing.JFrame {
         rSPanelGradiente3.setColorPrimario(new java.awt.Color(51, 153, 255));
         rSPanelGradiente3.setColorSecundario(new java.awt.Color(20, 101, 187));
         rSPanelGradiente3.setGradiente(rspanelgradiente.RSPanelGradiente.Gradiente.VERTICAL);
+        rSPanelGradiente3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel34.setFont(new java.awt.Font("Franklin Gothic Book", 0, 16)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(255, 255, 255));
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel34.setText("Gerente Comercial");
+        rSPanelGradiente3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(316, 10, -1, 30));
 
         rSLabelIcon13.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon13.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon13.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         rSLabelIcon13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
+        rSPanelGradiente3.add(rSLabelIcon13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 60, 60));
 
         jLabel35.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(255, 255, 255));
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setText("Vendedor");
+        rSPanelGradiente3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 200, 30));
 
         jLabel36.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
         jLabel36.setForeground(new java.awt.Color(255, 255, 255));
         jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSPanelGradiente3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 200, 20));
 
         jLabel17.setFont(new java.awt.Font("Franklin Gothic Book", 1, 36)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel17.setText("Compras");
+        rSPanelGradiente3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 46, 153, 40));
 
         jLabel37.setFont(new java.awt.Font("Franklin Gothic Book", 0, 16)); // NOI18N
         jLabel37.setForeground(new java.awt.Color(255, 255, 255));
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel37.setText("Proveedor");
+        rSPanelGradiente3.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, 100, 30));
 
         rSLabelIcon14.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon14.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon14.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         rSLabelIcon14.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ACCOUNT_CIRCLE);
+        rSPanelGradiente3.add(rSLabelIcon14, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, 60, 60));
 
         jLabel38.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(255, 255, 255));
         jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel38.setText("Proveedor");
+        rSPanelGradiente3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 40, 250, 30));
 
         jLabel39.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
         jLabel39.setForeground(new java.awt.Color(255, 255, 255));
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel39.setText("Provvedor");
+        rSPanelGradiente3.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 70, 250, 20));
 
         rSLabelIcon16.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon16.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon16.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         rSLabelIcon16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ACCOUNT_CIRCLE);
+        rSPanelGradiente3.add(rSLabelIcon16, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 46, 60, 60));
 
         jLabel43.setFont(new java.awt.Font("Franklin Gothic Book", 0, 16)); // NOI18N
         jLabel43.setForeground(new java.awt.Color(255, 255, 255));
         jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel43.setText("Usuario");
+        rSPanelGradiente3.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 10, 100, 30));
 
         rSLabelIcon17.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CONTACTS);
+        rSPanelGradiente3.add(rSLabelIcon17, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 40, 60, 60));
 
         jLabel44.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel44.setForeground(new java.awt.Color(255, 255, 255));
         jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel44.setText("Usuario");
+        rSPanelGradiente3.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 40, 160, 30));
 
         jLabel45.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
         jLabel45.setForeground(new java.awt.Color(255, 255, 255));
         jLabel45.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel45.setText("Usuario");
+        rSPanelGradiente3.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 70, 160, 20));
 
-        javax.swing.GroupLayout rSPanelGradiente3Layout = new javax.swing.GroupLayout(rSPanelGradiente3);
-        rSPanelGradiente3.setLayout(rSPanelGradiente3Layout);
-        rSPanelGradiente3Layout.setHorizontalGroup(
-            rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(rSLabelIcon13, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(rSLabelIcon16, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addGap(137, 137, 137)
-                        .addComponent(jLabel34)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(rSLabelIcon14, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(250, 250, 250)
-                .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(rSLabelIcon17, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        rSPanelGradiente3Layout.setVerticalGroup(
-            rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(rSLabelIcon13, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rSLabelIcon14, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rSLabelIcon17, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                                .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(rSPanelGradiente3Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(rSPanelGradiente3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rSLabelIcon16, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        dashboardview.add(rSPanelGradiente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 108));
+        dashboardview.add(rSPanelGradiente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 108));
 
         rSPanelShadow1.setBackground(new java.awt.Color(242, 244, 242));
         rSPanelShadow1.add(rSPanelsSlider2, java.awt.BorderLayout.LINE_START);
@@ -1017,6 +1393,7 @@ public class Compras extends javax.swing.JFrame {
 
         rSPanel1.setBackground(new java.awt.Color(242, 244, 242));
         rSPanel1.setColorBackground(new java.awt.Color(242, 244, 242));
+        rSPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         JTableBancos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1027,7 +1404,7 @@ public class Compras extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, true, true, true, false
@@ -1064,20 +1441,25 @@ public class Compras extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(JTableBancos);
 
+        rSPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 599, 250));
+
         jLabel8.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(102, 0, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("0");
+        rSPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 49, 180, 20));
 
         jLabel32.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(102, 0, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel32.setText("N. COMPRA:");
+        rSPanel1.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 49, 120, 20));
 
         jLabel33.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(102, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel33.setText("0");
+        rSPanel1.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 49, 150, 20));
 
         rSPanelGradiente1.setColorPrimario(new java.awt.Color(51, 153, 255));
         rSPanelGradiente1.setColorSecundario(new java.awt.Color(20, 101, 187));
@@ -1207,62 +1589,20 @@ public class Compras extends javax.swing.JFrame {
                             .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
 
+        rSPanel1.add(rSPanelGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 343, -1, 131));
+
         jLabel29.setFont(new java.awt.Font("Franklin Gothic Book", 3, 24)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(102, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel29.setText("DETALLE DE COMPRA");
+        rSPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 23, 300, 20));
+        rSPanel1.add(rSPanelsSlider1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 69, -1, -1));
 
         jLabel30.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(102, 0, 255));
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel30.setText("Total Productos:");
-
-        javax.swing.GroupLayout rSPanel1Layout = new javax.swing.GroupLayout(rSPanel1);
-        rSPanel1.setLayout(rSPanel1Layout);
-        rSPanel1Layout.setHorizontalGroup(
-            rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelGradiente1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(rSPanel1Layout.createSequentialGroup()
-                .addGroup(rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(rSPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(rSPanel1Layout.createSequentialGroup()
-                                .addGap(130, 130, 130)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(rSPanel1Layout.createSequentialGroup()
-                                .addGap(80, 80, 80)
-                                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(rSPanelsSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(rSPanel1Layout.createSequentialGroup()
-                        .addGap(168, 168, 168)
-                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rSPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        rSPanel1Layout.setVerticalGroup(
-            rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(rSPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(rSPanelsSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSPanelGradiente1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        rSPanel1.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 49, 200, 20));
 
         rSPanelShadow1.add(rSPanel1, java.awt.BorderLayout.PAGE_START);
 
@@ -1292,7 +1632,7 @@ public class Compras extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(102, 0, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Productos");
-        rSPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 110, 40));
+        rSPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 150, 30));
 
         JTableBancos1.setForeground(new java.awt.Color(204, 204, 204));
         JTableBancos1.setModel(new javax.swing.table.DefaultTableModel(
@@ -1335,7 +1675,7 @@ public class Compras extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(JTableBancos1);
 
-        rSPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 670, 110));
+        rSPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 670, 110));
 
         rSButtonHover1.setBackground(new java.awt.Color(255, 0, 102));
         rSButtonHover1.setText("-");
@@ -1345,7 +1685,7 @@ public class Compras extends javax.swing.JFrame {
                 rSButtonHover1ActionPerformed(evt);
             }
         });
-        rSPanel2.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 50, -1));
+        rSPanel2.add(rSButtonHover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, 50, -1));
 
         rSButtonIcon_new12.setBackground(new java.awt.Color(20, 101, 187));
         rSButtonIcon_new12.setText("Ver Todos");
@@ -1356,7 +1696,7 @@ public class Compras extends javax.swing.JFrame {
                 rSButtonIcon_new12ActionPerformed(evt);
             }
         });
-        rSPanel2.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 150, -1));
+        rSPanel2.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 150, -1));
 
         rSButtonHover4.setText("+");
         rSButtonHover4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -1365,7 +1705,7 @@ public class Compras extends javax.swing.JFrame {
                 rSButtonHover4ActionPerformed(evt);
             }
         });
-        rSPanel2.add(rSButtonHover4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 50, -1));
+        rSPanel2.add(rSButtonHover4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, 50, -1));
 
         jLabel14.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(102, 0, 255));
@@ -1376,8 +1716,8 @@ public class Compras extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Franklin Gothic Book", 2, 16)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(102, 0, 255));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Acciones");
-        rSPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 110, 40));
+        jLabel15.setText("N. Factura");
+        rSPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 80, 160, 30));
 
         rSPanelForma3.setBackground(new java.awt.Color(255, 255, 255));
         rSPanelForma3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1385,8 +1725,8 @@ public class Compras extends javax.swing.JFrame {
         jLabel50.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
         jLabel50.setForeground(new java.awt.Color(102, 0, 255));
         jLabel50.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel50.setText("Forma de Pago");
-        rSPanelForma3.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 11, 130, 20));
+        jLabel50.setText("Forma de Pago de la Compra:");
+        rSPanelForma3.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 11, 350, 20));
 
         rSRadioButton1.setText("TARJETA");
         rSRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -1474,13 +1814,25 @@ public class Compras extends javax.swing.JFrame {
         jLabel16.setForeground(new java.awt.Color(102, 0, 255));
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel16.setText("Buscador");
-        rSPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 100, 40));
+        rSPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 100, 30));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
         rSPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 290, 100));
+
+        jLabel31.setFont(new java.awt.Font("Franklin Gothic Book", 2, 16)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("Acciones");
+        rSPanel2.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, 110, 30));
+
+        jLabel40.setFont(new java.awt.Font("Franklin Gothic Book", 2, 16)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel40.setText("N. Factura");
+        rSPanel2.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, 160, 30));
 
         rSPanelShadow2.add(rSPanel2, java.awt.BorderLayout.CENTER);
 
@@ -1493,7 +1845,7 @@ public class Compras extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1336, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(dashboardview, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1395, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1533,7 +1885,7 @@ public class Compras extends javax.swing.JFrame {
         // TODO add your handling code here:
        
         if(codigop!=null){
-            if(Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())>0){
+          
                 if(JTableBancos.getRowCount()==0){
                     agregarproductosorden(Integer.valueOf(codigop));
                     sumarcantidadproductos();
@@ -1543,24 +1895,21 @@ public class Compras extends javax.swing.JFrame {
                     total();
                 
                     
+              
+                    
                 }else{
-                    if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())<Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())){
+                   
                     agregarproductosorden(Integer.valueOf(codigop));
                     sumarcantidadproductos();
                     sumarsubtotal();
                     sumardescuento();
                     sumarisv();
                     total();
-                    }else{
-                        JOptionPane.showMessageDialog(rootPane, "Maxima cantidad de productos disponibles");
-                    }
+                 
                 }
                 
                 
                
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "No hay productos en existencia para el producto seleccionado");
-            }
             
         }else{
             JOptionPane.showMessageDialog(rootPane, "Seleccione el producto en la tabla");
@@ -1609,11 +1958,12 @@ public class Compras extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(codigop1!=null){
             if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+                
             
             if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())>0){
               
                
-                if(Integer.valueOf(JTableBancos.getValueAt(seleccion1,3).toString())<=Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString())){
+                
                 actualizarEnter();
                 sumarcantidadproductos();
                 sumarsubtotal();
@@ -1622,11 +1972,7 @@ public class Compras extends javax.swing.JFrame {
                 total();
                 codigop=null;
                 
-                }else{
-                   JOptionPane.showMessageDialog(rootPane, "Ha ingresado una cantidad que sobrepasa la cantidad disponbible, el maximo de productos es de: "+Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString()));
-                   JTableBancos.setValueAt(Integer.valueOf(JTableBancos1.getValueAt(seleccion2,3).toString()), seleccion1, 3);
- 
-                }
+              
                 
                 
             }else{
@@ -1866,6 +2212,7 @@ public class Compras extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
@@ -1875,6 +2222,7 @@ public class Compras extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
