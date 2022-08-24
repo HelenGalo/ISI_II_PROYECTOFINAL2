@@ -91,7 +91,7 @@ public class Menu extends javax.swing.JFrame {
     
     
     
-     public boolean validarRol(){
+     public boolean validarRolPOS(){
         boolean estado=false;
         if(validarconexion()==true){
              
@@ -119,6 +119,41 @@ public class Menu extends javax.swing.JFrame {
         }else{
             
         }
+       
+        
+        
+   
+        
+        return estado;
+        
+        
+    }
+     
+     public boolean validarRolCaja(){
+        boolean estado=false;
+     
+         int idrol=0;
+         String SQL = "SELECT u.IdRol FROM Usuarios u WHERE u.Usuario='"+usuario+"';";
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idrol = rs.getInt("u.IdRol");
+               
+                
+            }
+        }catch(SQLException e){
+              JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+        
+        if(idrol==7 || idrol==1){
+            estado = true;
+        }
+       
        
         
         
@@ -440,6 +475,7 @@ public class Menu extends javax.swing.JFrame {
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
         jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -514,7 +550,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -566,9 +602,9 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(13, 13, 13)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -910,7 +946,7 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -1591,6 +1627,11 @@ public class Menu extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(51, 0, 255));
         jLabel10.setText("Usuario en sesion: ");
 
+        jLabel11.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel11.setText("Usuario en sesion: ");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -1600,9 +1641,11 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(79, 79, 79)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel11)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel10)
-                .addGap(123, 123, 123)
+                .addGap(89, 89, 89)
                 .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1624,7 +1667,8 @@ public class Menu extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1826,9 +1870,18 @@ public class Menu extends javax.swing.JFrame {
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
         // TODO add your handling code here:
-        Caja caja = new Caja();
-        caja.setVisible(true);
-        this.dispose();
+        if(validarRolCaja()==true){
+            Caja caja = new Caja();
+            
+            caja.setVisible(true);
+            this.dispose();
+        }else{
+            VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+            vi.setEstado("N");
+            vi.setVisible(true);
+            
+        }
+        
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
 
     private void BOTONENVIOMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONENVIOMouseEntered
@@ -1880,9 +1933,17 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_BOTONPROMouseExited
 
     private void BOTONCAJAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONCAJAMouseClicked
-        Caja p = new Caja();
-        p.setVisible(true);
-        this.dispose();
+        if(validarRolCaja()){
+            Caja p = new Caja();
+            p.setUsuario(usuario);
+            p.setVisible(true);
+            this.dispose();
+        }else{
+            VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+            vi.setEstado("N");
+            vi.setVisible(true);
+        }
+        
     }//GEN-LAST:event_BOTONCAJAMouseClicked
 
     private void BOTONCAJAMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONCAJAMouseEntered
@@ -1896,8 +1957,8 @@ public class Menu extends javax.swing.JFrame {
     private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
         // TODO add your handling code here:
         
-        if(validarconexion()==true){
-             if(validarRol()==true){
+   
+            if(validarRolPOS()==true){
             if(validarcaja()==true){
                 if(validarfactura()==true){
                     GenerarVenta gv = new GenerarVenta();
@@ -1923,9 +1984,7 @@ public class Menu extends javax.swing.JFrame {
             vi.setVisible(true);
         }
             
-        }else{
-           
-        }
+       
         
        
         
@@ -2074,6 +2133,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
