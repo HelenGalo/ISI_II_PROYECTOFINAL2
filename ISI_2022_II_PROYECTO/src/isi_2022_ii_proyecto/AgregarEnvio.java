@@ -325,7 +325,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
     /*Verificamos que no sea null*/ 
     if(Nombre != null){
         /* 1ª Condición: que la letra inicial sea mayúscula*/
-        boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
+//        boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
 
         /* 2ª Condición: que el tamaño sea >= 3 y <= 15*/
         int stringSize=Nombre.length();
@@ -335,7 +335,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
         boolean isSpaced=Nombre.contains(" ");
 
         /* Verificamos que las tres condiciones son verdaderas*/
-        check= ( (isFirstUpper==true)  && (isFirstUpper && isValidSize &&  isSpaced) );
+        check= ( ( isValidSize &&  isSpaced) );
     }
     /*Devolvemos el estado de la validación*/
     return check;
@@ -1067,6 +1067,7 @@ public class AgregarEnvio extends javax.swing.JFrame {
 
         NombreC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NombreC.setPlaceholder("");
+        NombreC.setSoloLetras(true);
         NombreC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NombreCActionPerformed(evt);
@@ -1346,7 +1347,11 @@ public class AgregarEnvio extends javax.swing.JFrame {
     }//GEN-LAST:event_TelC1KeyTyped
 
     private void NombreCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyTyped
- 
+      char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
             
      if (NombreC.getText().trim().length() == 25)
     {
