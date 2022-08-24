@@ -107,13 +107,42 @@ public class CerraCaja extends javax.swing.JFrame {
         listarventastarjeta();
         listartotalventasefectivo();
         listartotalventastarjeta();
-     
+        listartotalencaja();
        
         setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
     
     
+    public void listartotalencaja(){
+        String valor="0.00";
+        DecimalFormat formato = new DecimalFormat("##,###.00");
+        String SQL = "	Select sum(ec.Total) from Ventas v\n" +
+                "INNER JOIN EntradasCaja ec on ec.IdOrden = v.IdOrden\n" +
+                "WHERE v.IdCaja=2 AND v.FechaVenta=\"2022/08/22\" AND v.IdTipoVenta=1 OR v.IdTipoVenta=2\n" +
+                ";";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                valor = formato.format(rs.getDouble("sum(ec.Total)"));
+              
     
+    
+                
+            }
+          if(valor.equals(".00")){
+               jLabel35.setText("0.00");
+           }else{
+              jLabel35.setText(valor); 
+           }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       
+                 con=null;
+                validarconexion();
+        }
+    }
     
     
     public void listartotalventasefectivo(){
@@ -154,7 +183,7 @@ public class CerraCaja extends javax.swing.JFrame {
         String SQL = "Select sum(T1.Subtotal) from(\n" +
                     "Select v.idOrden, sum(dv.Subtotal) as 'Subtotal'from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=2 AND v.IdCaja=2 AND v.FechaVenta=\"2022/08/24\"\n" +
+                    "Where v.IdTipoVenta=2 AND v.IdCaja=2 AND v.FechaVenta=\"2022/08/22\"\n" +
                     "Group by 1) as T1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -224,7 +253,7 @@ public class CerraCaja extends javax.swing.JFrame {
         String[] registros = new String[2];
         String SQL = "Select v.idOrden, sum(dv.Subtotal) from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=2 AND v.IdCaja=2 AND v.FechaVenta=\"2022/08/24\"\n" +
+                    "Where v.IdTipoVenta=2 AND v.IdCaja=2 AND v.FechaVenta=\"2022/08/22\"\n" +
                     "Group by 1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -344,6 +373,7 @@ validarconexion();
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
         jLabel34 = new javax.swing.JLabel();
         JTextbuscar1 = new RSMaterialComponent.RSTextFieldIconUno();
+        jLabel35 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -581,8 +611,8 @@ validarconexion();
         jLabel30.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(153, 0, 255));
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel30.setText("L.0.00");
-        jPanel7.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 230, 230, 30));
+        jLabel30.setText("L.");
+        jPanel7.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 40, 30));
 
         rSButtonIcon_new15.setBackground(new java.awt.Color(102, 51, 255));
         rSButtonIcon_new15.setText("Realizar Corte");
@@ -841,6 +871,12 @@ validarconexion();
         });
         jPanel7.add(JTextbuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 240, -1));
 
+        jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel35.setText("0.00");
+        jPanel7.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 220, 30));
+
         rSPanelOpacity3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 890, 680));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1056,6 +1092,7 @@ validarconexion();
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
