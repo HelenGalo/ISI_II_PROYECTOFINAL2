@@ -221,7 +221,7 @@ public class Menu extends javax.swing.JFrame {
               JOptionPane.showMessageDialog(this, e.getMessage());
         }
         
-        if(idestadocaja==2){
+        if(idestadocaja==2 || idestadocaja==1){
             estado = true;
         } 
      
