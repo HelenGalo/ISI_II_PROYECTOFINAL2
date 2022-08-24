@@ -113,7 +113,7 @@ public class Menu extends javax.swing.JFrame {
         }
         
         
-        if(idrol==2){
+        if(idrol==2 || idrol==1){
             estado = true;
         }
         }else{
@@ -185,7 +185,7 @@ public class Menu extends javax.swing.JFrame {
               JOptionPane.showMessageDialog(this, e.getMessage());
         }
         
-        if(idrol==2 || idrol==1){
+        if(idrol==5 || idrol==1){
             estado = true;
         }
         
