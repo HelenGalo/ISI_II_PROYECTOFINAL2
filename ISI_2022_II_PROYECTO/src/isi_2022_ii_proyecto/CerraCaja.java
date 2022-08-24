@@ -40,20 +40,19 @@ public class CerraCaja extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     int codigocaja;
+    boolean estadototalcaja;
 
     public void setCodigocaja(int codigocaja) {
         this.codigocaja = codigocaja;
     }
-    boolean estadopostaperturar=false;
-    boolean estadopostaperturarbanco=false;
-             
-
+    boolean estadoposthistoriar=false;
+    boolean estadopostcorte=false;
+     boolean estadopostotalcaja=false;
+    
+    float montooperacionventas;
+    String fechaactual;
    
-    boolean estadosModificar=false;
-
-    public void setEstadosModificar(boolean estadosModificar) {
-        this.estadosModificar = estadosModificar;
-    }
+ 
     public void conectar(){
        /* conexion.setApertcajas(this);
         con = conexion.conexion();*/
@@ -67,17 +66,19 @@ public class CerraCaja extends javax.swing.JFrame {
     }
     
     
-    
-    public void validarConfirmacion(){
-        if(estadosModificar=true){
-           
-            if(estadopostaperturar==true){
-                /*insertarHistoriaCaja();
-                actualizarCuentaBancaria(Float.valueOf(JTextbuscar.getText()));*/
-            }
-            
-        }
+    public void calcularfechaactual(){
+        SimpleDateFormat dtf1 = new SimpleDateFormat("yyyy/MM/dd");
+            Calendar calendar = Calendar.getInstance();
+
+            Date dateObj = calendar.getTime();
+            String fechaderegistro = dtf1.format(dateObj);
+            fechaactual = fechaderegistro;
     }
+    
+    
+    
+
+    
       public void validarconexion(){
 
         if(con==null){
@@ -110,13 +111,16 @@ public class CerraCaja extends javax.swing.JFrame {
         initComponents();
        
         RSUtilities.setOpaqueWindow(this, false);
-        
+        rSPanelBorder1.setVisible(false);
+        rSButtonIcon_new15.setVisible(false);
+        rSButtonIcon_new16.setVisible(false);
        
         setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
     
     
     public void inicializar(){
+        calcularfechaactual();
         listarventasefectivo();
         listarventastarjeta();
         listartotalventasefectivo();
@@ -125,12 +129,38 @@ public class CerraCaja extends javax.swing.JFrame {
     }
     
     
+    public void cerrarcaja(){
+        actualizarHistoriaCaja();
+        if(estadoposthistoriar==true){
+            realizarcorte();
+            if(estadopostcorte==true){
+                actualizartotalcaja();
+                if(estadopostotalcaja==true){
+                    VentanaEmergente1 v = new VentanaEmergente1();
+                    v.setVisible(true);
+                }
+            }
+        }
+        
+        
+        
+    }
+    
+    public void listarmontoinicial(){
+         DecimalFormat formato = new DecimalFormat("##,###.00");
+         float f = obtenerMontoInicial();
+         String montoinicialStr = String.valueOf(f);
+         String montoinicial = formato.format(Double.valueOf(montoinicialStr));
+         jLabel35.setText(montoinicial);
+    }
+    
+    
     public void listartotalencaja(){
         String valor="0.00";
         DecimalFormat formato = new DecimalFormat("##,###.00");
         String SQL = "	Select sum(ec.Total) from Ventas v\n" +
                 "INNER JOIN EntradasCaja ec on ec.IdOrden = v.IdOrden\n" +
-                "WHERE v.IdCaja="+codigocaja+" AND v.FechaVenta=\"2022/08/22\" AND v.IdTipoVenta=1 OR v.IdTipoVenta=2\n" +
+                "WHERE v.IdCaja="+codigocaja+" AND v.FechaVenta='"+fechaactual+"' AND v.IdTipoVenta=1 OR v.IdTipoVenta=2\n" +
                 ";";
         try {
             Statement st = (Statement) con.createStatement();
@@ -144,9 +174,9 @@ public class CerraCaja extends javax.swing.JFrame {
                 
             }
           if(valor.equals(".00")){
-               jLabel35.setText("0.00");
+               jLabel45.setText("0.00");
            }else{
-              jLabel35.setText(valor); 
+              jLabel45.setText(valor); 
            }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -163,7 +193,7 @@ public class CerraCaja extends javax.swing.JFrame {
         String SQL = "Select sum(T1.Subtotal) from(\n" +
                     "Select v.idOrden, sum(dv.Subtotal) as 'Subtotal'from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=1 AND v.IdCaja="+codigocaja+" AND v.FechaVenta=\"2022/08/24\"\n" +
+                    "Where v.IdTipoVenta=1 AND v.IdCaja="+codigocaja+" AND v.FechaVenta='"+fechaactual+"'\n" +
                     "Group by 1) as T1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -195,7 +225,7 @@ public class CerraCaja extends javax.swing.JFrame {
         String SQL = "Select sum(T1.Subtotal) from(\n" +
                     "Select v.idOrden, sum(dv.Subtotal) as 'Subtotal'from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=2 AND v.IdCaja="+codigocaja+" AND v.FechaVenta=\"2022/08/22\"\n" +
+                    "Where v.IdTipoVenta=2 AND v.IdCaja="+codigocaja+" AND v.FechaVenta'"+fechaactual+"'\n" +
                     "Group by 1) as T1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -232,7 +262,7 @@ public class CerraCaja extends javax.swing.JFrame {
         String[] registros = new String[2];
         String SQL = "Select v.idOrden, sum(dv.Subtotal) from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=1 AND v.IdCaja=2 AND v.FechaVenta=\"2022/08/24\"\n" +
+                    "Where v.IdTipoVenta=1 AND v.IdCaja="+codigocaja+" AND v.FechaVenta='"+fechaactual+"'\n" +
                     "Group by 1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -265,7 +295,7 @@ public class CerraCaja extends javax.swing.JFrame {
         String[] registros = new String[2];
         String SQL = "Select v.idOrden, sum(dv.Subtotal) from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=2 AND v.IdCaja="+codigocaja+" AND v.FechaVenta=\"2022/08/22\"\n" +
+                    "Where v.IdTipoVenta=2 AND v.IdCaja="+codigocaja+" AND v.FechaVenta='"+fechaactual+"'\n" +
                     "Group by 1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -291,39 +321,356 @@ public class CerraCaja extends javax.swing.JFrame {
     
 
     
-    public void cerrarcaja(){
-       /* float monto = 0.00f;
-        monto =Float.valueOf(JTextbuscar.getText());
- 
-       String SQL = "UPDATE Caja SET IdEstadoCaja=?, TotalCaja=? WHERE IdCaja="+JCodigoDisponible.getText();
+
+    
+    public int ObtenerIdUsuarios(){
+        int iduser=0;
+         
+        String SQL = "SELECT u.IdUsuario From Usuarios u Where u.Usuario='"+usuario+"';";
         try {
-            PreparedStatement preparedStmt = con.prepareStatement(SQL);
-            preparedStmt.setInt(1, 2);   
-            preparedStmt.setFloat(2, monto);         
-            preparedStmt.execute();
-            estadopostaperturar=true;
-            
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                iduser =rs.getInt("u.IdUsuario");
+            }
             
            
-
-        } catch (Exception e) {
-          con=null;
-validarconexion();
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         
-        */
+        }
+        return iduser;
     }
     
-    
-    
      
+    public void calcularoperacion(){
+         DecimalFormat formato = new DecimalFormat("##,###.00");
+        String efectivo = JTextbuscar1.getText();
+        String tarjeta = JTextbuscar.getText();
+        String montoi= jLabel35.getText();
+        String tcaja = jLabel45.getText();
+        
+        String efectivot = "";
+        String tarjetat = "";
+        String totcajat = "";
+        String montoit = "";
+        
+         for(int i=0; i<efectivo.length(); i++ ){
+                    char a = efectivo.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       efectivot= efectivot + vs;
+                    }else{
+                        
+                    }
+                }
+         for(int i=0; i<tarjeta.length(); i++ ){
+                    char a = tarjeta.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                     
+                       tarjetat= tarjetat + vs;
+                    }else{
+                        
+                    }
+                }
+         
+         for(int i=0; i<tcaja.length(); i++ ){
+                    char a = tcaja.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+            
+                       totcajat= totcajat + vs;
+                    }else{
+                        
+                    }
+                }
+         
+          for(int i=0; i<montoi.length(); i++ ){
+                    char a = montoi.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+            
+                       montoit= montoit + vs;
+                    }else{
+                        
+                    }
+                }
+        
+        float treflejado = (Float.valueOf(montoit)+Float.valueOf(totcajat)) - (Float.valueOf(efectivot) + Float.valueOf(tarjetat));
+        montooperacionventas = Float.valueOf(totcajat);
+       
+        
+        
+        String resultado1 = formato.format(Double.valueOf(treflejado));
+        String resultado="";
+        if(resultado1.equals(".00")){
+            resultado="0.00";
+        }else{
+            resultado  =resultado1;
+        }
+        
+         if(resultado.equals("0.00")){
+            jLabel43.setText("0.00");
+            jLabel42.setText("0.00");
+            rSPanelBorder1.setVisible(true);
+            rSButtonIcon_new15.setVisible(true);
+            rSButtonIcon_new16.setVisible(true);
+        }else{
+            if(treflejado<Float.valueOf(totcajat)){
+                jLabel43.setText(resultado);
+                jLabel42.setText("0.00");
+            }else{
+               if(treflejado>Float.valueOf(totcajat)){
+                jLabel43.setText("0.00");
+                jLabel42.setText(resultado);
+            } 
+            }
+        }
+        
+        
+        
+        
+        
+        
+    }
     
+     public float obtenerMontoOperacion(){
+        
+        String SQL = "SELECT h.MontoOperacion FROM HistoriaCajas h Where h.IdCaja="+codigocaja+" AND h.IdEstadoHistoria="+1;
+        float montooperacion=0.00f;
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+           
+                montooperacion =Float.valueOf(rs.getString("h.MontoOperacion"));
+
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+                 con=null;
+                 validarconexion();
+        
+            }
+        
+        return montooperacion;
+        
+    }
+    
+    public void realizarcorte(){
+        if(montooperacionventas==obtenerMontoOperacion()){
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+            String horaregistro = dtf.format(LocalDateTime.now());
+            SimpleDateFormat dtf1 = new SimpleDateFormat("yyyy/MM/dd");
+            Calendar calendar = Calendar.getInstance();
+
+            Date dateObj = calendar.getTime();
+            String fechaderegistro = dtf1.format(dateObj);
+
+            String tcaja = jLabel45.getText();
+            String totcajat="";
+            for(int i=0; i<tcaja.length(); i++ ){
+                        char a = tcaja.charAt(i);
+                        String vs = String.valueOf(a);
+                        String coma = ",";
+                        char b = coma.charAt(0);
+                        if(a!=b){
+
+                           totcajat= totcajat + vs;
+                        }else{
+
+                        }
+                    }
+
+           String SQL = "INSERT INTO CortesCaja (IdCaja, ResultadoOperacionCaja, TotalCaja, FechaCorte, HoraCorte, IdUsuarioEncargadoCorte) VALUES(?, ?, ?, ?, ?)";
+            try {
+                PreparedStatement preparedStmt = con.prepareStatement(SQL);
+                preparedStmt.setInt(1, codigocaja);
+                preparedStmt.setFloat(2, obtenerMontoOperacion());
+                preparedStmt.setFloat(3, obtenertotalcajaA());
+                preparedStmt.setString(4, fechaderegistro);
+                preparedStmt.setString(5, horaregistro);
+                preparedStmt.setInt(5, ObtenerIdUsuarios());
+                preparedStmt.execute();
+
+                estadopostcorte=true;
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+              con=null;
+                validarconexion();
+
+            }
+        }else{
+            System.out.println("No es igual el monto");
+        }
+        
+    }
     
  
+     public void actualizartotalcaja(){
+        float totalcajaa=0.00f;
+        String SQL = "UPDATE Caja SET TotalCaja=? WHERE IdUsuario="+ObtenerIdUsuarios();
+ 
+        
+  
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setFloat(1, totalcajaa);
+            preparedStmt.execute();
+            estadototalcaja=true;
+          
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+            validarconexion();
+        }
+    }
+    
+    public float obtenertotalcajaA(){
+        float totalcajaa=0.00f;
+        String SQL = "Select c.TotalCaja from Caja c Where c.IdUsuario="+ObtenerIdUsuarios();
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                totalcajaa = Float.valueOf(rs.getString("c.TotalCaja"));
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+                 con=null;
+                 validarconexion();
+        
+            }
+         return totalcajaa;
+    }
+    
+     public float obtenerMontoInicial(){
+        float montoinicial=0.00f;
+        String SQL = "Select c.MontoInicial from HistoriaCajas c Where c.IdUsuario="+ObtenerIdUsuarios();
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                montoinicial = Float.valueOf(rs.getString("c.MontoInicial"));
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+                 con=null;
+                 validarconexion();
+        
+            }
+         return montoinicial;
+    }
+    
+     public void actualizarHistoriaCaja(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String horacierre = dtf.format(LocalDateTime.now());
+        SimpleDateFormat dtf1 = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar calendar = Calendar.getInstance();
+
+        Date dateObj = calendar.getTime();
+        String fechadecierre = dtf1.format(dateObj);
+        float montofinal=0.00f;
+        montofinal=obtenerMontoOperacion()+obtenerMontoInicial();
+        String SQL = "UPDATE HistoriaCajas SET  MontoFinal=?, FechaCierre=?, HoraCierre=?,IdEstadoHistoria=? WHERE IdCaja="+codigocaja+" AND IdEstadoHistoria="+1;
+        String montod=jLabel45.getText();
+        String montoo = "";
+             for(int j=0; j<montod.length(); j++ ){
+                                char a = montod.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   montoo= montoo + vs;
+                                }else{
+
+                                }
+            }
+        float montooperacionn=Float.valueOf(montoo);
+        
+  
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setFloat(1, montofinal);
+            preparedStmt.setString(2, fechadecierre);
+            preparedStmt.setString(3, horacierre);
+            preparedStmt.setInt(4, 0);
+            preparedStmt.execute();
+            estadoposthistoriar=true;
+    
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+            validarconexion();
+        }
+    }
+     
+      public boolean Validartarifa(String tarifa){
+        Pattern patron = Pattern
+                .compile("^[0-9]{1,3}+(\\,[0-9]+)*(\\.[0-9]{2})$");        
+        Matcher comparar = patron.matcher(tarifa);
+        return comparar.find();
+    }
+     public boolean validar(){
+        boolean a=true;
+      
+     
+     
+        if(JTextbuscar1.getText().contentEquals(paramString())){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
+          a= false;
+        }
+        
+        if(Validartarifa(JTextbuscar1.getText())==false)  {
+          a= false;     
+        }
+        
+        if(JTextbuscar.getText().contentEquals(paramString())){
+          JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
+          a= false;
+        }
+        
+        if(Validartarifa(JTextbuscar.getText())==false)  {
+          a= false;     
+        }
     
     
+       
     
+       
+        
+       
+         return a;
+      }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -396,6 +743,10 @@ validarconexion();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
+        rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -645,7 +996,7 @@ validarconexion();
         jLabel30.setForeground(new java.awt.Color(153, 0, 255));
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel30.setText("L.");
-        jPanel7.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 40, 30));
+        jPanel7.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 40, 30));
 
         rSButtonIcon_new15.setBackground(new java.awt.Color(102, 51, 255));
         rSButtonIcon_new15.setText("Realizar Corte");
@@ -697,7 +1048,7 @@ validarconexion();
                 .addContainerGap())
         );
 
-        jPanel7.add(rSPanelCircle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 70, 70));
+        jPanel7.add(rSPanelCircle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 70, 70));
 
         jLabel25.setBackground(new java.awt.Color(255, 255, 255));
         jLabel25.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
@@ -741,16 +1092,19 @@ validarconexion();
 
         jPanel7.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, 430, 210));
 
-        rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new11.setText("TOTAL L.");
+        rSButtonIcon_new11.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonIcon_new11.setForeground(new java.awt.Color(51, 102, 255));
+        rSButtonIcon_new11.setText("ACEPTAR");
         rSButtonIcon_new11.setBackgroundHover(new java.awt.Color(255, 51, 102));
-        rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
+        rSButtonIcon_new11.setForegroundIcon(new java.awt.Color(0, 102, 255));
+        rSButtonIcon_new11.setForegroundText(new java.awt.Color(0, 102, 255));
+        rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK_BOX);
         rSButtonIcon_new11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new11ActionPerformed(evt);
             }
         });
-        jPanel7.add(rSButtonIcon_new11, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 300, 170, -1));
+        jPanel7.add(rSButtonIcon_new11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 120, -1));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
@@ -854,13 +1208,13 @@ validarconexion();
         jLabel31.setForeground(new java.awt.Color(153, 0, 255));
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel31.setText("Código de Caja:");
-        jPanel7.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 400, 30));
+        jPanel7.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 400, 30));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("Total en Caja:");
-        jPanel7.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 120, 30));
+        jLabel33.setText("Monto Inicial:");
+        jPanel7.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 180, 30));
 
         JTextbuscar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
@@ -902,7 +1256,7 @@ validarconexion();
         jLabel35.setForeground(new java.awt.Color(153, 0, 255));
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setText("0.00");
-        jPanel7.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 220, 30));
+        jPanel7.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 190, 30));
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel36.setForeground(new java.awt.Color(153, 0, 255));
@@ -993,7 +1347,36 @@ validarconexion();
 
         jPanel7.add(rSPanelBorder1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 400, 180));
 
-        rSPanelOpacity3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 890, 650));
+        rSButtonIcon_new13.setBackground(new java.awt.Color(33, 150, 243));
+        rSButtonIcon_new13.setText("TOTAL L.");
+        rSButtonIcon_new13.setBackgroundHover(new java.awt.Color(255, 51, 102));
+        rSButtonIcon_new13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
+        rSButtonIcon_new13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new13ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(rSButtonIcon_new13, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 300, 170, -1));
+
+        jLabel44.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel44.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel44.setText("Resultado de Operacion:");
+        jPanel7.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 180, 30));
+
+        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel32.setText("L.");
+        jPanel7.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 40, 30));
+
+        jLabel45.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel45.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel45.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel45.setText("0.00");
+        jPanel7.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, 190, 30));
+
+        rSPanelOpacity3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 890, 630));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1046,6 +1429,10 @@ validarconexion();
 
     private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
         // TODO add your handling code here:
+        if(validar()==true){
+            calcularoperacion();
+        }
+        
     }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
 
     private void jLabel26MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MouseEntered
@@ -1114,6 +1501,10 @@ validarconexion();
         }
 
     }//GEN-LAST:event_rSButtonIconOne4ActionPerformed
+
+    private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1204,6 +1595,7 @@ validarconexion();
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
@@ -1215,6 +1607,8 @@ validarconexion();
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -1228,6 +1622,7 @@ validarconexion();
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new11;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new13;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new15;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new16;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new17;
