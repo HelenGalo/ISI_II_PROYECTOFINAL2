@@ -36,6 +36,14 @@ public class ActualizarInventario extends javax.swing.JFrame {
         this.codiap = Inventario;
     }
     int id;
+    
+  String usuario;
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabel15.setText("Usuario en sesion: "+usuario);
+    }
+    
       String prod;
      public void setId(int id) {
         this.id = id;
@@ -74,6 +82,23 @@ public class ActualizarInventario extends javax.swing.JFrame {
                Em.setVisible(false);
             setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage()); 
     }
+    public void conectarerror(){
+        conexion.setAin(this);
+        conexion.setPass(false);
+        con = conexion.conexion();
+    }
+    
+       public void conectarinicio(){
+        conexion.setAin(this);
+        con = conexion.conexion();
+    }
+       
+        public void conectarsinerror(){
+        conexion.setPass(true);
+        conexion.setAin(this);
+        con = conexion.conexion();
+    }
+    
        public void validarConfirmacion(){
         if(estadosModificar=true){
             Actualizar();
@@ -312,6 +337,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel15 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         rSButtonIconOne4 = new RSMaterialComponent.RSButtonIconOne();
@@ -368,10 +394,16 @@ public class ActualizarInventario extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO INVENTARIO");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 60));
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 350, 60));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 108, -1));
+
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, -1, -1));
 
         rSPanelOpacity1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 870, 50));
 
@@ -824,6 +856,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         Inventario al = new Inventario();
+        al.setUsuario(usuario);
         al.setVisible(true);
         this.dispose();
 
@@ -905,6 +938,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel34;

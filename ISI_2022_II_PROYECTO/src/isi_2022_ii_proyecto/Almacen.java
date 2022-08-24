@@ -1291,6 +1291,7 @@ public void conectarerror(){
 
     private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
       Inventario inv = new Inventario();
+      inv.setUsuario(usuario);
       inv.setVisible(true);
       this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed

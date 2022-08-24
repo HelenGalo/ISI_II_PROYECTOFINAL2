@@ -38,7 +38,12 @@ public class TablaProductos extends javax.swing.JFrame {
     public void setEstadoagregar(boolean estadoagregar) {
         this.estadoagregar = estadoagregar;
     }
+    String usuario;
 
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabel15.setText("Usuario en sesion: "+usuario);
+    }
    
     /**
      * Creates new form CalendarForm
@@ -67,6 +72,22 @@ public class TablaProductos extends javax.swing.JFrame {
             
         }
         
+    }
+    public void conectarerror(){
+        conexion.setTproductos(this);
+        conexion.setPass(false);
+        con = conexion.conexion();
+    }
+    
+       public void conectarinicio(){
+        conexion.setTproductos(this);
+        con = conexion.conexion();
+    }
+       
+        public void conectarsinerror(){
+        conexion.setPass(true);
+        conexion.setTproductos(this);
+        con = conexion.conexion();
     }
       public void listarP(){
         String[] registros = new String[6];
@@ -166,6 +187,7 @@ public class TablaProductos extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel15 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -207,13 +229,19 @@ public class TablaProductos extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO PRODUCTO");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 40));
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 420, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
         jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 0, 60, 40));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 108, -1));
+
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, -1, -1));
 
         rSPanelOpacity1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 870, 50));
 
@@ -498,6 +526,7 @@ public class TablaProductos extends javax.swing.JFrame {
           AgregarInventario p = new  AgregarInventario();
            p.setId(Integer.parseInt(prod));
            p.mostrarP();
+           p.setUsuario(usuario);
            p.setVisible(true);   
            this.dispose();
         }else{
@@ -558,6 +587,7 @@ public class TablaProductos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
