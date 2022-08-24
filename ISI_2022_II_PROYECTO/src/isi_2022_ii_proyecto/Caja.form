@@ -719,7 +719,7 @@
                       <Color blue="85" green="37" red="0" type="rgb"/>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor Por defecto"/>
+                      <Color id="Default Cursor"/>
                     </Property>
                     <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
                       <Value id="REPEAT"/>
@@ -1216,7 +1216,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Menu Principal"/>
+                        <Property name="text" type="java.lang.String" value="Men&#xfa; Principal"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel10">
@@ -1238,7 +1238,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Modulo Caja"/>
+                        <Property name="text" type="java.lang.String" value="Mod&#xfa;lo Caja"/>
                       </Properties>
                     </Component>
                     <Component class="rojerusan.RSLabelIcon" name="rSLabelIcon17">
@@ -1286,7 +1286,7 @@
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="3" rowCount="0">
-                            <Column editable="true" title="Codigo Caja" type="java.lang.Object"/>
+                            <Column editable="true" title="C&#xf3;digo Caja" type="java.lang.Object"/>
                             <Column editable="true" title="Usuario Asignado" type="java.lang.Object"/>
                             <Column editable="true" title="Total en Caja" type="java.lang.Object"/>
                           </Table>
@@ -1375,7 +1375,7 @@
                       <Color blue="ff" green="0" red="66" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="2"/>
-                    <Property name="text" type="java.lang.String" value="MODULO CAJA"/>
+                    <Property name="text" type="java.lang.String" value="MOD&#xda;LO CAJA"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

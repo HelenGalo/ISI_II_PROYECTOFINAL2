@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -49,6 +50,15 @@ public class BuscarProducto extends javax.swing.JFrame {
         conexion.setBproducto(this);
         con = conexion.conexion();
     }
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
     private void buscarNombre(){
         String nombre="";
@@ -63,12 +73,12 @@ public class BuscarProducto extends javax.swing.JFrame {
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
-
+          DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
                 nombre = rs.getString("Nombre");
                 descripcion = rs.getString("Descripcion");
                provee = rs.getString("NombreEmpresa");
-                total = rs.getString("Precio");
+                total = formato.format(rs.getFloat("Precio"));
                
                 
             }
@@ -85,6 +95,8 @@ public class BuscarProducto extends javax.swing.JFrame {
            
             
         } catch (SQLException e) {
+           con=null;
+           validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         
@@ -301,7 +313,7 @@ public class BuscarProducto extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));

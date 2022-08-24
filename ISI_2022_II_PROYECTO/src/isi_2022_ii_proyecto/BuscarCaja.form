@@ -117,7 +117,7 @@
                       <Color blue="ff" green="0" red="66" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="2"/>
-                    <Property name="text" type="java.lang.String" value="MODULO CAJA"/>
+                    <Property name="text" type="java.lang.String" value="MOD&#xda;LO CAJA"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -393,7 +393,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Menu Principal"/>
+                        <Property name="text" type="java.lang.String" value="Men&#xfa; Principal"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel10">
@@ -415,7 +415,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Modulo Bancos"/>
+                        <Property name="text" type="java.lang.String" value="Mod&#xfa;lo Bancos"/>
                       </Properties>
                     </Component>
                     <Component class="rojerusan.RSLabelIcon" name="rSLabelIcon17">
@@ -473,7 +473,7 @@
                       <Color blue="ff" green="0" red="99" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Codigo de Caja:"/>
+                    <Property name="text" type="java.lang.String" value="C&#xf3;digo de Caja:"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -528,7 +528,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="490" y="140" width="180" height="130"/>
+                      <AbsoluteConstraints x="460" y="140" width="270" height="130"/>
                     </Constraint>
                   </Constraints>
 
@@ -537,7 +537,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel37" pref="160" max="32767" attributes="0"/>
+                              <Component id="jLabel37" pref="246" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -663,7 +663,7 @@
                       <Color blue="ff" green="0" red="99" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Estado de funcion:"/>
+                    <Property name="text" type="java.lang.String" value="Estado de funci&#xf3;n:"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

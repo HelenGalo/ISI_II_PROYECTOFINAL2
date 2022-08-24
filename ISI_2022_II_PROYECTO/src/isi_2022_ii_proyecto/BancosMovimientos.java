@@ -102,7 +102,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
 
             while (rs.next()) {
                  DecimalFormat formato = new DecimalFormat("##,###.00");
-                t = formato.format(rs.getString("TotalenCuenta"));
+                t = String.valueOf(rs.getString("TotalenCuenta"));
             
             }
             
@@ -137,7 +137,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             while (rs.next()) {
                  DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("Descripcion");
-                registros[1] = formato.format(rs.getString("Valor"));
+                registros[1] = rs.getString("Valor");
                 registros[2] = rs.getString("Hora");
                 registros[3] = rs.getString("Fecha");
                 modelo.addRow(registros);
@@ -167,7 +167,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             while (rs.next()) {
                 DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("Descripcion");
-                registros[1] = formato.format(rs.getString("Valor"));
+                registros[1] = rs.getString("Valor");
                 registros[2] = rs.getString("Hora");
                 registros[3] = rs.getString("Fecha");
                 modelo.addRow(registros);
@@ -194,7 +194,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
  DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
-                tentradas=formato.format(rs.getFloat("sum(db.Valor)"));
+                tentradas=String.valueOf(rs.getFloat("sum(db.Valor)"));
               
             }
             if(tipoc.equals("LEMPIRAS")){
@@ -226,14 +226,14 @@ public class BancosMovimientos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
  DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
-                tsalidas=formato.format(rs.getFloat("sum(db.Valor)"));
+                tsalidas=String.valueOf(rs.getFloat("sum(db.Valor)"));
               
             }
             if(tipoc.equals("LEMPIRAS")){
-               jLabel17.setText("L."+tsalidas);
+               jLabel17.setText("L."+tsalidas.toString());
             }else{
                 if(tipoc.equals("DOLARES")){
-               jLabel17.setText("$."+tsalidas);
+               jLabel17.setText("$."+tsalidas.toString());
             }
             }
             
@@ -290,7 +290,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             while (rs.next()) {
                 DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("Descripcion");
-                registros[1] = formato.format(rs.getString("Valor"));
+                registros[1] = rs.getString("Valor");
                 registros[2] = rs.getString("Hora");
                 registros[3] = rs.getString("Fecha");
                 modelo.addRow(registros);
@@ -319,7 +319,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             while (rs.next()) {
                 DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("Descripcion");
-                registros[1] = formato.format(rs.getString("Valor"));
+                registros[1] = rs.getString("Valor");
                 registros[2] = rs.getString("Hora");
                 registros[3] = rs.getString("Fecha");
                 modelo.addRow(registros);
@@ -345,7 +345,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
-                tentradas=formato.format(rs.getFloat("sum(db.Valor)"));
+                tentradas=String.valueOf(rs.getFloat("sum(db.Valor)"));
               
             }
             if(tipoc.equals("LEMPIRAS")){
@@ -376,7 +376,7 @@ DecimalFormat formato = new DecimalFormat("##,###.00");
             ResultSet rs = st.executeQuery(SQL);
 DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
-                tsalidas=formato.format(rs.getFloat("sum(db.Valor)"));
+                tsalidas=String.valueOf(rs.getFloat("sum(db.Valor)"));
               
             }
             if(tipoc.equals("LEMPIRAS")){

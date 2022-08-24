@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +60,15 @@ public class Caja extends javax.swing.JFrame {
         conexion.setCaja(this);
         con = conexion.conexion();
     }
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
     public void deshabilitar(){
         String SQL = "UPDATE  Caja SET IdEstado=? Where IdCaja="+codigoc;
@@ -73,6 +83,8 @@ public class Caja extends javax.swing.JFrame {
 
         } catch (Exception e) {
             System.out.println("ERROR" + e.getMessage());   
+        con=null;
+         validarconexion();
         }
     }
 
@@ -88,10 +100,11 @@ public class Caja extends javax.swing.JFrame {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
+         DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
                 registros[0] = rs.getString("IdCaja");
                 registros[1] = rs.getString("Usuario");
-                registros[2] = rs.getString("TotalCaja");
+                registros[2] = formato.format(rs.getFloat("TotalCaja"));
                 modelo.addRow(registros);
             }
 
@@ -99,6 +112,8 @@ public class Caja extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
+         con=null;
+        validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -114,10 +129,11 @@ public class Caja extends javax.swing.JFrame {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
+             DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
                 registros[0] = rs.getString("IdCaja");
                 registros[1] = rs.getString("Usuario");
-                registros[2] = rs.getString("TotalCaja");
+                registros[2] = formato.format(rs.getFloat("TotalCaja"));
                 modelo.addRow(registros);
             }
 
@@ -125,6 +141,9 @@ public class Caja extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
+            con=null;
+            validarconexion();
+            
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -140,10 +159,11 @@ public class Caja extends javax.swing.JFrame {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
+             DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
                 registros[0] = rs.getString("IdCaja");
                 registros[1] = rs.getString("Usuario");
-                registros[2] = rs.getString("TotalCaja");
+                registros[2] = formato.format(rs.getFloat("TotalCaja"));
                 modelo.addRow(registros);
             }
 
@@ -151,6 +171,9 @@ public class Caja extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
+             con=null;
+        validarconexion();
+            
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -167,10 +190,11 @@ public class Caja extends javax.swing.JFrame {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
+            DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
                 registros[0] = rs.getString("IdCaja");
                 registros[1] = rs.getString("Usuario");
-                registros[2] = rs.getString("TotalCaja");
+                registros[2] = formato.format(rs.getFloat("TotalCaja"));
                 modelo.addRow(registros);
             }
 
@@ -178,6 +202,8 @@ public class Caja extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
+            con=null;
+        validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -191,11 +217,11 @@ public class Caja extends javax.swing.JFrame {
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
-
+  DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
                 registros[0] = rs.getString("IdCaja");
                 registros[1] = rs.getString("Usuario");
-                registros[2] = rs.getString("TotalCaja");
+                registros[2] = formato.format(rs.getFloat("TotalCaja"));
                 modelo.addRow(registros);
             }
 
@@ -203,7 +229,9 @@ public class Caja extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+        validarconexion();
+                  JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         
     }
@@ -235,10 +263,11 @@ public class Caja extends javax.swing.JFrame {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
+             DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
                 registros[0] = rs.getString("IdCaja");
                 registros[1] = rs.getString("Usuario");
-                registros[2] = rs.getString("TotalCaja");
+                registros[2] = formato.format(rs.getFloat("TotalCaja"));
                 modelo.addRow(registros);
             }
 
@@ -246,6 +275,8 @@ public class Caja extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
+           con=null;
+        validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         
@@ -497,7 +528,7 @@ public class Caja extends javax.swing.JFrame {
                 .addGap(253, 253, 253)
                 .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65))
@@ -903,7 +934,7 @@ public class Caja extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -911,7 +942,7 @@ public class Caja extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Caja");
+        jLabel11.setText("Modúlo Caja");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -981,7 +1012,7 @@ public class Caja extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo Caja", "Usuario Asignado", "Total en Caja"
+                "Código Caja", "Usuario Asignado", "Total en Caja"
             }
         ));
         JTableBancos.setBackgoundHead(new java.awt.Color(60, 76, 143));
@@ -1031,7 +1062,7 @@ public class Caja extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO CAJA");
+        jLabel6.setText("MODÚLO CAJA");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
@@ -1471,9 +1502,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel linesetting10;
     private javax.swing.JPanel linesetting11;
     private javax.swing.JPanel linesetting12;
-    private javax.swing.JPanel linesetting13;
-    private javax.swing.JPanel linesetting14;
-    private javax.swing.JPanel linesetting15;
     private javax.swing.JPanel linesetting16;
     private javax.swing.JPanel linesetting2;
     private javax.swing.JPanel linesetting3;
@@ -1485,20 +1513,11 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel linesetting9;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel menuhide;
-    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne10;
-    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne11;
-    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne12;
-    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne13;
-    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne14;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne15;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne16;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne17;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
-    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne6;
-    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne7;
-    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne8;
-    private RSMaterialComponent.RSButtonIconOne rSButtonIconOne9;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new10;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new11;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new12;

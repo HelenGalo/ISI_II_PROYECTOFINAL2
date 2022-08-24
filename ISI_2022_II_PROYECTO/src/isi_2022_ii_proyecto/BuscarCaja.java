@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -42,6 +43,16 @@ public class BuscarCaja extends javax.swing.JFrame {
         conexion.setBc(this);
         con = conexion.conexion();
     }
+      public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
+    
     /**
      * Creates new form CalendarForm
      */
@@ -72,15 +83,15 @@ public class BuscarCaja extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-           
+                DecimalFormat formato = new DecimalFormat("##,###.00");
                 usuario = rs.getString("u.Usuario");
                 ecaja = rs.getString("eu.Descripcion");
                 eucaja = rs.getString("ec.Valor");
-                totalcaja = rs.getString("c.TotalCaja");
-               
+                totalcaja = formato.format(rs.getFloat("c.TotalCaja"));
+         
                 
             }
-       
+   
             jLabel34.setText(usuario);
             jLabel39.setText(ecaja);
             jLabel40.setText(eucaja);
@@ -89,6 +100,9 @@ public class BuscarCaja extends javax.swing.JFrame {
         
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+        con=null;
+        validarconexion();
         }
         
     }
@@ -159,7 +173,7 @@ public class BuscarCaja extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO CAJA");
+        jLabel6.setText("MODÚLO CAJA");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 60));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
@@ -249,7 +263,7 @@ public class BuscarCaja extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -257,7 +271,7 @@ public class BuscarCaja extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Bancos");
+        jLabel11.setText("Modúlo Bancos");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -342,7 +356,7 @@ public class BuscarCaja extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("Codigo de Caja:");
+        jLabel29.setText("Código de Caja:");
         jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 143, 40));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -371,7 +385,7 @@ public class BuscarCaja extends javax.swing.JFrame {
             rSButtonPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rSButtonPane1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
                 .addContainerGap())
         );
         rSButtonPane1Layout.setVerticalGroup(
@@ -382,7 +396,7 @@ public class BuscarCaja extends javax.swing.JFrame {
                 .addGap(70, 70, 70))
         );
 
-        jPanel3.add(rSButtonPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, 180, 130));
+        jPanel3.add(rSButtonPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 270, 130));
 
         jLabel38.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(153, 0, 255));
@@ -425,7 +439,7 @@ public class BuscarCaja extends javax.swing.JFrame {
         jLabel41.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel41.setForeground(new java.awt.Color(153, 0, 255));
         jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel41.setText("Estado de funcion:");
+        jLabel41.setText("Estado de función:");
         jPanel3.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 160, 40));
 
         jLabel42.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
