@@ -78,6 +78,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         }
         
     }
+      
       public void conectarerror(){
         conexion.setAenv(this);
         conexion.setPass(false);
@@ -375,7 +376,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
 
  public boolean Validartarifa(String tarifa){
         Pattern patron = Pattern
-                .compile("^[0-9]{1,3}+(\\,[0-9]+)*(\\.[0-9]{2})$");        
+                .compile("^[0-9]*(\\.[0-9]{2})$");        
         Matcher comparar = patron.matcher(tarifa);
         return comparar.find();
     }
@@ -1140,6 +1141,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
 
         NombreC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NombreC.setPlaceholder("Ingresa nombre");
+        NombreC.setSoloLetras(true);
         NombreC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NombreCActionPerformed(evt);
@@ -1398,6 +1400,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
     Envio ev = new Envio();
+        ev.setUsuario(usuario);
        ev.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed

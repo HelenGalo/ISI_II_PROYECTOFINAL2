@@ -42,6 +42,12 @@ public class Envio extends javax.swing.JFrame {
     Connection con = conexion.conexion();
     int id=0;
 
+  String usuario;
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabel15.setText("Usuario en sesion: "+usuario);
+    }
     
   public void setEnvio(String envio) {
         this.codenvio = envio;
@@ -61,6 +67,22 @@ public class Envio extends javax.swing.JFrame {
         
     }
     
+  public void conectarerror(){
+        conexion.setEnvio(this);
+        conexion.setPass(false);
+        con = conexion.conexion();
+    }
+    
+       public void conectarinicio(){
+        conexion.setEnvio(this);
+        con = conexion.conexion();
+    }
+       
+        public void conectarsinerror(){
+        conexion.setPass(true);
+        conexion.setEnvio(this);
+        con = conexion.conexion();
+    }
     public Envio() {
         initComponents();
          this.setLocationRelativeTo(null);
@@ -297,6 +319,7 @@ public class Envio extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel15 = new javax.swing.JLabel();
         habilitado = new newscomponents.RSButtonIcon_new();
         deshabilitado = new newscomponents.RSButtonIcon_new();
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
@@ -305,6 +328,7 @@ public class Envio extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
@@ -440,6 +464,8 @@ public class Envio extends javax.swing.JFrame {
             HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+
+        jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1362, -1));
 
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
@@ -786,6 +812,8 @@ public class Envio extends javax.swing.JFrame {
             .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 46, -1, -1));
+
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -925,46 +953,29 @@ public class Envio extends javax.swing.JFrame {
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 112, 906, 390));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MENU);
+        jPanel4.add(rSLabelIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO EMPRESA DE ENVÍO");
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 370, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
+        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, 60, 50));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
+        jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 823, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, -1, -1));
 
         habilitado.setBackground(new java.awt.Color(33, 150, 243));
         habilitado.setText("Empresas Habilitadas");
@@ -1031,26 +1042,7 @@ public class Envio extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, 1362, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(260, 260, 260)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, 662));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -1139,6 +1131,7 @@ public class Envio extends javax.swing.JFrame {
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
       Menu m = new Menu();
+       m.setUsuario(usuario);
         m.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
@@ -1163,6 +1156,7 @@ public class Envio extends javax.swing.JFrame {
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
         // TODO add your handling code here:
         AgregarEnvio ag = new AgregarEnvio();
+        ag.setUsuario(usuario);
         ag.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
@@ -1175,6 +1169,7 @@ public class Envio extends javax.swing.JFrame {
           ActualizarEnvio ac = new   ActualizarEnvio();
            ac.setId(Integer.parseInt(codenvio));
            ac.MostrarE();
+           ac.setUsuario(usuario);
            ac.setVisible(true);   
            this.dispose();
         }else{
@@ -1337,6 +1332,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

@@ -1924,12 +1924,14 @@ public class Menu extends javax.swing.JFrame {
 
     private void BOTONENVIOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONENVIOMouseClicked
         Envio e = new Envio();
+            e.setUsuario(usuario);
              e.setVisible(true);
              this.dispose();
     }//GEN-LAST:event_BOTONENVIOMouseClicked
 
     private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new15ActionPerformed
         Envio e = new Envio();
+            e.setUsuario(usuario);
              e.setVisible(true);
              this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new15ActionPerformed
