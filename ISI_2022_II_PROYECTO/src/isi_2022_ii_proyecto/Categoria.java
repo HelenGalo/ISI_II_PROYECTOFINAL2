@@ -60,6 +60,15 @@ public class Categoria extends javax.swing.JFrame {
         conexion.setCate(this);
         con = conexion.conexion();
     }
+     public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
       public void listarAl(){
         String[] registros = new String[3];
@@ -84,6 +93,8 @@ public class Categoria extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        con=null;
+          validarconexion();
         }
     }
      
@@ -127,6 +138,8 @@ public class Categoria extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+           con=null;
+          validarconexion();
         }
         
     } 
@@ -684,7 +697,7 @@ public class Categoria extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo Categoria", "Nombre", "Descripcion"
+                "Código Categoría", "Nombre", "Descripción"
             }
         ));
         JTableInv.setToolTipText("");

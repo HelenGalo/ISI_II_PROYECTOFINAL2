@@ -51,6 +51,15 @@ public class PrecioHistorico extends javax.swing.JFrame {
         conexion.setPrecioh(this);
         con = conexion.conexion();
     }
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
     private void buscarNombre(){
         String[] registros = new String[6];
@@ -88,6 +97,8 @@ public class PrecioHistorico extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
         
     }

@@ -61,7 +61,15 @@ public class Facturas extends javax.swing.JFrame {
         conexion.setFacturas(this);
         con = conexion.conexion();
     }
-    
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
      public void deshabilitar(){
         String SQL = "UPDATE Factura SET IdEstado=? Where IdFactura='"+codigoc+"';";
@@ -75,7 +83,10 @@ public class Facturas extends javax.swing.JFrame {
             ve.setVisible(true);
 
         } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());   
+            System.out.println("ERROR" + e.getMessage()); 
+            
+            con=null;
+          validarconexion();
         }
     }
      
@@ -92,11 +103,15 @@ public class Facturas extends javax.swing.JFrame {
             view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             view.setVisible(true);
          } catch (JRException jex) {
+          
              System.err.println("Error al imprimir factura "+ jex.getMessage());
             JOptionPane.showMessageDialog(null,"JasperException"+jex.getMessage());
         } catch (Exception ex) {
              System.err.println("Error al imprimir factura "+ ex.getMessage());
             JOptionPane.showMessageDialog(null, ex.getStackTrace());
+                  con=null;
+               validarconexion();
+        
         }
     }
      
@@ -623,7 +638,7 @@ public class Facturas extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -631,10 +646,10 @@ public class Facturas extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Facturas");
+        jLabel11.setText("Modúlo Facturas");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WC);
+        rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DESCRIPTION);
         rSLabelIcon17.setName(""); // NOI18N
 
         rSPanelOpacity1.setLayer(rSLabelIcon6, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -720,7 +735,7 @@ public class Facturas extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO DE FACTURAS");
+        jLabel6.setText("MODÚLO DE FACTURAS");
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
 
@@ -984,6 +999,8 @@ public class Facturas extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+               con=null;
+            validarconexion();
         }
     }
      public void listarh(){
@@ -1009,6 +1026,8 @@ public class Facturas extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
     }
      public void listardh(){
@@ -1033,6 +1052,8 @@ public class Facturas extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
     }
      
@@ -1074,6 +1095,8 @@ public class Facturas extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+           validarconexion();
         }
         
     }

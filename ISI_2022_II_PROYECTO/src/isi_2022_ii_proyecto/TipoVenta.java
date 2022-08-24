@@ -75,6 +75,15 @@ ConexionBD conexion = new ConexionBD();
         conexion.setTventa(this);
         con = conexion.conexion();
     }
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
     public void transformarvalores(){
      
@@ -128,6 +137,8 @@ ConexionBD conexion = new ConexionBD();
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
     }
     
@@ -170,6 +181,8 @@ ConexionBD conexion = new ConexionBD();
                         
                     }catch(SQLException e){
                         System.out.println("Error al obtener el id de la direcciones"+e.getMessage());
+                        con=null;
+            validarconexion();
 
                     }
                 return idempresaenvio;
@@ -193,6 +206,8 @@ ConexionBD conexion = new ConexionBD();
 
                         
                     }catch(SQLException e){
+                        con=null;
+            validarconexion();
                         System.out.println("Error al obtener las direcciones"+e.getMessage());
 
                     }
@@ -232,6 +247,8 @@ ConexionBD conexion = new ConexionBD();
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
         
         jLabel61.setText(tarifa);

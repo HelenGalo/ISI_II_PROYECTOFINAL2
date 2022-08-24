@@ -60,7 +60,15 @@ public class Productos extends javax.swing.JFrame {
         con = conexion.conexion();
     }
     
-    
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
       public void deshabilitarp(){
         String SQL = "UPDATE Productos SET IdEstado=? Where IdProductos="+prod;
         try {
@@ -73,7 +81,10 @@ public class Productos extends javax.swing.JFrame {
             ve.setVisible(true);
 
         } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());   
+            System.out.println("ERROR" + e.getMessage()); ;
+            
+            con=null;
+             validarconexion();
         }
     }
        public void listardehabilitados(){
@@ -88,7 +99,7 @@ public class Productos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                DecimalFormat formato = new DecimalFormat("###,###.##");
+                DecimalFormat formato = new DecimalFormat("###,###.00");
                 registros[0] = rs.getString("IdProducto");
                 registros[1] = rs.getString("Nombre");
                 registros[2] = formato.format(rs.getString("Precio"));
@@ -102,6 +113,8 @@ public class Productos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+             con=null;
+             validarconexion();
         }
     }
        public void listarHabilitados(){
@@ -130,6 +143,8 @@ public class Productos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+             con=null;
+             validarconexion();
         }
     }
      public void listarP(){
@@ -161,6 +176,8 @@ public class Productos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+             con=null;
+             validarconexion();
         }
     }
      
@@ -206,6 +223,8 @@ public class Productos extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+             con=null;
+             validarconexion();
         }
         
     } 
@@ -892,7 +911,7 @@ public class Productos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo Producto", "Nombre  Producto", "Precio", "Categoria", "Proveedor"
+                "Código Producto", "Nombre  Producto", "Precio", "Categoría", "Proveedor"
             }
         ));
         JTableProductos.setToolTipText("");
@@ -914,7 +933,7 @@ public class Productos extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 1035, Short.MAX_VALUE)
+            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 1036, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane2)

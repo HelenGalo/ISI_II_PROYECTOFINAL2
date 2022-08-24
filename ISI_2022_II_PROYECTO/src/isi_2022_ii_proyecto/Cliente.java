@@ -52,6 +52,15 @@ public class Cliente extends javax.swing.JFrame {
         conexion.setCliente(this);
         con = conexion.conexion();
     }
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
      public void deshabilitar(){
         String SQL = "UPDATE Clientes SET Estado=? Where IdCliente="+codigoc;
@@ -66,6 +75,8 @@ public class Cliente extends javax.swing.JFrame {
 
         } catch (Exception e) {
             System.out.println("ERROR" + e.getMessage());   
+          con=null;
+       validarconexion();
         }
     }
 
@@ -112,14 +123,14 @@ public class Cliente extends javax.swing.JFrame {
         rSButtonIcon_new7 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new10 = new newscomponents.RSButtonIcon_new();
+        linesetting12 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         linesetting6 = new javax.swing.JPanel();
         rSLabelIcon3 = new rojerusan.RSLabelIcon();
         rSLabelIcon4 = new rojerusan.RSLabelIcon();
         rSLabelIcon5 = new rojerusan.RSLabelIcon();
-        linesetting12 = new javax.swing.JPanel();
         rSButtonIcon_new11 = new newscomponents.RSButtonIcon_new();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         dashboardview = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         rSPanelOpacity1 = new RSMaterialComponent.RSPanelOpacity();
@@ -148,6 +159,7 @@ public class Cliente extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
@@ -255,7 +267,10 @@ public class Cliente extends javax.swing.JFrame {
 
         Header.add(jPanel2, java.awt.BorderLayout.CENTER);
 
+        jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1416, -1));
+
         menu.setBackground(new java.awt.Color(255, 255, 255));
+        menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
@@ -417,6 +432,8 @@ public class Cliente extends javax.swing.JFrame {
 
         MenuIcon.add(linesetting11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, -1, 50));
 
+        menu.add(MenuIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 686));
+
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
         menuhide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -429,7 +446,7 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new4ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new4, new org.netbeans.lib.awtextra.AbsoluteConstraints(226, 110, 210, -1));
+        menuhide.add(rSButtonIcon_new4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 210, -1));
 
         rSButtonIcon_new5.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new5.setText("Buscar Clientes");
@@ -440,7 +457,7 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new5ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 210, -1));
+        menuhide.add(rSButtonIcon_new5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 210, -1));
 
         rSButtonIcon_new6.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new6.setText("Deshabilitar Clientes");
@@ -451,7 +468,7 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new6ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 210, 40));
+        menuhide.add(rSButtonIcon_new6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 210, 40));
 
         rSButtonIcon_new7.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new7.setText("Agregar Clientes");
@@ -462,7 +479,7 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new7ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 210, -1));
+        menuhide.add(rSButtonIcon_new7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 210, -1));
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new9.setText("Modificar Clientes");
@@ -473,7 +490,7 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new9ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 210, -1));
+        menuhide.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 210, -1));
 
         rSButtonIcon_new10.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new10.setText("Imprimir ");
@@ -484,7 +501,30 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new10ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 210, -1));
+        menuhide.add(rSButtonIcon_new10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 210, -1));
+
+        linesetting12.setBackground(new java.awt.Color(0, 55, 133));
+        linesetting12.setPreferredSize(new java.awt.Dimension(50, 10));
+        linesetting12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                linesetting12MouseClicked(evt);
+            }
+        });
+        linesetting12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Cliente");
+        linesetting12.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 30));
+
+        jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Gestiones");
+        linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 210, 30));
+
+        menuhide.add(linesetting12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 60));
 
         linesetting6.setBackground(new java.awt.Color(20, 101, 187));
         linesetting6.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -524,27 +564,6 @@ public class Cliente extends javax.swing.JFrame {
 
         menuhide.add(linesetting6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 585, 210, 51));
 
-        linesetting12.setBackground(new java.awt.Color(0, 55, 133));
-        linesetting12.setPreferredSize(new java.awt.Dimension(50, 10));
-        linesetting12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                linesetting12MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout linesetting12Layout = new javax.swing.GroupLayout(linesetting12);
-        linesetting12.setLayout(linesetting12Layout);
-        linesetting12Layout.setHorizontalGroup(
-            linesetting12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 210, Short.MAX_VALUE)
-        );
-        linesetting12Layout.setVerticalGroup(
-            linesetting12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-        );
-
-        menuhide.add(linesetting12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -50, 210, 50));
-
         rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new11.setText("Regresar");
         rSButtonIcon_new11.setBackgroundHover(new java.awt.Color(0, 55, 133));
@@ -554,40 +573,11 @@ public class Cliente extends javax.swing.JFrame {
                 rSButtonIcon_new11ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 210, -1));
+        menuhide.add(rSButtonIcon_new11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 210, -1));
 
-        jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Cliente");
+        menu.add(menuhide, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, -4, 210, 690));
 
-        jLabel12.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Gestiones");
-
-        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
-        menu.setLayout(menuLayout);
-        menuLayout.setHorizontalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addComponent(MenuIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menuhide, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-        menuLayout.setVerticalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(menuLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(menuhide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, -1, 637));
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
         dashboardview.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -614,7 +604,7 @@ public class Cliente extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -622,7 +612,7 @@ public class Cliente extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Clientes");
+        jLabel11.setText("Modúlo Clientes");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WC);
@@ -683,7 +673,7 @@ public class Cliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo Cliente", "Nombres", "Apellidos", "Telefono", "Correo Electronico", "Estado"
+                "Código Cliente", "Nombres", "Apellidos", "Teléfono", "Correo Electrónico", "Estado"
             }
         ));
         JTableEmpleado.setBackgoundHead(new java.awt.Color(60, 76, 143));
@@ -711,7 +701,7 @@ public class Cliente extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO CLIENTES");
+        jLabel6.setText("MODÚLO CLIENTES");
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
 
@@ -785,26 +775,7 @@ public class Cliente extends javax.swing.JFrame {
         });
         dashboardview.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(260, 260, 260)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 637, Short.MAX_VALUE))
-        );
+        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, 636));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -1008,6 +979,10 @@ String SQL = "select c.IdCliente,c.Nombres,c.Apellidos,c.Telefono, c.CorreoElect
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+          con=null;
+       validarconexion();
+        
         }
     }
      public void listarh(){
@@ -1028,6 +1003,7 @@ String SQL = "select c.IdCliente,c.Nombres,c.Apellidos,c.Telefono, c.CorreoElect
                 registros[4] = rs.getString("c.CorreoElectronico");
                 registros[5] = rs.getString("eu.Descripcion");
                 modelo.addRow(registros);
+            
             }
 
             JTableEmpleado.setModel(modelo);
@@ -1035,6 +1011,10 @@ String SQL = "select c.IdCliente,c.Nombres,c.Apellidos,c.Telefono, c.CorreoElect
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+         con=null;
+       validarconexion();
+        
+        
         }
     }
      public void listardh(){
@@ -1062,6 +1042,8 @@ String SQL = "select c.IdCliente,c.Nombres,c.Apellidos,c.Telefono, c.CorreoElect
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+       validarconexion();
         }
     }
      
@@ -1103,6 +1085,8 @@ String SQL = "select c.IdCliente,c.Nombres,c.Apellidos,c.Telefono, c.CorreoElect
             JTableEmpleado.setModel(modelo);
             
         } catch (SQLException e) {
+          con=null;
+       validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         

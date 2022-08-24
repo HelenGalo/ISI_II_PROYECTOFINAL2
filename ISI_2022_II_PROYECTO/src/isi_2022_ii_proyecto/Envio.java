@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +51,15 @@ public class Envio extends javax.swing.JFrame {
         conexion.setEnvio(this);
         con = conexion.conexion();
     }
-  
+  public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
     public Envio() {
         initComponents();
@@ -72,7 +81,9 @@ public class Envio extends javax.swing.JFrame {
             ve.setVisible(true);
 
         } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());   
+            System.out.println("ERROR" + e.getMessage());  
+            con=null;
+            validarconexion();
         }
     }
       public void listarh(){
@@ -86,9 +97,10 @@ public class Envio extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
+                DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("IdEmpresaEnvio");
                 registros[1] = rs.getString("NombreEmpresa");
-                registros[2] = rs.getString("Tarifa");
+                registros[2] = formato.format(rs.getFloat("Tarifa"));
                 registros[3] = rs.getString("Telefono");
                 registros[4] = rs.getString("CorreoElectronico");
                 modelo.addRow(registros);
@@ -99,6 +111,8 @@ public class Envio extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
     }
        public void listarE(){
@@ -111,10 +125,11 @@ public class Envio extends javax.swing.JFrame {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
-            while (rs.next()) {
+              while (rs.next()) {
+                DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("IdEmpresaEnvio");
                 registros[1] = rs.getString("NombreEmpresa");
-                registros[2] = rs.getString("Tarifa");
+                registros[2] = formato.format(rs.getFloat("Tarifa"));
                 registros[3] = rs.getString("Telefono");
                 registros[4] = rs.getString("CorreoElectronico");
                 modelo.addRow(registros);
@@ -125,6 +140,8 @@ public class Envio extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
     }
      public void listarDesh(){
@@ -137,10 +154,11 @@ public class Envio extends javax.swing.JFrame {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
-            while (rs.next()) {
+           while (rs.next()) {
+                DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("IdEmpresaEnvio");
                 registros[1] = rs.getString("NombreEmpresa");
-                registros[2] = rs.getString("Tarifa");
+                registros[2] = formato.format(rs.getFloat("Tarifa"));
                 registros[3] = rs.getString("Telefono");
                 registros[4] = rs.getString("CorreoElectronico");
                 modelo.addRow(registros);
@@ -151,6 +169,8 @@ public class Envio extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
     }
      
@@ -178,11 +198,12 @@ public class Envio extends javax.swing.JFrame {
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
-
-             while (rs.next()) {
+              
+            while (rs.next()) {
+                DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("IdEmpresaEnvio");
                 registros[1] = rs.getString("NombreEmpresa");
-                registros[2] = rs.getString("Tarifa");
+                registros[2] = formato.format(rs.getFloat("Tarifa"));
                 registros[3] = rs.getString("Telefono");
                 registros[4] = rs.getString("CorreoElectronico");
                 modelo.addRow(registros);
@@ -191,6 +212,8 @@ public class Envio extends javax.swing.JFrame {
             JTableEnvio.setModel(modelo);
             
         } catch (SQLException e) {
+            con=null;
+            validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         
@@ -787,7 +810,7 @@ public class Envio extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -795,7 +818,7 @@ public class Envio extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Empresa Envios");
+        jLabel11.setText("Modúlo Empresa Envíos");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -881,7 +904,7 @@ public class Envio extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo Empresa de Envío", "Nombre Empresa", "Tarifa", "Telefono", "Correo Electronico"
+                "Código Empresa de Envío", "Nombre Empresa", "Tarifa", "Teléfono", "Correo Electrónico"
             }
         ));
         JTableEnvio.setToolTipText("");

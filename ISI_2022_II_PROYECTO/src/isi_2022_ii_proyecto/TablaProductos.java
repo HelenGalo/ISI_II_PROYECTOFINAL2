@@ -59,7 +59,15 @@ public class TablaProductos extends javax.swing.JFrame {
         conexion.setTproductos(this);
         con = conexion.conexion();
     }
-    
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
       public void listarP(){
         String[] registros = new String[6];
         DefaultTableModel modelo =  (DefaultTableModel) JTableProductos.getModel();
@@ -72,10 +80,11 @@ public class TablaProductos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
+                 DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("IdProducto");
                 registros[1] = rs.getString("Nombre");
                 registros[2] = rs.getString("Descripcion");
-                registros[3] = rs.getString("Precio");
+                registros[3] = formato.format(rs.getFloat("Precio"));
                 registros[4] = rs.getString("NombreCategoria");
                 registros[5] = rs.getString("NombreEmpresa");
                 modelo.addRow(registros);
@@ -86,6 +95,8 @@ public class TablaProductos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
     }
      
@@ -132,6 +143,8 @@ public class TablaProductos extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
         
     } 
@@ -193,7 +206,7 @@ public class TablaProductos extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO PRODUCTO");
+        jLabel6.setText("MODÚLO PRODUCTO");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
@@ -274,7 +287,7 @@ public class TablaProductos extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -282,7 +295,7 @@ public class TablaProductos extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Productos");
+        jLabel11.setText("Modúlo Productos");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_MALL);
@@ -360,7 +373,7 @@ public class TablaProductos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo Producto", "Nombre  Producto", "Descripcion", "Precio", "Categoria", "Proveedor"
+                "Código Producto", "Nombre  Producto", "Descripcion", "Precio", "Categoría", "Proveedor"
             }
         ));
         JTableProductos.setToolTipText("");

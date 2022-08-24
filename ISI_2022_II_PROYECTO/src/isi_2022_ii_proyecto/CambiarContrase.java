@@ -109,6 +109,7 @@ public class CambiarContrase extends javax.swing.JFrame {
         con = conexion.conexion();
     }
     
+    
     public void cerrarc(){
         try {
             con.close();
@@ -116,7 +117,15 @@ public class CambiarContrase extends javax.swing.JFrame {
             Logger.getLogger(ActualizarNuevaContrase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
     
     public void actualizarcontra(){
@@ -202,7 +211,8 @@ public class CambiarContrase extends javax.swing.JFrame {
               
             }
     }catch(Exception e){
-        
+        con=null;
+         validarconexion(); 
     }
         System.out.println("el id es: "+idEmpleado);
         System.out.println("el sql es: "+SQL);
@@ -228,7 +238,8 @@ public class CambiarContrase extends javax.swing.JFrame {
             }
         }catch(Exception e ){
             System.out.println("ERROR"+ e.getMessage());
-        
+         con=null;
+         validarconexion(); 
         }
         int tokeningresado= Integer.valueOf(token);
         System.out.println("TOKEN R "+tokenbd);
@@ -299,7 +310,8 @@ public class CambiarContrase extends javax.swing.JFrame {
             }
         }catch(Exception e ){
             System.out.println("ERROR"+ e.getMessage());
-        
+         con=null;
+         validarconexion(); 
         }
         
         if(correo.isEmpty()){
@@ -686,7 +698,7 @@ public class CambiarContrase extends javax.swing.JFrame {
         jLabel7.setText("Ingrese el código que hemos enviado a su correo registrado");
         jLabel7.setFocusable(false);
         panelRound1.add(jLabel7);
-        jLabel7.setBounds(60, 270, 580, 30);
+        jLabel7.setBounds(50, 310, 580, 20);
 
         rSTextFullRound1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         rSTextFullRound1.setPlaceholder("Escribe tu correo...");
@@ -796,7 +808,7 @@ public class CambiarContrase extends javax.swing.JFrame {
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, linesetting4Layout.createSequentialGroup()
-                .addContainerGap(667, Short.MAX_VALUE)
+                .addContainerGap(664, Short.MAX_VALUE)
                 .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)

@@ -60,7 +60,15 @@ public class Inventario extends javax.swing.JFrame {
         conexion.setInventario(this);
         con = conexion.conexion();
     }
-    
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
       public void listarAl(){
         String[] registros = new String[6];
         DefaultTableModel modelo =  (DefaultTableModel) JTableInv.getModel();
@@ -87,6 +95,8 @@ public class Inventario extends javax.swing.JFrame {
             
 
         } catch (SQLException e) {
+            con=null;
+            validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -133,6 +143,8 @@ public class Inventario extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+         con=null;
+            validarconexion();
         }
         
     } 
@@ -459,7 +471,7 @@ public class Inventario extends javax.swing.JFrame {
 
         MenuIcon.add(linesetting11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, -1, 50));
 
-        menu.add(MenuIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 1010));
+        menu.add(MenuIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 1010));
 
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
         menuhide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -475,7 +487,7 @@ public class Inventario extends javax.swing.JFrame {
                 rSButtonIcon_new3ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 210, -1));
+        menuhide.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 200, -1));
 
         linesetting6.setBackground(new java.awt.Color(20, 101, 187));
         linesetting6.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -524,7 +536,7 @@ public class Inventario extends javax.swing.JFrame {
                 rSButtonIcon_new5ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 77, 210, -1));
+        menuhide.add(rSButtonIcon_new5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 190, -1));
 
         rSButtonIcon_new7.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new7.setText("Agregar Inventario");
@@ -535,7 +547,7 @@ public class Inventario extends javax.swing.JFrame {
                 rSButtonIcon_new7ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 210, -1));
+        menuhide.add(rSButtonIcon_new7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 200, -1));
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new9.setText("Modificar ");
@@ -546,7 +558,7 @@ public class Inventario extends javax.swing.JFrame {
                 rSButtonIcon_new9ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 210, -1));
+        menuhide.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 190, -1));
 
         rSButtonIcon_new10.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new10.setText("Imprimir ");
@@ -557,7 +569,7 @@ public class Inventario extends javax.swing.JFrame {
                 rSButtonIcon_new10ActionPerformed(evt);
             }
         });
-        menuhide.add(rSButtonIcon_new10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 210, -1));
+        menuhide.add(rSButtonIcon_new10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 190, -1));
 
         linesetting12.setBackground(new java.awt.Color(0, 55, 133));
         linesetting12.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -580,7 +592,7 @@ public class Inventario extends javax.swing.JFrame {
         jLabel12.setText("Gestiones");
         linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 210, 20));
 
-        menuhide.add(linesetting12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 80));
+        menuhide.add(linesetting12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 80));
 
         menu.add(menuhide, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 210, 720));
 
@@ -604,7 +616,7 @@ public class Inventario extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -612,7 +624,7 @@ public class Inventario extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Inventario");
+        jLabel11.setText("Modúlo Inventario");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LIST);
@@ -690,7 +702,7 @@ public class Inventario extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo Producto", "Codigo Almacen", "Producto", "Cantida Actual", "Cantidad Maxima", "Cantidad Minima"
+                "Código Producto", "Código Almacén", "Producto", "Cantida Actual", "Cantidad Maxima", "Cantidad Minima"
             }
         ));
         JTableInv.setToolTipText("");

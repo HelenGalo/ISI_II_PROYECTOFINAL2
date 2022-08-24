@@ -53,7 +53,17 @@ public class VentasEmpleado extends javax.swing.JFrame {
         conexion.setVentaempleado(this);
         con = conexion.conexion();
     }
-      
+        public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
+    
+    
      
      
      public void limpiartabla(){
@@ -102,6 +112,8 @@ public class VentasEmpleado extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
         
     } 
@@ -120,12 +132,7 @@ public class VentasEmpleado extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-               // registros[0] = rs.getString("v.IdOrden");
-               // registros[1] = rs.getString("v.FechaVenta");
-               // registros[2] = rs.getString("v.HoraVenta");
-               // registros[3] = rs.getString("c.Nombres")+" "+rs.getString("c.Apellidos");
-               // registros[4] = rs.getString("tp.Descripcion");
-               // modelo.addRow(registros);
+              
                 nombre= rs.getString("e.PrimerNombre")+" "+rs.getString("e.PrimerApellido");
                 Total=rs.getString("Total");
             }
@@ -136,6 +143,8 @@ public class VentasEmpleado extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
         
     } 

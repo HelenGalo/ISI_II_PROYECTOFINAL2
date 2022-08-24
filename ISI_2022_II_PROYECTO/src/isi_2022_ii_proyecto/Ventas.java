@@ -60,7 +60,16 @@ public class Ventas extends javax.swing.JFrame {
         conexion.setVentas(this);
         con = conexion.conexion();
     }
-    
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
+
     
     
       public void listaV(){
@@ -95,6 +104,8 @@ public class Ventas extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+                con=null;
+            validarconexion();
         }
     }
      
@@ -213,6 +224,8 @@ public class Ventas extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+                con=null;
+            validarconexion();
         }
         
     } 
@@ -292,8 +305,6 @@ public class Ventas extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
-        habilitado = new newscomponents.RSButtonIcon_new();
-        deshabilitado = new newscomponents.RSButtonIcon_new();
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -922,26 +933,6 @@ public class Ventas extends javax.swing.JFrame {
             .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        habilitado.setBackground(new java.awt.Color(33, 150, 243));
-        habilitado.setText("Ventas Habilitados");
-        habilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        habilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
-        habilitado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                habilitadoActionPerformed(evt);
-            }
-        });
-
-        deshabilitado.setBackground(new java.awt.Color(255, 153, 51));
-        deshabilitado.setText("Ventas Anuladas");
-        deshabilitado.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        deshabilitado.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_OFF);
-        deshabilitado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deshabilitadoActionPerformed(evt);
-            }
-        });
-
         JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         JTextbuscar.setPlaceholder("Busqueda rapida");
         JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -963,11 +954,7 @@ public class Ventas extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dashboardviewLayout.createSequentialGroup()
                 .addGap(69, 69, 69)
                 .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(habilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(deshabilitado, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(180, 180, 180))
+                .addGap(180, 783, Short.MAX_VALUE))
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1049, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -978,10 +965,7 @@ public class Ventas extends javax.swing.JFrame {
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(habilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deshabilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
                 .addGap(24, 24, 24))
@@ -1135,20 +1119,6 @@ public class Ventas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_JTextbuscarKeyReleased
 
-    private void habilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitadoActionPerformed
-        // TODO add your handling code here:
-        rSButtonIcon_new6.setEnabled(true);
-        limpiartabla();
-        //listarh();
-    }//GEN-LAST:event_habilitadoActionPerformed
-
-    private void deshabilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deshabilitadoActionPerformed
-        // TODO add your handling code here:
-        rSButtonIcon_new6.setEnabled(false);
-        limpiartabla();
-        //listardesh();
-    }//GEN-LAST:event_deshabilitadoActionPerformed
-
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
        VentasEmpleado v = new VentasEmpleado();
          v.setVisible(true);
@@ -1289,8 +1259,6 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel MenuIcon;
     private javax.swing.JPanel dashboardview;
-    private newscomponents.RSButtonIcon_new deshabilitado;
-    private newscomponents.RSButtonIcon_new habilitado;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JPanel iconoshe;
     private javax.swing.JLabel jLabel10;

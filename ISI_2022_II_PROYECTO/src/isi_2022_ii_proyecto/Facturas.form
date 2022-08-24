@@ -1065,7 +1065,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Menu Principal"/>
+                        <Property name="text" type="java.lang.String" value="Men&#xfa; Principal"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel10">
@@ -1087,7 +1087,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Modulo Facturas"/>
+                        <Property name="text" type="java.lang.String" value="Mod&#xfa;lo Facturas"/>
                       </Properties>
                     </Component>
                     <Component class="rojerusan.RSLabelIcon" name="rSLabelIcon17">
@@ -1096,7 +1096,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                          <Value id="WC"/>
+                          <Value id="DESCRIPTION"/>
                         </Property>
                         <Property name="name" type="java.lang.String" value="" noResource="true"/>
                       </Properties>
@@ -1239,7 +1239,7 @@
                       <Color blue="ff" green="0" red="66" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="2"/>
-                    <Property name="text" type="java.lang.String" value="MODULO DE FACTURAS"/>
+                    <Property name="text" type="java.lang.String" value="MOD&#xda;LO DE FACTURAS"/>
                   </Properties>
                 </Component>
                 <Component class="rojerusan.RSLabelIcon" name="rSLabelIcon2">

@@ -50,6 +50,15 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         conexion.setEmpleado(this);
         con = conexion.conexion();
     }
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
     public void deshabilitarem(){
         String SQL = "UPDATE Empleados SET IdEstado=? Where IdEmpleado="+code;
@@ -63,7 +72,9 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
             ve.setVisible(true);
 
         } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());   
+            System.out.println("ERROR" + e.getMessage());
+            con=null;
+            validarconexion();
         }
     }
     public void  changecolor(JPanel hover, Color rand){
@@ -128,6 +139,8 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+          validarconexion();
         }
     }
     public void listarh(){
@@ -162,6 +175,8 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
             JTableEmpleado.setModel(modelo);
             
         } catch (SQLException e) {
+           con=null;
+         validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -200,6 +215,9 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
             JTableEmpleado.setModel(modelo);
             
         } catch (SQLException e) {
+                       con=null;
+                       validarconexion();
+
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -284,6 +302,7 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         setUndecorated(true);
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
@@ -390,6 +409,8 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         jPanel2.add(linesetting3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1234, 0, 117, 50));
 
         Header.add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1416, -1));
 
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
@@ -759,6 +780,8 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
                 .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
         dashboardview.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -792,7 +815,7 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Empleados");
+        jLabel11.setText("Modúlo Empleados");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WC);
@@ -853,7 +876,7 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
 
             },
             new String [] {
-                "CodigoEmpleado", "Primer Nombre", "Primer Apellido", "Identificacion", "Puesto"
+                "Código Empleado", "Primer Nombre", "Primer Apellido", "Identificacion", "Puesto"
             }
         ));
         JTableEmpleado.setColorSecondary(new java.awt.Color(204, 255, 255));
@@ -877,7 +900,7 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO EMPLEADOS");
+        jLabel6.setText("MODÚLO EMPLEADOS");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
@@ -924,24 +947,7 @@ public class Empleados extends javax.swing.JFrame implements Metodos{
         });
         dashboardview.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1416, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(260, 260, 260)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, 655));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 

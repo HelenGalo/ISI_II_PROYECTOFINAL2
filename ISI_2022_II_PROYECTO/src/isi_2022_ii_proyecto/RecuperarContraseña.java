@@ -83,7 +83,15 @@ public class RecuperarContraseña extends javax.swing.JFrame {
         conexion.setRcontrase(this);
         con = conexion.conexion();
     }
-   
+   public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
     public void MostrarMensaje(){
         MInformacionCorreo mic = new MInformacionCorreo();
@@ -107,7 +115,8 @@ public class RecuperarContraseña extends javax.swing.JFrame {
             }
         }catch(Exception e ){
             System.out.println("ERROR"+ e.getMessage());
-        
+        con=null;
+        validarconexion();
         }
         
         if(correo.isEmpty()){
@@ -829,7 +838,8 @@ public class RecuperarContraseña extends javax.swing.JFrame {
               
             }
     }catch(Exception e){
-        
+        con=null;
+        validarconexion();
     }
         return idEmpleado;}
     
