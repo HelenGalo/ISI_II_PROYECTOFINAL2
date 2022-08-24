@@ -44,16 +44,16 @@ public class RegistrarFacturaCompra extends javax.swing.JFrame {
             jLabel8.setVisible(true);
             
         }else{
-            if(rSTextFullRound1.getText().length()<19){
+            if(rSTextFullRound1.getText().length()<16){
             jLabel8.setText("El valor ingresado está incompleto");
             jLabel8.setVisible(true);
             
         }else{
-            if(rSTextFullRound1.getText().length()>19){
+            if(rSTextFullRound1.getText().length()>16){
             jLabel8.setText("El valor ingresado sobrepasa el límite permitido");
             jLabel8.setVisible(true);
             }else{
-                if(rSTextFullRound1.getText().length()==19){
+                if(rSTextFullRound1.getText().length()==16){
             jLabel8.setText("El valor ingresado es correcto");
             jLabel8.setVisible(true);
             a=true;
@@ -119,6 +119,7 @@ public class RegistrarFacturaCompra extends javax.swing.JFrame {
 
         rSTextFullRound1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         rSTextFullRound1.setPlaceholder("Campo de N. Factura");
+        rSTextFullRound1.setSoloNumeros(true);
         rSTextFullRound1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSTextFullRound1ActionPerformed(evt);
@@ -139,7 +140,7 @@ public class RegistrarFacturaCompra extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Franklin Gothic Book", 2, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Ingrese el número de la factura con guiones");
+        jLabel9.setText("Ingrese el número de la factura sin guiones");
         rSPanelOpacity1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 460, -1));
 
         rSButtonRound3.setBackground(new java.awt.Color(255, 0, 102));
@@ -187,11 +188,66 @@ public class RegistrarFacturaCompra extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(validar()==true){
           String factura = rSTextFullRound1.getText();
-          gc.setNfacturac(factura);
+          char value;
+          String convertidor="";
+          String convertidor1="";
+          String convertidor2="";
+          String convertidor3="";
+          String tf;
+        
+          for(int i=0;i<4; i++){
+              
+             value =factura.charAt(i);
+             if(i==3){
+                 convertidor = convertidor+ "-";
+             }else{
+                 convertidor = convertidor+ String.valueOf(value);
+             }
+             
+              
+          }
+          
+           for(int i=3;i<7; i++){
+              
+             value =factura.charAt(i);
+             if(i==6){
+                 convertidor1 = convertidor1+ "-";
+             }else{
+                 convertidor1= convertidor1+ String.valueOf(value);
+             }
+             
+              
+          }
+           
+            for(int i=6;i<9; i++){
+              
+             value =factura.charAt(i);
+             if(i==8){
+                 convertidor2 = convertidor2+ "-";
+             }else{
+                 convertidor2 = convertidor2+ String.valueOf(value);
+             }
+             
+              
+          }
+            
+            for(int i=8;i<factura.length(); i++){
+              
+             value =factura.charAt(i);
+             convertidor3 = convertidor3+ String.valueOf(value);
+                
+             }
+             
+           
+          tf = convertidor+convertidor1+convertidor2+convertidor3;
+          gc.setNfacturac(tf);
           this.setVisible(false);
           gc.iracompra();
-          this.dispose();
-        }
+          this.dispose();   
+          }
+       
+          
+        
         
     }//GEN-LAST:event_rSButtonRound2ActionPerformed
 

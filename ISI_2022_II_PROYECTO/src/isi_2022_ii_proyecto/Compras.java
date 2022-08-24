@@ -1713,11 +1713,11 @@ public class Compras extends javax.swing.JFrame {
         jLabel14.setText("Observaciones");
         rSPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 190, 30));
 
-        jLabel15.setFont(new java.awt.Font("Franklin Gothic Book", 2, 16)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Franklin Gothic Book", 2, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(102, 0, 255));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("N. Factura");
-        rSPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 80, 160, 30));
+        rSPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, 180, 40));
 
         rSPanelForma3.setBackground(new java.awt.Color(255, 255, 255));
         rSPanelForma3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1832,7 +1832,7 @@ public class Compras extends javax.swing.JFrame {
         jLabel40.setForeground(new java.awt.Color(102, 0, 255));
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel40.setText("N. Factura");
-        rSPanel2.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, 160, 30));
+        rSPanel2.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, 170, 30));
 
         rSPanelShadow2.add(rSPanel2, java.awt.BorderLayout.CENTER);
 
