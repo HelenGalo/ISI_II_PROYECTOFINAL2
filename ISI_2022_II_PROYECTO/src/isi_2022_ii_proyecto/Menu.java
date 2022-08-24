@@ -2063,6 +2063,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
        Logistica lg = new Logistica();
+       lg.setUsuario(usuario);
        lg.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed

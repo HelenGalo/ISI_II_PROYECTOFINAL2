@@ -44,7 +44,12 @@ public class Logistica extends javax.swing.JFrame {
     Connection con = conexion.conexion();
 
     
+String usuario;
 
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabel15.setText("Usuario en sesion: "+usuario);
+    }
   
     
     public Logistica() {
@@ -68,6 +73,23 @@ public class Logistica extends javax.swing.JFrame {
             conectar();
         }
     }
+      public void conectarerror(){
+        conexion.setLogistica(this);
+        conexion.setPass(false);
+        con = conexion.conexion();
+    }
+    
+       public void conectarinicio(){
+        conexion.setLogistica(this);
+        con = conexion.conexion();
+    }
+       
+        public void conectarsinerror(){
+        conexion.setPass(true);
+        conexion.setLogistica(this);
+        con = conexion.conexion();
+    }
+
     
       public void deshabilitarp(){
               Connection con = conexion.conexion();
@@ -252,6 +274,7 @@ public class Logistica extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel15 = new javax.swing.JLabel();
         deshabilitado = new newscomponents.RSButtonIcon_new();
         habilitado = new newscomponents.RSButtonIcon_new();
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
@@ -876,6 +899,12 @@ public class Logistica extends javax.swing.JFrame {
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 10, 108, -1));
 
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, -1, -1));
+
         dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, -1));
 
         deshabilitado.setBackground(new java.awt.Color(255, 153, 51));
@@ -1026,6 +1055,7 @@ public class Logistica extends javax.swing.JFrame {
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
       Menu m = new Menu();
+        m.setUsuario(usuario);
         m.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
@@ -1046,6 +1076,7 @@ public class Logistica extends javax.swing.JFrame {
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
         // TODO add your handling code here:
         AgregarLogistica ag = new AgregarLogistica();
+        ag.setUsuario(usuario);
         ag.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
@@ -1057,6 +1088,7 @@ public class Logistica extends javax.swing.JFrame {
           ActualizarLogistica log = new  ActualizarLogistica();
            log.setId(Integer.parseInt(logi));
            log.mostrar();
+           log.setUsuario(usuario);
            log.setVisible(true);   
            this.dispose();
         }else{
@@ -1319,6 +1351,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
