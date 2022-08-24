@@ -237,7 +237,7 @@ public class VerificarOrden extends javax.swing.JFrame {
     public float obtenerMontoOperacion(){
         
         String SQL = "SELECT h.MontoOperacion FROM HistoriaCajas h Where h.IdCaja="+codigocaja+" AND h.IdEstadoHistoria="+1;
-        float montooperacion=0.00f;
+        String montooperacion="";
           
         try {
             Statement st = (Statement) con.createStatement();
@@ -245,7 +245,7 @@ public class VerificarOrden extends javax.swing.JFrame {
 
             while (rs.next()) {
            
-                montooperacion =Float.valueOf(rs.getString("h.MontoOperacion"));
+                montooperacion =rs.getString("h.MontoOperacion");
 
             }
         
@@ -257,7 +257,17 @@ public class VerificarOrden extends javax.swing.JFrame {
         
             }
         
-        return montooperacion;
+        if(montooperacion==null){
+            montooperacion = "0.00";
+        }else{
+           if(montooperacion.equals("")){
+            montooperacion = "0.00";
+        } 
+        }
+        
+        float g = Float.valueOf(montooperacion);
+        
+        return g;
         
     }
     

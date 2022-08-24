@@ -542,11 +542,63 @@ public class POS extends javax.swing.JFrame {
         float nuevosubtotal=0.00f;
         float nuevodescuento=0.00f;
         
-        nuevodescuento=Float.valueOf(modelo1.getValueAt(seleccion1, 3).toString())*Float.valueOf(String.valueOf(obtenerdescuento(Integer.valueOf(codigop1))));
-        modelo1.setValueAt(nuevodescuento, seleccion1, 4);
-        nuevosubtotal=(Float.valueOf(modelo1.getValueAt(seleccion1, 3).toString())*Float.valueOf(modelo1.getValueAt(seleccion1, 2).toString()))-Float.valueOf(modelo1.getValueAt(seleccion1, 4).toString());
+            
+           String descuentoresultado="";
+            for(int i=0; i< modelo1.getValueAt(seleccion1, 4).toString().length(); i++ ){
+                    char a = modelo1.getValueAt(seleccion1, 4).toString().charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       descuentoresultado= descuentoresultado + vs;
+                    }else{
+                        
+                    }
+                }
+            
+            
+            nuevodescuento=Float.valueOf(descuentoresultado);
+           
+            String descuentontrans = formato.format(nuevodescuento);
+           if(descuentontrans.equals(".00")){
+               modelo1.setValueAt("0.00", seleccion1, 4);
+           }else{
+               modelo1.setValueAt(descuentontrans, seleccion1, 4);
+           }
+            
+            
+            String preciopc="";
+            
+            
+            String preciotrans=modelo1.getValueAt(seleccion1, 2).toString();
+            
+             for(int i=0; i<preciotrans.length(); i++ ){
+                    char a = preciotrans.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       preciopc= preciopc + vs;
+                    }else{
+                        
+                    }
+                }
+            
+    
+            
+            nuevosubtotal=(Float.valueOf(modelo1.getValueAt(seleccion1, 3).toString())*Float.valueOf(preciopc))-Float.valueOf(descuentoresultado);
+            String pase="";
+            pase = String.valueOf(nuevosubtotal);
+            String nuevosubtotalparse =formato.format(Double.valueOf(pase));
+            if(nuevosubtotalparse.equals(".00")){
+                modelo1.setValueAt("0.00", seleccion1, 5);
+            }else{
+               modelo1.setValueAt(nuevosubtotalparse, seleccion1, 5); 
+            }
         
-        modelo1.setValueAt(nuevosubtotal, seleccion1, 5);
+      
         
         
     

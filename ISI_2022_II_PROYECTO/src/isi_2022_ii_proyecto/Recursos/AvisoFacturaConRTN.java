@@ -145,12 +145,10 @@ public class AvisoFacturaConRTN extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(vo!=null){
             vo.pagar();
-            this.setVisible(false);
             this.dispose();
         }else{
             if(vod!=null){
             vod.pagar();
-            this.setVisible(false);
             this.dispose();
         }
         }
