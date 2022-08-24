@@ -114,7 +114,7 @@ public class CerraCaja extends javax.swing.JFrame {
         rSPanelBorder1.setVisible(false);
         rSButtonIcon_new15.setVisible(false);
         rSButtonIcon_new16.setVisible(false);
-       
+       rSButtonIcon_new12.setVisible(false);
         setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
     
@@ -138,6 +138,7 @@ public class CerraCaja extends javax.swing.JFrame {
                 if(estadopostotalcaja==true){
                     VentanaEmergente1 v = new VentanaEmergente1();
                     v.setVisible(true);
+                    rSButtonIcon_new12.setVisible(true);
                 }
             }
         }
@@ -689,6 +690,8 @@ public class CerraCaja extends javax.swing.JFrame {
         rSLabelHora2 = new rojeru_san.RSLabelHora();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
+        rSButtonIcon_new19 = new newscomponents.RSButtonIcon_new();
+        rSButtonIcon_new12 = new newscomponents.RSButtonIcon_new();
         jPanel6 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -725,7 +728,6 @@ public class CerraCaja extends javax.swing.JFrame {
         rSButtonIcon_new18 = new newscomponents.RSButtonIcon_new();
         jScrollPane3 = new javax.swing.JScrollPane();
         JTableBancosSalidas1 = new rojerusan.RSTableMetro1();
-        rSButtonIcon_new12 = new newscomponents.RSButtonIcon_new();
         rSPanelOpacity5 = new rojerusan.RSPanelOpacity();
         jLabel27 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
@@ -747,6 +749,7 @@ public class CerraCaja extends javax.swing.JFrame {
         jLabel44 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
+        rSButtonIcon_new14 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -768,21 +771,45 @@ public class CerraCaja extends javax.swing.JFrame {
         jLabel15.setForeground(new java.awt.Color(102, 0, 255));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel15.setText("MODÚLO CAJA");
-        jPanel5.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 60));
+        jPanel5.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 190, 60));
 
         rSLabelHora2.setForeground(new java.awt.Color(20, 101, 187));
-        jPanel5.add(rSLabelHora2, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 108, -1));
+        jPanel5.add(rSLabelHora2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, 108, -1));
 
         jLabel28.setBackground(new java.awt.Color(102, 51, 255));
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(51, 0, 255));
-        jPanel5.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 20, 180, 20));
+        jPanel5.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 180, 20));
 
         jLabel29.setBackground(new java.awt.Color(102, 51, 255));
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(51, 0, 255));
         jLabel29.setText("Usuario en sesion: ");
-        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 130, 20));
+        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 130, 20));
+
+        rSButtonIcon_new19.setBackground(new java.awt.Color(255, 102, 102));
+        rSButtonIcon_new19.setText("Cancelar");
+        rSButtonIcon_new19.setBackgroundHover(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new19.setFocusable(false);
+        rSButtonIcon_new19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSButtonIcon_new19.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        rSButtonIcon_new19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new19ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(rSButtonIcon_new19, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 590, 390, 40));
+
+        rSButtonIcon_new12.setBackground(new java.awt.Color(0, 204, 153));
+        rSButtonIcon_new12.setText("Terminar Proceso");
+        rSButtonIcon_new12.setBackgroundHover(new java.awt.Color(255, 51, 102));
+        rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
+        rSButtonIcon_new12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new12ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 0, 180, 60));
 
         rSPanelOpacity3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 980, 60));
 
@@ -1167,17 +1194,6 @@ public class CerraCaja extends javax.swing.JFrame {
 
         jPanel7.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 380, 430, 210));
 
-        rSButtonIcon_new12.setBackground(new java.awt.Color(255, 51, 102));
-        rSButtonIcon_new12.setText("TOTAL L.");
-        rSButtonIcon_new12.setBackgroundHover(new java.awt.Color(255, 51, 102));
-        rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
-        rSButtonIcon_new12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new12ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 590, 170, -1));
-
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1376,6 +1392,17 @@ public class CerraCaja extends javax.swing.JFrame {
         jLabel45.setText("0.00");
         jPanel7.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, 190, 30));
 
+        rSButtonIcon_new14.setBackground(new java.awt.Color(255, 51, 102));
+        rSButtonIcon_new14.setText("TOTAL L.");
+        rSButtonIcon_new14.setBackgroundHover(new java.awt.Color(255, 51, 102));
+        rSButtonIcon_new14.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
+        rSButtonIcon_new14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new14ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(rSButtonIcon_new14, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 590, 170, -1));
+
         rSPanelOpacity3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 890, 630));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1455,6 +1482,9 @@ public class CerraCaja extends javax.swing.JFrame {
 
     private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
         // TODO add your handling code here:
+        Caja c = new Caja();
+        c.setUsuario(usuario);
+        c.setVisible(estadototalcaja);
     }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
 
     private void jLabel27MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel27MouseEntered
@@ -1505,6 +1535,14 @@ public class CerraCaja extends javax.swing.JFrame {
     private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
+
+    private void rSButtonIcon_new19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new19ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSButtonIcon_new19ActionPerformed
+
+    private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rSButtonIcon_new14ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1623,10 +1661,12 @@ public class CerraCaja extends javax.swing.JFrame {
     private newscomponents.RSButtonIcon_new rSButtonIcon_new11;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new13;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new14;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new15;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new16;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new17;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new18;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new19;
     private rojeru_san.RSLabelHora rSLabelHora2;
     private rojerusan.RSLabelIcon rSLabelIcon13;
     private rojerusan.RSLabelIcon rSLabelIcon18;

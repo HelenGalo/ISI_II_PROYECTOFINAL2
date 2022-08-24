@@ -53,6 +53,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         listarTipoCuenta();
         listarBancos();
         listarEstado();
+        ListarMoneda();
         
      setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
          avisoT.setVisible(false);
@@ -126,6 +127,30 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         return tipocuenta;
     }
     
+    public int ObtenerTipoMoneda(){
+        
+        int tipomoneda=0;
+         
+        String SQL = "SELECT tm.IdTipoMoneda From TipoMoneda tm Where tm.Moneda='"+JEstados1.getSelectedItem().toString()+"';";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                tipomoneda =rs.getInt("tm.IdTipoMoneda");
+
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       con=null;
+         validarconexion();
+        
+        }
+        
+        return tipomoneda;
+    }
+    
     public int ObtenerEstado(){
         int estado=0;
          
@@ -146,13 +171,33 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         return estado;
     }
    public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062; 
+   
+   
     public void insertar(){
        int idcuenta=Integer.parseInt(JCodigoDisponible.getText());
        int idbanco=ObtenerBancos();
        int tipocuenta=ObtenerTipoCuenta();
+       int tipomoneda = ObtenerTipoMoneda();
        String fechaapertura=rSLabelFecha1.getFecha();
        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-       Float totalencuenta=Float.valueOf(JNDeposito.getText());
+       String totalencuenta=JNDeposito.getText();
+        String totalencuentat = "";
+             for(int j=0; j<totalencuenta.length(); j++ ){
+                                char a = totalencuenta.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                 
+                                   totalencuentat= totalencuentat + vs;
+                                }else{
+
+                                }
+            }
+       
+       
+       
+       
        int idestado=ObtenerEstado();
        String horaapertura = dtf.format(LocalDateTime.now());
        int numerocuenta=Integer.parseInt(JNCuenta.getText().toString());
@@ -160,17 +205,18 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         
         
  
-       String SQL = "INSERT INTO CuentasBancarias (IdCuenta, IdBanco, IdTipoCuenta, FechaApertura, TotalenCuenta, IdEstado, HoraApertura, NCuenta) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+       String SQL = "INSERT INTO CuentasBancarias (IdCuenta, IdBanco, IdTipoCuenta, FechaApertura, TotalenCuenta, IdEstado, HoraApertura, NCuenta, IdTipoMoneda) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, idcuenta);
             preparedStmt.setInt(2, idbanco);
             preparedStmt.setInt(3, tipocuenta);
             preparedStmt.setString(4, fechaapertura);
-            preparedStmt.setFloat(5, totalencuenta);
+            preparedStmt.setFloat(5, Float.valueOf(totalencuentat));
             preparedStmt.setInt(6, idestado);
             preparedStmt.setString(7, horaapertura);
-            preparedStmt.setInt(8, numerocuenta);            
+            preparedStmt.setInt(8, numerocuenta);
+            preparedStmt.setInt(9, tipomoneda);             
             preparedStmt.execute();
             
              VentanaEmergente1 ve = new VentanaEmergente1();
@@ -242,6 +288,28 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
                 nombre =rs.getString("b.Nombre");
     
                 JNombreF.addItem(nombre);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        con=null;
+         validarconexion();
+        }
+    }
+    
+    public void ListarMoneda(){
+        JEstados1.addItem("Seleccionar Moneda");
+        String nombre="";
+         
+        String SQL = "SELECT b.Moneda From TipoMoneda b Where IdEstado=1";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                nombre =rs.getString("b.Moneda");
+    
+                JEstados1.addItem(nombre);
             }
             
         } catch (SQLException e) {
@@ -426,6 +494,8 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         JNCuenta = new rojeru_san.RSMTextFull();
         JNDeposito = new rojeru_san.RSMTextFull();
         avisoT = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        JEstados1 = new rojerusan.RSComboMetro();
         rSButtonIcon_new11 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -468,7 +538,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         linesetting4.setLayout(linesetting4Layout);
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGap(0, 602, Short.MAX_VALUE)
         );
         linesetting4Layout.setVerticalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -539,9 +609,9 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(253, 253, 253)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 2, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 3, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
                 .addGap(278, 278, 278)
                 .addComponent(linesetting13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -851,7 +921,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(510, 510, 510)
-                .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 52, Short.MAX_VALUE))
+                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
         );
 
         menu.add(menuhide, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, -1));
@@ -1102,8 +1172,8 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(153, 0, 255));
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel24.setText("Estado de la Cuenta:");
-        jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 310, 230, 30));
+        jLabel24.setText("Tipo de Moneda:");
+        jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 370, 190, 30));
 
         rSLabelHora2.setForeground(new java.awt.Color(20, 101, 187));
         jPanel3.add(rSLabelHora2, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 230, 160, 40));
@@ -1154,7 +1224,6 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
 
         JNDeposito.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JNDeposito.setPlaceholder("");
-        JNDeposito.setSoloNumeros(true);
         JNDeposito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JNDepositoActionPerformed(evt);
@@ -1175,6 +1244,20 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
         avisoT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         avisoT.setText("*Formato invalído*");
         jPanel3.add(avisoT, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 180, -1));
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel26.setText("Estado de la Cuenta:");
+        jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 310, 230, 30));
+
+        JEstados1.setBorder(null);
+        JEstados1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JEstados1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(JEstados1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 370, 170, -1));
 
         rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new11.setText("Guardar Cuenta Bancaria");
@@ -1388,6 +1471,10 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_JNCuentaKeyTyped
 
+    private void JEstados1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JEstados1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JEstados1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1427,6 +1514,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
     private javax.swing.JPanel Header;
     private javax.swing.JLabel JCodigoDisponible;
     private rojerusan.RSComboMetro JEstados;
+    private rojerusan.RSComboMetro JEstados1;
     private rojeru_san.RSMTextFull JNCuenta;
     private rojeru_san.RSMTextFull JNDeposito;
     private rojerusan.RSComboMetro JNombreF;
@@ -1448,6 +1536,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

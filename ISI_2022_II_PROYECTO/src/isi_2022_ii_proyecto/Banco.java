@@ -94,24 +94,25 @@ public class Banco extends javax.swing.JFrame {
     }
 
       public void listar(){
+          DecimalFormat formato = new DecimalFormat("##,###.00");
         String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
 
         String SQL = "SELECT cb.IdCuenta, b.Nombre, tc.Descripcion, tm.Moneda, cb.TotalenCuenta FROM CuentasBancarias cb\n" +
                     "INNER JOIN Bancos b ON b.IdBanco = cb.IdBanco\n" +
                     "INNER JOIN TipoCuenta tc ON tc.IdTipoCuenta = cb.IdTipoCuenta\n"+
-                "INNER JOIN TipoMoneda tm ON tm.IdTipoMoneda = cb.IdTipoMoneda WHERE cb.IdEstado=1";
+                    "INNER JOIN TipoMoneda tm ON tm.IdTipoMoneda = cb.IdTipoMoneda WHERE cb.IdEstado=1";
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                 DecimalFormat formato = new DecimalFormat("##,###.00");
+                 
                 registros[0] = rs.getString("IdCuenta");
                 registros[1] = rs.getString("Nombre");
                 registros[2] = rs.getString("Descripcion");
                 registros[3] = rs.getString("Moneda");
-                registros[4] = formato.format(rs.getFloat("TotalenCuenta"));
+                registros[4] = formato.format(rs.getDouble("TotalenCuenta"));
                 modelo.addRow(registros);
             }
 
@@ -127,6 +128,7 @@ public class Banco extends javax.swing.JFrame {
     }
      
       public void listarHabilitados(){
+          DecimalFormat formato = new DecimalFormat("##,###.00");
         String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
 
@@ -143,7 +145,7 @@ public class Banco extends javax.swing.JFrame {
                 registros[1] = rs.getString("Nombre");
                 registros[2] = rs.getString("Descripcion");
                 registros[3] = rs.getString("Moneda");
-                registros[4] = rs.getString("TotalenCuenta");
+                registros[4] = formato.format(rs.getDouble("TotalenCuenta"));
                 modelo.addRow(registros);
             }
 
@@ -157,6 +159,7 @@ public class Banco extends javax.swing.JFrame {
         }
     }
       public void listarDeshabilitados(){
+          DecimalFormat formato = new DecimalFormat("##,###.00");
         String[] registros = new String[5];
         DefaultTableModel modelo =  (DefaultTableModel) JTableBancos.getModel();
 
@@ -173,7 +176,7 @@ public class Banco extends javax.swing.JFrame {
                 registros[1] = rs.getString("Nombre");
                 registros[2] = rs.getString("Descripcion");
                 registros[3] = rs.getString("Moneda");
-                registros[4] = rs.getString("TotalenCuenta");
+                registros[4] = formato.format(rs.getDouble("TotalenCuenta"));
                 modelo.addRow(registros);
             }
 
@@ -431,7 +434,7 @@ public class Banco extends javax.swing.JFrame {
                 .addGap(253, 253, 253)
                 .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
                 .addGap(278, 278, 278)
                 .addComponent(linesetting13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -677,8 +680,8 @@ public class Banco extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
         );
@@ -693,7 +696,7 @@ public class Banco extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        menuhide.add(linesetting6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 620, 427, 52));
+        menuhide.add(linesetting6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 620, 210, 52));
 
         linesetting12.setBackground(new java.awt.Color(0, 55, 133));
         linesetting12.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -938,8 +941,9 @@ public class Banco extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -1057,8 +1061,9 @@ public class Banco extends javax.swing.JFrame {
                     .addComponent(rSButtonIcon_new11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSButtonIcon_new12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSButtonIcon_new8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
