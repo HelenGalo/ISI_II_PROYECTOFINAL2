@@ -21,6 +21,7 @@ import isi_2022_ii_proyecto.AgregarCuentaBancaria;
 import isi_2022_ii_proyecto.AperturarCajas;
 import isi_2022_ii_proyecto.Banco;
 import isi_2022_ii_proyecto.ModificarCuentaB;
+import isi_2022_ii_proyecto.SeleccionarCuentaPagoCompra;
 import rojeru_san.complementos.RSUtilities;
 
 /**
@@ -41,6 +42,11 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
     ActualizarBanco gbanco;
     ActualizarUsuarios gusuario;
     ActualizarLogistica glog;
+    SeleccionarCuentaPagoCompra pagoc;
+
+    public void setPagoc(SeleccionarCuentaPagoCompra pagoc) {
+        this.pagoc = pagoc;
+    }
 
     public void setGusuario(ActualizarUsuarios gusuario) {
         this.gusuario = gusuario;
@@ -317,6 +323,12 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
                if(tipo=="MUsuario"){
                 gusuario.setEstadosModificar(true);
                gusuario.validarConfirmacion();
+                this.dispose();
+                
+            }
+               if(tipo=="RCompra"){
+                pagoc.setEstadosmodificar(true);
+                pagoc.validarConfirmacion();
                 this.dispose();
                 
             }

@@ -7,6 +7,7 @@ package isi_2022_ii_proyecto;
 import Atxy2k.CustomTextField.RestrictedTextField;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -16,7 +17,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.chrono.IsoEra;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -47,6 +53,7 @@ public class Compras extends javax.swing.JFrame {
      int seleccion2;
     int idproductocompra;
     String Nfacturac;
+
 
     public void setNfacturac(String Nfacturac) {
         this.Nfacturac = Nfacturac;
@@ -187,39 +194,9 @@ public class Compras extends javax.swing.JFrame {
     }
     
     
-    
-    public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
-        if(numberbool == 1){
-            h1.setBackground(new Color(25,29,74));
-            h2.setBackground(new Color(5,10,46));
-        }
-        else{
-             h1.setBackground(new Color(5,10,46));
-            h2.setBackground(new Color(25,29,74));
-        }
-    }
-    
-    public void changeimage(JLabel button, String resourcheimg){
-        ImageIcon aimg = new ImageIcon(getClass().getResource(resourcheimg));
-        button.setIcon(aimg);
-        
-    }
-    
-    public void hideshow(JPanel menushowhide, boolean dashboard , JLabel button){
-        if(dashboard == true){
-            menushowhide.setPreferredSize(new Dimension(50,menushowhide.getHeight()));
-           // changeimage(button, "/image/menu_32px.png");
-        }
-        else{
-             menushowhide.setPreferredSize(new Dimension(270,menushowhide.getHeight()));
-              //changeimage(button, "/image/back_32px.png");
-        }
-    } 
-    
-    public void  changecolor(JPanel hover, Color rand){
-     hover.setBackground(rand);
-    }
-    
+ 
+
+   
     
     public String obtenerdescuento(int idproducto){
          String descuento="0.00";
@@ -1029,6 +1006,109 @@ public class Compras extends javax.swing.JFrame {
     }
     
     
+    public void registrarcompra(){
+        if(rSRadioButton2.isSelected()){
+            SeleccionarCuentaPagoCompra cp = new SeleccionarCuentaPagoCompra();
+            cp.setCodigocompra(codigop);
+        }else{
+             if(rSRadioButton2.isSelected()){
+            
+        }
+        }
+    }
+    
+    
+       public int obteneridusuario(){
+        int idusuario=0;
+        String SQL = "SELECT u.IdUsuario FROM Usuarios u WHERE u.Usuario='"+usuario+"';";
+          
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                idusuario = rs.getInt("u.IdUsuario");
+               
+                
+            }
+        }catch(SQLException e){
+              JOptionPane.showMessageDialog(this, e.getMessage());
+              con=null;
+              validarconexion();
+        } 
+        
+        return idusuario;
+        
+    }
+    
+    
+    public void insertarcompra(){
+        int estadopago = 0;
+        if(rSRadioButton2.isSelected()){
+            estadopago=1;
+        }else{
+           if(rSRadioButton1.isSelected()){
+            estadopago=2;
+        } 
+        }
+        String formato="yyyy/MM/dd";
+        //obtener las fechas//
+        Date FechaC=FC2.getDatoFecha();
+        Date FechaEntre=FC3.getDatoFecha();
+        Date FechaPago=FC1.getDatoFecha();
+        SimpleDateFormat formateador = new SimpleDateFormat(formato);
+        String Fc = formateador.format(FechaC);
+        String Fe = formateador.format(FechaEntre);
+        String Fp = formateador.format(FechaPago);
+        int codigoco = Integer.valueOf(idorden);
+        String hora="";
+        String minuto="";
+        hora = rSComboBox3.getSelectedItem().toString();
+        minuto = rSComboBox2.getSelectedItem().toString();
+        String hf="";
+        hf = hora+":"+minuto;
+        
+        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String horaregistro = dtf.format(LocalDateTime.now());
+        SimpleDateFormat dtf1 = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar calendar = Calendar.getInstance();
+
+        Date dateObj = calendar.getTime();
+        String fechaderegistro = dtf1.format(dateObj);
+        
+        String SQL = "INSERT INTO Compras (IdCompra, FechaCompra, HoraCompra, IdUsuario, IdProveedor, FechaEntrega, FechaPago, Observacion, NumeroFactura, FechadeRegistro, HoradeRegistro, EstadodePago) VALUES"
+                + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1,codigoco);
+            preparedStmt.setString(2, Fc);
+            preparedStmt.setString(3, hf);
+            preparedStmt.setInt(4,obteneridusuario());
+            preparedStmt.setInt(5, codigprov);
+            preparedStmt.setString(6, Fe);
+            preparedStmt.setString(7, Fp);
+            preparedStmt.setString(8, textArea1.getText());
+            preparedStmt.setString(9, jLabel15.getText());
+            preparedStmt.setString(10, fechaderegistro);
+            preparedStmt.setString(11, horaregistro);
+            preparedStmt.setInt(12, estadopago);
+
+            preparedStmt.execute();
+            
+            VentanaEmergente1 ve = new VentanaEmergente1();
+            ve.setVisible(true);
+
+            
+
+        } catch (SQLException e) {
+            System.out.println("ERROR" + e.getMessage());
+        }
+    }
+    
+    
+    
     
 
     /**
@@ -1109,19 +1189,24 @@ public class Compras extends javax.swing.JFrame {
         jLabel50 = new javax.swing.JLabel();
         rSRadioButton1 = new rojerusan.RSRadioButton();
         rSRadioButton2 = new rojerusan.RSRadioButton();
-        jLabel51 = new javax.swing.JLabel();
-        JTextbuscar1 = new RSMaterialComponent.RSTextFieldIconUno();
         rSButtonIcon_new18 = new newscomponents.RSButtonIcon_new();
-        rSRadioButton3 = new rojerusan.RSRadioButton();
         rSLabelFecha1 = new rojeru_san.RSLabelFecha();
         rSLabelHora1 = new rojeru_san.rsdate.RSLabelHora();
         jLabel47 = new javax.swing.JLabel();
         jLabel48 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jLabel31 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
+        rSComboBox2 = new RSMaterialComponent.RSComboBox();
+        jLabel42 = new javax.swing.JLabel();
+        rSComboBox3 = new RSMaterialComponent.RSComboBox();
+        jLabel46 = new javax.swing.JLabel();
+        FC1 = new rojeru_san.componentes.RSDateChooser();
+        jLabel49 = new javax.swing.JLabel();
+        FC2 = new rojeru_san.componentes.RSDateChooser();
+        FC3 = new rojeru_san.componentes.RSDateChooser();
+        textArea1 = new java.awt.TextArea();
+        jLabel41 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout rSPanelVector1Layout = new javax.swing.GroupLayout(rSPanelVector1);
         rSPanelVector1.setLayout(rSPanelVector1Layout);
@@ -1675,7 +1760,7 @@ public class Compras extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(JTableBancos1);
 
-        rSPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 670, 110));
+        rSPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 670, 110));
 
         rSButtonHover1.setBackground(new java.awt.Color(255, 0, 102));
         rSButtonHover1.setText("-");
@@ -1710,8 +1795,8 @@ public class Compras extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(102, 0, 255));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("Observaciones");
-        rSPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 190, 30));
+        jLabel14.setText("Observaciones:");
+        rSPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 330, 150, 30));
 
         jLabel15.setFont(new java.awt.Font("Franklin Gothic Book", 2, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(102, 0, 255));
@@ -1722,13 +1807,13 @@ public class Compras extends javax.swing.JFrame {
         rSPanelForma3.setBackground(new java.awt.Color(255, 255, 255));
         rSPanelForma3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel50.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel50.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel50.setForeground(new java.awt.Color(102, 0, 255));
         jLabel50.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel50.setText("Forma de Pago de la Compra:");
-        rSPanelForma3.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 11, 350, 20));
+        rSPanelForma3.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 20));
 
-        rSRadioButton1.setText("TARJETA");
+        rSRadioButton1.setText("CREDITO");
         rSRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         rSRadioButton1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rSRadioButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -1736,9 +1821,9 @@ public class Compras extends javax.swing.JFrame {
                 rSRadioButton1ActionPerformed(evt);
             }
         });
-        rSPanelForma3.add(rSRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 110, -1));
+        rSPanelForma3.add(rSRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 100, -1));
 
-        rSRadioButton2.setText("EFECTIVO");
+        rSRadioButton2.setText("CONTADO");
         rSRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         rSRadioButton2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rSRadioButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -1746,28 +1831,7 @@ public class Compras extends javax.swing.JFrame {
                 rSRadioButton2ActionPerformed(evt);
             }
         });
-        rSPanelForma3.add(rSRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 38, 110, -1));
-
-        jLabel51.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
-        jLabel51.setForeground(new java.awt.Color(102, 0, 255));
-        jLabel51.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel51.setText("Ingrese la cantidad de efectivo recibido:");
-        rSPanelForma3.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 370, 20));
-
-        JTextbuscar1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        JTextbuscar1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
-        JTextbuscar1.setPlaceholder("Efectivo recibido");
-        JTextbuscar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTextbuscar1ActionPerformed(evt);
-            }
-        });
-        JTextbuscar1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                JTextbuscar1KeyReleased(evt);
-            }
-        });
-        rSPanelForma3.add(JTextbuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 188, -1));
+        rSPanelForma3.add(rSRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 100, -1));
 
         rSButtonIcon_new18.setBackground(new java.awt.Color(0, 102, 204));
         rSButtonIcon_new18.setText("Registrar");
@@ -1780,19 +1844,9 @@ public class Compras extends javax.swing.JFrame {
                 rSButtonIcon_new18ActionPerformed(evt);
             }
         });
-        rSPanelForma3.add(rSButtonIcon_new18, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 130, 130, -1));
+        rSPanelForma3.add(rSButtonIcon_new18, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 130, -1));
 
-        rSRadioButton3.setText("MIXTO");
-        rSRadioButton3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        rSRadioButton3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSRadioButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSRadioButton3ActionPerformed(evt);
-            }
-        });
-        rSPanelForma3.add(rSRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 100, -1));
-
-        rSPanel2.add(rSPanelForma3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, 390, 210));
+        rSPanel2.add(rSPanelForma3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 230, 140));
 
         rSLabelFecha1.setFormato("yyyy/MM/dd");
         rSPanel2.add(rSLabelFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 80, 20));
@@ -1801,7 +1855,7 @@ public class Compras extends javax.swing.JFrame {
         jLabel47.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel47.setForeground(new java.awt.Color(102, 0, 255));
         jLabel47.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel47.setText("Fecha de Compra:");
+        jLabel47.setText("Fecha de Registro:");
         rSPanel2.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, 20));
 
         jLabel48.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
@@ -1816,12 +1870,6 @@ public class Compras extends javax.swing.JFrame {
         jLabel16.setText("Buscador");
         rSPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 100, 30));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        rSPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 290, 100));
-
         jLabel31.setFont(new java.awt.Font("Franklin Gothic Book", 2, 16)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(102, 0, 255));
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1833,6 +1881,54 @@ public class Compras extends javax.swing.JFrame {
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel40.setText("N. Factura");
         rSPanel2.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, 170, 30));
+
+        rSComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar Minutos", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", " " }));
+        rSComboBox2.setColorArrow(new java.awt.Color(102, 102, 255));
+        rSComboBox2.setColorFondo(new java.awt.Color(102, 102, 255));
+        rSComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSComboBox2ActionPerformed(evt);
+            }
+        });
+        rSPanel2.add(rSComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 290, 180, -1));
+
+        jLabel42.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
+        jLabel42.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel42.setText("Fecha de Pago de la Compra:");
+        rSPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 260, 30));
+
+        rSComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar Hora", "00:00:00", "01:00:00", "02:00:00", "03:00:00", "04:00:00", "05:00:00", "06:00:00", "07:00:00", "08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00", "18:00:00", "19:00:00", "20:00:00", "21:00:00", "22:00:00", "23:00:00", "24:00:00" }));
+        rSComboBox3.setColorArrow(new java.awt.Color(102, 102, 255));
+        rSComboBox3.setColorFondo(new java.awt.Color(102, 102, 255));
+        rSComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSComboBox3ActionPerformed(evt);
+            }
+        });
+        rSPanel2.add(rSComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 290, 170, -1));
+
+        jLabel46.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
+        jLabel46.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel46.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel46.setText("Fecha de la Compra:");
+        rSPanel2.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 190, 30));
+        rSPanel2.add(FC1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 290, 30));
+
+        jLabel49.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
+        jLabel49.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel49.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel49.setText("Fecha de Entrega de la Compra:");
+        rSPanel2.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 260, 30));
+        rSPanel2.add(FC2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 290, 30));
+        rSPanel2.add(FC3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 290, 30));
+        rSPanel2.add(textArea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 370, 150, 100));
+
+        jLabel41.setFont(new java.awt.Font("Franklin Gothic Book", 1, 16)); // NOI18N
+        jLabel41.setForeground(new java.awt.Color(102, 0, 255));
+        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel41.setText("Hora de la Compra:");
+        rSPanel2.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 250, 190, 30));
 
         rSPanelShadow2.add(rSPanel2, java.awt.BorderLayout.CENTER);
 
@@ -2019,134 +2115,30 @@ public class Compras extends javax.swing.JFrame {
 
     }//GEN-LAST:event_JTextbuscarActionPerformed
 
+    private void rSButtonIcon_new18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new18ActionPerformed
+        // TODO add your handling code here:
+      
+
+    }//GEN-LAST:event_rSButtonIcon_new18ActionPerformed
+
     private void rSRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton1ActionPerformed
         // TODO add your handling code here:
         rSRadioButton2.setSelected(false);
-        rSRadioButton3.setSelected(false);
-        jLabel51.setVisible(false);
     
-        rSButtonIcon_new18.setLocation(149,111);
-        rSButtonIcon_new18.setVisible(true);
-
     }//GEN-LAST:event_rSRadioButton1ActionPerformed
 
     private void rSRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton2ActionPerformed
         // TODO add your handling code here:
         rSRadioButton1.setSelected(false);
-        rSRadioButton3.setSelected(false);
-        jLabel51.setVisible(true);
-   
-        rSButtonIcon_new18.setLocation(250,130);
-        rSButtonIcon_new18.setVisible(true);
     }//GEN-LAST:event_rSRadioButton2ActionPerformed
 
-    private void JTextbuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscar1ActionPerformed
-
-    }//GEN-LAST:event_JTextbuscar1ActionPerformed
-
-    private void JTextbuscar1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextbuscar1KeyReleased
+    private void rSComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSComboBox2ActionPerformed
         // TODO add your handling code here:
+    }//GEN-LAST:event_rSComboBox2ActionPerformed
 
-    }//GEN-LAST:event_JTextbuscar1KeyReleased
-
-    private void rSButtonIcon_new18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new18ActionPerformed
+    private void rSComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSComboBox3ActionPerformed
         // TODO add your handling code here:
-       /* if(rSRadioButton2.isSelected()){
-            if(JTextbuscar.getText().length()>0){
-                if(tipodeVenta==1){
-                    insertarOrden();
-                    enviarDetallesOrden();
-                    if(estadodetalleorden==true && estadoorden==true){
-
-                        enviarActualizacionExistencia();
-                        actualizartotalcaja();
-                        if(estadototalcaja==true){
-                            actualizarHistoriaCaja();
-                            VentanaEmergente1 ve = new VentanaEmergente1();
-                            ve.setVisible(true);
-                        }
-
-                        calcularcambio();
-                        rSPanelForma3.setVisible(false);
-                        rSPanelForma6.setVisible(true);
-                    }
-
-                }else{
-                    if(tipodeVenta==2){
-                        insertarOrden();
-                        enviarDetallesOrden();
-                        insertarEnvio();
-                        if(estadodetalleorden==true && estadoorden==true){
-                            enviarActualizacionExistencia();
-                            actualizartotalcaja();
-                            if(estadototalcaja==true){
-                                actualizarHistoriaCaja();
-                                VentanaEmergente1 ve = new VentanaEmergente1();
-                                ve.setVisible(true);
-                            }
-
-                            calcularcambio();
-                            rSPanelForma3.setVisible(false);
-                            rSPanelForma6.setVisible(true);
-                        }
-                    }
-                }
-
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "Ingrese un valor de efectivo");
-            }
-        }else{
-            if(tipodeVenta==1){
-                insertarOrden();
-                enviarDetallesOrden();
-                if(estadodetalleorden==true && estadoorden==true){
-
-                    enviarActualizacionExistencia();
-                    actualizartotalcaja();
-                    if(estadototalcaja==true){
-                        actualizarHistoriaCaja();
-                        VentanaEmergente1 ve = new VentanaEmergente1();
-                        ve.setVisible(true);
-                    }
-
-                    calcularcambio();
-                    rSPanelForma3.setVisible(false);
-                    rSPanelForma6.setVisible(true);
-                }
-
-            }else{
-                if(tipodeVenta==2){
-                    insertarOrden();
-                    enviarDetallesOrden();
-                    insertarEnvio();
-                    if(estadodetalleorden==true && estadoorden==true){
-                        enviarActualizacionExistencia();
-                        actualizartotalcaja();
-                        if(estadototalcaja==true){
-                            actualizarHistoriaCaja();
-                            VentanaEmergente1 ve = new VentanaEmergente1();
-                            ve.setVisible(true);
-                        }
-
-                        calcularcambio();
-                        rSPanelForma3.setVisible(false);
-                        rSPanelForma6.setVisible(true);
-                    }
-                }
-            }
-        }*/
-
-    }//GEN-LAST:event_rSButtonIcon_new18ActionPerformed
-
-    private void rSRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSRadioButton3ActionPerformed
-        // TODO add your handling code here:
-        rSRadioButton1.setSelected(false);
-        rSRadioButton2.setSelected(false);
-        jLabel51.setVisible(false);
-        JTextbuscar.setVisible(false);
-        rSButtonIcon_new18.setLocation(149,111);
-        rSButtonIcon_new18.setVisible(true);
-    }//GEN-LAST:event_rSRadioButton3ActionPerformed
+    }//GEN-LAST:event_rSComboBox3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2187,11 +2179,13 @@ public class Compras extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private rojeru_san.componentes.RSDateChooser FC1;
+    private rojeru_san.componentes.RSDateChooser FC2;
+    private rojeru_san.componentes.RSDateChooser FC3;
     private javax.swing.JPanel Header;
     private rojerusan.RSTableMetro1 JTableBancos;
     private rojerusan.RSTableMetro1 JTableBancos1;
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
-    private RSMaterialComponent.RSTextFieldIconUno JTextbuscar1;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel12;
@@ -2223,22 +2217,23 @@ public class Compras extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
-    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel linesetting3;
     private javax.swing.JPanel linesetting4;
     private javax.swing.JPanel linesetting5;
@@ -2249,6 +2244,8 @@ public class Compras extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new18;
+    private RSMaterialComponent.RSComboBox rSComboBox2;
+    private RSMaterialComponent.RSComboBox rSComboBox3;
     private rojeru_san.RSLabelFecha rSLabelFecha1;
     private rojeru_san.rsdate.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon13;
@@ -2268,6 +2265,6 @@ public class Compras extends javax.swing.JFrame {
     private rojerusan.RSPanelsSlider rSPanelsSlider3;
     private rojerusan.RSRadioButton rSRadioButton1;
     private rojerusan.RSRadioButton rSRadioButton2;
-    private rojerusan.RSRadioButton rSRadioButton3;
+    private java.awt.TextArea textArea1;
     // End of variables declaration//GEN-END:variables
 }
