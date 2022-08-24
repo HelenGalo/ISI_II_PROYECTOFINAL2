@@ -56,6 +56,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
         buscardatos();
         aviso.setVisible(false);
          aviso2.setVisible(false);
+         aviso3.setVisible(false);
          setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
     public void conectar(){
@@ -229,6 +230,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
           a= false;
       }
       
+      
        if(DireccionE.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese una direccion valida");
           a= false;
@@ -250,6 +252,10 @@ public class AgregarProveedor extends javax.swing.JFrame {
        if (validarC(CorreoP.getText())==false){
            a=false;
        }
+       if (validarcorreo(CorreoP.getText())==false){
+           a=false;
+       }
+       
        
        if(JEstado.getSelectedItem().toString().isEmpty()){
             JOptionPane.showMessageDialog(this, "Por favor seleccione un estado valido");
@@ -270,10 +276,28 @@ public class AgregarProveedor extends javax.swing.JFrame {
      
     }
     
-     public boolean validarT(String cel){
+    public boolean validarcorreo(String correo){
             
-        Pattern patron = Pattern
-                .compile("^[389]?[0-9]{4}?[0-9]{4}$");          
+          Pattern patron = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})$");
+        Matcher comparar = patron.matcher(correo);
+        return comparar.find();
+     
+    }
+
+      public boolean verificar(){
+        if (validarcorreo(CorreoP.getText())==false && validarC(CorreoP.getText())==false){
+            System.out.println("FALLO");
+             return false;
+        }else{
+            return true;
+         }
+     }
+      
+     public boolean validarT(String cel){
+         Pattern patron = Pattern
+                .compile("^[389]?[0-9]{4}?[0-9]{4}$");        
         Matcher comparar = patron.matcher(cel);
         return comparar.find();
      
@@ -354,6 +378,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
         Tel = new rojeru_san.RSMTextFull();
         aviso2 = new javax.swing.JLabel();
         aviso = new javax.swing.JLabel();
+        aviso3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -365,6 +390,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
@@ -493,6 +519,10 @@ public class AgregarProveedor extends javax.swing.JFrame {
         );
 
         Header.add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1416, -1));
+
+        menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
@@ -671,6 +701,8 @@ public class AgregarProveedor extends javax.swing.JFrame {
                 .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        menu.add(MenuIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 668));
+
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
 
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
@@ -759,22 +791,9 @@ public class AgregarProveedor extends javax.swing.JFrame {
                 .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
-        menu.setLayout(menuLayout);
-        menuLayout.setHorizontalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addComponent(MenuIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menuhide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        menuLayout.setVerticalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(menuhide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        menu.add(menuhide, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, -1));
+
+        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 52, -1, 660));
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
         dashboardview.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -904,6 +923,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
         jLabel18.setText("Nombre del Empresa:");
         jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 190, 30));
 
+        CorreoP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         CorreoP.setPlaceholder("Ingresar Correo Electronico");
         CorreoP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -975,10 +995,20 @@ public class AgregarProveedor extends javax.swing.JFrame {
         jLabel23.setText("Correo Electronico:");
         jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 180, 40));
 
+        NombreE1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NombreE1.setPlaceholder("Ingresa nombre Empresas..");
+        NombreE1.setSoloLetras(true);
         NombreE1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NombreE1ActionPerformed(evt);
+            }
+        });
+        NombreE1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                NombreE1KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NombreE1KeyTyped(evt);
             }
         });
         jPanel3.add(NombreE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 380, -1));
@@ -990,8 +1020,14 @@ public class AgregarProveedor extends javax.swing.JFrame {
                 DireccionEActionPerformed(evt);
             }
         });
+        DireccionE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                DireccionEKeyTyped(evt);
+            }
+        });
         jPanel3.add(DireccionE, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, 380, -1));
 
+        Tel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Tel.setPlaceholder("Ingresa el numero Telefono");
         Tel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1012,13 +1048,19 @@ public class AgregarProveedor extends javax.swing.JFrame {
         aviso2.setForeground(new java.awt.Color(255, 0, 0));
         aviso2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         aviso2.setText("*Teléfono invalído*");
-        jPanel3.add(aviso2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 320, 180, -1));
+        jPanel3.add(aviso2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 320, 180, 30));
 
         aviso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         aviso.setForeground(new java.awt.Color(255, 0, 0));
         aviso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         aviso.setText("*Correo invalido*");
         jPanel3.add(aviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 390, 170, 25));
+
+        aviso3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso3.setForeground(new java.awt.Color(255, 0, 0));
+        aviso3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso3.setText("*Nombre Incorrecto*");
+        jPanel3.add(aviso3, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 190, 180, -1));
 
         dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 118, 1030, 520));
 
@@ -1054,26 +1096,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
         });
         dashboardview.add(guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 190, 40));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1416, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(260, 260, 260)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, 662));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -1196,7 +1219,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_TelKeyReleased
 
     private void CorreoPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorreoPKeyReleased
-      if (validarC(CorreoP.getText())){
+    if (validarC(CorreoP.getText())||validarcorreo(CorreoP.getText()) ){
               aviso.setVisible(false);
              //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
         }
@@ -1207,7 +1230,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_CorreoPKeyReleased
 
     private void TelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelKeyTyped
-         if (Tel.getText().trim().length() == 9) {
+         if (Tel.getText().trim().length() == 8) {
         evt.consume();
         
          }
@@ -1215,17 +1238,46 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         // TODO add your handling code here:
-        if(validar()==true){
+          if(validar()==true){
+           //if(verificar()==true){
             ConfirmacionGuardar p = new  ConfirmacionGuardar();
             p.setGprov(this);
             p.setTipo("GProveedor");
             p.setVisible(true);
 
         }else{
-
+              
             JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
-        }
+        //}
+        } 
     }//GEN-LAST:event_guardarActionPerformed
+
+    private void NombreE1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreE1KeyReleased
+      
+      
+    }//GEN-LAST:event_NombreE1KeyReleased
+
+    private void NombreE1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreE1KeyTyped
+          char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+          if (NombreE1.getText().trim().length() == 25) {
+        evt.consume();
+       }
+    }//GEN-LAST:event_NombreE1KeyTyped
+
+    private void DireccionEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DireccionEKeyTyped
+           char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+          if (NombreE1.getText().trim().length() == 25) {
+        evt.consume();
+       }
+    }//GEN-LAST:event_DireccionEKeyTyped
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1304,6 +1356,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private rojeru_san.RSMTextFull Tel;
     private javax.swing.JLabel aviso;
     private javax.swing.JLabel aviso2;
+    private javax.swing.JLabel aviso3;
     private javax.swing.JPanel dashboardview;
     private newscomponents.RSButtonIcon_new guardar;
     private javax.swing.JPanel iconminmaxclose;

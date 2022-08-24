@@ -316,7 +316,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
     /*Verificamos que no sea null*/ 
     if(Nombre != null){
         /* 1ª Condición: que la letra inicial sea mayúscula*/
-        boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
+        //boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
 
         /* 2ª Condición: que el tamaño sea >= 3 y <= 15*/
         int stringSize=Nombre.length();
@@ -326,7 +326,7 @@ public class AgregarAlmacen extends javax.swing.JFrame {
         boolean isSpaced=Nombre.contains(" ");
 
         /* Verificamos que las tres condiciones son verdaderas*/
-        check= ( (isFirstUpper==true)  && (isFirstUpper && isValidSize &&  isSpaced) );
+        check=  (isValidSize &&  isSpaced) ;
     }
     /*Devolvemos el estado de la validación*/
     return check;

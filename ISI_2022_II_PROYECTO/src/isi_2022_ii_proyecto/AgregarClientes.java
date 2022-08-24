@@ -258,9 +258,9 @@ public class AgregarClientes extends javax.swing.JFrame {
         String direccion="";
         String correo="";
         int estado=Obtenerestado();
-        nombres = NombreC.getText();
-        apellidos = ApellidoC.getText();
-        direccion = DireccionC.getText();
+        nombres = NombreC.getText().toUpperCase();
+        apellidos = ApellidoC.getText().toUpperCase();
+        direccion = DireccionC.getText().toUpperCase();
         telefono=TelC.getText();
         correo=CorreoC.getText();
         
@@ -316,17 +316,15 @@ public class AgregarClientes extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
           a= false;
       }
-      if(validarNombre(NombreC.getText())==false){
-          a=false;
-      }
+     
+      
       
        if(ApellidoC.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese Apellidos");
           a= false;
-          if(validarNombre(ApellidoC.getText())==false){
-          a=false;
+          
       }
-      }
+      
         if(TelC.getText().contentEquals(paramString())){
           JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
           a= false;
@@ -355,11 +353,11 @@ public class AgregarClientes extends javax.swing.JFrame {
             
               
              a= false;
-        
-      
-             
-        
+     
         }
+          if (validarcorreo(CorreoC.getText())==false){
+           a=false;
+       }
        if(JComboEstado.getSelectedItem().toString().isEmpty()){
             JOptionPane.showMessageDialog(this, "Por favor seleccione un estado valido");
           a= false;
@@ -413,28 +411,7 @@ public boolean validarcorreo(String correo){
         return comparar.find();
      
     }
-  public  boolean validarNombre(String Nombre){
-    boolean check=false;
-    
-    /*Verificamos que no sea null*/ 
-    if(Nombre != null){
-        
-        /* 1ª Condición: que la letra inicial sea mayúscula*/
-        boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
-
-        /* 2ª Condición: que el tamaño sea >= 3 y <= 15*/
-        int stringSize=Nombre.length();
-        boolean isValidSize=(stringSize >= 3 && stringSize <= 15);
-
-        /* 3ª Condición: que contenga al menos un espacio*/
-        boolean isSpaced=Nombre.contains(" ");
-
-        /* Verificamos que las tres condiciones son verdaderas*/
-        check= ( (isFirstUpper==true)  && (isFirstUpper && isValidSize &&  isSpaced) );
-    }
-    /*Devolvemos el estado de la validación*/
-    return check;
-}
+ 
 
     
    
@@ -1157,7 +1134,11 @@ public boolean validarcorreo(String correo){
 
         NombreC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NombreC.setPlaceholder("Ingrese los nombres del cliente");
-        NombreC.setSoloLetras(true);
+        NombreC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                NombreCMouseExited(evt);
+            }
+        });
         NombreC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NombreCActionPerformed(evt);
@@ -1523,11 +1504,11 @@ public boolean validarcorreo(String correo){
 
     private void CorreoCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CorreoCKeyReleased
           if (validarC(CorreoC.getText())||validarcorreo(CorreoC.getText()) ){
-              aviso.setVisible(false);
+              aviso1.setVisible(false);
              //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
         }
           else{
-                    aviso.setVisible(true);
+                    aviso1.setVisible(true);
               //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
           }
                  
@@ -1541,7 +1522,7 @@ public boolean validarcorreo(String correo){
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         // TODO add your handling code here:
         if(validar()==true){
-            if(verificar()==true){
+           // if(verificar()==true){
             ConfirmacionGuardar gc = new  ConfirmacionGuardar();
             gc.setGcliente(this);
             gc.setTipo("Gcliente");
@@ -1550,7 +1531,7 @@ public boolean validarcorreo(String correo){
         }else{
 
             JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
-        }
+        //}
         }    
     }//GEN-LAST:event_guardarActionPerformed
 
@@ -1573,34 +1554,32 @@ public boolean validarcorreo(String correo){
     }//GEN-LAST:event_TelCKeyTyped
 
     private void NombreCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyReleased
-        if (validarNombre(NombreC.getText())){
-             nombreav.setVisible(false);
-             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
-        }
-          else{
-                    nombreav.setVisible(true);
-              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
-          }
+        
+      
     }//GEN-LAST:event_NombreCKeyReleased
 
     private void ApellidoCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ApellidoCKeyReleased
-         if (validarNombre(NombreC.getText())){
-            apellidoav.setVisible(false);
-             //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
-        }
-          else{
-                    apellidoav.setVisible(true);
-              //JOptionPane.showMessageDialog(this, "El correo ingresado no es valido"); 
-          }
+      
     }//GEN-LAST:event_ApellidoCKeyReleased
 
     private void DireccionCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DireccionCKeyTyped
         if (DireccionC.getText().trim().length() == 25) {
         evt.consume();
        }
+        char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
     }//GEN-LAST:event_DireccionCKeyTyped
 
     private void NombreCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyTyped
+        char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+        
         if (NombreC.getText().trim().length() == 15) {
         evt.consume();
        }
@@ -1632,10 +1611,23 @@ public boolean validarcorreo(String correo){
     }//GEN-LAST:event_rSRadioButtonMaterial1ActionPerformed
 
     private void ApellidoCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ApellidoCKeyTyped
-       if (ApellidoC.getText().trim().length() == 15) {
+           char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+        
+        
+        if (ApellidoC.getText().trim().length() == 15) {
         evt.consume();
        }
     }//GEN-LAST:event_ApellidoCKeyTyped
+
+    private void NombreCMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NombreCMouseExited
+      if (NombreC.getText().trim().length() == 15) {
+        evt.consume();
+       }
+    }//GEN-LAST:event_NombreCMouseExited
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
