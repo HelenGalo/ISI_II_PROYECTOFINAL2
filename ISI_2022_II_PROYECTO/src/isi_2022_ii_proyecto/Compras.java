@@ -53,7 +53,7 @@ public class Compras extends javax.swing.JFrame {
      int seleccion2;
     int idproductocompra;
     String Nfacturac;
-
+    boolean estadodetalleorden=false;
 
     public void setNfacturac(String Nfacturac) {
         this.Nfacturac = Nfacturac;
@@ -189,7 +189,9 @@ public class Compras extends javax.swing.JFrame {
            
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e+ " code"+ e.getErrorCode(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
     }
     
@@ -335,7 +337,7 @@ public class Compras extends javax.swing.JFrame {
                 }
             
             
-            nuevodescuento=(Float.valueOf(modelo1.getValueAt(posicion, 3).toString())*Float.valueOf(descuentoresultado));
+            nuevodescuento=(Float.valueOf(descuentoresultado));
            
             String descuentontrans = formato.format(nuevodescuento);
            if(descuentontrans.equals(".00")){
@@ -592,7 +594,7 @@ public class Compras extends javax.swing.JFrame {
                 }
             
             
-            nuevodescuento=(Float.valueOf(modelo1.getValueAt(seleccion1, 3).toString())*Float.valueOf(descuentoresultado));
+            nuevodescuento=Float.valueOf(descuentoresultado);
            
             String descuentontrans = formato.format(nuevodescuento);
            if(descuentontrans.equals(".00")){
@@ -1009,12 +1011,112 @@ public class Compras extends javax.swing.JFrame {
     public void registrarcompra(){
         if(rSRadioButton2.isSelected()){
             SeleccionarCuentaPagoCompra cp = new SeleccionarCuentaPagoCompra();
-            cp.setCodigocompra(codigop);
+            cp.setCodigocompra(String.valueOf(idorden));
+            cp.setValordelacompra(jLabel22.getText());
+            cp.setCompras(this);
+            cp.setVisible(true);
         }else{
              if(rSRadioButton2.isSelected()){
+                 insertarcompra();
+                 enviarDetallesOrden();
+                 if(estadodetalleorden==true){
+                     enviarActualizacionExistencia();
+                     VentanaEmergente1 v = new VentanaEmergente1();
+                     v.setVisible(true);
+                 }
             
         }
         }
+    }
+    
+     public void enviarActualizacionExistencia(){
+        int idproducto=0;
+        int cantidad=0;
+       
+        
+        for(int i=0; i<JTableBancos.getRowCount();i++){
+             idproducto=Integer.valueOf(modelo1.getValueAt(i, 0).toString());
+             cantidad=Integer.valueOf(modelo1.getValueAt(i, 3).toString());
+             actualizarinventario(idproducto, cantidad);
+            }
+        
+ 
+        
+        
+    }
+     
+     public int existenciaactual(int idproducto){
+        int existenciactual=0;
+        String SQL1 = "Select ap.ExistenciaActual from AlmacenProducto ap\n" +
+                    "Where ap.IdProducto="+idproducto+" AND ap.IdAlmacen=(Select s.IdAlmacen From Sucursales s\n" +
+                    "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
+                    "INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n" +
+                    "WHERE u.Usuario='"+usuario+"');";
+        
+        
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL1);
+
+            while (rs.next()) {
+                existenciactual =rs.getInt("ap.ExistenciaActual");
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+                 con=null;
+                validarconexion();
+        
+            }
+         return existenciactual;
+     }
+     
+     
+    
+     public void actualizarinventario(int idproducto, int cantidad){
+        int existenciaactual=0;
+        existenciaactual = existenciaactual(idproducto);
+        
+        int nuevoinventario=existenciaactual+cantidad;
+     
+        
+        String SQL = "UPDATE AlmacenProducto ap SET ap.ExistenciaActual=?\n" +
+                    "WHERE IdAlmacen=(Select s.IdAlmacen From Sucursales s\n" +
+                    "INNER JOIN Empleados e ON e.IdSucursal = s.IdSucursal\n" +
+                    "INNER JOIN Usuarios u ON u.IdEmpleado = e.IdEmpleado\n" +
+                    "WHERE u.Usuario=+'"+usuario+"' AND ap.IdProducto="+idproducto+");";
+        
+        
+      
+        
+        
+  
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, nuevoinventario);
+            preparedStmt.execute();
+            
+           
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+            validarconexion();
+        }
+    }
+     
+   
+    
+    public void registrarcompradesdefuera(){
+                 insertarcompra();
+                 enviarDetallesOrden();
+                 if(estadodetalleorden==true){
+                     enviarActualizacionExistencia();
+                     VentanaEmergente1 v = new VentanaEmergente1();
+                     v.setVisible(true);
+                 }
     }
     
     
@@ -1097,15 +1199,120 @@ public class Compras extends javax.swing.JFrame {
 
             preparedStmt.execute();
             
-            VentanaEmergente1 ve = new VentanaEmergente1();
-            ve.setVisible(true);
-
+     
             
 
         } catch (SQLException e) {
             System.out.println("ERROR" + e.getMessage());
         }
     }
+    
+    
+      public void insertarDetallesCompra(int idorden, int idproducto, int cantidad, float preciodecompra, float subtotal, float descuento, float total){
+               String SQL = "INSERT INTO DetalleCompra (IdOrdenC, IdProducto, Cantidad, PreciodeCompra, SubTotal, Descuento, Total) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, idorden);
+            preparedStmt.setInt(2, idproducto);
+            preparedStmt.setInt(3, cantidad);
+            preparedStmt.setFloat(4, preciodecompra);
+            preparedStmt.setFloat(5, subtotal);
+             preparedStmt.setFloat(6, descuento);
+            preparedStmt.setFloat(7, total);
+            preparedStmt.execute();
+            
+            
+          
+           
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+            validarconexion();
+        }
+    }
+    
+    public void enviarDetallesOrden(){
+        int idproducto=0;
+        int cantidad=0;
+        float descuento =0.00f;
+        float subtotal = 0.00f;
+        float totalc = 0.00f;
+        float preciocc =0.00f;
+        
+        for(int i=0; i<JTableBancos.getRowCount();i++){
+             idproducto=Integer.valueOf(modelo1.getValueAt(i, 0).toString());
+             cantidad=Integer.valueOf(modelo1.getValueAt(i, 3).toString());
+             String subtott = "";
+             for(int j=0; j<modelo1.getValueAt(i, 5).toString().length(); j++ ){
+                                char a = modelo1.getValueAt(i, 5).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   subtott= subtott + vs;
+                                }else{
+
+                                }
+            }
+             
+             String descuent = "";
+             for(int j=0; j<modelo1.getValueAt(i, 4).toString().length(); j++ ){
+                                char a = modelo1.getValueAt(i, 4).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   descuent= descuent + vs;
+                                }else{
+
+                                }
+            }
+             String preciocompra = "";
+             for(int j=0; j<modelo1.getValueAt(i, 2).toString().length(); j++ ){
+                                char a = modelo1.getValueAt(i, 2).toString().charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   preciocompra= preciocompra + vs;
+                                }else{
+
+                                }
+            }
+             String totalt="";
+             String valorasar=jLabel22.getText();
+             for(int j=0; j<valorasar.length(); j++ ){
+                                char a = valorasar.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   totalt= totalt + vs;
+                                }else{
+
+                                }
+            }
+             
+             descuento=Float.valueOf(descuent);
+             preciocc=Float.valueOf(preciocompra);
+             totalc = Float.valueOf(totalt);
+             
+             subtotal=Float.valueOf(subtott);
+             insertarDetallesCompra(idorden,idproducto,cantidad,preciocc,subtotal,descuento,totalc);
+             estadodetalleorden=true;
+            }
+        
+ 
+        
+        
+    }
+    
     
     
     
@@ -1596,7 +1803,7 @@ public class Compras extends javax.swing.JFrame {
 
         jLabel20.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("Total:");
 
         jLabel25.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
@@ -1604,7 +1811,7 @@ public class Compras extends javax.swing.JFrame {
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel25.setText("L.");
 
-        jLabel22.setFont(new java.awt.Font("Franklin Gothic Book", 1, 18)); // NOI18N
+        jLabel22.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("0.00");
@@ -1630,19 +1837,18 @@ public class Compras extends javax.swing.JFrame {
                             .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(7, 7, 7)
-                        .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                                .addGap(291, 291, 291)
-                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                                .addGap(281, 281, 281)
-                                .addComponent(jLabel25))
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                                .addGap(301, 301, 301)
-                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(80, Short.MAX_VALUE))
+                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(jLabel25)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         rSPanelGradiente1Layout.setVerticalGroup(
             rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1653,15 +1859,10 @@ public class Compras extends javax.swing.JFrame {
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
+                        .addGap(6, 6, 6)
                         .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
                                 .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1671,7 +1872,15 @@ public class Compras extends javax.swing.JFrame {
                                 .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(7, 7, 7)
                                 .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
+                                .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap())
         );
 
         rSPanel1.add(rSPanelGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 343, -1, 131));
@@ -1898,7 +2107,7 @@ public class Compras extends javax.swing.JFrame {
         jLabel42.setText("Fecha de Pago de la Compra:");
         rSPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 260, 30));
 
-        rSComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar Hora", "00:00:00", "01:00:00", "02:00:00", "03:00:00", "04:00:00", "05:00:00", "06:00:00", "07:00:00", "08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00", "18:00:00", "19:00:00", "20:00:00", "21:00:00", "22:00:00", "23:00:00", "24:00:00" }));
+        rSComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar Hora", "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24" }));
         rSComboBox3.setColorArrow(new java.awt.Color(102, 102, 255));
         rSComboBox3.setColorFondo(new java.awt.Color(102, 102, 255));
         rSComboBox3.addActionListener(new java.awt.event.ActionListener() {
@@ -2083,10 +2292,7 @@ public class Compras extends javax.swing.JFrame {
                
         
             
-    }else{
-                JOptionPane.showMessageDialog(rootPane, "No hay productos en existencia para el producto seleccionado");
-
-            }
+    }
         
     }//GEN-LAST:event_JTableBancosKeyReleased
 
@@ -2117,7 +2323,7 @@ public class Compras extends javax.swing.JFrame {
 
     private void rSButtonIcon_new18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new18ActionPerformed
         // TODO add your handling code here:
-      
+            registrarcompra();
 
     }//GEN-LAST:event_rSButtonIcon_new18ActionPerformed
 

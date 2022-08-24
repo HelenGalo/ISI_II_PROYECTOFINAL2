@@ -41,6 +41,17 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
     String codigoc="";
     String codigocompra="";
     boolean estadosmodificar;
+    Compras compras;
+    String valordelacompra;
+
+    public void setValordelacompra(String valordelacompra) {
+        this.valordelacompra = valordelacompra;
+        JTextbuscar.setText(valordelacompra);
+    }
+
+    public void setCompras(Compras compras) {
+        this.compras = compras;
+    }
 
     public void setEstadosmodificar(boolean estadosmodificar) {
         this.estadosmodificar = estadosmodificar;
@@ -48,7 +59,7 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
 
     public void setCodigocompra(String codigocompra) {
         this.codigocompra = codigocompra;
-         JCodigoDisponible.setText(codigoc);
+         JCodigoDisponible.setText(codigocompra);
     }
 
              
@@ -64,9 +75,24 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
     
     public void validarConfirmacion(){
             if(estadosmodificar==true){
-                agregarDetalleBancario(Float.valueOf(JTextbuscar.getText()));
+                 String valort="";
+                 String totalc = JTextbuscar.getText();
                 
-
+                for(int i=0; i<totalc.length(); i++ ){
+                    char a = totalc.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       valort= valort + vs;
+                    }else{
+                        
+                    }
+                }
+                actualizarCuentaBancaria(Float.valueOf(valort));
+                rcompras();
+                this.dispose();
             }
     }
     
@@ -230,17 +256,16 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
  public boolean validar(){
         boolean a=true;
       
-      
- 
+     
      
         if(JTextbuscar.getText().contentEquals(paramString())){
           JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
           a= false;
       }
         
-         if(Validartarifa(JTextbuscar.getText())==false)  {
+      if(Validartarifa(JTextbuscar.getText())==false)  {
                    a= false;     
-                }
+    }
     
        
        if(rSComboMetro3.getSelectedItem().toString().isEmpty()){
@@ -280,7 +305,9 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
    
     
     
-     
+     public void rcompras(){
+         compras.registrarcompradesdefuera();
+     }
     
     
  
@@ -703,16 +730,34 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
 
     private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
         if(validar()==true){
-            if(Float.valueOf(JTextbuscar.getText())<=Float.valueOf(jLabel42.getText())){
+            String valort="";
+            String totalc = JTextbuscar.getText();
+                
+                for(int i=0; i<totalc.length(); i++ ){
+                    char a = totalc.charAt(i);
+                    String vs = String.valueOf(a);
+                    String coma = ",";
+                    char b = coma.charAt(0);
+                    if(a!=b){
+                       System.out.println("Cara "+ a);
+                       valort= valort + vs;
+                    }else{
+                        
+                    }
+                }
+                
+            if(Float.valueOf(valort)<=Float.valueOf(jLabel42.getText())){
             ConfirmacionModificar cm = new ConfirmacionModificar();
             cm.setPagoc(this);
             cm.setTipo("RCompra");
             cm.setVisible(true);
+            }else{
+                VentanaFondosIns vfi = new VentanaFondosIns();
+                vfi.setVisible(true);
+            }
+           
         }else{
-            VentanaFondosIns vfi = new VentanaFondosIns();
-            vfi.setVisible(true);
-        }
-           JOptionPane.showMessageDialog(this, "POR FAVOR VALIDE LA INFORMACÍON");
+            JOptionPane.showMessageDialog(this, "POR FAVOR VALIDE LA INFORMACÍON");
         }
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
 
@@ -753,7 +798,7 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
         jLabel40.setText(ObtenerNBancos());
         jLabel42.setText(ObtenerTCuenta());
         jLabel38.setText("L.");
-        JTextbuscar.setEditable(true);
+        
     }//GEN-LAST:event_rSButtonIconTwo1ActionPerformed
 
     private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
