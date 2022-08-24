@@ -1766,6 +1766,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void rSButtonIcon_new1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new1ActionPerformed
         Productos p = new Productos();
+        p.setUsuario(usuario);
         p.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new1ActionPerformed
@@ -1794,6 +1795,7 @@ public class Menu extends javax.swing.JFrame {
     private void rSButtonIcon_new6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new6ActionPerformed
         // TODO add your handling code here:
         Proveedores proveedores = new Proveedores();
+        proveedores.setUsuario(usuario);
         proveedores.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new6ActionPerformed
@@ -1838,6 +1840,7 @@ public class Menu extends javax.swing.JFrame {
     private void BOTONPROVEEDORESMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONPROVEEDORESMouseClicked
         // TODO add your handling code here:
         Proveedores p = new Proveedores();
+        p.setUsuario(usuario);
         p.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BOTONPROVEEDORESMouseClicked
@@ -1945,6 +1948,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void BOTONPROMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONPROMouseClicked
        Productos p = new Productos();
+       p.setUsuario(usuario);
         p.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BOTONPROMouseClicked

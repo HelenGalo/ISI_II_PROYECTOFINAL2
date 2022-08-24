@@ -34,6 +34,12 @@ public class ActualizarCategoria extends javax.swing.JFrame {
     int id=0;
      String codiap;
       String categoria;
+       String usuario;
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabel15.setText("Usuario en sesion: "+usuario);
+    }
      public void setId(int id) {
         this.id = id;
     }
@@ -61,6 +67,22 @@ public class ActualizarCategoria extends javax.swing.JFrame {
             
         }
         
+    }
+     public void conectarerror(){
+        conexion.setAca(this);
+        conexion.setPass(false);
+        con = conexion.conexion();
+    }
+    
+       public void conectarinicio(){
+        conexion.setAca(this);
+        con = conexion.conexion();
+    }
+       
+        public void conectarsinerror(){
+        conexion.setPass(true);
+        conexion.setAca(this);
+        con = conexion.conexion();
     }
    
     /**
@@ -208,13 +230,13 @@ public class ActualizarCategoria extends javax.swing.JFrame {
       
     }
     
-     public  boolean validarNombre(String Nombre){
+    public  boolean validarNombre(String Nombre){
     boolean check=false;
     
     /*Verificamos que no sea null*/ 
     if(Nombre != null){
         /* 1ª Condición: que la letra inicial sea mayúscula*/
-        boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
+        //boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
 
         /* 2ª Condición: que el tamaño sea >= 3 y <= 15*/
         int stringSize=Nombre.length();
@@ -224,7 +246,7 @@ public class ActualizarCategoria extends javax.swing.JFrame {
         boolean isSpaced=Nombre.contains(" ");
 
         /* Verificamos que las tres condiciones son verdaderas*/
-        check= ( (isFirstUpper==true)  && (isFirstUpper && isValidSize &&  isSpaced) );
+        check=  (isValidSize &&  isSpaced) ;
     }
     /*Devolvemos el estado de la validación*/
     return check;
@@ -248,6 +270,7 @@ public class ActualizarCategoria extends javax.swing.JFrame {
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel15 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         rSButtonIconOne4 = new RSMaterialComponent.RSButtonIconOne();
@@ -298,10 +321,16 @@ public class ActualizarCategoria extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO CATEGORÍA");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 60));
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 430, 60));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 108, -1));
+
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, -1, -1));
 
         rSPanelOpacity1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 870, 50));
 
@@ -646,7 +675,11 @@ public class ActualizarCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_NombreKeyReleased
 
     private void NombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreKeyTyped
-
+         char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
          if (Nombre.getText().trim().length() == 25) {
             evt.consume();
 
@@ -672,6 +705,7 @@ public class ActualizarCategoria extends javax.swing.JFrame {
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         Categoria c = new Categoria();
+        c.setUsuario(usuario);
         c.setVisible(true);
         this.dispose();
 
@@ -758,6 +792,7 @@ public class ActualizarCategoria extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;

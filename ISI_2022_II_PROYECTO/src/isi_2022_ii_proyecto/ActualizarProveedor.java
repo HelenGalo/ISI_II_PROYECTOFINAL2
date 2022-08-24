@@ -46,7 +46,12 @@ public class ActualizarProveedor extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
   
-    
+     String usuario;
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabel15.setText("Usuario en sesion: "+usuario);
+    }
      public void setId(int id) {
         this.id = id;
     }
@@ -84,7 +89,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
          listarEstado();
        aviso.setVisible(false);
        aviso2.setVisible(false);
-       
+       avisoT1.setVisible(false);
        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
     public void validarConfirmacion(){
@@ -116,7 +121,23 @@ public class ActualizarProveedor extends javax.swing.JFrame {
        validarconexion();
         
         }
-    }    
+    } 
+        public void conectarerror(){
+        conexion.setApro(this);
+        conexion.setPass(false);
+        con = conexion.conexion();
+    }
+    
+       public void conectarinicio(){
+        conexion.setApro(this);
+        con = conexion.conexion();
+    }
+       
+        public void conectarsinerror(){
+        conexion.setPass(true);
+        conexion.setApro(this);
+        con = conexion.conexion();
+    }
  
     public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
       public void actualizar(){
@@ -189,6 +210,9 @@ public class ActualizarProveedor extends javax.swing.JFrame {
       if(NombreE1.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
           a= false;
+      }
+         if(validarNombre(NombreE1.getText())==false){
+          a=false;
       }
       
        if(DireccionE.getText().isEmpty()){
@@ -280,8 +304,28 @@ public class ActualizarProveedor extends javax.swing.JFrame {
      
     }
 
-        
-       
+        public  boolean validarNombre(String Nombre){
+    boolean check=false;
+    
+    /*Verificamos que no sea null*/ 
+    if(Nombre != null){
+        /* 1ª Condición: que la letra inicial sea mayúscula*/
+        //boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
+
+        /* 2ª Condición: que el tamaño sea >= 3 y <= 15*/
+        int stringSize=Nombre.length();
+        boolean isValidSize=(stringSize >= 3 && stringSize <= 25);
+
+        /* 3ª Condición: que contenga al menos un espacio*/
+        boolean isSpaced=Nombre.contains(" ");
+
+        /* Verificamos que las tres condiciones son verdaderas*/
+        check=  (isValidSize &&  isSpaced) ;
+    }
+    /*Devolvemos el estado de la validación*/
+    return check;
+    
+        } 
  
     /**
      * This method is called from within the constructor to initialize the form.
@@ -360,11 +404,13 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         actual = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
+        avisoT1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -983,9 +1029,18 @@ public class ActualizarProveedor extends javax.swing.JFrame {
 
         NombreE1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NombreE1.setPlaceholder("Ingresa nombre Empresas..");
+        NombreE1.setSoloLetras(true);
         NombreE1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NombreE1ActionPerformed(evt);
+            }
+        });
+        NombreE1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                NombreE1KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NombreE1KeyTyped(evt);
             }
         });
         jPanel3.add(NombreE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 460, -1));
@@ -995,6 +1050,11 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         DireccionE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DireccionEActionPerformed(evt);
+            }
+        });
+        DireccionE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                DireccionEKeyTyped(evt);
             }
         });
         jPanel3.add(DireccionE, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, 460, -1));
@@ -1052,6 +1112,12 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         jLabel25.setText("Actual Estado:");
         jPanel3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, 180, 30));
 
+        avisoT1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        avisoT1.setForeground(new java.awt.Color(255, 0, 0));
+        avisoT1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        avisoT1.setText("*Formato invalído*");
+        jPanel3.add(avisoT1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 190, 180, -1));
+
         dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 98, -1, 540));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -1065,13 +1131,19 @@ public class ActualizarProveedor extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO PROVEEDORES");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 410, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
         jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, 60, 50));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
+
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 20, -1, -1));
 
         dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1156, -1));
 
@@ -1177,6 +1249,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
         Proveedores p = new Proveedores();
+        p.setUsuario(usuario);
         p.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
@@ -1228,7 +1301,7 @@ public class ActualizarProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_TelKeyReleased
 
     private void TelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TelKeyTyped
-          if (Tel.getText().trim().length() == 9) {
+          if (Tel.getText().trim().length() == 8) {
         evt.consume();
 
     }
@@ -1246,6 +1319,39 @@ public class ActualizarProveedor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACION");
         }
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
+
+    private void NombreE1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreE1KeyTyped
+        char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+           if (NombreE1.getText().trim().length() == 15) {
+        evt.consume();
+        }
+    }//GEN-LAST:event_NombreE1KeyTyped
+
+    private void DireccionEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DireccionEKeyTyped
+       char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+           if (DireccionE.getText().trim().length() == 25) {
+        evt.consume();
+        }
+    }//GEN-LAST:event_DireccionEKeyTyped
+
+    private void NombreE1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreE1KeyReleased
+     if (validarNombre(NombreE1.getText())){
+            avisoT1.setVisible(false);
+
+        }
+        else{
+            avisoT1.setVisible(true);
+
+        }
+    }//GEN-LAST:event_NombreE1KeyReleased
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1327,6 +1433,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel actual;
     private javax.swing.JLabel aviso;
     private javax.swing.JLabel aviso2;
+    private javax.swing.JLabel avisoT1;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
@@ -1334,6 +1441,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel20;
