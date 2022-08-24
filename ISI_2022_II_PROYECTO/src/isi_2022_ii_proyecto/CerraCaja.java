@@ -39,9 +39,9 @@ import rojerusan.RSEffectFade;
 public class CerraCaja extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
-    String codigocaja="";
+    int codigocaja;
 
-    public void setCodigocaja(String codigocaja) {
+    public void setCodigocaja(int codigocaja) {
         this.codigocaja = codigocaja;
     }
     boolean estadopostaperturar=false;
@@ -103,13 +103,18 @@ public class CerraCaja extends javax.swing.JFrame {
         initComponents();
        
         RSUtilities.setOpaqueWindow(this, false);
+        
+       
+        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
+    }
+    
+    
+    public void inicializar(){
         listarventasefectivo();
         listarventastarjeta();
         listartotalventasefectivo();
         listartotalventastarjeta();
         listartotalencaja();
-       
-        setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
     }
     
     
@@ -118,7 +123,7 @@ public class CerraCaja extends javax.swing.JFrame {
         DecimalFormat formato = new DecimalFormat("##,###.00");
         String SQL = "	Select sum(ec.Total) from Ventas v\n" +
                 "INNER JOIN EntradasCaja ec on ec.IdOrden = v.IdOrden\n" +
-                "WHERE v.IdCaja=2 AND v.FechaVenta=\"2022/08/22\" AND v.IdTipoVenta=1 OR v.IdTipoVenta=2\n" +
+                "WHERE v.IdCaja="+codigocaja+" AND v.FechaVenta=\"2022/08/22\" AND v.IdTipoVenta=1 OR v.IdTipoVenta=2\n" +
                 ";";
         try {
             Statement st = (Statement) con.createStatement();
@@ -151,7 +156,7 @@ public class CerraCaja extends javax.swing.JFrame {
         String SQL = "Select sum(T1.Subtotal) from(\n" +
                     "Select v.idOrden, sum(dv.Subtotal) as 'Subtotal'from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=1 AND v.IdCaja=2 AND v.FechaVenta=\"2022/08/24\"\n" +
+                    "Where v.IdTipoVenta=1 AND v.IdCaja="+codigocaja+" AND v.FechaVenta=\"2022/08/24\"\n" +
                     "Group by 1) as T1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -183,7 +188,7 @@ public class CerraCaja extends javax.swing.JFrame {
         String SQL = "Select sum(T1.Subtotal) from(\n" +
                     "Select v.idOrden, sum(dv.Subtotal) as 'Subtotal'from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=2 AND v.IdCaja=2 AND v.FechaVenta=\"2022/08/22\"\n" +
+                    "Where v.IdTipoVenta=2 AND v.IdCaja="+codigocaja+" AND v.FechaVenta=\"2022/08/22\"\n" +
                     "Group by 1) as T1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -253,7 +258,7 @@ public class CerraCaja extends javax.swing.JFrame {
         String[] registros = new String[2];
         String SQL = "Select v.idOrden, sum(dv.Subtotal) from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=2 AND v.IdCaja=2 AND v.FechaVenta=\"2022/08/22\"\n" +
+                    "Where v.IdTipoVenta=2 AND v.IdCaja="+codigocaja+" AND v.FechaVenta=\"2022/08/22\"\n" +
                     "Group by 1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -368,12 +373,20 @@ validarconexion();
         rSPanelOpacity5 = new rojerusan.RSPanelOpacity();
         jLabel27 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
         jLabel34 = new javax.swing.JLabel();
         JTextbuscar1 = new RSMaterialComponent.RSTextFieldIconUno();
         jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        rSPanelBorder1 = new RSMaterialComponent.RSPanelBorder();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -625,7 +638,7 @@ validarconexion();
                 rSButtonIcon_new15ActionPerformed(evt);
             }
         });
-        jPanel7.add(rSButtonIcon_new15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 230, 50));
+        jPanel7.add(rSButtonIcon_new15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 230, 50));
 
         rSButtonIcon_new16.setBackground(new java.awt.Color(255, 102, 102));
         rSButtonIcon_new16.setText("Cancelar");
@@ -638,7 +651,7 @@ validarconexion();
                 rSButtonIcon_new16ActionPerformed(evt);
             }
         });
-        jPanel7.add(rSButtonIcon_new16, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 230, 50));
+        jPanel7.add(rSButtonIcon_new16, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 630, 230, 50));
 
         rSPanelCircle2.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -669,14 +682,14 @@ validarconexion();
         jLabel25.setBackground(new java.awt.Color(255, 255, 255));
         jLabel25.setFont(new java.awt.Font("Franklin Gothic Medium Cond", 1, 24)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(153, 0, 153));
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel25.setText("CERRAR CAJA");
-        jPanel7.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 150, 50));
+        jPanel7.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 170, 50));
 
         rSButtonIcon_new17.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new17.setText("VENTAS EN EFECTIVO");
         rSButtonIcon_new17.setBackgroundHover(new java.awt.Color(255, 51, 102));
-        rSButtonIcon_new17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONEY_OFF);
+        rSButtonIcon_new17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
         rSButtonIcon_new17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new17ActionPerformed(evt);
@@ -689,7 +702,7 @@ validarconexion();
 
             },
             new String [] {
-                "ORDEN N.", "TOTAL", "FECHA"
+                "ORDEN N.", "TOTAL"
             }
         ));
         JTableBancosSalidas.setBackgoundHead(new java.awt.Color(60, 76, 143));
@@ -722,7 +735,7 @@ validarconexion();
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel26.setText("Menu Principal");
+        jLabel26.setText("0.00");
         jLabel26.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel26MouseEntered(evt);
@@ -748,7 +761,7 @@ validarconexion();
         rSButtonIcon_new18.setBackground(new java.awt.Color(255, 51, 102));
         rSButtonIcon_new18.setText("VENTAS CON TARJETA DE CREDITO:");
         rSButtonIcon_new18.setBackgroundHover(new java.awt.Color(255, 51, 102));
-        rSButtonIcon_new18.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONEY_OFF);
+        rSButtonIcon_new18.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
         rSButtonIcon_new18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new18ActionPerformed(evt);
@@ -761,7 +774,7 @@ validarconexion();
 
             },
             new String [] {
-                "ORDEN N.", "TOTAL", "FECHA"
+                "ORDEN N.", "TOTAL"
             }
         ));
         JTableBancosSalidas1.setBackgoundHead(new java.awt.Color(60, 76, 143));
@@ -794,7 +807,7 @@ validarconexion();
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel27.setText("Menu Principal");
+        jLabel27.setText("0.00");
         jLabel27.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel27MouseEntered(evt);
@@ -821,13 +834,7 @@ validarconexion();
         jLabel31.setForeground(new java.awt.Color(153, 0, 255));
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel31.setText("Código de Caja:");
-        jPanel7.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 120, 30));
-
-        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel32.setForeground(new java.awt.Color(153, 0, 255));
-        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setText("Total en Váucher:");
-        jPanel7.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 150, 40));
+        jPanel7.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 400, 30));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
@@ -854,7 +861,7 @@ validarconexion();
         jLabel34.setForeground(new java.awt.Color(153, 0, 255));
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel34.setText("Total en efectivo:");
-        jPanel7.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 150, 40));
+        jPanel7.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 140, 40));
 
         JTextbuscar1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JTextbuscar1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
@@ -877,27 +884,112 @@ validarconexion();
         jLabel35.setText("0.00");
         jPanel7.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 220, 30));
 
+        jLabel36.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel36.setText("Total en Váucher:");
+        jPanel7.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 140, 40));
+
+        rSPanelBorder1.setBackground(new java.awt.Color(255, 255, 255));
+        rSPanelBorder1.setBgBorder(new java.awt.Color(102, 153, 255));
+
+        jLabel37.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel37.setText("Resultado de Operacion:");
+
+        jLabel38.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel38.setText("Faltantes:");
+
+        jLabel39.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel39.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel39.setText("Sobrantes:");
+
+        jLabel40.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel40.setText("L.");
+
+        jLabel41.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel41.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel41.setText("L.");
+
+        jLabel42.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel42.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel42.setText("0.00");
+
+        jLabel43.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel43.setForeground(new java.awt.Color(153, 0, 255));
+        jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel43.setText("0.00");
+
+        javax.swing.GroupLayout rSPanelBorder1Layout = new javax.swing.GroupLayout(rSPanelBorder1);
+        rSPanelBorder1.setLayout(rSPanelBorder1Layout);
+        rSPanelBorder1Layout.setHorizontalGroup(
+            rSPanelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelBorder1Layout.createSequentialGroup()
+                .addGroup(rSPanelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(rSPanelBorder1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(rSPanelBorder1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel43, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)))
+                .addContainerGap(26, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelBorder1Layout.createSequentialGroup()
+                .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        rSPanelBorder1Layout.setVerticalGroup(
+            rSPanelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelBorder1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(rSPanelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(rSPanelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+
+        jPanel7.add(rSPanelBorder1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 400, 180));
+
         rSPanelOpacity3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 890, 680));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1005, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 889, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -916,6 +1008,7 @@ validarconexion();
 
     private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new15ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_rSButtonIcon_new15ActionPerformed
 
     private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
@@ -1089,10 +1182,17 @@ validarconexion();
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -1116,6 +1216,7 @@ validarconexion();
     private rojerusan.RSLabelIcon rSLabelIcon2;
     private rojerusan.RSLabelIcon rSLabelIcon7;
     private rojerusan.RSLabelIcon rSLabelIcon9;
+    private RSMaterialComponent.RSPanelBorder rSPanelBorder1;
     private rojeru_san.rspanel.RSPanelCircle rSPanelCircle2;
     private rojerusan.RSPanelOpacity rSPanelOpacity2;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity3;

@@ -1301,6 +1301,15 @@ public class Caja extends javax.swing.JFrame {
 
     private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
         // TODO add your handling code here:
+        if(codigoc!=null){
+          
+          CerraCaja cc = new CerraCaja();
+          cc.setCodigocaja(Integer.valueOf(codigoc));
+          cc.inicializar();
+          cc.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
+        }
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
 
     private void JTableBancosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableBancosMouseClicked
