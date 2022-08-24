@@ -46,7 +46,7 @@ public class Caja extends javax.swing.JFrame {
     
     public void setUsuario(String usuario) {
         this.usuario = usuario;
-        jLabel15.setText(usuario);
+        jLabel16.setText(usuario);
     }
   
     
@@ -367,9 +367,8 @@ public class Caja extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         rSButtonIcon_new14 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new15 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new8 = new newscomponents.RSButtonIcon_new();
@@ -1064,23 +1063,17 @@ public class Caja extends javax.swing.JFrame {
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
 
-        jLabel13.setBackground(new java.awt.Color(102, 51, 255));
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(51, 0, 255));
-        jLabel13.setText("Usuario en sesion: ");
-        jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 20, -1, -1));
-
-        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
-        jLabel15.setText("Usuario en sesion: ");
-        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, -1, -1));
-
         jLabel16.setBackground(new java.awt.Color(102, 51, 255));
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(51, 0, 255));
         jLabel16.setText("Usuario en sesion: ");
-        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, -1, -1));
+        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, 170, -1));
+
+        jLabel17.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel17.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, 130, -1));
 
         dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1256, -1));
 
@@ -1499,10 +1492,9 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

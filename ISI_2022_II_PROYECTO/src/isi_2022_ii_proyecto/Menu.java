@@ -185,28 +185,23 @@ public class Menu extends javax.swing.JFrame {
               JOptionPane.showMessageDialog(this, e.getMessage());
         }
         
-        if(idrol==2){
+        if(idrol==2 || idrol==1){
             estado = true;
         }
-        if(idrol==1){
-            estado = true;
-        }
-        }else{ 
-            
-        }
+        
        
         
         
    
         
-        return estado;
-        
-        
+        }
+      return estado;
+    
     }
     
     public boolean validarcaja(){
         boolean estado=false;
-     if(validarconexion()==true){
+     
           int idestadocaja=0;
          String SQL = "Select c.IdEstadoCaja from Caja c\n" +
                     "INNER JOIN Usuarios u ON u.IdUsuario = c.IdUsuario\n" +
@@ -229,9 +224,7 @@ public class Menu extends javax.swing.JFrame {
         if(idestadocaja==2){
             estado = true;
         } 
-     }else{
-         
-     }
+     
         
        
         
@@ -475,7 +468,6 @@ public class Menu extends javax.swing.JFrame {
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -1625,12 +1617,6 @@ public class Menu extends javax.swing.JFrame {
         jLabel10.setBackground(new java.awt.Color(102, 51, 255));
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(51, 0, 255));
-        jLabel10.setText("Usuario en sesion: ");
-
-        jLabel11.setBackground(new java.awt.Color(102, 51, 255));
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(51, 0, 255));
-        jLabel11.setText("Usuario en sesion: ");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -1641,11 +1627,9 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(40, 40, 40)
-                .addComponent(jLabel11)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addGap(89, 89, 89)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1667,8 +1651,7 @@ public class Menu extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1872,7 +1855,7 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(validarRolCaja()==true){
             Caja caja = new Caja();
-            
+            caja.setUsuario(usuario);
             caja.setVisible(true);
             this.dispose();
         }else{
@@ -2133,7 +2116,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

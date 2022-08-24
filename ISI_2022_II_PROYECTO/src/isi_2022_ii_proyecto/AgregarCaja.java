@@ -84,7 +84,15 @@ public class AgregarCaja extends javax.swing.JFrame {
     
     
     public boolean validar(){
-        return false;
+        boolean a=false;
+       if(JComboEmpleados.getSelectedItem().toString().isEmpty()==false && jLabel26.getText().isEmpty()==false){
+           a=true;
+       }
+       if(JComboEmpleados1.getSelectedItem().toString().isEmpty()==false && jLabel18.getText().isEmpty()==false){
+           a=true;
+       }
+       
+       return a;
     }
     
    
@@ -986,7 +994,6 @@ public class AgregarCaja extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(153, 0, 255));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("Asignar Usuario:");
         jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 330, 190, 40));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
@@ -1067,7 +1074,6 @@ public class AgregarCaja extends javax.swing.JFrame {
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(153, 0, 255));
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel26.setText("Asignar Usuario:");
         jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 230, 190, 30));
 
         rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
