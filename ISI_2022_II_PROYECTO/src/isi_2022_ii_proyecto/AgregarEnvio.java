@@ -259,14 +259,14 @@ public class AgregarEnvio extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
           a= false;
       }
-         if (validarC(CorreoC.getText())==false){
+         /* (validarC(CorreoC.getText())==false){
               
              a= false;
         
       
              
         
-        }
+        }*/
        
        
       
