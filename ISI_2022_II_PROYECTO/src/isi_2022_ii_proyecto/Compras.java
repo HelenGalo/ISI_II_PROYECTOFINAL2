@@ -94,6 +94,7 @@ public class Compras extends javax.swing.JFrame {
         buscarUltimoId();
         modelo1=(DefaultTableModel) JTableBancos.getModel();
         modelo=(DefaultTableModel) JTableBancos1.getModel();
+        rSButtonIcon_new1.setVisible(false);
         setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         
     }
@@ -904,30 +905,7 @@ public class Compras extends javax.swing.JFrame {
      
     }
     
-    public void iniciarvendedor(){
-        String nombrevendedor="";
-        String SQL = "SELECT e.PrimerNombre, e.PrimerApellido FROM Empleados e Where e.IdEmpleado="+codigvendedor;
-        
-        
- 
-        try {
-          Statement  st = (Statement) con.createStatement();
-          ResultSet rs = st.executeQuery(SQL);
-        
-        
-         while (rs.next()) {
-           
-                nombrevendedor = rs.getString("e.PrimerNombre")+" "+rs.getString("e.PrimerApellido");
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error "+ ex.getMessage());
-        }
-        
-         
-        jLabel35.setText(nombrevendedor);
-        jLabel36.setText(String.valueOf(codigvendedor));
-         
-    }
+
     
      public void iniciarcajero(){
          String nombrecajero="";
@@ -996,7 +974,7 @@ public class Compras extends javax.swing.JFrame {
        iniciarcajero();
 
        iniciarproveedor();
-       iniciarvendedor();
+     
        jLabel15.setText(Nfacturac);
        
         
@@ -1016,13 +994,14 @@ public class Compras extends javax.swing.JFrame {
             cp.setCompras(this);
             cp.setVisible(true);
         }else{
-             if(rSRadioButton2.isSelected()){
+             if(rSRadioButton1.isSelected()){
                  insertarcompra();
                  enviarDetallesOrden();
                  if(estadodetalleorden==true){
                      enviarActualizacionExistencia();
                      VentanaEmergente1 v = new VentanaEmergente1();
                      v.setVisible(true);
+                     bloqueartodo();
                  }
             
         }
@@ -1116,6 +1095,10 @@ public class Compras extends javax.swing.JFrame {
                      enviarActualizacionExistencia();
                      VentanaEmergente1 v = new VentanaEmergente1();
                      v.setVisible(true);
+                     bloqueartodo();
+                    
+                   
+                     
                  }
     }
     
@@ -1144,6 +1127,19 @@ public class Compras extends javax.swing.JFrame {
         
     }
     
+       
+       public void bloqueartodo(){
+           rSPanel2.setEnabled(false);
+           rSPanel1.setEnabled(false);
+           rSButtonIcon_new1.setVisible(true);
+          
+       }
+       
+       public void irmenu(){
+           Menu menu = new Menu();
+           menu.setUsuario(usuario);
+           menu.setVisible(true);
+       }
     
     public void insertarcompra(){
         int estadopago = 0;
@@ -1185,7 +1181,7 @@ public class Compras extends javax.swing.JFrame {
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1,codigoco);
-            preparedStmt.setString(2, Fc);
+            preparedStmt.setString(2, Fc.toUpperCase());
             preparedStmt.setString(3, hf);
             preparedStmt.setInt(4,obteneridusuario());
             preparedStmt.setInt(5, codigprov);
@@ -1342,20 +1338,17 @@ public class Compras extends javax.swing.JFrame {
         linesetting5 = new javax.swing.JPanel();
         dashboardview = new javax.swing.JPanel();
         rSPanelGradiente3 = new rspanelgradiente.RSPanelGradiente();
-        jLabel34 = new javax.swing.JLabel();
         rSLabelIcon13 = new rojerusan.RSLabelIcon();
-        jLabel35 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         rSLabelIcon14 = new rojerusan.RSLabelIcon();
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        rSLabelIcon16 = new rojerusan.RSLabelIcon();
         jLabel43 = new javax.swing.JLabel();
         rSLabelIcon17 = new rojerusan.RSLabelIcon();
         jLabel44 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
+        rSButtonIcon_new1 = new newscomponents.RSButtonIcon_new();
         rSPanelShadow1 = new necesario.RSPanelShadow();
         rSPanelsSlider2 = new rojerusan.RSPanelsSlider();
         rSPanelsSlider3 = new rojerusan.RSPanelsSlider();
@@ -1591,28 +1584,11 @@ public class Compras extends javax.swing.JFrame {
         rSPanelGradiente3.setGradiente(rspanelgradiente.RSPanelGradiente.Gradiente.VERTICAL);
         rSPanelGradiente3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel34.setFont(new java.awt.Font("Franklin Gothic Book", 0, 16)); // NOI18N
-        jLabel34.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel34.setText("Gerente Comercial");
-        rSPanelGradiente3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(316, 10, -1, 30));
-
         rSLabelIcon13.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon13.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon13.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         rSLabelIcon13.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
         rSPanelGradiente3.add(rSLabelIcon13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 60, 60));
-
-        jLabel35.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
-        jLabel35.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel35.setText("Vendedor");
-        rSPanelGradiente3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 200, 30));
-
-        jLabel36.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
-        jLabel36.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        rSPanelGradiente3.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 200, 20));
 
         jLabel17.setFont(new java.awt.Font("Franklin Gothic Book", 1, 36)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
@@ -1624,55 +1600,60 @@ public class Compras extends javax.swing.JFrame {
         jLabel37.setForeground(new java.awt.Color(255, 255, 255));
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel37.setText("Proveedor");
-        rSPanelGradiente3.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, 100, 30));
+        rSPanelGradiente3.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 100, 30));
 
         rSLabelIcon14.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon14.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon14.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         rSLabelIcon14.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ACCOUNT_CIRCLE);
-        rSPanelGradiente3.add(rSLabelIcon14, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, 60, 60));
+        rSPanelGradiente3.add(rSLabelIcon14, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, 60, 60));
 
         jLabel38.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(255, 255, 255));
         jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel38.setText("Proveedor");
-        rSPanelGradiente3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 40, 250, 30));
+        rSPanelGradiente3.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 250, 30));
 
         jLabel39.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
         jLabel39.setForeground(new java.awt.Color(255, 255, 255));
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel39.setText("Provvedor");
-        rSPanelGradiente3.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 70, 250, 20));
-
-        rSLabelIcon16.setBackground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon16.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon16.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        rSLabelIcon16.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ACCOUNT_CIRCLE);
-        rSPanelGradiente3.add(rSLabelIcon16, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 46, 60, 60));
+        rSPanelGradiente3.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 250, 20));
 
         jLabel43.setFont(new java.awt.Font("Franklin Gothic Book", 0, 16)); // NOI18N
         jLabel43.setForeground(new java.awt.Color(255, 255, 255));
         jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel43.setText("Usuario");
-        rSPanelGradiente3.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 10, 100, 30));
+        rSPanelGradiente3.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, 100, 20));
 
         rSLabelIcon17.setBackground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CONTACTS);
-        rSPanelGradiente3.add(rSLabelIcon17, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 40, 60, 60));
+        rSPanelGradiente3.add(rSLabelIcon17, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, 60, 60));
 
         jLabel44.setFont(new java.awt.Font("Franklin Gothic Book", 1, 14)); // NOI18N
         jLabel44.setForeground(new java.awt.Color(255, 255, 255));
         jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel44.setText("Usuario");
-        rSPanelGradiente3.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 40, 160, 30));
+        rSPanelGradiente3.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 40, 160, 30));
 
         jLabel45.setFont(new java.awt.Font("Franklin Gothic Book", 1, 12)); // NOI18N
         jLabel45.setForeground(new java.awt.Color(255, 255, 255));
         jLabel45.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel45.setText("Usuario");
-        rSPanelGradiente3.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 70, 160, 20));
+        rSPanelGradiente3.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 70, 160, 20));
+
+        rSButtonIcon_new1.setBackground(new java.awt.Color(0, 153, 102));
+        rSButtonIcon_new1.setText("Terminar Proceso");
+        rSButtonIcon_new1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rSButtonIcon_new1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REPLY_ALL);
+        rSButtonIcon_new1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new1ActionPerformed(evt);
+            }
+        });
+        rSPanelGradiente3.add(rSButtonIcon_new1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 0, 290, 110));
 
         dashboardview.add(rSPanelGradiente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 108));
 
@@ -2346,6 +2327,11 @@ public class Compras extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rSComboBox3ActionPerformed
 
+    private void rSButtonIcon_new1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new1ActionPerformed
+        // TODO add your handling code here:
+        irmenu();
+    }//GEN-LAST:event_rSButtonIcon_new1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2415,9 +2401,6 @@ public class Compras extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
@@ -2448,6 +2431,7 @@ public class Compras extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new1;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new18;
     private RSMaterialComponent.RSComboBox rSComboBox2;
@@ -2456,7 +2440,6 @@ public class Compras extends javax.swing.JFrame {
     private rojeru_san.rsdate.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon13;
     private rojerusan.RSLabelIcon rSLabelIcon14;
-    private rojerusan.RSLabelIcon rSLabelIcon16;
     private rojerusan.RSLabelIcon rSLabelIcon17;
     private necesario.RSPanel rSPanel1;
     private necesario.RSPanel rSPanel2;

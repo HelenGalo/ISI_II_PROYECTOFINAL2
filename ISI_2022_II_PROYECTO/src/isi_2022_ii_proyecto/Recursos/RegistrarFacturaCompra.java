@@ -6,7 +6,13 @@
 package isi_2022_ii_proyecto.Recursos;
 
 
+import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.GenerarCompra;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 import rojeru_san.complementos.RSUtilities;
 
@@ -15,8 +21,14 @@ import rojeru_san.complementos.RSUtilities;
  * @author Edwin Rafael
  */
 public class RegistrarFacturaCompra extends javax.swing.JFrame {
-  
+      ConexionBD conexion = new ConexionBD();
+      Connection con = conexion.conexion();
   GenerarCompra gc;
+  int codigop;
+
+    public void setCodigop(int codigop) {
+        this.codigop = codigop;
+    }
 
     public void setGc(GenerarCompra gc) {
         this.gc = gc;
@@ -65,6 +77,27 @@ public class RegistrarFacturaCompra extends javax.swing.JFrame {
         return a;
     }
     
+    private String validarexistenciaproductoproveedor(String f){
+        String SQL = "SELECT fc.NumeroFactura FROM Compras fc WHERE fc.NumeroFactura='"+f+"' AND fc.IdProveedor="+codigop;
+        String NumeroFactura="";
+          
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL);
+
+            while (rs.next()) {
+                NumeroFactura = rs.getString("fc.NumeroFactura");
+               
+                
+            }
+        }catch(SQLException e){
+              JOptionPane.showMessageDialog(this, e.getMessage());
+              con=null;
+              /*validarconexion();*/
+        }
+        return NumeroFactura;
+    }
+    
    
 
     /**
@@ -98,14 +131,14 @@ public class RegistrarFacturaCompra extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("FACTURA DE COMPRA");
-        rSPanelOpacity1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 450, -1));
+        rSPanelOpacity1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 490, -1));
 
         jLabel8.setBackground(new java.awt.Color(255, 102, 102));
         jLabel8.setFont(new java.awt.Font("Franklin Gothic Book", 3, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 0, 102));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("VALOR INGRESADO INCORRECTO");
-        rSPanelOpacity1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 470, -1));
+        rSPanelOpacity1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 520, 30));
 
         rSButtonRound2.setBackground(new java.awt.Color(0, 153, 102));
         rSButtonRound2.setText("Aceptar");
@@ -115,7 +148,7 @@ public class RegistrarFacturaCompra extends javax.swing.JFrame {
                 rSButtonRound2ActionPerformed(evt);
             }
         });
-        rSPanelOpacity1.add(rSButtonRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, 140, -1));
+        rSPanelOpacity1.add(rSButtonRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 140, -1));
 
         rSTextFullRound1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         rSTextFullRound1.setPlaceholder("Campo de N. Factura");
@@ -130,18 +163,18 @@ public class RegistrarFacturaCompra extends javax.swing.JFrame {
                 rSTextFullRound1KeyReleased(evt);
             }
         });
-        rSPanelOpacity1.add(rSTextFullRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 300, -1));
+        rSPanelOpacity1.add(rSTextFullRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 300, -1));
 
         rSLabelIcon2.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CONFIRMATION_NUMBER);
-        rSPanelOpacity1.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 40, 40));
+        rSPanelOpacity1.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 40, 40));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Franklin Gothic Book", 2, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Ingrese el número de la factura sin guiones");
-        rSPanelOpacity1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 460, -1));
+        rSPanelOpacity1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 510, -1));
 
         rSButtonRound3.setBackground(new java.awt.Color(255, 0, 102));
         rSButtonRound3.setText("X");
@@ -157,9 +190,9 @@ public class RegistrarFacturaCompra extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -184,6 +217,9 @@ public class RegistrarFacturaCompra extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    
     private void rSButtonRound2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonRound2ActionPerformed
         // TODO add your handling code here:
         if(validar()==true){
@@ -240,10 +276,17 @@ public class RegistrarFacturaCompra extends javax.swing.JFrame {
              
            
           tf = convertidor+convertidor1+convertidor2+convertidor3;
-          gc.setNfacturac(tf);
-          this.setVisible(false);
-          gc.iracompra();
-          this.dispose();   
+          
+          if(validarexistenciaproductoproveedor(tf).endsWith(tf)){
+              jLabel8.setText("El numero de factura ingresado ya existe para el proveedor seleccionado");
+          }else{
+              gc.setNfacturac(tf);
+              this.setVisible(false);
+              gc.iracompra();
+              this.dispose();  
+          }
+          
+           
           }
        
           

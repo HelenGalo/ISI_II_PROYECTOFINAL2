@@ -39,6 +39,7 @@ public class GenerarCompra extends javax.swing.JFrame {
     String usuario;
     RestrictedTextField r;
     String Nfacturac;
+    int codigoprov;
 
     public void setNfacturac(String Nfacturac) {
         this.Nfacturac = Nfacturac;
@@ -76,8 +77,9 @@ public class GenerarCompra extends javax.swing.JFrame {
     
     
     private void EstablecerProveedor(){
-        Connection con = conexion.conexion();
+    
         int idprove=buscarIdProv();
+        codigoprov=idprove;
         String nombre="";
         
         if(idprove==0){
@@ -121,7 +123,7 @@ public class GenerarCompra extends javax.swing.JFrame {
     
     
     private int buscarIdProv(){
-        Connection con = conexion.conexion();
+       
         int idpro=0;
  
         String SQL = "Select p.IdProveedor From Proveedores p\n"
@@ -147,13 +149,8 @@ public class GenerarCompra extends javax.swing.JFrame {
         }
         
         
-        try {
-            con.close();
-        } catch (Exception e) {
-             System.out.println("Ha ocurrido un error al cerrar la conexion: "+e.getMessage());
-        }
         
-     
+        
         
         return idpro;
         
@@ -178,7 +175,7 @@ public class GenerarCompra extends javax.swing.JFrame {
     public void iracompra(){
             Compras cp = new Compras();
             cp.setUsuario(usuario);
-            cp.setCodigprov(buscarIdProv());
+            cp.setCodigprov(codigoprov);
             cp.setNfacturac(Nfacturac);
             cp.iniciardatos();
             cp.setVisible(true);
@@ -190,6 +187,7 @@ public class GenerarCompra extends javax.swing.JFrame {
     public void registrarfacturac(){
         RegistrarFacturaCompra rc = new RegistrarFacturaCompra();
         rc.setGc(this);
+        rc.setCodigop(codigoprov);
         rc.setVisible(true);
     }
         
