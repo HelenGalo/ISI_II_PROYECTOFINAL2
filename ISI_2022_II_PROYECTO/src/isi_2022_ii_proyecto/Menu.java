@@ -2050,6 +2050,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
         Ventas v = new Ventas();
+        v.setUsuario(usuario);
         v.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
