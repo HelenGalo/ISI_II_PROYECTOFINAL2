@@ -349,15 +349,7 @@ public class AgregarClientes extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
           a= false;
       }
-          if (validarC(CorreoC.getText())==false){
-            
-              
-             a= false;
-     
-        }
-          if (validarcorreo(CorreoC.getText())==false){
-           a=false;
-       }
+        
        if(JComboEstado.getSelectedItem().toString().isEmpty()){
             JOptionPane.showMessageDialog(this, "Por favor seleccione un estado valido");
           a= false;
@@ -1522,7 +1514,7 @@ public boolean validarcorreo(String correo){
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         // TODO add your handling code here:
         if(validar()==true){
-           // if(verificar()==true){
+           if(verificar()==true){
             ConfirmacionGuardar gc = new  ConfirmacionGuardar();
             gc.setGcliente(this);
             gc.setTipo("Gcliente");
@@ -1531,7 +1523,7 @@ public boolean validarcorreo(String correo){
         }else{
 
             JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
-        //}
+        }
         }    
     }//GEN-LAST:event_guardarActionPerformed
 

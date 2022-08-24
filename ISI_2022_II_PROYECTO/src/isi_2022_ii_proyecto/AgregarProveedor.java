@@ -249,12 +249,12 @@ public class AgregarProveedor extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un correo valido");
           a= false;
       }
-       if (validarC(CorreoP.getText())==false){
+      /* if (validarC(CorreoP.getText())==false){
            a=false;
        }
        if (validarcorreo(CorreoP.getText())==false){
            a=false;
-       }
+       }*/
        
        
        if(JEstado.getSelectedItem().toString().isEmpty()){
@@ -1239,7 +1239,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         // TODO add your handling code here:
           if(validar()==true){
-           //if(verificar()==true){
+           if(verificar()==true){
             ConfirmacionGuardar p = new  ConfirmacionGuardar();
             p.setGprov(this);
             p.setTipo("GProveedor");
@@ -1248,7 +1248,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
         }else{
               
             JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACIÓN");
-        //}
+        }
         } 
     }//GEN-LAST:event_guardarActionPerformed
 
