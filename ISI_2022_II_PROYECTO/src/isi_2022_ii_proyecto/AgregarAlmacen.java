@@ -59,7 +59,15 @@ public class AgregarAlmacen extends javax.swing.JFrame {
         conexion.setAal(this);
         con = conexion.conexion();
     }
-    
+       public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     public AgregarAlmacen() {
         initComponents();
          this.setLocationRelativeTo(null);
@@ -99,6 +107,8 @@ public class AgregarAlmacen extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
     }
       
@@ -131,6 +141,8 @@ public class AgregarAlmacen extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+            validarconexion();
         }
     }
          public void listarEmpleados(){
@@ -159,6 +171,8 @@ public class AgregarAlmacen extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+           con=null;
+           validarconexion();
         }
     }
      public int Obtenerestado(){
@@ -184,6 +198,10 @@ public class AgregarAlmacen extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+        con=null;
+        validarconexion();
+        
         }
         return idg;
         
@@ -221,14 +239,14 @@ public class AgregarAlmacen extends javax.swing.JFrame {
                 String msj = "ERROR";
                 if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
                   
-                    msj = "EL REGISTRO EXISTE EN LA BASE DE DATOS";
+         
+              JOptionPane.showMessageDialog(null,"EL REGISTRO EXISTE EN LA BASE DE DATOS");
+              
                 }
-                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
-                return false;
+              con=null;
+              validarconexion();
+               //return false;
         
-        }catch (Exception e) {
-               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
-            return false;
         }
         return true;
     }

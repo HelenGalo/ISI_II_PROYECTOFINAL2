@@ -62,6 +62,17 @@ public class AgregarProveedor extends javax.swing.JFrame {
         conexion.setAgprovee(this);
         con = conexion.conexion();
     }
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
+    
+    
      public void validarConfirmacion(){
         if(estadoagregar=true){
             insertarP();
@@ -87,6 +98,9 @@ public class AgregarProveedor extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        con=null;
+        validarconexion();
+        
         }
     }    
             
@@ -124,6 +138,8 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+           con=null;
+        validarconexion();
         }
     }
     
@@ -150,11 +166,14 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+           con=null;
+        validarconexion();
         }
         return idg;
         
     }
-    
+    public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
     public void insertarP(){
         String NombreE="";
         String direccion="";
@@ -186,8 +205,16 @@ public class AgregarProveedor extends javax.swing.JFrame {
              VentanaEmergente1 ve = new VentanaEmergente1();
              ve.setVisible(true);
 
-        } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());
+        }catch (SQLException  e) {
+                String msj = "ERROR";
+                if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
+                  JOptionPane.showMessageDialog(null,"EL REGISTRO EXISTE EN LA BASE DE DATOS");
+               
+                }else{
+                    JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE); 
+                }
+           con=null;
+         validarconexion();
         }
         
         
@@ -774,7 +801,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -782,7 +809,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Proveedores");
+        jLabel11.setText("Modúlo Proveedores");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -919,7 +946,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(153, 0, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("Telefono");
+        jLabel20.setText("Teléfono");
         jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 180, 40));
 
         JEstado.setBorder(null);
@@ -1005,7 +1032,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO PROVEEDORES");
+        jLabel6.setText("MODÚLO PROVEEDORES");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);

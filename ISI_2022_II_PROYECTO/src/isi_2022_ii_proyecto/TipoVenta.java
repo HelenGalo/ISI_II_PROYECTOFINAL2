@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import rojerusan.RSTableMetro1;
@@ -65,7 +66,7 @@ ConexionBD conexion = new ConexionBD();
         rSPanel2.setLocation(540,220);
         rSButtonIcon_new19.setVisible(false);
         iniciarEmpresasEnvio();
-        
+         setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         
       
     }

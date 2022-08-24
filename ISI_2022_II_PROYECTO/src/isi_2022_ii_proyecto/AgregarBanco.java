@@ -44,6 +44,15 @@ public class AgregarBanco extends javax.swing.JFrame {
         conexion.setAgregarbanco(this);
         con = conexion.conexion();
     }
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     boolean estadoagregar=false;
 
     public void setEstadoagregar(boolean estadoagregar) {
@@ -98,6 +107,8 @@ public class AgregarBanco extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+           con=null;
+          validarconexion();
         }
     }  public void listarEstado(){
         JEstados.addItem("Seleccionar Estado");
@@ -117,6 +128,9 @@ public class AgregarBanco extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+          validarconexion();
+        
         }
     }
       public int Obtenerestado(){
@@ -142,6 +156,9 @@ public class AgregarBanco extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+          validarconexion();
+        
         }
         return idg;
         
@@ -174,15 +191,16 @@ public class AgregarBanco extends javax.swing.JFrame {
       } catch (SQLException  e) {
                 String msj = "ERROR";
                 if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
-                  
-                    msj = "EL REGISTRO EXISTE EN LA BASE DE DATOS";
-                }
-                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
-                return false;
+                
+                JOptionPane.showMessageDialog(null,"EL REGISTRO EXISTE EN LA BASE DE DATOS");
+             
         
-        }catch (Exception e) {
-               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
-            return false;
+        }else{
+                 JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+          con=null;
+          validarconexion();
+     
         }
         return true;
     }

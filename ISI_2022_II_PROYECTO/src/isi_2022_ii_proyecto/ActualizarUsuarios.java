@@ -6,6 +6,8 @@ package isi_2022_ii_proyecto;
 
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
 import isi_2022_ii_proyecto.Recursos.ColorFondo;
+import isi_2022_ii_proyecto.Recursos.ConfirmacionModificar;
+import isi_2022_ii_proyecto.Recursos.VentanaEmergente1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.List;
@@ -48,7 +50,11 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         this.codigou = codigou;
         MostrarUsuario();
     }
- 
+     boolean estadosModificar=false;
+
+    public void setEstadosModificar(boolean estadosModificar) {
+        this.estadosModificar = estadosModificar;
+    } 
   
     
     public ActualizarUsuarios() {
@@ -59,6 +65,15 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
        public void conectar(){
         conexion.setAu(this);
         con = conexion.conexion();
+    }
+       public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
     }
     
     public void inicializarValoresC(){
@@ -181,6 +196,9 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
                     idrol=rs.getInt("IdRol");
                 }
         } catch (Exception e) {
+            
+        con=null;
+        validarconexion();
                JOptionPane.showMessageDialog(this, e.getMessage());
                 
         }
@@ -232,7 +250,11 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
            
       
         }
- 
+  public void validarConfirmacion(){
+        if(estadosModificar=true){
+          ActualizarUsuario();
+        }
+    }
     
     public void ActualizarUsuario(){
          
@@ -258,10 +280,13 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
             preparedStmt.setInt(3,idrol);
             preparedStmt.execute();
             
-            JOptionPane.showMessageDialog(null, "Registro actualizado Exitosamente");
+             VentanaEmergente1 ve = new VentanaEmergente1();
+             ve.setVisible(true);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+          con=null;
+        validarconexion();
         }
          
      }
@@ -304,6 +329,9 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+          con=null;
+        validarconexion();
         }
     }
     
@@ -400,7 +428,6 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         rSMPassView1 = new rojeru_san.RSMPassView();
         jLabel22 = new javax.swing.JLabel();
-        rSButtonIcon_new8 = new newscomponents.RSButtonIcon_new();
         Juser3 = new javax.swing.JLabel();
         rSPanelRound1 = new rojeru_san.rspanel.RSPanelRound();
         rSPanelRound2 = new rojeru_san.rspanel.RSPanelRound();
@@ -414,6 +441,7 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         rSRadioButtonMaterial9 = new RSMaterialComponent.RSRadioButtonMaterial();
         jLabel23 = new javax.swing.JLabel();
         rSMPassView2 = new rojeru_san.RSMPassView();
+        rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -764,7 +792,7 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -857,7 +885,7 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -865,7 +893,7 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Usuario");
+        jLabel11.setText("Modúlo Usuario");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -949,7 +977,7 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("CodigoUsuario:");
+        jLabel17.setText("CódigoUsuario:");
         jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 130, 40));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
@@ -981,7 +1009,7 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(153, 0, 255));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("ASIGNACION DE ROLES");
+        jLabel19.setText("ASIGNACIÓN DE ROLES");
         jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 80, 260, 30));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1019,18 +1047,6 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Usuario:");
         jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 180, 30));
-
-        rSButtonIcon_new8.setBackground(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new8.setText("Guardar");
-        rSButtonIcon_new8.setBackgroundHover(new java.awt.Color(153, 0, 255));
-        rSButtonIcon_new8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        rSButtonIcon_new8.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
-        rSButtonIcon_new8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new8ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(rSButtonIcon_new8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 110, 40));
 
         Juser3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Juser3.setForeground(new java.awt.Color(153, 0, 255));
@@ -1171,6 +1187,18 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 180, 40));
         jPanel3.add(rSMPassView2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 350, 260, -1));
 
+        rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
+        rSButtonIcon_new9.setText("Modificar Cambios");
+        rSButtonIcon_new9.setBackgroundHover(new java.awt.Color(153, 0, 255));
+        rSButtonIcon_new9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        rSButtonIcon_new9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.UPDATE);
+        rSButtonIcon_new9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new9ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 220, 40));
+
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1181,7 +1209,7 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO USUARIO");
+        jLabel6.setText("MODÚLO USUARIO");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
@@ -1321,18 +1349,6 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_linesetting12MouseClicked
 
-    private void rSButtonIcon_new8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new8ActionPerformed
-        // TODO add your handling code here:
-        if(validar()==true){
-            ActualizarUsuario();
-           
-             
-        }else{
-            JOptionPane.showMessageDialog(this, "POR FAVOR LLENE O SELECCIONE LOS CAMPOS FALTANTES");
-        }
-       
-    }//GEN-LAST:event_rSButtonIcon_new8ActionPerformed
-
     private void JIntentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JIntentosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JIntentosActionPerformed
@@ -1437,6 +1453,18 @@ public class ActualizarUsuarios extends javax.swing.JFrame {
     private void rSMPassView1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMPassView1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rSMPassView1ActionPerformed
+
+    private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
+        if(validar()==true){
+            ConfirmacionModificar u = new ConfirmacionModificar();
+            u.setGusuario(this);
+            u.setTipo("MUsuario");
+            u.setVisible(true);
+        }else{
+
+            JOptionPane.showMessageDialog(this, "POR FAVOR VERIFIQUE LA INFORMACION");
+        }
+    }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1560,7 +1588,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new3;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new8;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new9;
     private rojeru_san.RSLabelHora rSLabelHora1;
     private rojerusan.RSLabelIcon rSLabelIcon1;
     private rojerusan.RSLabelIcon rSLabelIcon10;

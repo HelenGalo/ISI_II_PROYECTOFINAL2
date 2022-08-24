@@ -55,7 +55,19 @@ public class ActualizarCliente extends javax.swing.JFrame {
         conexion.setAcl(this);
         con = conexion.conexion();
     }
-    HashMap<String, Integer> empleados = new HashMap<String, Integer>();
+    
+  public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
+    
+    
+ //   HashMap<String, Integer> empleados = new HashMap<String, Integer>();
 
    boolean estadosModificar=false;
 
@@ -81,8 +93,8 @@ public class ActualizarCliente extends javax.swing.JFrame {
     
     
     
-          
-    public void actualizar(){
+  public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;     
+    public boolean actualizar(){
    String nombres="";
         String apellidos="";
         String telefono="";
@@ -112,11 +124,20 @@ public class ActualizarCliente extends javax.swing.JFrame {
           VentanaEmergente1 ve = new VentanaEmergente1();
              ve.setVisible(true);
 
-        } catch (Exception e) {
-            System.out.println("ERROR" + e.getMessage());   
+        }  catch (SQLException  e) {
+                String msj = "ERROR";
+                if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
+               JOptionPane.showMessageDialog(null, "EL REGISTRO EXISTE EN LA BASE DE DATOS");
+           }
+               
+         con=null;
+         validarconexion();
+        
         }
+        return true;
+    }        
               
-    }
+    
         public void listarEstado(){
         JComboEstado.addItem("Seleccionar Estado");
         JComboEstado.setSelectedIndex(0);
@@ -135,6 +156,9 @@ public class ActualizarCliente extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+          validarconexion();
+        
         }
     }
         public int Obtenerestado(){
@@ -160,6 +184,9 @@ public class ActualizarCliente extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+         con=null;
+         validarconexion();
+        
         }
         return idg;
         
@@ -286,6 +313,9 @@ public class ActualizarCliente extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+         con=null;
+         validarconexion();
+        
         }
     }
     

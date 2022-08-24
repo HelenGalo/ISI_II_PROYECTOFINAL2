@@ -120,7 +120,6 @@ public class VerificarOrden extends javax.swing.JFrame {
         rSPanelForma6.setVisible(false);
         rSPanel4.setVisible(false);
         estadodetalleorden=false;
-  
         setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagenes/LOGOFACTURAS.png")).getImage());
         
     }

@@ -262,21 +262,14 @@ public class AgregarLogistica extends javax.swing.JFrame {
       } catch (SQLException  e) {
                 String msj = "ERROR";
                 if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
-                  
-                    msj = "EL REGISTRO EXISTE EN LA BASE DE DATOS";
+                  JOptionPane.showMessageDialog(null,"EL REGISTRO EXISTE EN LA BASE DE DATOS");
+               
+                }else{
+                    JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE); 
                 }
-                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
-                return false;
-        
-        }catch (Exception e) {
-               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
-                   con=null;
-                 validarconexion();
-               return false;
-               
-               
-               
-        } 
+           con=null;
+         validarconexion();
+        }
         return true;
     }
       

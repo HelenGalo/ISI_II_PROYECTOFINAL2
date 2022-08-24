@@ -70,6 +70,15 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         con = conexion.conexion();
     }
     
+  public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
         public void validarConfirmacion(){
         if(estadoagregar=true){
             insertar();
@@ -148,6 +157,9 @@ public class AgregarEmpleado extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       
+         con=null;
+        validarconexion();
         }
        
     
@@ -179,6 +191,10 @@ public class AgregarEmpleado extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+        con=null;
+        validarconexion();
+        
         }
     }
     
@@ -206,6 +222,9 @@ public class AgregarEmpleado extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+         con=null;
+        validarconexion();
+        
         }
         return idp;
         
@@ -236,6 +255,10 @@ public class AgregarEmpleado extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+          con=null;
+        validarconexion();
+        
         }
         return idp;
         
@@ -265,6 +288,10 @@ public class AgregarEmpleado extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       
+          con=null;
+        validarconexion();
+        
         }
         return idg;
         
@@ -293,11 +320,15 @@ public class AgregarEmpleado extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       
+          con=null;
+        validarconexion();
+        
         }
         return idg;
         
     }
-    
+     public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
     public void insertar(){
         
        String primernombre="";
@@ -360,14 +391,20 @@ public class AgregarEmpleado extends javax.swing.JFrame {
             preparedStmt.execute();
                 VentanaEmergente1 ve = new VentanaEmergente1();
              ve.setVisible(true);
-        } catch (SQLException e) {
-            System.out.println("ERROR AL REGISTRAR: " + e.getMessage());
+        } catch (SQLException  e) {
+                String msj = "ERROR";
+                if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
+                  JOptionPane.showMessageDialog(null,"EL REGISTRO EXISTE EN LA BASE DE DATOS");
+               
+                }else{
+                    JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE); 
+                }
+           con=null;
+         validarconexion();
         }
-        
-        
-        
-       
-    }
+    
+         }
+
   public Boolean validar(){
         boolean a=true;
       if(primern.getText().isEmpty()){
@@ -949,7 +986,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -957,7 +994,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Empleado");
+        jLabel11.setText("Modúlo Empleado");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -1041,13 +1078,13 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Codigo Empleado Disponible:");
+        jLabel17.setText("Código Empleado Disponible:");
         jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 220, 50));
 
         Genero.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Genero.setForeground(new java.awt.Color(153, 0, 255));
         Genero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Genero.setText("Genero:");
+        Genero.setText("Género:");
         jPanel3.add(Genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, 150, 30));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
@@ -1089,7 +1126,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 190, 30));
 
         Apellido2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Apellido2.setPlaceholder("Ingresa nombre");
+        Apellido2.setPlaceholder("Ingresa Apellido");
         Apellido2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Apellido2ActionPerformed(evt);
@@ -1153,7 +1190,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         CorreoAE.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         CorreoAE.setForeground(new java.awt.Color(153, 0, 255));
         CorreoAE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CorreoAE.setText("Numero cuenta:");
+        CorreoAE.setText("Número cuenta:");
         jPanel3.add(CorreoAE, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 240, 150, 30));
 
         JCombopuesto.setColorArrow(new java.awt.Color(102, 0, 255));
@@ -1177,7 +1214,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         jPanel3.add(JCombopuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 360, 220, 30));
 
         primern.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        primern.setPlaceholder("");
+        primern.setPlaceholder("Ingresar Nombre");
         primern.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 primernActionPerformed(evt);
@@ -1188,7 +1225,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         CorreoAE1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         CorreoAE1.setForeground(new java.awt.Color(153, 0, 255));
         CorreoAE1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CorreoAE1.setText("Correo Electronico:");
+        CorreoAE1.setText("Correo Electrónico:");
         jPanel3.add(CorreoAE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, 150, 30));
 
         correoE.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1264,7 +1301,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 170, 30));
 
         Apellidop.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Apellidop.setPlaceholder("Ingresa nombre");
+        Apellidop.setPlaceholder("Ingresa Apellido");
         Apellidop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ApellidopActionPerformed(evt);
@@ -1275,7 +1312,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         FechaContracion1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         FechaContracion1.setForeground(new java.awt.Color(153, 0, 255));
         FechaContracion1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        FechaContracion1.setText("Fecha Contratacion:");
+        FechaContracion1.setText("Fecha Contratación:");
         jPanel3.add(FechaContracion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 90, 150, 40));
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1302,7 +1339,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO EMPLEADO");
+        jLabel6.setText("MODÚLO EMPLEADO");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);

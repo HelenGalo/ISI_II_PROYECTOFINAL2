@@ -50,7 +50,15 @@ public class AgregarCategoria extends javax.swing.JFrame {
         conexion.setAcat(this);
         con = conexion.conexion();
     }
+  public void validarconexion(){
 
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
    
     /**
      * Creates new form CalendarForm
@@ -98,6 +106,9 @@ public class AgregarCategoria extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+        con=null;
+        validarconexion();
         }
     }
    
@@ -129,17 +140,16 @@ public class AgregarCategoria extends javax.swing.JFrame {
       } catch (SQLException  e) {
                 String msj = "ERROR";
                 if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
-                  
-                    msj = "EL REGISTRO EXISTE EN LA BASE DE DATOS";
-                }
-                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
-                return false;
+                  JOptionPane.showMessageDialog(null, "EL REGISTRO EXISTE EN LA BASE DE DATOS");
+                    
+                }else{
+              JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
+              }
+          con=null;
+           validarconexion();    
         
-        }catch (Exception e) {
-               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
-            return false;
         }
-        return true;
+    return true;
     }
        public Boolean validar(){
         boolean a=true;
@@ -362,7 +372,7 @@ public class AgregarCategoria extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -455,7 +465,7 @@ public class AgregarCategoria extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("Codigo de Categoria:");
+        jLabel29.setText("Codigo de Categoría:");
         jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 80, 150, 40));
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

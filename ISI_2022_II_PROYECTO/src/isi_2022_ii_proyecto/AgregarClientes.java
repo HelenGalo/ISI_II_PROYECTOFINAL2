@@ -58,6 +58,15 @@ public class AgregarClientes extends javax.swing.JFrame {
         conexion.setAgcliente(this);
         con = conexion.conexion();
     }
+   public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     public void setEstadoagregar(boolean estadoagregar) {
         this.estadoagregar = estadoagregar;
     }
@@ -113,6 +122,9 @@ public class AgregarClientes extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        con=null;
+        validarconexion();
+        
         }
     }
     public void inicial(){
@@ -140,6 +152,9 @@ public class AgregarClientes extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+        con=null;
+        validarconexion();
         }
        
     
@@ -170,6 +185,9 @@ public class AgregarClientes extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+          validarconexion();
+        
         }
         return idg;
         
@@ -226,7 +244,8 @@ public class AgregarClientes extends javax.swing.JFrame {
             
       }catch(Exception e){
             System.out.println("ERROR "+e.getMessage() );
-          
+         con=null;
+          validarconexion();  
       }
         return idtdc;
       }
@@ -274,16 +293,15 @@ public class AgregarClientes extends javax.swing.JFrame {
         } catch (SQLException  e) {
                 String msj = "ERROR";
                 if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
-                  
-                    msj = "EL REGISTRO EXISTE EN LA BASE DE DATOS";
+                  JOptionPane.showMessageDialog(null,"EL REGISTRO EXISTE EN LA BASE DE DATOS");
+               
+                }else{
+                    JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE); 
                 }
-                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
-                return false;
-        
-        }catch (Exception e) {
-               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
-            return false;
+           con=null;
+         validarconexion();
         }
+       
         return true;
     }
     
@@ -983,7 +1001,7 @@ public boolean validarcorreo(String correo){
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setText("Menu Principal");
+        jLabel26.setText("Menú Principal");
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
@@ -991,7 +1009,7 @@ public boolean validarcorreo(String correo){
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel28.setText("Modulo Clientes");
+        jLabel28.setText("Modúlo Clientes");
 
         rSLabelIcon20.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon20.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -1122,7 +1140,7 @@ public boolean validarcorreo(String correo){
         jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(153, 0, 255));
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel31.setText("Telefono");
+        jLabel31.setText("Teléfono");
         jPanel5.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 180, 40));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1200,7 +1218,7 @@ public boolean validarcorreo(String correo){
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("Correo Electronico:");
+        jLabel33.setText("Correo Electrónico:");
         jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 180, 40));
 
         CorreoC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1273,7 +1291,7 @@ public boolean validarcorreo(String correo){
         jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(153, 0, 255));
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel35.setText("Direccion Domiciliaria:");
+        jLabel35.setText("Dirección Domiciliaria:");
         jPanel5.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 180, 40));
 
         rSRadioButtonMaterial1.setText("PASAPORTE");
@@ -1326,18 +1344,19 @@ public boolean validarcorreo(String correo){
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.DEFAULT_SIZE, 1023, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 999, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 999, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         dashboardview.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 1010, -1));

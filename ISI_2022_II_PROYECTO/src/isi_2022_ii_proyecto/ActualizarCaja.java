@@ -47,6 +47,15 @@ public class ActualizarCaja extends javax.swing.JFrame {
         con = conexion.conexion();
     }
     
+  public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     public int ObtenerUsuarios(){
         int idusuario=0;
         String SQL = "SELECT b.IdUsuario From Usuarios b Where b.Usuario='"+rSComboMetro3.getSelectedItem().toString()+"';";
@@ -62,6 +71,8 @@ public class ActualizarCaja extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+           validarconexion(); 
         }
         return idusuario;
         
@@ -83,6 +94,8 @@ public class ActualizarCaja extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+             con=null;
+            validarconexion();
         }
         return estado;
     }
@@ -108,8 +121,8 @@ public class ActualizarCaja extends javax.swing.JFrame {
         return estado;
     }
     
-    
-    public void modificar(){
+     public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
+    public boolean modificar(){
         int idusuario=ObtenerUsuarios();
         int idestado=ObtenerEstado();
         
@@ -128,13 +141,17 @@ public class ActualizarCaja extends javax.swing.JFrame {
              VentanaEmergente1 ve = new VentanaEmergente1();
              ve.setVisible(true);
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (SQLException e) {
+            if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode()) {
+            JOptionPane.showMessageDialog(null,"EL REGISTRO EXISTE EN LA BASE DE DATOS" );
+            
         }
-        
+         con=null;
+            validarconexion();
     }
+        return true;
     
-
+  }
     public void setCodigoC(String codigoc) {
         this.codigoc = codigoc;
         JCodigoDisponible.setText(codigoc);
@@ -178,6 +195,8 @@ public class ActualizarCaja extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+         con=null;
+            validarconexion();
         }
     }
     
@@ -200,6 +219,9 @@ public class ActualizarCaja extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+         con=null;
+            validarconexion();
+        
         }
     }
     
@@ -261,6 +283,8 @@ public class ActualizarCaja extends javax.swing.JFrame {
         
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+            validarconexion();
         }
         
     }
@@ -334,7 +358,7 @@ public class ActualizarCaja extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO CAJA");
+        jLabel6.setText("MODÚLO CAJA");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 60));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
@@ -424,7 +448,7 @@ public class ActualizarCaja extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -432,7 +456,7 @@ public class ActualizarCaja extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Bancos");
+        jLabel11.setText("Modúlo Caja");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -517,7 +541,7 @@ public class ActualizarCaja extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("Codigo de Caja:");
+        jLabel29.setText("Código de Caja:");
         jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 143, 40));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

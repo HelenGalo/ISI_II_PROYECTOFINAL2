@@ -118,7 +118,15 @@ setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagene
         conexion.setActualizaralmacen(this);
         con = conexion.conexion();
     }
-    
+       public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
     public void buscardatos(){
           String SQL = "SELECT * FROM Almacenes WHERE IdAlmacen=(SELECT max(IdAlmacen) FROM Almacenes)";
@@ -143,6 +151,8 @@ setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagene
            
 
         } catch (SQLException e) {
+            con=null;
+            validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -172,6 +182,8 @@ setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagene
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+          validarconexion();
         }
     }
      public int Obtenerestado(){
@@ -197,6 +209,9 @@ setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagene
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+           con=null;
+           validarconexion();
+        
         }
         return idg;
         
@@ -236,7 +251,9 @@ setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagene
     
           } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+           con= null;
+           validarconexion();
+          }
     }
         
      public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
@@ -246,7 +263,7 @@ setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagene
         int estado = 0;
         int empleado = 0;
         String almacen ="";
-        empleado = empleados.get(JComboEmpleados.getSelectedItem().toString());
+         empleado = empleados.get(JComboEmpleados.getSelectedItem().toString());
        direccion= Direccion.getText();
         telefono=TelC1.getText();
         estado = Obtenerestado();
@@ -270,11 +287,14 @@ setIconImage(new ImageIcon(getClass().getResource("/isi_2022_ii_proyecto/Imagene
       } catch (SQLException  e) {
                 String msj = "ERROR";
                 if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
-                  
-                    msj = "EL REGISTRO EXISTE EN LA BASE DE DATOS";
+                
+                JOptionPane.showMessageDialog(null,msj + "EL REGISTRO EXISTE EN LA BASE DE DATOS");
+                
                 }
-                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
-                return false;
+                
+             con=null;
+             validarconexion();
+             
         
     
         }

@@ -66,6 +66,15 @@ public class ActualizarProductos extends javax.swing.JFrame {
         con = conexion.conexion();
     }
     
+  public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     public ActualizarProductos() {
         initComponents();
          this.setLocationRelativeTo(null);
@@ -127,7 +136,10 @@ public class ActualizarProductos extends javax.swing.JFrame {
     
           } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+         con=null;
+        validarconexion();
+          
+          }
     }
         
     
@@ -152,7 +164,10 @@ public class ActualizarProductos extends javax.swing.JFrame {
                } 
             } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        con=null;
+        validarconexion();
+            
+            }
        
     
     }
@@ -176,6 +191,9 @@ public class ActualizarProductos extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+         con=null;
+        validarconexion();
+        
         }
     }
       
@@ -202,6 +220,8 @@ public class ActualizarProductos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+        validarconexion();
         }
        
     
@@ -226,6 +246,8 @@ public class ActualizarProductos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+        validarconexion();
         }
         return categoria;
         
@@ -254,6 +276,9 @@ public class ActualizarProductos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+        validarconexion();
+        
         }
         return estado;
         
@@ -274,6 +299,8 @@ public class ActualizarProductos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        con=null;
+        validarconexion();
         }
         return idg;
         
@@ -309,15 +336,15 @@ public class ActualizarProductos extends javax.swing.JFrame {
          } catch (SQLException  e) {
                 String msj = "ERROR";
                 if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
+                  JOptionPane.showMessageDialog(null,"EL REGISTRO EXISTE EN LA BASE DE DATOS");
                   
-                    msj = "EL REGISTRO EXISTE EN LA BASE DE DATOS";
+                }else{
+                     JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
-                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
-                return false;
-        
-        }catch (Exception e) {
-               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
-            return false;
+                    
+                con=null;
+              validarconexion();
+               
         }
         return true;
          }

@@ -57,6 +57,8 @@ public class AperturarCajas extends javax.swing.JFrame {
         con = conexion.conexion();
     }
     
+    
+    
     public void validarConfirmacion(){
         if(estadosModificar=true){
             aperturar();
@@ -66,6 +68,15 @@ public class AperturarCajas extends javax.swing.JFrame {
             }
             
         }
+    }
+      public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
     }
     
         
@@ -86,6 +97,9 @@ public class AperturarCajas extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+        con=null;
+validarconexion();
         }
         return nombreb;
     }
@@ -111,6 +125,9 @@ public class AperturarCajas extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       
+        con=null;
+validarconexion();
         }
          return descripcion;
     }
@@ -131,6 +148,10 @@ public class AperturarCajas extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+      
+        con=null;
+validarconexion();
+        
         }
         return nombreb;
     } 
@@ -154,6 +175,9 @@ public class AperturarCajas extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       
+        con=null;
+validarconexion();
         }
     }
     
@@ -185,6 +209,9 @@ public class AperturarCajas extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+        
+        con=null;
+validarconexion();
         }
         
     }
@@ -205,6 +232,8 @@ public class AperturarCajas extends javax.swing.JFrame {
            
 
         } catch (Exception e) {
+          con=null;
+validarconexion();
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
         
@@ -228,6 +257,9 @@ public class AperturarCajas extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+        
+        con=null;
+validarconexion();
         }
     }
     
@@ -260,6 +292,9 @@ public class AperturarCajas extends javax.swing.JFrame {
             
 
         } catch (Exception e) {
+         con=null;
+validarconexion();   
+            
             System.out.println("ERROR" + e.getMessage());
         }
     }
@@ -283,6 +318,9 @@ public class AperturarCajas extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        con=null;
+validarconexion();
+        
         }
         return idcuenta;
     }
@@ -430,7 +468,7 @@ public class AperturarCajas extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO CAJA");
+        jLabel6.setText("MODÚLO CAJA");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 60));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
@@ -517,7 +555,7 @@ public class AperturarCajas extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -525,7 +563,7 @@ public class AperturarCajas extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Bancos");
+        jLabel11.setText("Modúlo Bancos");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -610,7 +648,7 @@ public class AperturarCajas extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("Codigo de Caja:");
+        jLabel29.setText("Código de Caja:");
         jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 120, 50));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -726,7 +764,7 @@ public class AperturarCajas extends javax.swing.JFrame {
         jLabel43.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel43.setForeground(new java.awt.Color(153, 0, 255));
         jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel43.setText("Institucion Bancaria:");
+        jLabel43.setText("Institución Bancaria:");
         jPanel3.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 150, 150, 40));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));

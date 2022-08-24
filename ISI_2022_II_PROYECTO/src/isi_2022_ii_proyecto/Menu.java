@@ -156,7 +156,7 @@ public class Menu extends javax.swing.JFrame {
         if(idrol==1){
             estado = true;
         }
-        }else{
+        }else{ 
             
         }
        

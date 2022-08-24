@@ -59,6 +59,17 @@ public class Almacen extends javax.swing.JFrame {
         conexion.setAlmacen(this);
         con = conexion.conexion();
     }
+    public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
+
+    
      public void deshabilitar(){
         String SQL = "UPDATE Almacen SET IdEstado=? Where IdAlmacen="+codigoalm;
         try {
@@ -72,6 +83,9 @@ public class Almacen extends javax.swing.JFrame {
 
         } catch (Exception e) {
             System.out.println("ERROR" + e.getMessage());   
+       
+        con=null;
+     validarconexion();
         }
     }
       public void listarAl(){
@@ -101,6 +115,9 @@ public class Almacen extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       
+          con=null;
+     validarconexion();
         }
     }
      
@@ -131,6 +148,9 @@ public class Almacen extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+      
+          con=null;
+     validarconexion();
         }
     }
       public void listardesh(){
@@ -160,6 +180,8 @@ public class Almacen extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+     validarconexion();
         }
     }
      
@@ -204,6 +226,8 @@ public class Almacen extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+     validarconexion();
         }
         
     } 
@@ -815,7 +839,7 @@ public class Almacen extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -823,7 +847,7 @@ public class Almacen extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Almacén");
+        jLabel11.setText("Modúlo Almacén");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_CONVENIENCE_STORE);
@@ -909,7 +933,7 @@ public class Almacen extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo Almacen", "Nombre  Almacen", "Empleado", "Direccion", "Telefono"
+                "Código Almacén", "Nombre  Almacén", "Empleado", "Dirección", "Teléfono"
             }
         ));
         JTableAlmacen.setToolTipText("");

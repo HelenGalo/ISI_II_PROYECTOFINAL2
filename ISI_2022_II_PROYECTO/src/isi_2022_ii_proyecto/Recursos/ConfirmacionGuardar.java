@@ -16,6 +16,7 @@ import isi_2022_ii_proyecto.AgregarEnvio;
 import isi_2022_ii_proyecto.AgregarInventario;
 import isi_2022_ii_proyecto.AgregarLogistica;
 import isi_2022_ii_proyecto.AgregarProveedor;
+import isi_2022_ii_proyecto.AgregarUsuario;
 import isi_2022_ii_proyecto.AperturarCajas;
 import isi_2022_ii_proyecto.Banco;
 import rojeru_san.complementos.RSUtilities;
@@ -36,7 +37,14 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
     AgregarCategoria acat;
     AgregarBanco abanco;
     AgregarLogistica alog;
+   AgregarUsuario ausuario;
 
+    public void setAusuario(AgregarUsuario ausuario) {
+        this.ausuario = ausuario;
+    }
+
+   
+   
     public void setAlog(AgregarLogistica alog) {
         this.alog = alog;
     }
@@ -278,6 +286,12 @@ public class ConfirmacionGuardar extends javax.swing.JFrame {
                 alog.validarConfirmacion();
                 this.dispose();
             }
+           if(tipo=="GUsuario"){
+                ausuario.setEstadoagregar(true);
+                ausuario.validarConfirmacion();
+                this.dispose();
+            }
+           
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     /**

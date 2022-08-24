@@ -63,6 +63,15 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         conexion.setAenv(this);
         con = conexion.conexion();
     }
+      public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     public ActualizarEnvio() {
         initComponents();
          this.setLocationRelativeTo(null);
@@ -102,6 +111,9 @@ public class ActualizarEnvio extends javax.swing.JFrame {
             }
             
         } catch (SQLException e) {
+            
+        con=null;
+        validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -130,6 +142,8 @@ public class ActualizarEnvio extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       con=null;
+        validarconexion();
         }
     }
      public int Obtenerestado(){
@@ -155,6 +169,8 @@ public class ActualizarEnvio extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        con=null;
+        validarconexion();
         }
         return idg;
         
@@ -189,16 +205,20 @@ public class ActualizarEnvio extends javax.swing.JFrame {
        } catch (SQLException  e) {
                 String msj = "ERROR";
                 if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
-                  
-                    msj = "El registro ya se encuentra en la base de datos";
-                }
-                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.PLAIN_MESSAGE);
-                return false;
+                
+                
+                JOptionPane.showMessageDialog(null, "El registro ya se encuentra en la base de datos");
+            
         
-        }catch (Exception e) {
+        }else{
                JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.PLAIN_MESSAGE);
-            return false;
+           
         }
+            con=null;
+        validarconexion();  
+                    
+                }
+        
         return true;
     }
         
@@ -240,6 +260,9 @@ public class ActualizarEnvio extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            
+            con=null;
+            validarconexion();
         }
     }
        
@@ -892,7 +915,7 @@ public class ActualizarEnvio extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -1034,13 +1057,13 @@ public class ActualizarEnvio extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Codigo EmpresaEnvio:");
+        jLabel17.setText("Código EmpresaEnvío:");
         jPanel5.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 174, 50));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("Telefono:");
+        jLabel33.setText("Teléfono:");
         jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, 180, 40));
 
         TelC1.setHorizontalAlignment(javax.swing.JTextField.CENTER);

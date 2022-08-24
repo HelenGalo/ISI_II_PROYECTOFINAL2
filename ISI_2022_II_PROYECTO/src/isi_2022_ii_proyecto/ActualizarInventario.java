@@ -51,7 +51,14 @@ public class ActualizarInventario extends javax.swing.JFrame {
         conexion.setAin(this);
         con = conexion.conexion();
     }
+  public void validarconexion(){
 
+        if(con==null){
+            conectar();
+            
+            
+        }
+         }
    
     /**
      * Creates new form CalendarForm
@@ -125,6 +132,8 @@ public class ActualizarInventario extends javax.swing.JFrame {
            
 
         } catch (SQLException e) {
+            con=null;
+            validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -146,6 +155,8 @@ public class ActualizarInventario extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+            validarconexion();
         }
     }
      public void mostrarP(){
@@ -178,6 +189,8 @@ public class ActualizarInventario extends javax.swing.JFrame {
              ID.setText(String.valueOf(id));
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+          con=null;
+            validarconexion();
         }
         
     }
@@ -212,15 +225,15 @@ public class ActualizarInventario extends javax.swing.JFrame {
       } catch (SQLException  e) {
                 String msj = "ERROR";
                 if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
-                  
-                    msj = "EL REGISTRO EXISTE EN LA BASE DE DATOS";
-                }
-                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
-                return false;
-        
-        }catch (Exception e) {
-               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
-            return false;
+                   JOptionPane.showMessageDialog(null,  "EL REGISTRO EXISTE EN LA BASE DE DATOS");
+                    
+                }else{
+             JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
+      }
+               
+             con=null;
+            validarconexion();
+      
         }
         return true;
     }
@@ -547,7 +560,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("Codigo del Producto:");
+        jLabel29.setText("Código del Producto:");
         jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 80, 150, 40));
 
         alm1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -682,7 +695,7 @@ public class ActualizarInventario extends javax.swing.JFrame {
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(153, 0, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setText("Nombre Almacen:");
+        jLabel32.setText("Nombre Almacén:");
         jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 130, 130, 40));
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

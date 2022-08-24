@@ -75,6 +75,16 @@ public class AgregarProducto extends javax.swing.JFrame {
         con = conexion.conexion();
     }
     
+
+  public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
         public void validarConfirmacion(){
         if(estadoagregar=true){
             insertarP();
@@ -101,7 +111,11 @@ public class AgregarProducto extends javax.swing.JFrame {
                } 
             } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        
+con=null;
+validarconexion();
+            
+            }
        
     
     }
@@ -125,6 +139,12 @@ public class AgregarProducto extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       
+        
+        
+              con=null;
+              validarconexion();
+        
         }
     }
       
@@ -151,6 +171,10 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       
+         con=null;
+              validarconexion();
+        
         }
        
     
@@ -182,6 +206,9 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+      
+         con=null;
+              validarconexion();
         }
     }
      public int Obtenerestado(){
@@ -207,6 +234,10 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+         con=null;
+              validarconexion();
+        
         }
         return estado;
         
@@ -227,6 +258,10 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       
+         con=null;
+              validarconexion();
+        
         }
         return idcat;
         
@@ -247,6 +282,10 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       
+         con=null;
+              validarconexion();
+        
         }
         return idprov;
         
@@ -290,15 +329,14 @@ public class AgregarProducto extends javax.swing.JFrame {
      } catch (SQLException  e) {
                 String msj = "ERROR";
                 if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
-                  
-                    msj = "EL REGISTRO EXISTE EN LA BASE DE DATOS";
+                  JOptionPane.showMessageDialog(null,"EL REGISTRO EXISTE EN LA BASE DE DATOS");
+               
+                }else{
+                    JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE); 
                 }
-                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
-                return false;
+           con=null;
+         validarconexion();
         
-        }catch (Exception e) {
-               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
-            return false;
         }
         return true;
     }
@@ -1120,7 +1158,7 @@ public class AgregarProducto extends javax.swing.JFrame {
                 rSButtonIcon_new9ActionPerformed(evt);
             }
         });
-        jPanel5.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 385, 168, -1));
+        jPanel5.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 168, -1));
 
         JProveedores.setColorArrow(new java.awt.Color(102, 0, 255));
         JProveedores.setColorFondo(new java.awt.Color(60, 76, 143));

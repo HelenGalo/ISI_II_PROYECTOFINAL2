@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -65,6 +66,15 @@ public class BancosMovimientos extends javax.swing.JFrame {
         conexion.setBm(this);
         con = conexion.conexion();
     }
+   public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
     
     public BancosMovimientos() {
         RSUtilities.setFullScreenJFrame(this);
@@ -91,7 +101,8 @@ public class BancosMovimientos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
-                t = rs.getString("TotalenCuenta");
+                 DecimalFormat formato = new DecimalFormat("##,###.00");
+                t = formato.format(rs.getString("TotalenCuenta"));
             
             }
             
@@ -108,6 +119,8 @@ public class BancosMovimientos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR FELLE SO" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        con=null;
+        validarconexion();
         }
     }
     
@@ -122,8 +135,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
+                 DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("Descripcion");
-                registros[1] = rs.getString("Valor");
+                registros[1] = formato.format(rs.getString("Valor"));
                 registros[2] = rs.getString("Hora");
                 registros[3] = rs.getString("Fecha");
                 modelo.addRow(registros);
@@ -134,6 +148,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR HELLO" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+           con=null;
+        validarconexion();
         }
     }
       
@@ -148,8 +165,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
+                DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("Descripcion");
-                registros[1] = rs.getString("Valor");
+                registros[1] = formato.format(rs.getString("Valor"));
                 registros[2] = rs.getString("Hora");
                 registros[3] = rs.getString("Fecha");
                 modelo.addRow(registros);
@@ -160,6 +178,10 @@ public class BancosMovimientos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR ARI " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+       
+           con=null;
+        validarconexion();
+        
         }
     }
     
@@ -170,9 +192,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
-
+ DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
-                tentradas=String.valueOf(rs.getFloat("sum(db.Valor)"));
+                tentradas=formato.format(rs.getFloat("sum(db.Valor)"));
               
             }
             if(tipoc.equals("LEMPIRAS")){
@@ -189,6 +211,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR NPES" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+         con=null;
+        validarconexion();
+        
         }
     }
     
@@ -199,9 +224,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
-
+ DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
-                tsalidas=String.valueOf(rs.getFloat("sum(db.Valor)"));
+                tsalidas=formato.format(rs.getFloat("sum(db.Valor)"));
               
             }
             if(tipoc.equals("LEMPIRAS")){
@@ -218,6 +243,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR PUEDE SER" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+         con=null;
+        validarconexion();
+        
         }
     }
      
@@ -260,8 +288,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
+                DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("Descripcion");
-                registros[1] = rs.getString("Valor");
+                registros[1] = formato.format(rs.getString("Valor"));
                 registros[2] = rs.getString("Hora");
                 registros[3] = rs.getString("Fecha");
                 modelo.addRow(registros);
@@ -272,6 +301,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AQUI" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+       
+            con=null;
+        validarconexion();
         }
     }
     
@@ -285,8 +317,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(SQL);
 
             while (rs.next()) {
+                DecimalFormat formato = new DecimalFormat("##,###.00");
                 registros[0] = rs.getString("Descripcion");
-                registros[1] = rs.getString("Valor");
+                registros[1] = formato.format(rs.getString("Valor"));
                 registros[2] = rs.getString("Hora");
                 registros[3] = rs.getString("Fecha");
                 modelo.addRow(registros);
@@ -297,6 +330,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR OTRO" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            con=null;
+        validarconexion();
+        
         }
     }
      
@@ -307,9 +343,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
-
+DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
-                tentradas=String.valueOf(rs.getFloat("sum(db.Valor)"));
+                tentradas=formato.format(rs.getFloat("sum(db.Valor)"));
               
             }
             if(tipoc.equals("LEMPIRAS")){
@@ -326,6 +362,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "EL QUE NO" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+           con=null;
+        validarconexion();
+        
         }
     }
     
@@ -335,9 +374,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
         try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
-
+DecimalFormat formato = new DecimalFormat("##,###.00");
             while (rs.next()) {
-                tsalidas=String.valueOf(rs.getFloat("sum(db.Valor)"));
+                tsalidas=formato.format(rs.getFloat("sum(db.Valor)"));
               
             }
             if(tipoc.equals("LEMPIRAS")){
@@ -354,6 +393,9 @@ public class BancosMovimientos extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "EL QUE BUSCO" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+           con=null;
+        validarconexion();
+        
         }
     }
     
@@ -574,7 +616,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
                 .addGap(253, 253, 253)
                 .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 2, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
                 .addGap(278, 278, 278)
                 .addComponent(linesetting13, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -986,7 +1028,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -994,7 +1036,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Bancos");
+        jLabel11.setText("Modúlo Bancos");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -1243,7 +1285,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO BANCOS");
+        jLabel6.setText("MODÚLO BANCOS");
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
 
@@ -1314,7 +1356,7 @@ public class BancosMovimientos extends javax.swing.JFrame {
             rSPanelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rSPanelBorder1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
         );
 

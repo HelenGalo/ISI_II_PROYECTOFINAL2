@@ -48,7 +48,15 @@ public class AgregarInventario extends javax.swing.JFrame {
         conexion.setAinven(this);
         con = conexion.conexion();
     }
-   
+   public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    } 
     /**
      * Creates new form CalendarForm
      */
@@ -94,6 +102,9 @@ public class AgregarInventario extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+             con=null;
+             validarconexion();
         }
         return idg;
         
@@ -120,6 +131,9 @@ public class AgregarInventario extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+         con=null;
+             validarconexion();
+        
         }
     }
      public void mostrarP(){
@@ -140,6 +154,9 @@ public class AgregarInventario extends javax.swing.JFrame {
              ID.setText(String.valueOf(id));
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+         con=null;
+             validarconexion();
         }
         
     }
@@ -161,6 +178,9 @@ public class AgregarInventario extends javax.swing.JFrame {
    
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+         con=null;
+             validarconexion();
         }
         
     }
@@ -194,15 +214,13 @@ public class AgregarInventario extends javax.swing.JFrame {
       } catch (SQLException  e) {
                 String msj = "ERROR";
                 if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
-                  
-                    msj = "EL REGISTRO EXISTE EN LA BASE DE DATOS";
+                  JOptionPane.showMessageDialog(null,"EL REGISTRO EXISTE EN LA BASE DE DATOS");
+               
+                }else{
+                    JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE); 
                 }
-                JOptionPane.showMessageDialog(null, e, msj, JOptionPane.ERROR_MESSAGE);
-                return false;
-        
-        }catch (Exception e) {
-               JOptionPane.showMessageDialog(null, e, "ERROR", JOptionPane.ERROR_MESSAGE);
-            return false;
+           con=null;
+         validarconexion();
         }
         return true;
     }
@@ -353,7 +371,7 @@ public class AgregarInventario extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO INVENTARIO");
+        jLabel6.setText("MODÚLO INVENTARIO");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 60));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
@@ -453,7 +471,7 @@ public class AgregarInventario extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -461,7 +479,7 @@ public class AgregarInventario extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Inventario");
+        jLabel11.setText("Modúlo Inventario");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DEVELOPER_BOARD);

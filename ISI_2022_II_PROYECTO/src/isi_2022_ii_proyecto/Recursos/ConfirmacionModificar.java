@@ -16,6 +16,7 @@ import isi_2022_ii_proyecto.ActualizarInventario;
 import isi_2022_ii_proyecto.ActualizarLogistica;
 import isi_2022_ii_proyecto.ActualizarProductos;
 import isi_2022_ii_proyecto.ActualizarProveedor;
+import isi_2022_ii_proyecto.ActualizarUsuarios;
 import isi_2022_ii_proyecto.AgregarCuentaBancaria;
 import isi_2022_ii_proyecto.AperturarCajas;
 import isi_2022_ii_proyecto.Banco;
@@ -38,11 +39,21 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
     ActualizarInventario ainv;
     ActualizarCategoria acat;
     ActualizarBanco gbanco;
+    ActualizarUsuarios gusuario;
+    ActualizarLogistica glog;
 
+    public void setGusuario(ActualizarUsuarios gusuario) {
+        this.gusuario = gusuario;
+    }
+    
+    
+    
+    
+    
     public void setGlog(ActualizarLogistica glog) {
         this.glog = glog;
     }
-    ActualizarLogistica glog;
+   
 
     public void setGbanco(ActualizarBanco gbanco) {
         this.gbanco = gbanco;
@@ -303,6 +314,12 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
                 this.dispose();
                 
             }
+               if(tipo=="MUsuario"){
+                gusuario.setEstadosModificar(true);
+               gusuario.validarConfirmacion();
+                this.dispose();
+                
+            }
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     /**
@@ -356,6 +373,8 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
     private RSMaterialComponent.RSLabelIcon rSLabelIcon1;
     private RSMaterialComponent.RSPanelOpacity rSPanelOpacity1;
     // End of variables declaration//GEN-END:variables
+
+   
 
   
 

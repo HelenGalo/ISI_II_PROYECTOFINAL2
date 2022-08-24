@@ -67,6 +67,15 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         conexion.setAe(this);
         con = conexion.conexion();
     }
+      public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
        
     public ActualizarEmpleado() {
         initComponents();
@@ -157,9 +166,12 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        con=null;
+        validarconexion();
+        
         }
     }
-    
+     public static final int UNIQUE_CONSTRAINT_VIOLATED = 1062;
      public void actualizar(){
         
        String primernombre="";
@@ -221,11 +233,19 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
              ve.setVisible(true);
 
         } catch (SQLException e) {
+            if (UNIQUE_CONSTRAINT_VIOLATED == e.getErrorCode ()) {
+               JOptionPane.showMessageDialog(null, "EL REGISTRO EXISTE EN LA BASE DE DATOS"); 
+            }else{
+ 
             System.out.println("ERROR AL REGISTRAR: " + e.getMessage());
+        } 
+          con=null;
+         validarconexion();
+        
         }
-        
-        
-        
+            
+  
+      
        
     }
     public void inicializar(){
@@ -300,6 +320,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+             con=null;
+         validarconexion();
         }
        
     
@@ -329,6 +351,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+             con=null;
+         validarconexion(); 
         }
     }
     
@@ -355,6 +379,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
            
 
         } catch (SQLException e) {
+                 con=null;
+         validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return idp;
@@ -385,6 +411,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
            
 
         } catch (SQLException e) {
+                 con=null;
+         validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return idp;
@@ -414,6 +442,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
            
 
         } catch (SQLException e) {
+                 con=null;
+         validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return idg;
@@ -442,6 +472,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
            
 
         } catch (SQLException e) {
+                 con=null;
+         validarconexion();
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return idg;
@@ -614,6 +646,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setMinimumSize(new java.awt.Dimension(150, 50));
@@ -743,8 +776,13 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
         Header.add(jPanel2, java.awt.BorderLayout.CENTER);
 
+        jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1416, -1));
+
+        menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
+        MenuIcon.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         linesetting.setBackground(new java.awt.Color(5, 10, 46));
         linesetting.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -760,6 +798,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
+        MenuIcon.add(linesetting, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, -1, -1));
+
         linehidemenu.setBackground(new java.awt.Color(5, 10, 46));
         linehidemenu.setPreferredSize(new java.awt.Dimension(50, 10));
 
@@ -773,6 +813,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             linehidemenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
+
+        MenuIcon.add(linehidemenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         linesetting1.setBackground(new java.awt.Color(5, 10, 46));
         linesetting1.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -788,6 +830,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
+        MenuIcon.add(linesetting1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, -1, -1));
+
         linesetting2.setBackground(new java.awt.Color(5, 10, 46));
         linesetting2.setPreferredSize(new java.awt.Dimension(50, 10));
 
@@ -801,6 +845,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             linesetting2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
+
+        MenuIcon.add(linesetting2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, -1, -1));
 
         linesetting7.setBackground(new java.awt.Color(0, 55, 133));
         linesetting7.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -817,6 +863,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         rSLabelIcon7.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon7.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.INFO);
         linesetting7.add(rSLabelIcon7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
+
+        MenuIcon.add(linesetting7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, -1, 50));
 
         linesetting8.setBackground(new java.awt.Color(0, 55, 133));
         linesetting8.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -837,6 +885,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         rSLabelIcon9.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ENHANCED_ENCRYPTION);
         linesetting8.add(rSLabelIcon9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
 
+        MenuIcon.add(linesetting8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, -1, 50));
+
         linesetting9.setBackground(new java.awt.Color(0, 55, 133));
         linesetting9.setPreferredSize(new java.awt.Dimension(50, 10));
         linesetting9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -854,6 +904,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         rSLabelIcon10.setInheritsPopupMenu(true);
         linesetting9.add(rSLabelIcon10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
 
+        MenuIcon.add(linesetting9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, -1, 50));
+
         linesetting10.setBackground(new java.awt.Color(5, 10, 46));
         linesetting10.setPreferredSize(new java.awt.Dimension(50, 10));
 
@@ -867,6 +919,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
             linesetting10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
+
+        MenuIcon.add(linesetting10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, -1, -1));
 
         linesetting11.setBackground(new java.awt.Color(0, 55, 133));
         linesetting11.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -884,43 +938,12 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         rSLabelIcon11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SETTINGS);
         linesetting11.add(rSLabelIcon11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
 
-        javax.swing.GroupLayout MenuIconLayout = new javax.swing.GroupLayout(MenuIcon);
-        MenuIcon.setLayout(MenuIconLayout);
-        MenuIconLayout.setHorizontalGroup(
-            MenuIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(linehidemenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        MenuIconLayout.setVerticalGroup(
-            MenuIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MenuIconLayout.createSequentialGroup()
-                .addComponent(linehidemenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(linesetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting11, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        MenuIcon.add(linesetting11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, -1, 50));
+
+        menu.add(MenuIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 670));
 
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
+        menuhide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new3.setText("Regresar");
@@ -933,6 +956,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 rSButtonIcon_new3ActionPerformed(evt);
             }
         });
+        menuhide.add(rSButtonIcon_new3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 210, -1));
 
         linesetting6.setBackground(new java.awt.Color(20, 101, 187));
         linesetting6.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -962,12 +986,14 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         linesetting6Layout.setVerticalGroup(
             linesetting6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(linesetting6Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(0, 0, 0)
                 .addGroup(linesetting6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
+
+        menuhide.add(linesetting6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 210, 50));
 
         linesetting12.setBackground(new java.awt.Color(0, 55, 133));
         linesetting12.setPreferredSize(new java.awt.Dimension(50, 10));
@@ -990,40 +1016,14 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel12.setText("Modificar");
         linesetting12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 40));
 
-        javax.swing.GroupLayout menuhideLayout = new javax.swing.GroupLayout(menuhide);
-        menuhide.setLayout(menuhideLayout);
-        menuhideLayout.setHorizontalGroup(
-            menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        menuhideLayout.setVerticalGroup(
-            menuhideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuhideLayout.createSequentialGroup()
-                .addComponent(linesetting12, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(500, 500, 500)
-                .addComponent(linesetting6, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))
-        );
+        menuhide.add(linesetting12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 70));
 
-        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
-        menu.setLayout(menuLayout);
-        menuLayout.setHorizontalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addComponent(MenuIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menuhide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        menuLayout.setVerticalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
-            .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        menu.add(menuhide, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, -1, 670));
+
+        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 46, -1, 670));
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
+        dashboardview.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1047,7 +1047,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -1055,7 +1055,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Empleado");
+        jLabel11.setText("Modúlo Empleado");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -1139,13 +1139,13 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 0, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Codigo Empleado Disponible:");
+        jLabel17.setText("Código Empleado Disponible:");
         jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 220, 50));
 
         Genero.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Genero.setForeground(new java.awt.Color(153, 0, 255));
         Genero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Genero.setText("Genero:");
+        Genero.setText("Género:");
         jPanel3.add(Genero, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 390, 150, 30));
 
         rSPanelCircle1.setBackground(new java.awt.Color(60, 76, 143));
@@ -1187,7 +1187,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 190, 30));
 
         ape2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ape2.setPlaceholder("Ingresa nombre");
+        ape2.setPlaceholder("Ingresa apellido");
+        ape2.setSoloLetras(true);
         ape2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ape2ActionPerformed(evt);
@@ -1206,6 +1207,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
         segundonom.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         segundonom.setPlaceholder("Ingresa nombre");
+        segundonom.setSoloLetras(true);
         segundonom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 segundonomActionPerformed(evt);
@@ -1214,7 +1216,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jPanel3.add(segundonom, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 130, -1));
 
         ident1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ident1.setPlaceholder("Ingresa nombre");
+        ident1.setPlaceholder("Ingresa Identificacion");
+        ident1.setSoloNumeros(true);
         ident1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ident1ActionPerformed(evt);
@@ -1251,7 +1254,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         CorreoAE.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         CorreoAE.setForeground(new java.awt.Color(153, 0, 255));
         CorreoAE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CorreoAE.setText("Numero cuenta:");
+        CorreoAE.setText("Número cuenta:");
         jPanel3.add(CorreoAE, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 240, 150, 30));
 
         JCombopuesto.setColorArrow(new java.awt.Color(102, 0, 255));
@@ -1276,6 +1279,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
 
         pnomb.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pnomb.setPlaceholder("Ingresa nombre");
+        pnomb.setSoloLetras(true);
         pnomb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pnombActionPerformed(evt);
@@ -1286,7 +1290,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         CorreoAE1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         CorreoAE1.setForeground(new java.awt.Color(153, 0, 255));
         CorreoAE1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CorreoAE1.setText("Correo Electronico:");
+        CorreoAE1.setText("Correo Electrónico:");
         jPanel3.add(CorreoAE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, 150, 30));
 
         correo1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1332,7 +1336,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(153, 0, 255));
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel24.setText("No. Identificacion:");
+        jLabel24.setText("No. Identificación:");
         jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 480, 170, 30));
 
         JComboTipo2.setColorArrow(new java.awt.Color(102, 0, 255));
@@ -1362,7 +1366,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jPanel3.add(ActualT, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, 170, 30));
 
         ape1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ape1.setPlaceholder("Ingresa nombre");
+        ape1.setPlaceholder("Ingresa Apellido");
+        ape1.setSoloLetras(true);
         ape1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ape1ActionPerformed(evt);
@@ -1373,7 +1378,7 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         FechaContracion1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         FechaContracion1.setForeground(new java.awt.Color(153, 0, 255));
         FechaContracion1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        FechaContracion1.setText("Fecha Contratacion:");
+        FechaContracion1.setText("Fecha Contratación:");
         jPanel3.add(FechaContracion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 90, 150, 40));
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1405,13 +1410,13 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         actualg.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         actualg.setForeground(new java.awt.Color(153, 0, 255));
         actualg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        actualg.setText("Actual Genero:");
+        actualg.setText("Actual Género:");
         jPanel3.add(actualg, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 350, 150, 30));
 
         Genero1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Genero1.setForeground(new java.awt.Color(153, 0, 255));
         Genero1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Genero1.setText("Genero:");
+        Genero1.setText("Género:");
         jPanel3.add(Genero1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 350, 150, 30));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1438,6 +1443,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel29.setText("Tipo documento");
         jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, 170, 30));
 
+        dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 105, 1047, 541));
+
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1448,14 +1455,16 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO EMPLEADO");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
+        jLabel6.setText("MODÚLO EMPLEADO");
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 823, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
-        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, 60, 50));
+        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 10, 60, 40));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
+
+        dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1156, -1));
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new9.setText("Modificar Cambios");
@@ -1467,49 +1476,9 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
                 rSButtonIcon_new9ActionPerformed(evt);
             }
         });
+        dashboardview.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 58, -1, -1));
 
-        javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
-        dashboardview.setLayout(dashboardviewLayout);
-        dashboardviewLayout.setHorizontalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1156, Short.MAX_VALUE)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1047, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        dashboardviewLayout.setVerticalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 1416, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(dashboardview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dashboardview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
+        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 46, -1, 670));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 

@@ -71,6 +71,17 @@ public class ActualizarNuevaContrase extends javax.swing.JFrame {
         con = conexion.conexion();
     }
     
+  public void validarconexion(){
+
+        if(con==null){
+            conectar();
+            
+            
+        }
+        
+    }
+    
+    
     public void inicializarValoresC(){
         cifrador.put("A", "E3:$%^");
         cifrador.put("B", "Aq2=!#");
@@ -180,7 +191,8 @@ public class ActualizarNuevaContrase extends javax.swing.JFrame {
               
             }
     }catch(Exception e){
-        
+        con=null;
+    validarconexion();
     }
         
         JUser.setText(usuario);
@@ -253,6 +265,8 @@ public class ActualizarNuevaContrase extends javax.swing.JFrame {
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+             validarconexion();
             }
         }
         
