@@ -690,7 +690,36 @@ public class VerificarOrden extends javax.swing.JFrame {
         }
     }
     
- 
+        public String obtenerRangoInicial(){
+    String SQL1 = "Select fc.RangoInicial from FormatoFacturaCabecera fc Where fc.IdEstado=1;";
+     String nfactura=""; 
+      char vi;
+      char vf;
+      String contadori="";
+      String contadorf="";
+        
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL1);
+
+            while (rs.next()) {
+                nfactura =rs.getString("fc.RangoInicial");
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+         
+       
+         
+         
+         return nfactura;
+         
+}
+    
     
     public String ObtenerNumeroFactura(){
         String nfactura="";
@@ -719,7 +748,17 @@ public class VerificarOrden extends javax.swing.JFrame {
                 validarconexion();
         
             }
+         boolean paseinicio = false;
          
+         if(nfactura==null){
+             nfactura=obtenerRangoInicial();
+             paseinicio = true;
+         }else{
+             if(nfactura.equals("")){
+                 nfactura=obtenerRangoInicial();
+                 paseinicio = true;
+             }
+         }
          
          for(int i=0; i<11;i++){
                 vi= nfactura.charAt(i);
@@ -732,7 +771,12 @@ public class VerificarOrden extends javax.swing.JFrame {
          }
          
          int nvalorfactura=0;
-         nvalorfactura = Integer.parseInt(contadorf) + 1;
+         if(paseinicio==false){
+             nvalorfactura = Integer.parseInt(contadorf) + 1;
+         }else{
+             nvalorfactura = Integer.parseInt(contadorf);
+         }
+   
          String formatted = String.format("%0" + 8 + "d",nvalorfactura );
      
 

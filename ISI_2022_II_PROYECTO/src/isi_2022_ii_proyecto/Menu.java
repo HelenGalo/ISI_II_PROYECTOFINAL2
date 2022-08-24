@@ -93,7 +93,7 @@ public class Menu extends javax.swing.JFrame {
     
      public boolean validarRolPOS(){
         boolean estado=false;
-        if(validarconexion()==true){
+
              
             int idrol=0;
          String SQL = "SELECT u.IdRol FROM Usuarios u WHERE u.Usuario='"+usuario+"';";
@@ -116,9 +116,7 @@ public class Menu extends javax.swing.JFrame {
         if(idrol==2 || idrol==1){
             estado = true;
         }
-        }else{
-            
-        }
+    
        
         
         
@@ -248,7 +246,8 @@ public class Menu extends javax.swing.JFrame {
     }
     
     
-    public int obtenerlimitefactura(){
+    
+     public int obtenerlimitefactura(){
     String SQL1 = "Select fc.RangoFinal from FormatoFacturaCabecera fc Where fc.IdEstado=1;";
      String nfactura=""; 
       char vi;
@@ -288,6 +287,36 @@ public class Menu extends javax.swing.JFrame {
          
 }
     
+    public String obtenerRangoInicial(){
+    String SQL1 = "Select fc.RangoInicial from FormatoFacturaCabecera fc Where fc.IdEstado=1;";
+     String nfactura=""; 
+      char vi;
+      char vf;
+      String contadori="";
+      String contadorf="";
+        
+         try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(SQL1);
+
+            while (rs.next()) {
+                nfactura =rs.getString("fc.RangoInicial");
+             
+            }
+        
+     
+            }catch(SQLException e){
+                 System.out.println("Error "+e.getMessage());
+        
+            }
+         
+       
+         
+         
+         return nfactura;
+         
+}
+    
     
     public boolean validarfactura(){
           boolean a= false;
@@ -316,6 +345,16 @@ public class Menu extends javax.swing.JFrame {
         
             }
          
+         boolean paseinicio=false;
+         if(nfactura==null){
+              nfactura = obtenerRangoInicial();
+              paseinicio = true;
+         }else{
+             if(nfactura.equals("")){
+                 nfactura = obtenerRangoInicial();
+                 paseinicio = true;
+             }
+         }
          
          for(int i=0; i<11;i++){
                 vi= nfactura.charAt(i);
@@ -328,7 +367,10 @@ public class Menu extends javax.swing.JFrame {
          }
          
          int nvalorfactura=0;
-         nvalorfactura = Integer.parseInt(contadorf)+1;
+         if(paseinicio==false){
+             nvalorfactura = Integer.parseInt(contadorf)+1;
+         }
+         
      
 
        

@@ -107,10 +107,13 @@ public class CerraCaja extends javax.swing.JFrame {
      * Creates new form CalendarForm
      */
     public CerraCaja() {
-        RSUtilities.setFullScreenJFrame(this);
+         RSUtilities.setFullScreenJFrame(this);
         initComponents();
        
         RSUtilities.setOpaqueWindow(this, false);
+        RSUtilities.setOpacityComponent(this.jPanel1, 150);
+       
+ 
         rSPanelBorder1.setVisible(false);
         rSButtonIcon_new15.setVisible(false);
         rSButtonIcon_new16.setVisible(false);
@@ -126,13 +129,16 @@ public class CerraCaja extends javax.swing.JFrame {
         listartotalventasefectivo();
         listartotalventastarjeta();
         listartotalencaja();
+        jLabel45.setText(String.valueOf(obtenerMontoOperacion()));
+        listarmontoinicial();
     }
     
     
     public void cerrarcaja(){
+        realizarcorte();
         actualizarHistoriaCaja();
         if(estadoposthistoriar==true){
-            realizarcorte();
+            
             if(estadopostcorte==true){
                 actualizartotalcaja();
                 if(estadopostotalcaja==true){
@@ -159,9 +165,9 @@ public class CerraCaja extends javax.swing.JFrame {
     public void listartotalencaja(){
         String valor="0.00";
         DecimalFormat formato = new DecimalFormat("##,###.00");
-        String SQL = "	Select sum(ec.Total) from Ventas v\n" +
+        String SQL = "Select sum(ec.Total) from Ventas v\n" +
                 "INNER JOIN EntradasCaja ec on ec.IdOrden = v.IdOrden\n" +
-                "WHERE v.IdCaja="+codigocaja+" AND v.FechaVenta='"+fechaactual+"' AND v.IdTipoVenta=1 OR v.IdTipoVenta=2\n" +
+                "WHERE v.IdCaja="+codigocaja+" AND v.FechaVenta="+fechaactual+" AND v.IdTipoVenta=1 OR v.IdTipoVenta=2\n" +
                 ";";
         try {
             Statement st = (Statement) con.createStatement();
@@ -180,7 +186,7 @@ public class CerraCaja extends javax.swing.JFrame {
               jLabel45.setText(valor); 
            }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR TOTAL CAJA" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
        
                  con=null;
                 validarconexion();
@@ -192,9 +198,9 @@ public class CerraCaja extends javax.swing.JFrame {
         String valor="0.00";
         DecimalFormat formato = new DecimalFormat("##,###.00");
         String SQL = "Select sum(T1.Subtotal) from(\n" +
-                    "Select v.idOrden, sum(dv.Subtotal) as 'Subtotal'from Ventas v\n" +
+                    "Select v.idOrden, sum(dv.Subtotal) as 'Subtotal' from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=1 AND v.IdCaja="+codigocaja+" AND v.FechaVenta='"+fechaactual+"'\n" +
+                    "Where v.IdTipoVenta=1 AND v.IdCaja=1 AND v.FechaVenta='"+fechaactual+"'\n" +
                     "Group by 1) as T1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -213,7 +219,7 @@ public class CerraCaja extends javax.swing.JFrame {
               jLabel26.setText(valor); 
            }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR EN LISTARtVENTAEFECTIVO" + e.getNextException(), "ERROR", JOptionPane.ERROR_MESSAGE);
        
                  con=null;
                 validarconexion();
@@ -224,9 +230,9 @@ public class CerraCaja extends javax.swing.JFrame {
         String valor="0.00";
         DecimalFormat formato = new DecimalFormat("##,###.00");
         String SQL = "Select sum(T1.Subtotal) from(\n" +
-                    "Select v.idOrden, sum(dv.Subtotal) as 'Subtotal'from Ventas v\n" +
+                    "Select v.idOrden, sum(dv.Subtotal) as 'Subtotal' from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=2 AND v.IdCaja="+codigocaja+" AND v.FechaVenta'"+fechaactual+"'\n" +
+                    "Where v.IdTipoVenta=2 AND v.IdCaja="+codigocaja+" AND v.FechaVenta="+fechaactual+"\n" +
                     "Group by 1) as T1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -247,7 +253,7 @@ public class CerraCaja extends javax.swing.JFrame {
            
             
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR LISTARtVENTATarjeta" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
        
                  con=null;
                 validarconexion();
@@ -280,7 +286,7 @@ public class CerraCaja extends javax.swing.JFrame {
             JTableBancosSalidas.setModel(modelo);
             
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR ListarVefectivo" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
        
                  con=null;
                 validarconexion();
@@ -313,7 +319,7 @@ public class CerraCaja extends javax.swing.JFrame {
             JTableBancosSalidas1.setModel(modelo);
             
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR listarventastarjeta" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
        
                  con=null;
                 validarconexion();
@@ -433,10 +439,14 @@ public class CerraCaja extends javax.swing.JFrame {
             if(treflejado<Float.valueOf(totcajat)){
                 jLabel43.setText(resultado);
                 jLabel42.setText("0.00");
+                rSPanelBorder1.setVisible(true);
+  
             }else{
                if(treflejado>Float.valueOf(totcajat)){
                 jLabel43.setText("0.00");
                 jLabel42.setText(resultado);
+                rSPanelBorder1.setVisible(true);
+
             } 
             }
         }
@@ -570,7 +580,7 @@ public class CerraCaja extends javax.swing.JFrame {
     
      public float obtenerMontoInicial(){
         float montoinicial=0.00f;
-        String SQL = "Select c.MontoInicial from HistoriaCajas c Where c.IdUsuario="+ObtenerIdUsuarios();
+        String SQL = "Select c.MontoInicial from HistoriaCajas c Where c.IdCaja="+codigocaja;
          try {
             Statement st = (Statement) con.createStatement();
             ResultSet rs = st.executeQuery(SQL);
@@ -637,15 +647,13 @@ public class CerraCaja extends javax.swing.JFrame {
      
       public boolean Validartarifa(String tarifa){
         Pattern patron = Pattern
-                .compile("^[0-9]{1,3}+(\\,[0-9]+)*(\\.[0-9]{2})$");        
+                .compile("^[0-9]*(\\.[0-9]{2})$");        
         Matcher comparar = patron.matcher(tarifa);
         return comparar.find();
     }
      public boolean validar(){
         boolean a=true;
       
-     
-     
         if(JTextbuscar1.getText().contentEquals(paramString())){
           JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
           a= false;
@@ -722,7 +730,6 @@ public class CerraCaja extends javax.swing.JFrame {
         rSButtonIcon_new17 = new newscomponents.RSButtonIcon_new();
         jScrollPane2 = new javax.swing.JScrollPane();
         JTableBancosSalidas = new rojerusan.RSTableMetro1();
-        rSButtonIcon_new11 = new newscomponents.RSButtonIcon_new();
         rSPanelOpacity2 = new rojerusan.RSPanelOpacity();
         jLabel26 = new javax.swing.JLabel();
         rSButtonIcon_new18 = new newscomponents.RSButtonIcon_new();
@@ -750,6 +757,7 @@ public class CerraCaja extends javax.swing.JFrame {
         jLabel32 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
         rSButtonIcon_new14 = new newscomponents.RSButtonIcon_new();
+        rSButtonIcon_new20 = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -779,13 +787,13 @@ public class CerraCaja extends javax.swing.JFrame {
         jLabel28.setBackground(new java.awt.Color(102, 51, 255));
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(51, 0, 255));
-        jPanel5.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 180, 20));
+        jPanel5.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 180, 20));
 
         jLabel29.setBackground(new java.awt.Color(102, 51, 255));
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(51, 0, 255));
         jLabel29.setText("Usuario en sesion: ");
-        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 130, 20));
+        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, 130, 20));
 
         rSButtonIcon_new19.setBackground(new java.awt.Color(255, 102, 102));
         rSButtonIcon_new19.setText("Cancelar");
@@ -800,7 +808,7 @@ public class CerraCaja extends javax.swing.JFrame {
         });
         jPanel5.add(rSButtonIcon_new19, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 590, 390, 40));
 
-        rSButtonIcon_new12.setBackground(new java.awt.Color(0, 204, 153));
+        rSButtonIcon_new12.setBackground(new java.awt.Color(255, 51, 102));
         rSButtonIcon_new12.setText("Terminar Proceso");
         rSButtonIcon_new12.setBackgroundHover(new java.awt.Color(255, 51, 102));
         rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
@@ -1119,20 +1127,6 @@ public class CerraCaja extends javax.swing.JFrame {
 
         jPanel7.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, 430, 210));
 
-        rSButtonIcon_new11.setBackground(new java.awt.Color(255, 255, 255));
-        rSButtonIcon_new11.setForeground(new java.awt.Color(51, 102, 255));
-        rSButtonIcon_new11.setText("ACEPTAR");
-        rSButtonIcon_new11.setBackgroundHover(new java.awt.Color(255, 51, 102));
-        rSButtonIcon_new11.setForegroundIcon(new java.awt.Color(0, 102, 255));
-        rSButtonIcon_new11.setForegroundText(new java.awt.Color(0, 102, 255));
-        rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK_BOX);
-        rSButtonIcon_new11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new11ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(rSButtonIcon_new11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 120, -1));
-
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1403,6 +1397,20 @@ public class CerraCaja extends javax.swing.JFrame {
         });
         jPanel7.add(rSButtonIcon_new14, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 590, 170, -1));
 
+        rSButtonIcon_new20.setBackground(new java.awt.Color(255, 255, 255));
+        rSButtonIcon_new20.setForeground(new java.awt.Color(51, 102, 255));
+        rSButtonIcon_new20.setText("ACEPTAR");
+        rSButtonIcon_new20.setBackgroundHover(new java.awt.Color(255, 51, 102));
+        rSButtonIcon_new20.setForegroundIcon(new java.awt.Color(0, 102, 255));
+        rSButtonIcon_new20.setForegroundText(new java.awt.Color(0, 102, 255));
+        rSButtonIcon_new20.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CHECK_BOX);
+        rSButtonIcon_new20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIcon_new20ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(rSButtonIcon_new20, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 120, -1));
+
         rSPanelOpacity3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 890, 630));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1438,7 +1446,9 @@ public class CerraCaja extends javax.swing.JFrame {
 
     private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new15ActionPerformed
         // TODO add your handling code here:
-        
+        if(jLabel43.getText().equals("0.00") && jLabel42.getText().equals("0.00")){
+            cerrarcaja();
+        }
     }//GEN-LAST:event_rSButtonIcon_new15ActionPerformed
 
     private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
@@ -1453,14 +1463,6 @@ public class CerraCaja extends javax.swing.JFrame {
         // TODO add your handling code here:
      
     }//GEN-LAST:event_JTableBancosSalidasMouseClicked
-
-    private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
-        // TODO add your handling code here:
-        if(validar()==true){
-            calcularoperacion();
-        }
-        
-    }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
 
     private void jLabel26MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MouseEntered
         // TODO add your handling code here:
@@ -1543,6 +1545,11 @@ public class CerraCaja extends javax.swing.JFrame {
     private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rSButtonIcon_new14ActionPerformed
+
+    private void rSButtonIcon_new20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new20ActionPerformed
+        // TODO add your handling code here:
+           calcularoperacion();
+    }//GEN-LAST:event_rSButtonIcon_new20ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1658,7 +1665,6 @@ public class CerraCaja extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new11;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new13;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new14;
@@ -1667,6 +1673,7 @@ public class CerraCaja extends javax.swing.JFrame {
     private newscomponents.RSButtonIcon_new rSButtonIcon_new17;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new18;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new19;
+    private newscomponents.RSButtonIcon_new rSButtonIcon_new20;
     private rojeru_san.RSLabelHora rSLabelHora2;
     private rojerusan.RSLabelIcon rSLabelIcon13;
     private rojerusan.RSLabelIcon rSLabelIcon18;
