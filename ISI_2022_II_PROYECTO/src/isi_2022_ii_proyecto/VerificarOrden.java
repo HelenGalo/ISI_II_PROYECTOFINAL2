@@ -83,7 +83,7 @@ public class VerificarOrden extends javax.swing.JFrame {
         this.RTNC = RTNC;
     }
     /*VARIABLES PARA TABLA DE ENVIOS*/
-    int tipodeVenta;
+    int tipodeVenta=1;
     int idDireccionCliente;
     String fechaentrega;
     String horaentrega;
@@ -424,6 +424,40 @@ public class VerificarOrden extends javax.swing.JFrame {
         
         
        
+    }
+    
+    public void insertarTotalOrden(){
+        String SQL = "INSERT INTO EntradasCaja (IdOrden, Total) VALUES(?, ?)";
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(SQL);
+            preparedStmt.setInt(1, idorden);
+            String valoratransformar=jLabel22.getText();
+            String total="";
+              for(int j=0; j<valoratransformar.length(); j++ ){
+                                char a = valoratransformar.charAt(j);
+                                String vs = String.valueOf(a);
+                                String coma = ",";
+                                char b = coma.charAt(0);
+                                if(a!=b){
+                                   System.out.println("Cara "+ a);
+                                   total= total + vs;
+                                }else{
+
+                                }
+            }
+            
+            preparedStmt.setFloat(2, Float.valueOf(total));
+            preparedStmt.execute();
+      
+     
+           
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            con=null;
+            validarconexion();
+        }
     }
     
     
@@ -864,7 +898,7 @@ public class VerificarOrden extends javax.swing.JFrame {
                
                    insertarOrden();
                    enviarDetallesOrden();
-                   
+                   insertarTotalOrden();
                     if(estadodetalleorden==true && estadoorden==true){
 
                         enviarActualizacionExistencia();
@@ -893,6 +927,7 @@ public class VerificarOrden extends javax.swing.JFrame {
             if(rSRadioButton1.isSelected()){
                    insertarOrden();
                    enviarDetallesOrden();
+                   insertarTotalOrden();
                     if(estadodetalleorden==true && estadoorden==true){
 
                         enviarActualizacionExistencia();
@@ -914,6 +949,7 @@ public class VerificarOrden extends javax.swing.JFrame {
                 if(rSRadioButton3.isSelected()){
                    insertarOrden();
                    enviarDetallesOrden();
+                   insertarTotalOrden();
                     if(estadodetalleorden==true && estadoorden==true){
 
                         enviarActualizacionExistencia();
