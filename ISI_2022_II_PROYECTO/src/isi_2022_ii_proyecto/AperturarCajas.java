@@ -319,7 +319,7 @@ validarconexion();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
         con=null;
-validarconexion();
+        validarconexion();
         
         }
         return idcuenta;

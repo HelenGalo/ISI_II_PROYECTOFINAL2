@@ -35,13 +35,13 @@ import rojerusan.RSEffectFade;
  *
  * @author Edwin Rafael
  */
-public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
+public class SeleccionarCuentaAcreditar extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     String codigoc="";
     String codigocompra="";
     boolean estadosmodificar;
-    Compras compras;
+    CerraCaja cerracaja;
     String valordelacompra;
 
     public void setValordelacompra(String valordelacompra) {
@@ -49,8 +49,8 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
         JTextbuscar.setText(valordelacompra);
     }
 
-    public void setCompras(Compras compras) {
-        this.compras = compras;
+    public void setCerracaja(CerraCaja cerracaja) {
+        this.cerracaja = cerracaja;
     }
 
     public void setEstadosmodificar(boolean estadosmodificar) {
@@ -91,8 +91,8 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
                     }
                 }
                 actualizarCuentaBancaria(Float.valueOf(valort));
-                rcompras();
-                this.dispose();
+                bajarcuenta();
+                
             }
     }
     
@@ -164,12 +164,15 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
     
 
     
-
+    public void bajarcuenta(){
+        cerracaja.cerrarcaja();
+        this.dispose();
+    }
     
     
     public void actualizarCuentaBancaria(float m){
         float diferenciamonto=0.00f;
-        diferenciamonto= Float.valueOf(jLabel42.getText())-m;
+        diferenciamonto= Float.valueOf(jLabel42.getText())+m;
         
         String SQL = "UPDATE CuentasBancarias SET TotalenCuenta=? WHERE NCuenta='"+rSComboMetro3.getSelectedItem().toString()+"';";
         try {
@@ -247,7 +250,7 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
     
  public boolean Validartarifa(String tarifa){
         Pattern patron = Pattern
-                .compile("^[0-9]*(\\.[0-9]{2})$");        
+                 .compile("^[0-9]{1,3}+(\\,[0-9]+)*(\\.[0-9]{2})$");          
         Matcher comparar = patron.matcher(tarifa);
         return comparar.find();
     }
@@ -288,7 +291,7 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
     /**
      * Creates new form CalendarForm
      */
-    public SeleccionarCuentaPagoCompra() {
+    public SeleccionarCuentaAcreditar() {
         RSUtilities.setFullScreenJFrame(this);
         initComponents();
        
@@ -305,9 +308,7 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
    
     
     
-     public void rcompras(){
-         compras.registrarcompradesdefuera();
-     }
+     
     
     
  
@@ -547,7 +548,7 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(153, 0, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("Numero de Compra:");
+        jLabel29.setText("Numero de Caja:");
         jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, 160, 50));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -577,7 +578,7 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
         jPanel3.add(rSComboMetro3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 190, 30));
 
         rSButtonIcon_new13.setBackground(new java.awt.Color(102, 51, 255));
-        rSButtonIcon_new13.setText("Registrar Compra");
+        rSButtonIcon_new13.setText("Cargar Cuenta");
         rSButtonIcon_new13.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new13.setFocusable(false);
         rSButtonIcon_new13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -746,15 +747,12 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
                     }
                 }
                 
-            if(Float.valueOf(valort)<=Float.valueOf(jLabel42.getText())){
+          
             ConfirmacionModificar cm = new ConfirmacionModificar();
-            cm.setPagoc(this);
-            cm.setTipo("RCompra");
+            cm.setSca(this);
+            cm.setTipo("Cbanco");
             cm.setVisible(true);
-            }else{
-                VentanaFondosIns vfi = new VentanaFondosIns();
-                vfi.setVisible(true);
-            }
+           
            
         }else{
             JOptionPane.showMessageDialog(this, "POR FAVOR VALIDE LA INFORMACÍON");
@@ -822,14 +820,46 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarCuentaPagoCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionarCuentaAcreditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarCuentaPagoCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionarCuentaAcreditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarCuentaPagoCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionarCuentaAcreditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarCuentaPagoCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionarCuentaAcreditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -866,7 +896,7 @@ public class SeleccionarCuentaPagoCompra extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SeleccionarCuentaPagoCompra().setVisible(true);
+                new SeleccionarCuentaAcreditar().setVisible(true);
             }
         });
     }

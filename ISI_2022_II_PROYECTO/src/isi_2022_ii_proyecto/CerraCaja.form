@@ -205,7 +205,7 @@
                       <Color blue="66" green="33" red="ff" type="rgb"/>
                     </Property>
                     <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                      <Value id="MONETIZATION_ON"/>
+                      <Value id="EXIT_TO_APP"/>
                     </Property>
                   </Properties>
                   <Events>
@@ -1092,9 +1092,9 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel39" min="-2" pref="141" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel41" min="-2" pref="43" max="-2" attributes="0"/>
@@ -1102,7 +1102,6 @@
                                       <Component id="jLabel42" min="-2" pref="163" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel38" min="-2" pref="141" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel40" min="-2" pref="43" max="-2" attributes="0"/>

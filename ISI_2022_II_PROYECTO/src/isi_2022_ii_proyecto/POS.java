@@ -1199,14 +1199,12 @@ public class POS extends javax.swing.JFrame {
         rSButtonGradiente11 = new rsbuttongradiente.RSButtonGradiente();
         rSButtonGradiente12 = new rsbuttongradiente.RSButtonGradiente();
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
-        jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         JTableBancos1 = new rojerusan.RSTableMetro1();
         rSButtonHover1 = new rojeru_san.complementos.RSButtonHover();
         rSButtonGradiente13 = new rsbuttongradiente.RSButtonGradiente();
         rSButtonGradiente14 = new rsbuttongradiente.RSButtonGradiente();
         rSButtonGradiente15 = new rsbuttongradiente.RSButtonGradiente();
-        rSButtonIcon_new12 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new13 = new newscomponents.RSButtonIcon_new();
         rSButtonHover4 = new rojeru_san.complementos.RSButtonHover();
         rSButtonIcon_new14 = new newscomponents.RSButtonIcon_new();
@@ -1966,13 +1964,7 @@ public class POS extends javax.swing.JFrame {
                 JTextbuscarKeyReleased(evt);
             }
         });
-        rSPanel2.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 190, -1));
-
-        jLabel12.setFont(new java.awt.Font("Franklin Gothic Book", 2, 16)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(102, 0, 255));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Productos");
-        rSPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 110, 40));
+        rSPanel2.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 330, -1));
 
         JTableBancos1.setForeground(new java.awt.Color(204, 204, 204));
         JTableBancos1.setModel(new javax.swing.table.DefaultTableModel(
@@ -2077,17 +2069,6 @@ public class POS extends javax.swing.JFrame {
             }
         });
         rSPanel2.add(rSButtonGradiente15, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, 70, 60));
-
-        rSButtonIcon_new12.setBackground(new java.awt.Color(20, 101, 187));
-        rSButtonIcon_new12.setText("Ver Todos");
-        rSButtonIcon_new12.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.GRID_ON);
-        rSButtonIcon_new12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new12ActionPerformed(evt);
-            }
-        });
-        rSPanel2.add(rSButtonIcon_new12, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 150, -1));
 
         rSButtonIcon_new13.setBackground(new java.awt.Color(20, 101, 187));
         rSButtonIcon_new13.setText("Limpiar Orden");
@@ -2337,10 +2318,6 @@ public class POS extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rSButtonGradiente15ActionPerformed
 
-    private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
-
     private void rSButtonIcon_new13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new13ActionPerformed
         // TODO add your handling code here:
           limpiartabla2();
@@ -2416,7 +2393,6 @@ public class POS extends javax.swing.JFrame {
     private RSMaterialComponent.RSTextFieldIconUno JTextbuscar;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -2476,7 +2452,6 @@ public class POS extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne3;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne4;
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new12;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new13;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new14;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new15;

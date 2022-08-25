@@ -23,6 +23,7 @@ import isi_2022_ii_proyecto.Banco;
 import isi_2022_ii_proyecto.CerraCaja;
 import isi_2022_ii_proyecto.EnviarCajaABancos;
 import isi_2022_ii_proyecto.ModificarCuentaB;
+import isi_2022_ii_proyecto.SeleccionarCuentaAcreditar;
 import isi_2022_ii_proyecto.SeleccionarCuentaPagoCompra;
 import rojeru_san.complementos.RSUtilities;
 
@@ -45,6 +46,11 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
     ActualizarUsuarios gusuario;
     ActualizarLogistica glog;
     SeleccionarCuentaPagoCompra pagoc;
+    SeleccionarCuentaAcreditar sca;
+
+    public void setSca(SeleccionarCuentaAcreditar sca) {
+        this.sca = sca;
+    }
   
     EnviarCajaABancos enviarcbanco;
 
@@ -346,6 +352,13 @@ public class ConfirmacionModificar extends javax.swing.JFrame {
                 if(tipo=="TF"){
                 enviarcbanco.setEstadosmodificar(true);
                 enviarcbanco.validarConfirmacion();
+                this.dispose();
+                
+            }
+                
+                if(tipo=="Cbanco"){
+                sca.setEstadosmodificar(true);
+                sca.validarConfirmacion();
                 this.dispose();
                 
             }

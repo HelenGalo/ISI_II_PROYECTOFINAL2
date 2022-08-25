@@ -41,6 +41,7 @@ public class CerraCaja extends javax.swing.JFrame {
     Connection con = conexion.conexion();
     int codigocaja;
     boolean estadototalcaja;
+    String resultadog;
 
     public void setCodigocaja(int codigocaja) {
         this.codigocaja = codigocaja;
@@ -48,9 +49,11 @@ public class CerraCaja extends javax.swing.JFrame {
     boolean estadoposthistoriar=false;
     boolean estadopostcorte=false;
      boolean estadopostotalcaja=false;
-    
+    float montooperacionenbruto;
     float montooperacionventas;
+    String montoftra="";
     String fechaactual;
+    String montooperacionventast;
    
  
     public void conectar(){
@@ -134,6 +137,11 @@ public class CerraCaja extends javax.swing.JFrame {
     }
     
     
+    public void cargarcuenta(){
+        
+    }
+    
+    
     public void cerrarcaja(){
         realizarcorte();
         actualizarHistoriaCaja();
@@ -145,6 +153,7 @@ public class CerraCaja extends javax.swing.JFrame {
                     VentanaEmergente1 v = new VentanaEmergente1();
                     v.setVisible(true);
                     rSButtonIcon_new12.setVisible(true);
+                    
                 }
             }
         }
@@ -152,6 +161,10 @@ public class CerraCaja extends javax.swing.JFrame {
         
         
     }
+    
+    
+    
+    
     
     public void listarmontoinicial(){
          DecimalFormat formato = new DecimalFormat("##,###.00");
@@ -417,17 +430,25 @@ public class CerraCaja extends javax.swing.JFrame {
                 }
         
         float treflejado = (Float.valueOf(montoit)+Float.valueOf(totcajat)) - (Float.valueOf(efectivot) + Float.valueOf(tarjetat));
-        montooperacionventas = Float.valueOf(totcajat);
-       
-        
+        montooperacionventas = (Float.valueOf(montoit)+Float.valueOf(totcajat));
+        String v=String.valueOf(montooperacionventas);
+         montooperacionenbruto= (Float.valueOf(montoit));
+        montooperacionventast=formato.format(Double.valueOf(v));
         
         String resultado1 = formato.format(Double.valueOf(treflejado));
         String resultado="";
+        
+           if(montooperacionventast.equals(".00")){
+                montooperacionventast="0.00";
+        }
+       
         if(resultado1.equals(".00")){
             resultado="0.00";
         }else{
             resultado  =resultado1;
         }
+        
+         resultadog =resultado;
         
          if(resultado.equals("0.00")){
             jLabel43.setText("0.00");
@@ -486,7 +507,9 @@ public class CerraCaja extends javax.swing.JFrame {
     }
     
     public void realizarcorte(){
-        if(montooperacionventas==obtenerMontoOperacion()){
+        
+        
+        
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             String horaregistro = dtf.format(LocalDateTime.now());
             SimpleDateFormat dtf1 = new SimpleDateFormat("yyyy/MM/dd");
@@ -529,22 +552,21 @@ public class CerraCaja extends javax.swing.JFrame {
                 validarconexion();
 
             }
-        }else{
-            System.out.println("No es igual el monto");
-        }
+        
         
     }
     
  
      public void actualizartotalcaja(){
         float totalcajaa=0.00f;
-        String SQL = "UPDATE Caja SET TotalCaja=? WHERE IdUsuario="+ObtenerIdUsuarios();
+        String SQL = "UPDATE Caja SET TotalCaja=? IdEstadoCaja=? WHERE IdUsuario="+ObtenerIdUsuarios();
  
         
   
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setFloat(1, totalcajaa);
+            preparedStmt.setFloat(2, 1);
             preparedStmt.execute();
             estadopostotalcaja=true;
           
@@ -633,7 +655,7 @@ public class CerraCaja extends javax.swing.JFrame {
             preparedStmt.setFloat(1, montofinal);
             preparedStmt.setString(2, fechadecierre);
             preparedStmt.setString(3, horacierre);
-            preparedStmt.setInt(4, 0);
+            preparedStmt.setInt(4, 2);
             preparedStmt.execute();
             estadoposthistoriar=true;
     
@@ -811,7 +833,7 @@ public class CerraCaja extends javax.swing.JFrame {
         rSButtonIcon_new12.setBackground(new java.awt.Color(255, 51, 102));
         rSButtonIcon_new12.setText("Terminar Proceso");
         rSButtonIcon_new12.setBackgroundHover(new java.awt.Color(255, 51, 102));
-        rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MONETIZATION_ON);
+        rSButtonIcon_new12.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EXIT_TO_APP);
         rSButtonIcon_new12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSButtonIcon_new12ActionPerformed(evt);
@@ -1317,16 +1339,15 @@ public class CerraCaja extends javax.swing.JFrame {
         rSPanelBorder1Layout.setHorizontalGroup(
             rSPanelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rSPanelBorder1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(rSPanelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(rSPanelBorder1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(rSPanelBorder1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1447,12 +1468,17 @@ public class CerraCaja extends javax.swing.JFrame {
     private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new15ActionPerformed
         // TODO add your handling code here:
         if(jLabel43.getText().equals("0.00") && jLabel42.getText().equals("0.00")){
-            cerrarcaja();
+            SeleccionarCuentaAcreditar cp = new SeleccionarCuentaAcreditar();
+            cp.setCodigocompra(String.valueOf(codigocaja));
+            cp.setValordelacompra(montooperacionventast);
+            cp.setCerracaja(this);
+            cp.setVisible(true);
         }
     }//GEN-LAST:event_rSButtonIcon_new15ActionPerformed
 
     private void rSButtonIcon_new16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new16ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new16ActionPerformed
 
     private void rSButtonIcon_new17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new17ActionPerformed
