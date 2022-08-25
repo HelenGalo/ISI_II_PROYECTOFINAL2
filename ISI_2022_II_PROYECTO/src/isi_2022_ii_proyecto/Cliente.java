@@ -35,6 +35,12 @@ public class Cliente extends javax.swing.JFrame {
     Connection con = conexion.conexion();
     String codigoc;
 
+  String usuario;
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabel15.setText("Usuario en sesion: "+usuario);
+    }
     /**
      * Creates new form Cliente
      */
@@ -60,6 +66,22 @@ public class Cliente extends javax.swing.JFrame {
             
         }
         
+    }
+    public void conectarerror(){
+        conexion.setCliente(this);
+        conexion.setPass(false);
+        con = conexion.conexion();
+    }
+    
+       public void conectarinicio(){
+        conexion.setCliente(this);
+        con = conexion.conexion();
+    }
+       
+        public void conectarsinerror(){
+        conexion.setPass(true);
+        conexion.setCliente(this);
+        con = conexion.conexion();
     }
     
      public void deshabilitar(){
@@ -117,7 +139,6 @@ public class Cliente extends javax.swing.JFrame {
         linesetting11 = new javax.swing.JPanel();
         rSLabelIcon11 = new rojerusan.RSLabelIcon();
         menuhide = new javax.swing.JPanel();
-        rSButtonIcon_new4 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new5 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new6 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new7 = new newscomponents.RSButtonIcon_new();
@@ -149,6 +170,7 @@ public class Cliente extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel15 = new javax.swing.JLabel();
         deshabilitado = new newscomponents.RSButtonIcon_new();
         habilitado = new newscomponents.RSButtonIcon_new();
         JTextbuscar = new RSMaterialComponent.RSTextFieldIconUno();
@@ -437,17 +459,6 @@ public class Cliente extends javax.swing.JFrame {
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
         menuhide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        rSButtonIcon_new4.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new4.setText("Modificar Clientes");
-        rSButtonIcon_new4.setBackgroundHover(new java.awt.Color(0, 55, 133));
-        rSButtonIcon_new4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ACCOUNT_BOX);
-        rSButtonIcon_new4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIcon_new4ActionPerformed(evt);
-            }
-        });
-        menuhide.add(rSButtonIcon_new4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 210, -1));
-
         rSButtonIcon_new5.setBackground(new java.awt.Color(33, 150, 243));
         rSButtonIcon_new5.setText("Buscar Clientes");
         rSButtonIcon_new5.setBackgroundHover(new java.awt.Color(0, 55, 133));
@@ -707,6 +718,11 @@ public class Cliente extends javax.swing.JFrame {
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
 
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -715,8 +731,10 @@ public class Cliente extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 823, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(318, 318, 318)
+                .addComponent(jLabel15)
+                .addGap(40, 40, 40)
                 .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -731,10 +749,12 @@ public class Cliente extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 1160, -1));
@@ -857,13 +877,6 @@ public class Cliente extends javax.swing.JFrame {
         linesetting1.setBackground(new Color(0,55,133));
     }//GEN-LAST:event_linesetting11MouseExited
 
-    private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
-        // TODO add your handling code here:
-        Cliente clientes = new Cliente();
-        clientes.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
-
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
         // TODO add your handling code here:
       
@@ -885,6 +898,7 @@ public class Cliente extends javax.swing.JFrame {
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
         // TODO add your handling code here:
         AgregarClientes ag = new AgregarClientes();
+        ag.setUsuario(usuario);
         ag.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
@@ -900,6 +914,7 @@ public class Cliente extends javax.swing.JFrame {
     private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
    
         Menu m = new Menu();
+        m.setUsuario(usuario);
         m.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
@@ -927,6 +942,7 @@ public class Cliente extends javax.swing.JFrame {
            ActualizarCliente ac = new ActualizarCliente();
            ac.setId(codigoc);
            ac.MostrarCliente();
+           ac.setUsuario(usuario);
            ac.setVisible(true);   
            this.setVisible(false);
         }else{
@@ -1174,6 +1190,7 @@ String SQL = "select c.IdCliente,c.Nombres,c.Apellidos,c.Telefono, c.CorreoElect
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1207,7 +1224,6 @@ String SQL = "select c.IdCliente,c.Nombres,c.Apellidos,c.Telefono, c.CorreoElect
     private RSMaterialComponent.RSButtonIconOne rSButtonIconOne5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new10;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new11;
-    private newscomponents.RSButtonIcon_new rSButtonIcon_new4;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new5;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new6;
     private newscomponents.RSButtonIcon_new rSButtonIcon_new7;

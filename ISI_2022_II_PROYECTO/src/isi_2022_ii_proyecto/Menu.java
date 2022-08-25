@@ -1782,6 +1782,7 @@ public class Menu extends javax.swing.JFrame {
     private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
         // TODO add your handling code here:
         Cliente clientes = new Cliente();
+        clientes.setUsuario(usuario);
         clientes.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
@@ -1789,6 +1790,7 @@ public class Menu extends javax.swing.JFrame {
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
         // TODO add your handling code here:
         Usuario usuarios = new Usuario();
+        usuarios.setUsuario(usuario);
         usuarios.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
@@ -1819,6 +1821,7 @@ public class Menu extends javax.swing.JFrame {
     private void BOTONCLIENTEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONCLIENTEMouseClicked
         // TODO add your handling code here:
         Cliente c = new Cliente();
+        c.setUsuario(usuario);
         c.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BOTONCLIENTEMouseClicked
@@ -1835,6 +1838,7 @@ public class Menu extends javax.swing.JFrame {
     private void BOTONUSUARIOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONUSUARIOMouseClicked
         // TODO add your handling code here:
         Usuario u = new Usuario();
+        u.setUsuario(usuario);
         u.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BOTONUSUARIOMouseClicked

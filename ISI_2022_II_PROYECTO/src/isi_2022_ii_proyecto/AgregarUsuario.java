@@ -44,7 +44,15 @@ public class AgregarUsuario extends javax.swing.JFrame {
     HashMap<String, Integer> empleados = new HashMap<String, Integer>();
     Hashtable<String, String> cifrador = new Hashtable<String, String>();
 
-   boolean estadoagregar=false;
+    String usuario;
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabel15.setText("Usuario en sesion: "+usuario);
+    }
+      
+    
+    boolean estadoagregar=false;
 
     public void setEstadoagregar(boolean estadoagregar) {
         this.estadoagregar = estadoagregar;
@@ -61,6 +69,22 @@ public class AgregarUsuario extends javax.swing.JFrame {
             
         }
         
+    }
+    public void conectarerror(){
+        conexion.setAgusuario(this);
+        conexion.setPass(false);
+        con = conexion.conexion();
+    }
+    
+       public void conectarinicio(){
+        conexion.setAgusuario(this);
+        con = conexion.conexion();
+    }
+       
+        public void conectarsinerror(){
+        conexion.setPass(true);
+        conexion.setAgusuario(this);
+        con = conexion.conexion();
     }
     
     public AgregarUsuario() {
@@ -427,6 +451,7 @@ validarconexion();
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel15 = new javax.swing.JLabel();
         guardar = new newscomponents.RSButtonIcon_new();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1190,13 +1215,19 @@ validarconexion();
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO USUARIO");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 310, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
         jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, 60, 50));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
+
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 20, -1, -1));
 
         dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1156, -1));
 
@@ -1295,8 +1326,9 @@ validarconexion();
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
-        Usuario usuario = new Usuario();
-        usuario.setVisible(true);
+        Usuario u = new Usuario();
+        u.setUsuario(usuario);
+        u.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
@@ -1547,6 +1579,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;

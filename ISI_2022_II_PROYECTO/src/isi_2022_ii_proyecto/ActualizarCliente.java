@@ -47,6 +47,14 @@ public class ActualizarCliente extends javax.swing.JFrame {
     ConexionBD conexion = new ConexionBD();
     Connection con = conexion.conexion();
     String id;
+    
+    
+  String usuario;
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabel15.setText("Usuario en sesion: "+usuario);
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -65,7 +73,22 @@ public class ActualizarCliente extends javax.swing.JFrame {
         }
         
     }
+    public void conectarerror(){
+        conexion.setAcl(this);
+        conexion.setPass(false);
+        con = conexion.conexion();
+    }
     
+       public void conectarinicio(){
+        conexion.setAcl(this);
+        con = conexion.conexion();
+    }
+       
+        public void conectarsinerror(){
+        conexion.setPass(true);
+        conexion.setAcl(this);
+        con = conexion.conexion();
+    }
     
  //   HashMap<String, Integer> empleados = new HashMap<String, Integer>();
 
@@ -198,11 +221,25 @@ public class ActualizarCliente extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
           a= false;
       }
+      if (validarNombre(NombreC.getText())==false){
+            
+              
+             a= false;
+        
+       }
+      
       
        if(ApellidoC.getText().isEmpty()){
           JOptionPane.showMessageDialog(this, "Por favor ingrese Apellidos");
           a= false;
       }
+       if (validarNombre(ApellidoC.getText())==false){
+            
+              
+             a= false;
+             
+           }
+      
         if(TelC.getText().contentEquals(paramString())){
           JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
           a= false;
@@ -240,6 +277,29 @@ public class ActualizarCliente extends javax.swing.JFrame {
        return a;
        
       
+    }
+       
+    
+    public  boolean validarNombre(String Nombre){
+    boolean check=false;
+    
+    /*Verificamos que no sea null*/ 
+    if(Nombre != null){
+        /* 1ª Condición: que la letra inicial sea mayúscula*/
+        //boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
+
+        /* 2ª Condición: que el tamaño sea >= 3 y <= 15*/
+        int stringSize=Nombre.length();
+        boolean isValidSize=(stringSize >= 3 && stringSize <= 25);
+
+        /* 3ª Condición: que contenga al menos un espacio*/
+        boolean isSpaced=Nombre.contains(" ");
+
+        /* Verificamos que las tres condiciones son verdaderas*/
+        check=  (isValidSize &&  isSpaced) ;
+    }
+    /*Devolvemos el estado de la validación*/
+    return check;
     }
     
       public boolean verificar(){
@@ -374,6 +434,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel15 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         rSPanelOpacity1 = new RSMaterialComponent.RSPanelOpacity();
         rSLabelIcon6 = new rojerusan.RSLabelIcon();
@@ -408,6 +469,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
         actuale = new javax.swing.JLabel();
         rSButtonIcon_new9 = new newscomponents.RSButtonIcon_new();
         aviso2 = new javax.swing.JLabel();
+        aviso3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -840,14 +902,20 @@ public class ActualizarCliente extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Franklin Gothic Book", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("MODULO CLIENTES");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 823, 40));
+        jLabel6.setText("MODÚLO CLIENTES");
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 370, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
         jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, 60, 50));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
+
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 20, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -870,7 +938,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Menu Principal");
+        jLabel9.setText("Menú Principal");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -878,7 +946,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Modulo Clientes");
+        jLabel11.setText("Modúlo Clientes");
 
         rSLabelIcon17.setForeground(new java.awt.Color(255, 255, 255));
         rSLabelIcon17.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIFI_TETHERING);
@@ -971,6 +1039,11 @@ public class ActualizarCliente extends javax.swing.JFrame {
                 DireccionCActionPerformed(evt);
             }
         });
+        DireccionC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                DireccionCKeyTyped(evt);
+            }
+        });
 
         rSPanelCircle2.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -1019,6 +1092,14 @@ public class ActualizarCliente extends javax.swing.JFrame {
                 NombreCActionPerformed(evt);
             }
         });
+        NombreC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                NombreCKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NombreCKeyTyped(evt);
+            }
+        });
 
         ApellidoC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ApellidoC.setPlaceholder("Ingrese los apellidos del cliente");
@@ -1026,6 +1107,11 @@ public class ActualizarCliente extends javax.swing.JFrame {
         ApellidoC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ApellidoCActionPerformed(evt);
+            }
+        });
+        ApellidoC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ApellidoCKeyTyped(evt);
             }
         });
 
@@ -1124,6 +1210,11 @@ public class ActualizarCliente extends javax.swing.JFrame {
         aviso2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         aviso2.setText("*Teléfono invalído*");
 
+        aviso3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        aviso3.setForeground(new java.awt.Color(255, 0, 0));
+        aviso3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aviso3.setText("*Nombre invalído*");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -1139,7 +1230,9 @@ public class ActualizarCliente extends javax.swing.JFrame {
                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(168, 168, 168)
-                        .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(aviso3))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(62, 62, 62)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1189,7 +1282,8 @@ public class ActualizarCliente extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(NombreC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(aviso3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(8, 8, 8)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -1313,6 +1407,7 @@ public class ActualizarCliente extends javax.swing.JFrame {
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
         Cliente clientes = new Cliente();
+        clientes.setUsuario(usuario);
         clientes.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
@@ -1448,6 +1543,44 @@ public class ActualizarCliente extends javax.swing.JFrame {
         evt.consume();
          }
     }//GEN-LAST:event_TelCKeyTyped
+
+    private void NombreCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyTyped
+     char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+
+    }//GEN-LAST:event_NombreCKeyTyped
+
+    private void ApellidoCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ApellidoCKeyTyped
+        char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+
+    }//GEN-LAST:event_ApellidoCKeyTyped
+
+    private void DireccionCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DireccionCKeyTyped
+      char caracter=evt.getKeyChar();
+          if(Character.isLowerCase(caracter)){
+              
+            evt.setKeyChar(Character.toUpperCase(caracter));
+      }
+
+    }//GEN-LAST:event_DireccionCKeyTyped
+
+    private void NombreCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyReleased
+             if (validarNombre(NombreC.getText())){
+             aviso3.setVisible(false);
+             
+        }
+          else{
+                    aviso3.setVisible(true);
+              
+          }
+    }//GEN-LAST:event_NombreCKeyReleased
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
@@ -1543,6 +1676,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel actuale;
     private javax.swing.JLabel aviso;
     private javax.swing.JLabel aviso2;
+    private javax.swing.JLabel aviso3;
     private javax.swing.JPanel dashboardview;
     private javax.swing.JPanel iconminmaxclose;
     private javax.swing.JLabel jLabel10;
@@ -1550,6 +1684,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;

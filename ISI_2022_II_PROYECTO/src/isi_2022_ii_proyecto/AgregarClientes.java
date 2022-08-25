@@ -48,10 +48,12 @@ public class AgregarClientes extends javax.swing.JFrame {
     boolean estadoagregar=false;
     RestrictedTextField r;
     String tipodedocumento="";
-    String usuario;
+  
+  String usuario;
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
+        jLabel15.setText("Usuario en sesion: "+usuario);
     }
     
   public void conectar(){
@@ -306,7 +308,27 @@ public class AgregarClientes extends javax.swing.JFrame {
     }
     
 
-      
+      public  boolean validarNombre(String Nombre){
+    boolean check=false;
+    
+    /*Verificamos que no sea null*/ 
+    if(Nombre != null){
+        /* 1ª Condición: que la letra inicial sea mayúscula*/
+        //boolean isFirstUpper=Character.isUpperCase(Nombre.charAt(0));
+
+        /* 2ª Condición: que el tamaño sea >= 3 y <= 15*/
+        int stringSize=Nombre.length();
+        boolean isValidSize=(stringSize >= 3 && stringSize <= 25);
+
+        /* 3ª Condición: que contenga al menos un espacio*/
+        boolean isSpaced=Nombre.contains(" ");
+
+        /* Verificamos que las tres condiciones son verdaderas*/
+        check=  (isValidSize &&  isSpaced) ;
+    }
+    /*Devolvemos el estado de la validación*/
+    return check;
+     }
        
     
         
@@ -316,7 +338,12 @@ public class AgregarClientes extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Por favor ingrese un nombre valido");
           a= false;
       }
-     
+     if (validarNombre(NombreC.getText())==false){
+            
+              
+             a= false;
+        
+       }
       
       
        if(ApellidoC.getText().isEmpty()){
@@ -324,7 +351,13 @@ public class AgregarClientes extends javax.swing.JFrame {
           a= false;
           
       }
+       if (validarNombre(ApellidoC.getText())==false){
+            
+              
+             a= false;
+        
       
+      }
         if(TelC.getText().contentEquals(paramString())){
           JOptionPane.showMessageDialog(this, "Por favor ingrese numeros unicamente");
           a= false;
@@ -358,8 +391,14 @@ public class AgregarClientes extends javax.swing.JFrame {
        
       
     }
+               
+       
              return a;
+     
+     
       }
+      
+      
   
 public boolean validarcorreo(String correo){
             
@@ -458,6 +497,7 @@ public boolean validarcorreo(String correo){
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel15 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         rSPanelOpacity3 = new RSMaterialComponent.RSPanelOpacity();
         rSLabelIcon16 = new rojerusan.RSLabelIcon();
@@ -914,6 +954,11 @@ public boolean validarcorreo(String correo){
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
 
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -922,8 +967,10 @@ public boolean validarcorreo(String correo){
                 .addContainerGap()
                 .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(6, 6, 6)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 322, Short.MAX_VALUE)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -933,17 +980,17 @@ public boolean validarcorreo(String correo){
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(rSLabelIcon2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 13, Short.MAX_VALUE)
-                        .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(rSLabelIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -1453,6 +1500,7 @@ public boolean validarcorreo(String correo){
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
         Cliente clientes = new Cliente();
+        clientes.setUsuario(usuario);
         clientes.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
@@ -1546,7 +1594,14 @@ public boolean validarcorreo(String correo){
     }//GEN-LAST:event_TelCKeyTyped
 
     private void NombreCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NombreCKeyReleased
-        
+     if (validarNombre(NombreC.getText())){
+             nombreav.setVisible(false);
+             
+        }
+          else{
+                    nombreav.setVisible(true);
+              
+          }        
       
     }//GEN-LAST:event_NombreCKeyReleased
 
@@ -1712,6 +1767,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JPanel dashboardview;
     private newscomponents.RSButtonIcon_new guardar;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;
