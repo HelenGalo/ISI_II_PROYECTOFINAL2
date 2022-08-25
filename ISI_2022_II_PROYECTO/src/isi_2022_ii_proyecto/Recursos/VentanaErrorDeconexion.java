@@ -46,7 +46,7 @@ import isi_2022_ii_proyecto.Categoria;
 import isi_2022_ii_proyecto.Cliente;
 import isi_2022_ii_proyecto.Compras;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
-import isi_2022_ii_proyecto.Dashboard;
+//import isi_2022_ii_proyecto.Dashboard;
 import isi_2022_ii_proyecto.Empleados;
 import isi_2022_ii_proyecto.Envio;
 import isi_2022_ii_proyecto.Facturas;
@@ -253,9 +253,6 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
         this.compras = compras;
     }
 
-    public void setDas(Dashboard das) {
-        this.das = das;
-    }
 
     public void setEmpleado(Empleados empleado) {
         this.empleado = empleado;
@@ -392,7 +389,7 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
     Categoria cate = null;
     Cliente cliente = null;
     Compras compras = null;
-    Dashboard das = null;
+   // Dashboard das = null;
     Empleados empleado = null;
     Envio envio = null;
     Facturas facturas = null;
@@ -587,10 +584,7 @@ public class VentanaErrorDeconexion extends javax.swing.JFrame {
                             compras.conectar();
                             this.dispose();
                     }else{
-                        if(das  !=null){
-                            das.conectar();
-                            this.dispose();
-                    }else{
+                     {
                         if(empleado   !=null){
                             empleado.conectar();
                             this.dispose();

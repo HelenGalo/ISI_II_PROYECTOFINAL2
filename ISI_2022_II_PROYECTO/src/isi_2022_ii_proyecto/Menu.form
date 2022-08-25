@@ -633,25 +633,37 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="jLabel3" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" min="-2" pref="200" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="rSButtonIcon_new1" min="-2" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new4" min="-2" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new5" min="-2" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new6" min="-2" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new7" min="-2" max="-2" attributes="0"/>
+                              <Component id="linesetting6" min="-2" pref="190" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="rSButtonIcon_new1" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new3" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new4" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new5" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new6" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new7" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new8" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new9" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new10" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new11" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new12" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new13" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new14" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new15" min="-2" max="-2" attributes="0"/>
-                      <Component id="rSButtonIcon_new2" min="-2" max="-2" attributes="0"/>
-                      <Component id="linesetting6" min="-2" pref="190" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="rSButtonIcon_new9" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rSButtonIcon_new10" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rSButtonIcon_new11" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rSButtonIcon_new12" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rSButtonIcon_new13" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rSButtonIcon_new14" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="rSButtonIcon_new15" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new2" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -671,9 +683,7 @@
                           <Component id="rSButtonIcon_new6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new7" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-                          <Component id="rSButtonIcon_new8" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new9" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new10" min="-2" max="-2" attributes="0"/>
@@ -685,9 +695,9 @@
                           <Component id="rSButtonIcon_new13" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new14" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new15" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="linesetting6" min="-2" pref="40" max="-2" attributes="0"/>
@@ -828,23 +838,6 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new7ActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new8">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="f3" green="96" red="21" type="rgb"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Dashboard"/>
-                    <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="85" green="37" red="0" type="rgb"/>
-                    </Property>
-                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                      <Value id="DASHBOARD"/>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new8ActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new9">

@@ -117,7 +117,23 @@ public class VerificarOrdenADomicilio extends javax.swing.JFrame {
         
     }
     
+    public void conectarerror(){
+        conexion.setVodomicilio(this);
+        conexion.setPass(false);
+        con = conexion.conexion();
+    }
     
+       public void conectarinicio(){
+        conexion.setVodomicilio(this);
+        con = conexion.conexion();
+    }
+       
+        public void conectarsinerror(){
+        conexion.setPass(true);
+        conexion.setVodomicilio(this);
+        con = conexion.conexion();
+    }
+
 
     /**
      * Creates new form VerificarOrden

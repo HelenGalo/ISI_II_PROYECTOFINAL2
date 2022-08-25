@@ -46,7 +46,7 @@ import isi_2022_ii_proyecto.Categoria;
 import isi_2022_ii_proyecto.Cliente;
 import isi_2022_ii_proyecto.Compras;
 import isi_2022_ii_proyecto.Conexion.ConexionBD;
-import isi_2022_ii_proyecto.Dashboard;
+//import isi_2022_ii_proyecto.Dashboard;
 import isi_2022_ii_proyecto.Empleados;
 import isi_2022_ii_proyecto.Envio;
 import isi_2022_ii_proyecto.Facturas;
