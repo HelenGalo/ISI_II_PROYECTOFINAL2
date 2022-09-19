@@ -203,7 +203,7 @@ public class Menu extends javax.swing.JFrame {
           int idestadocaja=0;
          String SQL = "Select c.IdEstadoCaja from Caja c\n" +
                     "INNER JOIN Usuarios u ON u.IdUsuario = c.IdUsuario\n" +
-                    "WHERE u.Usuario ='"+usuario+"' and c.IdEstado=1;";
+                    "WHERE u.Usuario ='"+usuario+"' and c.IdEstadoCaja=2;";
           
           
         try {

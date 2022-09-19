@@ -53,8 +53,7 @@ import isi_2022_ii_proyecto.Logistica;
 import isi_2022_ii_proyecto.Menu;
 import isi_2022_ii_proyecto.ModificarCuentaB;
 import isi_2022_ii_proyecto.POS;
-import isi_2022_ii_proyecto.POSCLOUD;
-import isi_2022_ii_proyecto.POS1;
+
 import isi_2022_ii_proyecto.PrecioHistorico;
 import isi_2022_ii_proyecto.Productos;
 import isi_2022_ii_proyecto.Proveedores;
@@ -377,7 +376,7 @@ public class ConexionBD {
     VentasEmpleado ventaempleado = null;
     VerificarOrden vorden = null;
     VerificarOrdenADomicilio vodomicilio = null;
-    POS1 pos1=null;
+
     TablaProductosCompras tbc = null;
     
     boolean pass = true;
@@ -386,9 +385,7 @@ public class ConexionBD {
         this.pass = pass;
     }
 
-    public void setPos1(POS1 pos1) {
-        this.pos1 = pos1;
-    }
+   
 
     public void setTbc(TablaProductosCompras tbc) {
         this.tbc = tbc;
@@ -415,7 +412,7 @@ public class ConexionBD {
         
         if(pass==true){
              try {
-            String url = "jdbc:mysql://162.241.62.192:3306/fhopenet_GEVEC?useSSL=false&allowPublicKeyRetrieval=true";
+            String url = "jdbc:mysql://162.241.62.192:3306/fhopenet_GEVEC?tcpKeepAlive=true&useSSL=false&allowPublicKeyRetrieval=true";
             String usuario = "fhopenet_gestionador";
             String password = "#+6ePODf*=,}";
             
@@ -711,17 +708,12 @@ public class ConexionBD {
                         v.setVodomicilio(vodomicilio);
                         v.setVisible(true);
                         }else{
-                          if(pos1  !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setPos1(pos1);
-                        v.setVisible(true);  
-                        }else{
-                             if(tbc!=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setTbc(tbc);
-                        v.setVisible(true);  
-                        }
-                          } 
+                         if(tbc!=null){
+                            VentanaErrorDeconexion v = new VentanaErrorDeconexion();
+                            v.setTbc(tbc);
+                            v.setVisible(true);  
+                            }
+                          
                           }            
                         }
                         }
@@ -1067,17 +1059,12 @@ public class ConexionBD {
                         v.setVodomicilio(vodomicilio);
                         v.setVisible(true);
                         }else{
-                          if(pos1  !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setPos1(pos1);
-                        v.setVisible(true);  
-                        }else{
                              if(tbc!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
                         v.setTbc(tbc);
                         v.setVisible(true);  
                         }
-                          } 
+                          
                           }            
                         }
                         }
@@ -1442,17 +1429,13 @@ public class ConexionBD {
                         v.setVodomicilio(vodomicilio);
                         v.setVisible(true);
                         }else{
-                          if(pos1  !=null){
-                        VentanaErrorDeconexion v = new VentanaErrorDeconexion();
-                        v.setPos1(pos1);
-                        v.setVisible(true);  
-                        }else{
-                             if(tbc!=null){
+                         
+                        if(tbc!=null){
                         VentanaErrorDeconexion v = new VentanaErrorDeconexion();
                         v.setTbc(tbc);
                         v.setVisible(true);  
                         }
-                          } 
+                          
                           }            
                         }
                         }
