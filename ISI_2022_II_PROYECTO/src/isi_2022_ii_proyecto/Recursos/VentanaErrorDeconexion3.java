@@ -57,8 +57,7 @@ import isi_2022_ii_proyecto.Logistica;
 import isi_2022_ii_proyecto.Menu;
 import isi_2022_ii_proyecto.ModificarCuentaB;
 import isi_2022_ii_proyecto.POS;
-import isi_2022_ii_proyecto.POSCLOUD;
-import isi_2022_ii_proyecto.POS1;
+
 import isi_2022_ii_proyecto.PrecioHistorico;
 import isi_2022_ii_proyecto.Productos;
 import isi_2022_ii_proyecto.Proveedores;
