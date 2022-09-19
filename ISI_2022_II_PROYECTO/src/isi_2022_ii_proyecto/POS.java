@@ -1215,6 +1215,8 @@ public class POS extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(20, 101, 187));
         jPanel1.setForeground(new java.awt.Color(20, 101, 187));

@@ -213,7 +213,7 @@ public class CerraCaja extends javax.swing.JFrame {
         String SQL = "Select sum(T1.Subtotal) from(\n" +
                     "Select v.idOrden, sum(dv.Subtotal) as 'Subtotal' from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=1 AND v.IdCaja=1 AND v.FechaVenta='"+fechaactual+"'\n" +
+                    "Where v.IdTipoPago=1 AND v.IdCaja=1 AND v.FechaVenta='"+fechaactual+"'\n" +
                     "Group by 1) as T1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -245,7 +245,7 @@ public class CerraCaja extends javax.swing.JFrame {
         String SQL = "Select sum(T1.Subtotal) from(\n" +
                     "Select v.idOrden, sum(dv.Subtotal) as 'Subtotal' from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=2 AND v.IdCaja="+codigocaja+" AND v.FechaVenta="+fechaactual+"\n" +
+                    "Where v.IdTipoPago=2 AND v.IdCaja="+codigocaja+" AND v.FechaVenta="+fechaactual+"\n" +
                     "Group by 1) as T1;";
         try {
             Statement st = (Statement) con.createStatement();
