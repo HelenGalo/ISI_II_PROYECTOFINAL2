@@ -64,7 +64,7 @@ public class Menu extends javax.swing.JFrame {
             preparedStmt.setInt (1, intentosAct);
             preparedStmt.execute();
             
-             JOptionPane.showMessageDialog(null, "Intentos Refrescados");
+             //JOptionPane.showMessageDialog(null, "Intentos Refrescados");
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());

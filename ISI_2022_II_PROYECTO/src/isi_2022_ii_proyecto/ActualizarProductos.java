@@ -602,13 +602,13 @@ public boolean Validartarifa(String tarifa){
         linesetting3Layout.setHorizontalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(linesetting3Layout.createSequentialGroup()
-                .addContainerGap(141, Short.MAX_VALUE)
+                .addContainerGap(192, Short.MAX_VALUE)
                 .addComponent(rSButtonIconOne5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78))
+                .addGap(33, 33, 33))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -632,9 +632,9 @@ public boolean Validartarifa(String tarifa){
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(253, 253, 253)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                 .addGap(83, 83, 83)
                 .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -837,7 +837,8 @@ public boolean Validartarifa(String tarifa){
                 .addGap(0, 0, 0)
                 .addComponent(linesetting2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(449, Short.MAX_VALUE))
         );
 
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
@@ -939,11 +940,11 @@ public boolean Validartarifa(String tarifa){
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
             .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 46, -1, -1));
+        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 46, -1, 730));
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
 
@@ -961,7 +962,7 @@ public boolean Validartarifa(String tarifa){
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 0, 280, 53));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
-        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1012, 0, 60, 50));
+        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 10, 60, 40));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 10, 108, -1));
@@ -1310,14 +1311,14 @@ public boolean Validartarifa(String tarifa){
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.DEFAULT_SIZE, 977, Short.MAX_VALUE)
-            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 977, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE))
         );
 
         rSButtonIcon_new9.setBackground(new java.awt.Color(0, 55, 133));
@@ -1339,11 +1340,11 @@ public boolean Validartarifa(String tarifa){
                 .addGap(43, 43, 43)
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(82, 82, 82))
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(dashboardviewLayout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         dashboardviewLayout.setVerticalGroup(
             dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1353,14 +1354,14 @@ public boolean Validartarifa(String tarifa){
                 .addComponent(rSButtonIcon_new9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(39, 39, 39))
+                .addGap(43, 43, 43))
         );
 
-        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 47, -1, 665));
+        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 47, -1, 720));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(1362, 712));
+        setSize(new java.awt.Dimension(1360, 761));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

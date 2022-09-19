@@ -340,6 +340,7 @@ public class Productos extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1362, 50));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
@@ -478,6 +479,9 @@ public class Productos extends javax.swing.JFrame {
         );
 
         jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1362, -1));
+
+        menu.setPreferredSize(new java.awt.Dimension(260, 666));
+        menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
@@ -656,6 +660,8 @@ public class Productos extends javax.swing.JFrame {
                 .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        menu.add(MenuIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 730));
+
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
 
         rSButtonIcon_new3.setBackground(new java.awt.Color(33, 150, 243));
@@ -702,7 +708,8 @@ public class Productos extends javax.swing.JFrame {
                 .addGroup(linesetting6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rSLabelIcon5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         linesetting12.setBackground(new java.awt.Color(0, 55, 133));
@@ -821,30 +828,20 @@ public class Productos extends javax.swing.JFrame {
                 .addComponent(rSButtonIcon_new3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rSButtonIcon_new10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 296, Short.MAX_VALUE)
                 .addComponent(linesetting6, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
-        menu.setLayout(menuLayout);
-        menuLayout.setHorizontalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        menuLayout.setVerticalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
-            .addComponent(menuhide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        menu.add(menuhide, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 210, 730));
 
-        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 46, -1, -1));
+        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 46, -1, 730));
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
+        dashboardview.setPreferredSize(new java.awt.Dimension(1090, 662));
+        dashboardview.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSPanelOpacity1.setBackground(new java.awt.Color(60, 76, 143));
 
@@ -937,6 +934,8 @@ public class Productos extends javax.swing.JFrame {
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
+        jPanel3.add(rSPanelOpacity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 984, 50));
+
         JTableProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -960,26 +959,12 @@ public class Productos extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(JTableProductos);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.DEFAULT_SIZE, 1020, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane2)
-                .addGap(40, 40, 40))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(rSPanelOpacity1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
-        );
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 112, 914, 390));
+
+        dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, 530));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setPreferredSize(new java.awt.Dimension(1090, 51));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSLabelIcon1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.MENU);
@@ -1002,7 +987,9 @@ public class Productos extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(51, 0, 255));
         jLabel15.setText("Usuario en sesion: ");
-        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, -1, -1));
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, -1, -1));
+
+        dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, -1));
 
         deshabilitado.setBackground(new java.awt.Color(255, 153, 51));
         deshabilitado.setText("Deshabilitadas");
@@ -1013,6 +1000,7 @@ public class Productos extends javax.swing.JFrame {
                 deshabilitadoActionPerformed(evt);
             }
         });
+        dashboardview.add(deshabilitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 59, -1, -1));
 
         habilitado.setBackground(new java.awt.Color(33, 150, 243));
         habilitado.setText("Habilitadas");
@@ -1023,6 +1011,7 @@ public class Productos extends javax.swing.JFrame {
                 habilitadoActionPerformed(evt);
             }
         });
+        dashboardview.add(habilitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 59, -1, -1));
 
         JTextbuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         JTextbuscar.setPlaceholder("Busqueda rapida");
@@ -1036,41 +1025,13 @@ public class Productos extends javax.swing.JFrame {
                 JTextbuscarKeyReleased(evt);
             }
         });
+        dashboardview.add(JTextbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 59, -1, -1));
 
-        javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
-        dashboardview.setLayout(dashboardviewLayout);
-        dashboardviewLayout.setHorizontalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(220, 220, 220)
-                .addComponent(habilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(deshabilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        dashboardviewLayout.setVerticalGroup(
-            dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dashboardviewLayout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addGroup(dashboardviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JTextbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(habilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deshabilitado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 50, 1083, -1));
+        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(262, 50, 1100, 720));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(1362, 712));
+        setSize(new java.awt.Dimension(1362, 773));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

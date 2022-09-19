@@ -831,7 +831,8 @@ validarconexion();
                 .addGap(0, 0, 0)
                 .addComponent(linesetting2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(linesetting8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(440, Short.MAX_VALUE))
         );
 
         menuhide.setBackground(new java.awt.Color(33, 150, 243));
@@ -933,11 +934,11 @@ validarconexion();
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+            .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
             .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 46, -1, -1));
+        jPanel1.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 46, -1, 730));
 
         dashboardview.setBackground(new java.awt.Color(232, 245, 255));
 
@@ -955,7 +956,7 @@ validarconexion();
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 0, 450, 53));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
-        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1012, 0, 60, 50));
+        jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1012, 10, 50, 40));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 10, 108, -1));
@@ -1195,7 +1196,7 @@ validarconexion();
                 rSButtonIcon_new9ActionPerformed(evt);
             }
         });
-        jPanel5.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 168, -1));
+        jPanel5.add(rSButtonIcon_new9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 168, -1));
 
         JProveedores.setColorArrow(new java.awt.Color(102, 0, 255));
         JProveedores.setColorFondo(new java.awt.Color(60, 76, 143));
@@ -1287,7 +1288,7 @@ validarconexion();
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(rSPanelOpacity3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout dashboardviewLayout = new javax.swing.GroupLayout(dashboardview);
@@ -1309,11 +1310,11 @@ validarconexion();
                 .addGap(39, 39, 39))
         );
 
-        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 47, -1, 665));
+        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 47, -1, 730));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(1362, 712));
+        setSize(new java.awt.Dimension(1362, 743));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
