@@ -205,9 +205,9 @@ public class SeleccionarCuentaAcreditar extends javax.swing.JFrame {
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, idcuenta);
-            preparedStmt.setInt(2, 2);
+            preparedStmt.setInt(2, 1);
             preparedStmt.setFloat(3, m);
-            preparedStmt.setString   (4, "TRANSACCION DE COMPRA C."+codigoc);
+            preparedStmt.setString   (4, "CORTE DE CAJA C."+codigoc);
             preparedStmt.setString(5, hora);
             preparedStmt.setString(6, fecha);
             preparedStmt.execute();

@@ -696,8 +696,6 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         ape1 = new rojeru_san.RSMTextFull();
         FechaContracion1 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        FN = new rojeru_san.componentes.RSDateChooser();
-        FC = new rojeru_san.componentes.RSDateChooser();
         aviso = new javax.swing.JLabel();
         actual = new javax.swing.JLabel();
         estado2 = new javax.swing.JLabel();
@@ -711,6 +709,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         aviso5 = new javax.swing.JLabel();
         aviso6 = new javax.swing.JLabel();
         aviso7 = new javax.swing.JLabel();
+        FN = new rojeru_san.componentes.RSDateChooser();
+        FC = new rojeru_san.componentes.RSDateChooser();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -1495,8 +1495,6 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel27.setText("Fecha de nacimiento");
         jPanel3.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 180, 30));
-        jPanel3.add(FN, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, -1, -1));
-        jPanel3.add(FC, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 90, -1, -1));
 
         aviso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         aviso.setForeground(new java.awt.Color(255, 0, 0));
@@ -1575,6 +1573,8 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         aviso7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         aviso7.setText("*Formato invalido*");
         jPanel3.add(aviso7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 290, 170, -1));
+        jPanel3.add(FN, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 270, -1));
+        jPanel3.add(FC, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 90, -1, -1));
 
         dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 105, 1047, 541));
 

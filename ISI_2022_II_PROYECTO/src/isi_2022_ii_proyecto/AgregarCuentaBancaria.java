@@ -365,7 +365,7 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
     }
      public boolean Validartarifa(String tarifa){
         Pattern patron = Pattern
-                .compile("^[0-9]{1,3}+(\\[0-9]+)*(\\.[0-9]{2})$");        
+                .compile("^[0-9]{1,3}+(\\,[0-9]+)*(\\.[0-9]{2})$");        
         Matcher comparar = patron.matcher(tarifa);
         return comparar.find();
     }
@@ -1451,7 +1451,6 @@ public class AgregarCuentaBancaria extends javax.swing.JFrame {
     private void JNDepositoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JNDepositoKeyReleased
         if (Validartarifa(JNDeposito.getText())){
              avisoT.setVisible(false);
-             
         }
           else{
                     avisoT.setVisible(true);

@@ -479,10 +479,8 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         JComboEmpleados = new rojerusan.RSComboMetro();
         Fsalida = new javax.swing.JLabel();
         Tarifa = new rojeru_san.RSMTextFull();
-        FS = new rojeru_san.componentes.RSDateChooser();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
-        FLL = new rojeru_san.componentes.RSDateChooser();
         jLabel22 = new javax.swing.JLabel();
         Jcarga = new rojerusan.RSComboMetro();
         rSLabelHora2 = new rojeru_san.rsdate.RSLabelHora();
@@ -496,6 +494,8 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        FLL = new rojeru_san.componentes.RSDateChooser();
+        FS = new rojeru_san.componentes.RSDateChooser();
         jPanel4 = new javax.swing.JPanel();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
@@ -1137,9 +1137,6 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         });
         jPanel5.add(Tarifa, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, 400, -1));
 
-        FS.setFormatoFecha("dd/MM/yyyy");
-        jPanel5.add(FS, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, -1, -1));
-
         jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(153, 0, 255));
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1151,9 +1148,6 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel32.setText("Fecha Llegada:");
         jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, 130, 40));
-
-        FLL.setFormatoFecha("dd/MM/yyyy");
-        jPanel5.add(FLL, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 210, -1, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(153, 0, 255));
@@ -1216,7 +1210,7 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         jLabel33.setForeground(new java.awt.Color(153, 0, 255));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel33.setText("Fecha Llegada:");
-        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 130, 40));
+        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 130, 40));
 
         Fllegada.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Fllegada.setForeground(new java.awt.Color(153, 0, 255));
@@ -1241,6 +1235,8 @@ public class ActualizarLogistica extends javax.swing.JFrame {
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText(" Empleado a Cargo:");
         jPanel5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 40, 190, 30));
+        jPanel5.add(FLL, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 220, -1, -1));
+        jPanel5.add(FS, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, -1, -1));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

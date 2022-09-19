@@ -282,7 +282,7 @@ public class CerraCaja extends javax.swing.JFrame {
         String[] registros = new String[2];
         String SQL = "Select v.idOrden, sum(dv.Subtotal) from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=1 AND v.IdCaja="+codigocaja+" AND v.FechaVenta='"+fechaactual+"'\n" +
+                    "Where v.IdTipoPago=1 AND v.IdCaja="+codigocaja+" AND v.FechaVenta='"+fechaactual+"'\n" +
                     "Group by 1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -315,7 +315,7 @@ public class CerraCaja extends javax.swing.JFrame {
         String[] registros = new String[2];
         String SQL = "Select v.idOrden, sum(dv.Subtotal) from Ventas v\n" +
                     "INNER JOIN DetalledeVenta dv on dv.idOrden = v.IdOrden\n" +
-                    "Where v.IdTipoVenta=2 AND v.IdCaja="+codigocaja+" AND v.FechaVenta='"+fechaactual+"'\n" +
+                    "Where v.IdTipoPago=2 AND v.IdCaja="+codigocaja+" AND v.FechaVenta='"+fechaactual+"'\n" +
                     "Group by 1;";
         try {
             Statement st = (Statement) con.createStatement();
@@ -368,7 +368,7 @@ public class CerraCaja extends javax.swing.JFrame {
     
      
     public void calcularoperacion(){
-         DecimalFormat formato = new DecimalFormat("##,###.00");
+        DecimalFormat formato = new DecimalFormat("##,###.00");
         String efectivo = JTextbuscar1.getText();
         String tarjeta = JTextbuscar.getText();
         String montoi= jLabel35.getText();
@@ -559,14 +559,14 @@ public class CerraCaja extends javax.swing.JFrame {
  
      public void actualizartotalcaja(){
         float totalcajaa=0.00f;
-        String SQL = "UPDATE Caja SET TotalCaja=? IdEstadoCaja=? WHERE IdUsuario="+ObtenerIdUsuarios();
+        String SQL = "UPDATE Caja SET TotalCaja=?, IdEstadoCaja=? WHERE IdUsuario="+ObtenerIdUsuarios();
  
         
   
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setFloat(1, totalcajaa);
-            preparedStmt.setFloat(2, 1);
+            preparedStmt.setInt(2, 1);
             preparedStmt.execute();
             estadopostotalcaja=true;
           
@@ -669,7 +669,7 @@ public class CerraCaja extends javax.swing.JFrame {
      
       public boolean Validartarifa(String tarifa){
         Pattern patron = Pattern
-                .compile("^[0-9]*(\\.[0-9]{2})$");        
+                .compile("^[0-9]{1,3}+(\\,[0-9]+)*(\\.[0-9]{2})$");       
         Matcher comparar = patron.matcher(tarifa);
         return comparar.find();
     }
@@ -702,6 +702,8 @@ public class CerraCaja extends javax.swing.JFrame {
        
          return a;
       }
+     
+     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1510,9 +1512,7 @@ public class CerraCaja extends javax.swing.JFrame {
 
     private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
         // TODO add your handling code here:
-        Caja c = new Caja();
-        c.setUsuario(usuario);
-        c.setVisible(estadototalcaja);
+      this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
 
     private void jLabel27MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel27MouseEntered
@@ -1574,7 +1574,12 @@ public class CerraCaja extends javax.swing.JFrame {
 
     private void rSButtonIcon_new20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new20ActionPerformed
         // TODO add your handling code here:
-           calcularoperacion();
+        if(Validartarifa(JTextbuscar1.getText()) && Validartarifa(JTextbuscar.getText())){
+            calcularoperacion();
+        }else{
+            System.out.println("Validar informacion");
+        }
+           
     }//GEN-LAST:event_rSButtonIcon_new20ActionPerformed
 
     /**

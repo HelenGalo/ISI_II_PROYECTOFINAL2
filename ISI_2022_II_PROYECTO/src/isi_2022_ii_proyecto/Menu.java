@@ -432,7 +432,6 @@ public class Menu extends javax.swing.JFrame {
         menu = new javax.swing.JPanel();
         MenuIcon = new javax.swing.JPanel();
         linesetting = new javax.swing.JPanel();
-        linehidemenu = new javax.swing.JPanel();
         linesetting1 = new javax.swing.JPanel();
         linesetting2 = new javax.swing.JPanel();
         linesetting7 = new javax.swing.JPanel();
@@ -583,7 +582,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(rSButtonIconOne3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(rSButtonIconOne4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         linesetting3Layout.setVerticalGroup(
             linesetting3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -635,9 +634,9 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jLabel5))
                 .addGap(13, 13, 13)
-                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                .addComponent(linesetting5, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
+                .addComponent(linesetting4, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(linesetting3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -657,7 +656,7 @@ public class Menu extends javax.swing.JFrame {
         MenuIcon.setBackground(new java.awt.Color(0, 55, 133));
         MenuIcon.setPreferredSize(new java.awt.Dimension(50, 450));
 
-        linesetting.setBackground(new java.awt.Color(5, 10, 46));
+        linesetting.setBackground(new java.awt.Color(0, 55, 133));
         linesetting.setPreferredSize(new java.awt.Dimension(50, 10));
 
         javax.swing.GroupLayout linesettingLayout = new javax.swing.GroupLayout(linesetting);
@@ -671,21 +670,7 @@ public class Menu extends javax.swing.JFrame {
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        linehidemenu.setBackground(new java.awt.Color(5, 10, 46));
-        linehidemenu.setPreferredSize(new java.awt.Dimension(50, 10));
-
-        javax.swing.GroupLayout linehidemenuLayout = new javax.swing.GroupLayout(linehidemenu);
-        linehidemenu.setLayout(linehidemenuLayout);
-        linehidemenuLayout.setHorizontalGroup(
-            linehidemenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-        );
-        linehidemenuLayout.setVerticalGroup(
-            linehidemenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
-        );
-
-        linesetting1.setBackground(new java.awt.Color(5, 10, 46));
+        linesetting1.setBackground(new java.awt.Color(0, 55, 133));
         linesetting1.setPreferredSize(new java.awt.Dimension(50, 10));
 
         javax.swing.GroupLayout linesetting1Layout = new javax.swing.GroupLayout(linesetting1);
@@ -699,7 +684,7 @@ public class Menu extends javax.swing.JFrame {
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        linesetting2.setBackground(new java.awt.Color(5, 10, 46));
+        linesetting2.setBackground(new java.awt.Color(0, 55, 133));
         linesetting2.setPreferredSize(new java.awt.Dimension(50, 10));
 
         javax.swing.GroupLayout linesetting2Layout = new javax.swing.GroupLayout(linesetting2);
@@ -743,7 +728,7 @@ public class Menu extends javax.swing.JFrame {
         rSLabelIcon10.setInheritsPopupMenu(true);
         linesetting9.add(rSLabelIcon10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
 
-        linesetting10.setBackground(new java.awt.Color(5, 10, 46));
+        linesetting10.setBackground(new java.awt.Color(0, 55, 133));
         linesetting10.setPreferredSize(new java.awt.Dimension(50, 10));
 
         javax.swing.GroupLayout linesetting10Layout = new javax.swing.GroupLayout(linesetting10);
@@ -769,7 +754,6 @@ public class Menu extends javax.swing.JFrame {
         MenuIcon.setLayout(MenuIconLayout);
         MenuIconLayout.setHorizontalGroup(
             MenuIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(linehidemenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(linesetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(linesetting9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(linesetting1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -782,8 +766,7 @@ public class Menu extends javax.swing.JFrame {
         MenuIconLayout.setVerticalGroup(
             MenuIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MenuIconLayout.createSequentialGroup()
-                .addComponent(linehidemenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(50, 50, 50)
                 .addComponent(linesetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(linesetting9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -969,7 +952,7 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -1106,15 +1089,15 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(rSPanelOpacity1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(rSLabelIcon8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addComponent(jLabel7)
                 .addGap(12, 12, 12)
                 .addComponent(rSLabelIcon6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jLabel8)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(640, Short.MAX_VALUE))
         );
         rSPanelOpacity1Layout.setVerticalGroup(
             rSPanelOpacity1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1799,9 +1782,10 @@ public class Menu extends javax.swing.JFrame {
 
     private void linesetting8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linesetting8MouseClicked
         // TODO add your handling code here:
-        this.setVisible(false);
+        
         Inicio inicio = new Inicio();
         inicio.setVisible(true);
+        this.dispose();
         
     }//GEN-LAST:event_linesetting8MouseClicked
 
@@ -2172,7 +2156,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel linehidemenu;
     private javax.swing.JPanel linesetting;
     private javax.swing.JPanel linesetting1;
     private javax.swing.JPanel linesetting10;
