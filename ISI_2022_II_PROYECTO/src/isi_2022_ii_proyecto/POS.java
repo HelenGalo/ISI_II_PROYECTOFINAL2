@@ -116,8 +116,11 @@ public class POS extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
-            con=null;
-            validarconexion();
+            if(e.getErrorCode()==1){
+                con=null;
+                validarconexion();
+            }
+            
            
         }
         
@@ -147,9 +150,11 @@ public class POS extends javax.swing.JFrame {
                 
             }
            }catch(SQLException e){
-                 System.out.println("Error "+e.getMessage());
-                 con=null;
-                 validarconexion();
+                if(e.getErrorCode()==1){
+                con=null;
+                validarconexion();
+                }
+                System.out.println("Error "+e.getMessage());
         
             }
            
