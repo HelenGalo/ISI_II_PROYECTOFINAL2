@@ -252,8 +252,8 @@ public class AgregarUsuario extends javax.swing.JFrame {
     
         
         
-        String SQL = "INSERT INTO Usuarios (IdUsuario,IdEmpleado,Contrase,Intentos,IdRol,Usuario) VALUES"
-                + "(?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO Usuarios (IdUsuario,IdEmpleado,Contrase,Intentos,IdRol,Usuario, IdEstado) VALUES"
+                + "(?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStmt = con.prepareStatement(SQL);
             preparedStmt.setInt(1, idUsuario);
@@ -262,6 +262,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
             preparedStmt.setInt(4, Intentos);
             preparedStmt.setInt(5, IdRol);
             preparedStmt.setString(6, Usuario);
+            preparedStmt.setInt(7, 1);
             preparedStmt.execute();
             
             JOptionPane.showMessageDialog(this, "Usuario Guardado");
