@@ -854,7 +854,7 @@
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f3" green="96" red="21" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Logisticas"/>
+                    <Property name="text" type="java.lang.String" value="Logistica"/>
                     <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="85" green="37" red="0" type="rgb"/>
                     </Property>
@@ -1676,8 +1676,8 @@
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="F6" min="-2" pref="88" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                              <Component id="F6" min="-2" pref="95" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
