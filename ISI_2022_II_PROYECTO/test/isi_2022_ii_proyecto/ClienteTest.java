@@ -67,7 +67,7 @@ public class ClienteTest {
              instance.conectar();
         }catch(Exception e){
            // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype."); 
+        fail("No se pudo lograr la conexion ."); 
         }
     }
 

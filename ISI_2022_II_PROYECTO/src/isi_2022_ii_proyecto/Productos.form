@@ -629,6 +629,8 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="linesetting6" alignment="0" pref="230" max="32767" attributes="0"/>
+                      <Component id="linesetting12" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="rSButtonIcon_new3" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
@@ -638,11 +640,10 @@
                               <Component id="rSButtonIcon_new9" min="-2" pref="210" max="-2" attributes="0"/>
                               <Component id="rSButtonIcon_new10" min="-2" pref="210" max="-2" attributes="0"/>
                               <Component id="rSButtonIcon_new8" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                              <Component id="rSButtonIcon_new4" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="linesetting6" alignment="0" pref="230" max="32767" attributes="0"/>
-                      <Component id="linesetting12" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -660,10 +661,12 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new8" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="rSButtonIcon_new3" min="-2" max="-2" attributes="0"/>
+                          <Component id="rSButtonIcon_new4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="rSButtonIcon_new10" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="296" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="rSButtonIcon_new3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="243" max="32767" attributes="0"/>
                           <Component id="linesetting6" min="-2" pref="56" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -675,7 +678,7 @@
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f3" green="96" red="21" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Regresar"/>
+                    <Property name="text" type="java.lang.String" value="Imprimir"/>
                     <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="85" green="37" red="0" type="rgb"/>
                     </Property>
@@ -915,6 +918,27 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new8ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="newscomponents.RSButtonIcon_new" name="rSButtonIcon_new4">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="f3" green="96" red="21" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Regresar"/>
+                    <Property name="backgroundHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="85" green="37" red="0" type="rgb"/>
+                    </Property>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Default Cursor"/>
+                    </Property>
+                    <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
+                      <Value id="REPEAT"/>
+                    </Property>
+                    <Property name="inheritsPopupMenu" type="boolean" value="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSButtonIcon_new4ActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

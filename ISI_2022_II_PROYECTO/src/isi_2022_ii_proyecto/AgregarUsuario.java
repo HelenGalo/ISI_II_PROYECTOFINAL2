@@ -1203,7 +1203,7 @@ validarconexion();
 
         jPanel3.add(rSPanelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 100, 250, 370));
 
-        dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 105, -1, -1));
+        dashboardview.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 105, -1, 510));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1228,7 +1228,7 @@ validarconexion();
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(51, 0, 255));
         jLabel15.setText("Usuario en sesion: ");
-        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 20, -1, -1));
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
 
         dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1156, -1));
 
@@ -1243,7 +1243,7 @@ validarconexion();
         });
         dashboardview.add(guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 190, 40));
 
-        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
+        jPanel1.add(dashboardview, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, 660));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 

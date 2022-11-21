@@ -1266,9 +1266,9 @@
                           <Component id="rSLabelIcon1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Component id="jLabel6" min="-2" pref="368" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="300" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
                           <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="220" max="-2" attributes="0"/>
                           <Component id="rSLabelHora1" min="-2" pref="108" max="-2" attributes="0"/>
                           <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
                           <Component id="rSLabelIcon2" min="-2" pref="60" max="-2" attributes="0"/>
@@ -1281,16 +1281,16 @@
                           <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
                           <Component id="rSLabelIcon1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="jLabel6" min="-2" pref="40" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="rSLabelIcon2" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <Component id="rSLabelHora1" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel15" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="rSLabelHora1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel6" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
