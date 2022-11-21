@@ -232,11 +232,11 @@ public class Productos extends javax.swing.JFrame {
         try {
             JasperReport reporte = null;
             String path1 = "src\\Reportes\\Reporte.jasper";
-          //  Map parametro = new HashMap();
+           Map parametro = new HashMap();
            // parametro.put("Nfactura",ObtenerNumerodeFacturaXOrden());
             
             reporte = (JasperReport) JRLoader.loadObjectFromFile(path1);
-            JasperPrint jprint = JasperFillManager.fillReport(reporte, null, con);
+            JasperPrint jprint = JasperFillManager.fillReport(reporte, parametro, con);
             JasperViewer view = new JasperViewer(jprint, false);
             view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             view.setVisible(true);
