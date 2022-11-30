@@ -127,7 +127,7 @@ public class Menu extends javax.swing.JFrame {
         
     }
      
-     public boolean validarRolCaja(){
+     public boolean validarRoles(String m){
         boolean estado=false;
      
          int idrol=0;
@@ -148,9 +148,81 @@ public class Menu extends javax.swing.JFrame {
         }
         
         
-        if(idrol==7 || idrol==1){
-            estado = true;
+        switch(m){
+            case "Productos":
+                if(idrol==1 || idrol==5){
+                    estado = true;
+                }
+                break;
+            case "Empleados":
+                if(idrol==1){
+                    estado = true;
+                }
+                break;
+            case "Clientes":
+                if(idrol==1 || idrol==2 ){
+                    estado = true;
+                }
+                break;
+            case "Usuarios":
+                if(idrol==1){
+                    estado = true;
+                }
+                break;
+            case "Proveedores":
+                if(idrol==1 || idrol==5){
+                    estado = true;
+                }
+                break;
+            case "Bancos":
+                if(idrol==1 || idrol==4){
+                    estado = true;
+                }
+                break;
+            case "Logistica":
+                if(idrol==1 || idrol==6){
+                    estado = true;
+                }
+                break;
+            case "Ventas":
+                if(idrol==1 || idrol==7){
+                    estado = true;
+                }
+                break;
+            case "POS":
+                if(idrol==1 || idrol==2){
+                    estado = true;
+                }
+                break;
+            case "Compras":
+                if(idrol==1 || idrol==6){
+                    estado = true;
+                }
+                break;
+            case "Envios":
+                if(idrol==1){
+                    estado = true;
+                }
+                break;
+            case "Almacenes":
+                if(idrol==1 || idrol==5){
+                    estado = true;
+                }
+                break;
+            case "Caja":
+                if(idrol==1 || idrol==7){
+                    estado = true;
+                }
+                break;
+            case "Facturas":
+                if(idrol==1 || idrol==7){
+                    estado = true;  
+                }
+                break;
         }
+        
+        
+    
        
        
         
@@ -161,41 +233,11 @@ public class Menu extends javax.swing.JFrame {
         
         
     }
-    
-    public boolean validarRolCompra(){
-        boolean estado=false;
-        if(validarconexion()==true){
-             
-            int idrol=0;
-         String SQL = "SELECT u.IdRol FROM Usuarios u WHERE u.Usuario='"+usuario+"';";
-          
-          
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                idrol = rs.getInt("u.IdRol");
-               
-                
-            }
-        }catch(SQLException e){
-              JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-        
-        if(idrol==5 || idrol==1){
-            estado = true;
-        }
-        
-       
-        
-        
+     
+     
    
-        
-        }
-      return estado;
     
-    }
+ 
     
     public boolean validarcaja(){
         boolean estado=false;
@@ -883,7 +925,7 @@ public class Menu extends javax.swing.JFrame {
         });
 
         rSButtonIcon_new11.setBackground(new java.awt.Color(33, 150, 243));
-        rSButtonIcon_new11.setText("Logisticas");
+        rSButtonIcon_new11.setText("Logistica");
         rSButtonIcon_new11.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new11.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.WIDGETS);
         rSButtonIcon_new11.addActionListener(new java.awt.event.ActionListener() {
@@ -1453,8 +1495,8 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BOTONPROLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(F6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
+                .addComponent(F6, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
         );
         BOTONPROLayout.setVerticalGroup(
             BOTONPROLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1742,42 +1784,70 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIconOne5ActionPerformed
 
     private void rSButtonIcon_new1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new1ActionPerformed
-        Productos p = new Productos();
-        p.setUsuario(usuario);
-        p.setVisible(true);
-        this.dispose();
+        if(validarRoles(rSButtonIcon_new1.getText())){
+            Productos p = new Productos();
+            p.setUsuario(usuario);
+            p.setVisible(true);
+            this.dispose(); 
+        }else{
+            VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+            vi.setVisible(true);
+            
+        }
+       
     }//GEN-LAST:event_rSButtonIcon_new1ActionPerformed
 
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
+        if(validarRoles(rSButtonIcon_new3.getText())){
         Empleados empleados = new Empleados();
         empleados.setUsuario(usuario);
         empleados.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
+        }else{
+            VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+            vi.setVisible(true); 
+        }
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
 
     private void rSButtonIcon_new4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new4ActionPerformed
         // TODO add your handling code here:
+         if(validarRoles(rSButtonIcon_new4.getText())){
         Cliente clientes = new Cliente();
         clientes.setUsuario(usuario);
         clientes.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
+         }else{
+            VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+            vi.setVisible(true); 
+         }
     }//GEN-LAST:event_rSButtonIcon_new4ActionPerformed
 
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
         // TODO add your handling code here:
+         if(validarRoles(rSButtonIcon_new5.getText())){
         Usuario usuarios = new Usuario();
         usuarios.setUsuario(usuario);
         usuarios.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
+         }else{
+            VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+            vi.setVisible(true);  
+         }
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
 
     private void rSButtonIcon_new6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new6ActionPerformed
         // TODO add your handling code here:
+        if(validarRoles(rSButtonIcon_new6.getText())){
         Proveedores proveedores = new Proveedores();
         proveedores.setUsuario(usuario);
         proveedores.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
+        }else{
+             VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+            vi.setVisible(true);  
+        }
+        
     }//GEN-LAST:event_rSButtonIcon_new6ActionPerformed
 
     private void linesetting8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linesetting8MouseClicked
@@ -1791,35 +1861,56 @@ public class Menu extends javax.swing.JFrame {
 
     private void BOTONCLIENTEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONCLIENTEMouseClicked
         // TODO add your handling code here:
+        if(validarRoles(F.getText())){
         Cliente c = new Cliente();
         c.setUsuario(usuario);
         c.setVisible(true);
         this.dispose();
+        }else{
+                 VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+                 vi.setVisible(true);  
+                }
     }//GEN-LAST:event_BOTONCLIENTEMouseClicked
 
     private void BOTONEMPLEADOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONEMPLEADOMouseClicked
         // TODO add your handling code here:
-      Empleados empleados = new Empleados();
+        if(validarRoles(F1.getText())){
+         Empleados empleados = new Empleados();
          empleados.setUsuario(usuario);
-        empleados.setVisible(true);
-        this.setVisible(false);
+         empleados.setVisible(true);
+        this.setVisible(false);}
+        else{
+                 VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+                 vi.setVisible(true);  
+                }
         
     }//GEN-LAST:event_BOTONEMPLEADOMouseClicked
 
     private void BOTONUSUARIOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONUSUARIOMouseClicked
         // TODO add your handling code here:
+        if(validarRoles(F2.getText())){
         Usuario u = new Usuario();
         u.setUsuario(usuario);
         u.setVisible(true);
         this.dispose();
+        }else{
+            VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+            vi.setVisible(true);
+        }
     }//GEN-LAST:event_BOTONUSUARIOMouseClicked
 
     private void BOTONPROVEEDORESMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONPROVEEDORESMouseClicked
         // TODO add your handling code here:
+        if(validarRoles(F3.getText())){
+        
         Proveedores p = new Proveedores();
         p.setUsuario(usuario);
         p.setVisible(true);
         this.dispose();
+        }else{
+            VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+            vi.setVisible(true);
+        }
     }//GEN-LAST:event_BOTONPROVEEDORESMouseClicked
 
     private void BOTONCLIENTEMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONCLIENTEMouseEntered
@@ -1875,7 +1966,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void rSButtonIcon_new7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new7ActionPerformed
         // TODO add your handling code here:
-        if(validarRolCaja()==true){
+        if(validarRoles(rSButtonIcon_new7.getText())==true){
             Caja caja = new Caja();
             caja.setUsuario(usuario);
             caja.setVisible(true);
@@ -1898,38 +1989,63 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_BOTONENVIOMouseExited
 
     private void BOTONENVIOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONENVIOMouseClicked
+        if(validarRoles(F5.getText())){
         Envio e = new Envio();
             e.setUsuario(usuario);
              e.setVisible(true);
              this.dispose();
+        }else{
+            VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+            vi.setVisible(true);
+        }
     }//GEN-LAST:event_BOTONENVIOMouseClicked
 
     private void rSButtonIcon_new15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new15ActionPerformed
-        Envio e = new Envio();
+             if(validarRoles(rSButtonIcon_new15.getText())){
+            Envio e = new Envio();
             e.setUsuario(usuario);
-             e.setVisible(true);
-             this.dispose();
+            e.setVisible(true);
+            this.dispose();
+             }else{
+                VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+                vi.setVisible(true);
+             }
     }//GEN-LAST:event_rSButtonIcon_new15ActionPerformed
 
     private void BOTONBANCOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONBANCOMouseClicked
         // TODO add your handling code here:
+        if(validarRoles(F4.getText())){
         Banco b = new Banco();
         b.setVisible(a);
         this.dispose();
+        }else{
+             VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+             vi.setVisible(true);
+        }
     }//GEN-LAST:event_BOTONBANCOMouseClicked
 
     private void rSButtonIcon_new10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new10ActionPerformed
         // TODO add your handling code here:
+         if(validarRoles(rSButtonIcon_new10.getText())){
         Banco b = new Banco();
         b.setVisible(a);
-        this.dispose();
+        this.dispose();}
+         else{
+               VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+             vi.setVisible(true); 
+         }
     }//GEN-LAST:event_rSButtonIcon_new10ActionPerformed
 
     private void BOTONPROMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONPROMouseClicked
-       Productos p = new Productos();
+            if(validarRoles(F6.getText())){
+        Productos p = new Productos();
        p.setUsuario(usuario);
         p.setVisible(true);
-        this.dispose();
+        this.dispose();}
+        else{
+                VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+                vi.setVisible(true); 
+                }
     }//GEN-LAST:event_BOTONPROMouseClicked
 
     private void BOTONPROMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONPROMouseEntered
@@ -1941,7 +2057,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_BOTONPROMouseExited
 
     private void BOTONCAJAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONCAJAMouseClicked
-        if(validarRolCaja()){
+        if(validarRoles(F7.getText())){
             Caja p = new Caja();
             p.setUsuario(usuario);
             p.setVisible(true);
@@ -1999,9 +2115,14 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new13ActionPerformed
 
     private void BOTONVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONVMouseClicked
-          Ventas v = new Ventas();
+        if(validarRoles(F8.getText())==true){
+        Ventas v = new Ventas();
         v.setVisible(true);
         this.dispose();
+        }else{
+                VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+                vi.setVisible(true); 
+                }
     }//GEN-LAST:event_BOTONVMouseClicked
 
     private void BOTONVMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONVMouseEntered
@@ -2013,10 +2134,14 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_BOTONVMouseExited
 
     private void BOTONALMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONALMouseClicked
+        if(validarRoles(F9.getText())==true){
         Almacen al = new Almacen();
         al.setUsuario(usuario);
         al.setVisible(true);
-        this.dispose();
+        this.dispose();}else{
+              VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+              vi.setVisible(true); 
+        }
     }//GEN-LAST:event_BOTONALMouseClicked
 
     private void BOTONALMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BOTONALMouseEntered
@@ -2028,54 +2153,62 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_BOTONALMouseExited
 
     private void rSButtonIcon_new12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new12ActionPerformed
+        if(validarRoles(rSButtonIcon_new12.getText())==true){
         Ventas v = new Ventas();
         v.setUsuario(usuario);
         v.setVisible(true);
-        this.dispose();
+        this.dispose();}
+        else{
+             VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+              vi.setVisible(true); 
+        }
     }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
 
     private void rSButtonIcon_new2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new2ActionPerformed
+        if(validarRoles(rSButtonIcon_new2.getText())==true){
         Almacen al = new Almacen();
         al.setUsuario(usuario);
         al.setVisible(true);
-        this.dispose();
+        this.dispose();}else{
+             VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+             vi.setVisible(true); 
+        }
     }//GEN-LAST:event_rSButtonIcon_new2ActionPerformed
 
     private void rSButtonIcon_new11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new11ActionPerformed
+       if(validarRoles(rSButtonIcon_new11.getText())==true){
        Logistica lg = new Logistica();
        lg.setUsuario(usuario);
        lg.setVisible(true);
-       this.dispose();
+       this.dispose();}else{
+           VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+           vi.setVisible(true);
+       }
     }//GEN-LAST:event_rSButtonIcon_new11ActionPerformed
 
     private void rSButtonIcon_new9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new9ActionPerformed
         // TODO add your handling code here:
+        if(validarRoles(rSButtonIcon_new9.getText())==true){
         Facturas f = new Facturas();
         f.setVisible(true);
         this.dispose();
+        }else{
+           VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+           vi.setVisible(true);
+        }
     }//GEN-LAST:event_rSButtonIcon_new9ActionPerformed
 
     private void rSButtonIcon_new14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new14ActionPerformed
      //  if(validarconexion()==true){
-             if(validarRolCompra()==true){
+             if(validarRoles(rSButtonIcon_new14.getText())==true){
                     GenerarCompra gc= new GenerarCompra();
                     gc.setUsuario(usuario);
                     gc.setMenu(this);
                     gc.setVisible(true);
-                //}else{
-                   // VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
-                   // vi.setEstado("FC");
-                   // vi.setVisible(true);
-               // }
-                
-        
-            
-        }else{
-            VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
-            vi.setEstado("N");
-            vi.setVisible(true);
-        }
-            
+                }else{
+                   VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
+                   vi.setVisible(true);
+               }
         
         
        
