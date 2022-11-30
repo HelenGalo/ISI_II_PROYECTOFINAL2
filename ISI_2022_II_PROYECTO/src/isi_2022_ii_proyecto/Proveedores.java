@@ -16,6 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -23,7 +25,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -1040,7 +1049,7 @@ public class Proveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
 
     private void rSButtonIcon_new10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new10ActionPerformed
-        // TODO add your handling code here:
+     ImprimirFactura();
     }//GEN-LAST:event_rSButtonIcon_new10ActionPerformed
 
     private void linesetting12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linesetting12MouseClicked
@@ -1120,7 +1129,26 @@ public class Proveedores extends javax.swing.JFrame {
         
     }
     
-    
+       public void ImprimirFactura(){
+        try {
+            JasperReport reporte = null;
+            String path1 = "src\\Reportes\\Reporte2.jasper";
+           Map parametro = new HashMap();
+           // parametro.put("Nfactura",ObtenerNumerodeFacturaXOrden());
+            
+            reporte = (JasperReport) JRLoader.loadObjectFromFile(path1);
+            JasperPrint jprint = JasperFillManager.fillReport(reporte, parametro, con);
+            JasperViewer view = new JasperViewer(jprint, false);
+            view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            view.setVisible(true);
+         } catch (JRException jex) {
+             System.err.println("Error al imprimir factura "+ jex.getMessage());
+            JOptionPane.showMessageDialog(null,"JasperException"+jex.getMessage());
+        } catch (Exception ex) {
+             System.err.println("Error al imprimir factura "+ ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+        }
+    }
     
     
     public void  changecolor(JPanel hover, Color rand){

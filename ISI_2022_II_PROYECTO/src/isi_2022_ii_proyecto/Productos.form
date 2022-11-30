@@ -686,7 +686,7 @@
                       <Color id="Default Cursor"/>
                     </Property>
                     <Property name="icons" type="rojeru_san.efectos.ValoresEnum$ICONS" editor="org.netbeans.modules.form.editors.EnumEditor">
-                      <Value id="REPEAT"/>
+                      <Value id="PRINT"/>
                     </Property>
                     <Property name="inheritsPopupMenu" type="boolean" value="true"/>
                   </Properties>

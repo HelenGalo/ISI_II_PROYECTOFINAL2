@@ -697,7 +697,7 @@ public class Productos extends javax.swing.JFrame {
         rSButtonIcon_new3.setText("Imprimir");
         rSButtonIcon_new3.setBackgroundHover(new java.awt.Color(0, 55, 133));
         rSButtonIcon_new3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        rSButtonIcon_new3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REPEAT);
+        rSButtonIcon_new3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
         rSButtonIcon_new3.setInheritsPopupMenu(true);
         rSButtonIcon_new3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
