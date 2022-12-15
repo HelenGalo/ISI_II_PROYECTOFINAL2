@@ -65,7 +65,7 @@ public class CerraCaja extends javax.swing.JFrame {
     
     public void setUsuario(String usuario) {
         this.usuario = usuario;
-        jLabel28.setText(usuario);
+        jLabel28.setText("Usuario en sesion: "+usuario);
     }
     
     

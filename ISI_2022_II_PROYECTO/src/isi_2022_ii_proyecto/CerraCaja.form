@@ -246,7 +246,7 @@
                           <EmptySpace min="-2" pref="253" max="-2" attributes="0"/>
                           <Component id="linesetting7" pref="169" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="linesetting6" pref="93" max="32767" attributes="0"/>
+                          <Component id="linesetting6" pref="92" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="162" max="-2" attributes="0"/>
                           <Component id="rSButtonIconOne5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>

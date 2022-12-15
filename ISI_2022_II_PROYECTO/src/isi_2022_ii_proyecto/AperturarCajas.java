@@ -78,7 +78,12 @@ public class AperturarCajas extends javax.swing.JFrame {
         }
         
     }
+      String usuario;
     
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabel16.setText(usuario);
+    }
         
      public String ObtenerNBancos(){
         String nombreb="";
@@ -413,6 +418,7 @@ validarconexion();
         rSLabelIcon1 = new rojerusan.RSLabelIcon();
         jLabel6 = new javax.swing.JLabel();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel16 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -469,10 +475,16 @@ validarconexion();
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO CAJA");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 60));
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 200, 60));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 108, -1));
+
+        jLabel16.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel16.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 170, -1));
 
         rSPanelOpacity1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 940, 60));
 
@@ -949,6 +961,7 @@ validarconexion();
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel38;

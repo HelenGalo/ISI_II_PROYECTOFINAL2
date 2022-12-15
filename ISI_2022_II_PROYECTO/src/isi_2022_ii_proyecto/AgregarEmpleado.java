@@ -1234,7 +1234,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
                 cuentaKeyTyped(evt);
             }
         });
-        jPanel3.add(cuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 230, 220, 30));
+        jPanel3.add(cuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 210, 220, 50));
 
         segundon.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         segundon.setPlaceholder("Ingresa nombre");
@@ -1351,7 +1351,7 @@ public class AgregarEmpleado extends javax.swing.JFrame {
                 correoEKeyReleased(evt);
             }
         });
-        jPanel3.add(correoE, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 170, 220, 30));
+        jPanel3.add(correoE, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 160, 220, 40));
 
         estado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         estado.setForeground(new java.awt.Color(153, 0, 255));

@@ -46,7 +46,7 @@ public class Caja extends javax.swing.JFrame {
     
     public void setUsuario(String usuario) {
         this.usuario = usuario;
-        jLabel16.setText(usuario);
+        jLabel15.setText("Usuario en sesion: "+usuario);
     }
   
     
@@ -367,8 +367,7 @@ public class Caja extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         rSButtonIcon_new14 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new15 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new8 = new newscomponents.RSButtonIcon_new();
@@ -416,7 +415,7 @@ public class Caja extends javax.swing.JFrame {
         linesetting4.setLayout(linesetting4Layout);
         linesetting4Layout.setHorizontalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
+            .addGap(0, 658, Short.MAX_VALUE)
         );
         linesetting4Layout.setVerticalGroup(
             linesetting4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1055,7 +1054,7 @@ public class Caja extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO CAJA");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 660, 40));
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 420, 40));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
         jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, 60, 50));
@@ -1063,17 +1062,11 @@ public class Caja extends javax.swing.JFrame {
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(893, 10, 108, -1));
 
-        jLabel16.setBackground(new java.awt.Color(102, 51, 255));
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(51, 0, 255));
-        jLabel16.setText("Usuario en sesion: ");
-        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, 170, -1));
-
-        jLabel17.setBackground(new java.awt.Color(102, 51, 255));
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(51, 0, 255));
-        jLabel17.setText("Usuario en sesion: ");
-        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, 130, -1));
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, -1, -1));
 
         dashboardview.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1256, -1));
 
@@ -1237,6 +1230,7 @@ public class Caja extends javax.swing.JFrame {
     private void rSButtonIcon_new3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new3ActionPerformed
         // TODO add your handling code here:
         Menu menu = new Menu();
+        menu.setUsuario(usuario);
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new3ActionPerformed
@@ -1244,6 +1238,7 @@ public class Caja extends javax.swing.JFrame {
     private void rSButtonIcon_new5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIcon_new5ActionPerformed
         // TODO add your handling code here:
         BuscarCaja bc = new BuscarCaja();
+        bc.setUsuario(usuario);
         bc.setVisible(true);
 
     }//GEN-LAST:event_rSButtonIcon_new5ActionPerformed
@@ -1266,6 +1261,7 @@ public class Caja extends javax.swing.JFrame {
         // TODO add your handling code here:
         AgregarCaja ac = new AgregarCaja();
         ac.setVisible(true);
+        ac.setUsuario(usuario);
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new7ActionPerformed
 
@@ -1275,6 +1271,7 @@ public class Caja extends javax.swing.JFrame {
           
           ActualizarCaja ac = new ActualizarCaja();
           ac.setCodigoC(codigoc);
+          ac.setUsuario(usuario);
           ac.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
@@ -1293,6 +1290,7 @@ public class Caja extends javax.swing.JFrame {
           
           AperturarCajas apc = new AperturarCajas();
           apc.setCodigoc(codigoc);
+          apc.setUsuario(usuario);
           apc.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro en la tabla");
@@ -1494,8 +1492,7 @@ public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
