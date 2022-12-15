@@ -55,6 +55,13 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         }
         
     }
+    
+       String usuario;
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabel15.setText("Usuario en sesion: "+usuario);
+    }
     public BuscarCuentaB() {
         RSUtilities.setFullScreenJFrame(this);
         initComponents();
@@ -129,6 +136,7 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         rSLabelIcon2 = new rojerusan.RSLabelIcon();
         rSLabelHora1 = new rojeru_san.RSLabelHora();
+        jLabel15 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -181,13 +189,19 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(102, 0, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("MODÚLO BANCOS");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 490, 60));
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 220, 60));
 
         rSLabelIcon2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD_CIRCLE_OUTLINE);
         jPanel4.add(rSLabelIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 10, 60, 40));
 
         rSLabelHora1.setForeground(new java.awt.Color(20, 101, 187));
         jPanel4.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 108, -1));
+
+        jLabel15.setBackground(new java.awt.Color(102, 51, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(51, 0, 255));
+        jLabel15.setText("Usuario en sesion: ");
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, -1, 20));
 
         rSPanelOpacity1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 870, 60));
 
@@ -464,6 +478,11 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         JTextbuscar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JTextbuscar.setPlaceholder("Ingrese el codigo.");
         JTextbuscar.setSoloNumeros(true);
+        JTextbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTextbuscarActionPerformed(evt);
+            }
+        });
         JTextbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 JTextbuscarKeyReleased(evt);
@@ -523,6 +542,7 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         bm.setTipoc(jLabel34.getText());
         bm.setCodigob(JTextbuscar.getText());
         bm.setVisible(true);
+        bm.setUsuario(usuario);
         banco.dispose();
         this.dispose();
     }//GEN-LAST:event_rSButtonIcon_new12ActionPerformed
@@ -539,6 +559,10 @@ public class BuscarCuentaB extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_JTextbuscarKeyReleased
+
+    private void JTextbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextbuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTextbuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -583,6 +607,7 @@ public class BuscarCuentaB extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;

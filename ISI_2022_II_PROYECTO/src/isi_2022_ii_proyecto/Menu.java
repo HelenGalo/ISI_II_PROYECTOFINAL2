@@ -2029,6 +2029,7 @@ public class Menu extends javax.swing.JFrame {
          if(validarRoles(rSButtonIcon_new10.getText())){
         Banco b = new Banco();
         b.setVisible(a);
+        b.setUsuario(usuario);
         this.dispose();}
          else{
                VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
@@ -2118,6 +2119,7 @@ public class Menu extends javax.swing.JFrame {
         if(validarRoles(F8.getText())==true){
         Ventas v = new Ventas();
         v.setVisible(true);
+        v.setUsuario(usuario);
         this.dispose();
         }else{
                 VentanaInformativaPOSMENU vi = new VentanaInformativaPOSMENU();
@@ -2190,6 +2192,7 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(validarRoles(rSButtonIcon_new9.getText())==true){
         Facturas f = new Facturas();
+        f.setUsuario(usuario);
         f.setVisible(true);
         this.dispose();
         }else{

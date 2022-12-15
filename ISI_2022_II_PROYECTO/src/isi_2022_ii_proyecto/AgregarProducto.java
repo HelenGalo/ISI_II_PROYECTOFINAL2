@@ -319,7 +319,7 @@ validarconexion();
       public boolean insertarP(){
         String nombre="";
         String descrip="";
-        int precio = 0;
+        String precio ="";
         int proveedor=0;
         int Categoria=0;
         int estado =0 ;
@@ -328,7 +328,7 @@ validarconexion();
         
         nombre = NombreP.getText();
         descrip = Descrip1.getText();
-        precio = Integer.parseInt(pre.getText());
+        precio = pre.getText();
         proveedor=ObtenerProveedor();
         Categoria=ObtenerCategoria();
         estado=Obtenerestado();
@@ -342,7 +342,7 @@ validarconexion();
             preparedStmt.setInt(3, Categoria);
             preparedStmt.setInt(4, proveedor);
             preparedStmt.setString (5,descrip);
-            preparedStmt.setInt(6, precio);
+            preparedStmt.setFloat(6, Float.valueOf(precio));
             preparedStmt.setInt(7, estado);
           
             preparedStmt.execute();
@@ -1092,6 +1092,9 @@ validarconexion();
             }
         });
         pre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                preKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 preKeyReleased(evt);
             }
@@ -1480,7 +1483,7 @@ validarconexion();
     }//GEN-LAST:event_JEstadoActionPerformed
 
     private void preKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_preKeyReleased
-          if (Validartarifa(pre.getText())){
+         if (Validartarifa(pre.getText())){
               avisoT.setVisible(false);
              //  JOptionPane.showMessageDialog(this, "El correo ingresado es valido");  
         }
@@ -1523,6 +1526,10 @@ validarconexion();
 
         }
     }//GEN-LAST:event_NombrePKeyReleased
+
+    private void preKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_preKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_preKeyPressed
 public void Clickmenu(JPanel h1, JPanel h2, int numberbool){
         if(numberbool == 1){
             h1.setBackground(new Color(25,29,74));
