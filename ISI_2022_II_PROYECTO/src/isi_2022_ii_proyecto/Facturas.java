@@ -164,10 +164,6 @@ public class Facturas extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         rSButtonIcon_new6 = new newscomponents.RSButtonIcon_new();
         rSButtonIcon_new10 = new newscomponents.RSButtonIcon_new();
-        linesetting6 = new javax.swing.JPanel();
-        rSLabelIcon3 = new rojerusan.RSLabelIcon();
-        rSLabelIcon4 = new rojerusan.RSLabelIcon();
-        rSLabelIcon5 = new rojerusan.RSLabelIcon();
         linesetting12 = new javax.swing.JPanel();
         rSButtonIcon_new11 = new newscomponents.RSButtonIcon_new();
         jLabel12 = new javax.swing.JLabel();
@@ -518,44 +514,6 @@ public class Facturas extends javax.swing.JFrame {
         });
         menuhide.add(rSButtonIcon_new10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 210, -1));
 
-        linesetting6.setBackground(new java.awt.Color(20, 101, 187));
-        linesetting6.setPreferredSize(new java.awt.Dimension(50, 10));
-
-        rSLabelIcon3.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PALETTE);
-
-        rSLabelIcon4.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_PRINTSHOP);
-
-        rSLabelIcon5.setForeground(new java.awt.Color(255, 255, 255));
-        rSLabelIcon5.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SCHEDULE);
-
-        javax.swing.GroupLayout linesetting6Layout = new javax.swing.GroupLayout(linesetting6);
-        linesetting6.setLayout(linesetting6Layout);
-        linesetting6Layout.setHorizontalGroup(
-            linesetting6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(linesetting6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon5, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13))
-        );
-        linesetting6Layout.setVerticalGroup(
-            linesetting6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(linesetting6Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(linesetting6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rSLabelIcon4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSLabelIcon5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSLabelIcon3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        menuhide.add(linesetting6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 585, 210, 51));
-
         linesetting12.setBackground(new java.awt.Color(0, 55, 133));
         linesetting12.setPreferredSize(new java.awt.Dimension(50, 10));
         linesetting12.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -615,7 +573,7 @@ public class Facturas extends javax.swing.JFrame {
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuLayout.createSequentialGroup()
                 .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE)
+                    .addComponent(MenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(menuhide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
@@ -1199,7 +1157,6 @@ public class Facturas extends javax.swing.JFrame {
     private javax.swing.JPanel linesetting3;
     private javax.swing.JPanel linesetting4;
     private javax.swing.JPanel linesetting5;
-    private javax.swing.JPanel linesetting6;
     private javax.swing.JPanel linesetting7;
     private javax.swing.JPanel linesetting8;
     private javax.swing.JPanel linesetting9;
@@ -1217,9 +1174,6 @@ public class Facturas extends javax.swing.JFrame {
     private rojerusan.RSLabelIcon rSLabelIcon11;
     private rojerusan.RSLabelIcon rSLabelIcon17;
     private rojerusan.RSLabelIcon rSLabelIcon2;
-    private rojerusan.RSLabelIcon rSLabelIcon3;
-    private rojerusan.RSLabelIcon rSLabelIcon4;
-    private rojerusan.RSLabelIcon rSLabelIcon5;
     private rojerusan.RSLabelIcon rSLabelIcon6;
     private rojerusan.RSLabelIcon rSLabelIcon7;
     private rojerusan.RSLabelIcon rSLabelIcon8;
